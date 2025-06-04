@@ -197,7 +197,7 @@ Function TweakEnableTypingRecognition_CU { # RESINFO
 
 # View
 Function TweakViewTypingRecognition_CU { # RESINFO
-	Write-Output "Viewing sending of ink and character data to Microsoft to improve language recognition for CU (0:Disabled)..."
+	Write-Output "Viewing sending of ink and character data to Microsoft to improve language recognition for CU (0: Disabled)..."
 	Get-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Input\TIPC" -Name "Enabled"
 }
 

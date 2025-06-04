@@ -143,7 +143,7 @@ Function TweakEnableWindowsCopilot_CU { # RESINFO
 
 # View Copilot
 Function TweakViewWindowsCopilot_CU { # RESINFO
-	Write-Output "Viewing Windows Copilot for CU..."
+	Write-Output "Viewing Windows Copilot for CU  (not exist: Enable, 0: Disable)..."
 	Get-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" -Name "TurnOffWindowsCopilot" -ErrorAction SilentlyContinue
 }
 
