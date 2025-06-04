@@ -118,7 +118,7 @@ $BtnConsoleTPM.Height = 20
 $BtnConsoleTPM.Text = "T"
 $Form.controls.Add($BtnConsoleTPM)
 $BtnConsoleTPM.Add_Click({
-	Start-Process -FilePath "${Env:SystemRoot}\System32\gpedit.msc"
+	Start-Process -FilePath "${Env:SystemRoot}\System32\tpm.msc"
 })
 $ToolTip.SetToolTip($BtnConsoleTPM, "TPM Console")
 
