@@ -122,6 +122,18 @@ $BtnConsoleTPM.Add_Click({
 })
 $ToolTip.SetToolTip($BtnConsoleTPM, "TPM Console")
 
+# Bitlocker Console
+$BtnConsoleBitlocker = New-Object System.Windows.Forms.Button
+$BtnConsoleBitlocker.Location = New-Object System.Drawing.Point(140,70)
+$BtnConsoleBitlocker.Width = 15
+$BtnConsoleBitlocker.Height = 20
+$BtnConsoleBitlocker.Text = "B"
+$Form.controls.Add($BtnConsoleBitlocker)
+$BtnConsoleBitlocker.Add_Click({
+	Start-Process -FilePath "${Env:SystemRoot}\System32\control.exe" -ArgumentList "/name Microsoft.BitLockerDriveEncryption"
+})
+$ToolTip.SetToolTip($BtnConsoleBitlocker, "Bitlocker Console")
+
 # Bitlocker Action
 $BitlockerAction = "Suspend"
 If ($BitlockerStatus -cmatch "Suspend") {
