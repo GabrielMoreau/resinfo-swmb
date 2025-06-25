@@ -132,9 +132,9 @@ Function SWMB_GetOSVersionColor {
 
 	# Last OS revision
 	# See ./get-ubr
-	$UBR10_22H2 = 5965 # 22H2 https://learn.microsoft.com/en-us/windows/release-health/release-information
+	$UBR10_22H2 = 6036 # 22H2 https://learn.microsoft.com/en-us/windows/release-health/release-information
 	$UBR11_23H2 = 5472 # 23H2 https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
-	$UBR11_24H2 = 4349 # 24H2 https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+	$UBR11_24H2 = 4351 # 24H2 https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
 
 	$Color = "Red"
 	If ($OSVersion -ge [version]"10.0.26100.0") {
