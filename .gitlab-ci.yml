@@ -37,7 +37,7 @@ pages:
     - (cd dists/uninstall-kaspersky/; make zip)
     - mv dists/uninstall-kaspersky/Kasperky-Uninstall-*.zip public/
     - rm -f public/*-Latest.*
-    - (cd public/; ../only-keep-1pkg-day | bash)
+    - (cd public/; ../only-keep-1pkg-day 'Kasperky-Uninstall-[123456789]*.zip' 'SWMB-WAPT-[123456789]*.zip' 'SWMB-OCS-[123456789]*.zip' 'SWMB-Setup-[123456789]*.exe' | tee >(cat 1>&2) | bash)
     - (cd public/; ln -sf $(ls -1t SWMB-Setup-*.exe | head -1) SWMB-Setup-Latest.exe)
     - (cd public/; ln -sf $(ls -1t SWMB-OCS-*.zip   | head -1) SWMB-OCS-Latest.zip)
     - (cd public/; ln -sf $(ls -1t SWMB-WAPT-*.zip  | head -1) SWMB-WAPT-Latest.zip)
