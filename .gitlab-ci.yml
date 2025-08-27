@@ -3,7 +3,7 @@ image: debian:latest
 
 before_script:
   - apt-get update -yqq
-  - apt-get install -yqq perl make binutils findutils gzip tar wget nsis zip git git-lfs dos2unix mkdocs python3.11-venv
+  - apt-get install -yqq perl make binutils findutils gzip tar wget nsis zip git git-lfs dos2unix mkdocs python3-venv
 
 pages:
   stage: build
