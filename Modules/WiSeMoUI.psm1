@@ -132,12 +132,20 @@ Function SWMB_GetOSVersionColor {
 
 	# Last OS revision
 	# See ./get-ubr
-	$UBR10_22H2 = 6332 # 22H2 https://learn.microsoft.com/en-us/windows/release-health/release-information
-	$UBR11_23H2 = 5909 # 23H2 https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
-	$UBR11_24H2 = 6584 # 24H2 https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+	$UBR10_21H2 = 6332 # 21H2 https://learn.microsoft.com/en-us/windows/release-health/release-information
+	$UBR10_22H2 = 6396 # 22H2 https://learn.microsoft.com/en-us/windows/release-health/release-information
+	$UBR11_22H2 = 5909 # 22H2 https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+	$UBR11_23H2 = 5984 # 23H2 https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+	$UBR11_24H2 = 6725 # 24H2 https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+	$UBR11_25H2 = 6584 # 25H2 https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
 
 	$Color = "Red"
-	If ($OSVersion -ge [version]"10.0.26100.0") {
+	If ($OSVersion -ge [version]"10.0.26200.0") {
+		# Windows 11_25H2
+		If ($OSVersion -ge [version]"10.0.26200.$UBR11_25H2") {
+			$Color = "Green"
+		}
+	} ElseIf ($OSVersion -ge [version]"10.0.26100.0") {
 		# Windows 11_24H2
 		If ($OSVersion -ge [version]"10.0.26100.$UBR11_24H2") {
 			$Color = "Green"
@@ -147,10 +155,15 @@ Function SWMB_GetOSVersionColor {
 		If ($OSVersion -ge [version]"10.0.22631.$UBR11_23H2") {
 			$Color = "Orange"
 		}
+	} ElseIf ($OSVersion -ge [version]"10.0.22000.0") {
+		# Windows 11_22H2
+		If ($OSVersion -ge [version]"10.0.22621.$UBR11_22H2") {
+			$Color = "Red"
+		}
 	} ElseIf ($OSVersion -ge [version]"10.0.10240.0") {
 		# Windows 10
 		If ($OSVersion -ge [version]"10.0.19045.$UBR10_22H2") {
-			$Color = "Green"
+			$Color = "Orange"
 		}
 	}
 	Return $Color
