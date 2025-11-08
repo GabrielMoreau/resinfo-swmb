@@ -1413,8 +1413,8 @@ Function TweakViewAdobeCollabSync { # RESINFO
 ################################################################
 
 # Disable
-Function TweakDisableAdobeUpdateService { # RESINFO
-	Write-Output "Disabling Adobe Update (ARM) Service..."
+Function TweakDisableAdobeAutoUpdateService { # RESINFO
+	Write-Output "Disabling Adobe AutoUpdate (ARM) Service..."
 	$ServiceName = "AdobeARMservice"
 	# Status  | Name            | DisplayName
 	# Running | AdobeARMservice | Adobe Acrobat Update Service
@@ -1424,8 +1424,8 @@ Function TweakDisableAdobeUpdateService { # RESINFO
 }
 
 # Enable
-Function TweakEnableAdobeUpdateService { # RESINFO
-	Write-Output "Enabling Adobe Update (ARM) Service..."
+Function TweakEnableAdobeAutoUpdateService { # RESINFO
+	Write-Output "Enabling Adobe AutoUpdate (ARM) Service..."
 	$ServiceName = "AdobeARMservice"
 	#Set-Service "$ServiceName" -StartupType Automatic
 	#Start-Service "$ServiceName" -WarningAction SilentlyContinue
@@ -1435,8 +1435,8 @@ Function TweakEnableAdobeUpdateService { # RESINFO
 }
 
 # View
-Function TweakViewAdobeUpdateService { # RESINFO
-	Write-Output "Viewing Adobe Update (ARM) Service..."
+Function TweakViewAdobeAutoUpdateService { # RESINFO
+	Write-Output "Viewing Adobe AutoUpdate (ARM) Service..."
 	$ServiceName = "AdobeARMservice"
 	Get-Service -Name "$ServiceName" -ErrorAction SilentlyContinue | Select-Object Name, StartType, Status
 }
