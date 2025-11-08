@@ -1359,6 +1359,58 @@ Function TweakViewOffice2016AutoUpdate {
 }
 
 ################################################################
+
+# https://community.adobe.com/t5/acrobat-discussions/permanently-disable-adobe-collab-sync/m-p/14939077/page/2?profile.language=fr
+# https://techdiy.info/fr/commencez/puis-je-desactiver-adobecollabsync-au-demarrage/
+# Disable AdobeCollabSync binary
+
+# Disable
+Function TweakDisableAdobeCollabSync { # RESINFO
+	Write-Output "Disabling AdobeCollabSync..."
+	$Name = "AdobeCollabSync.exe"
+	$FullPath = "$Env:ProgramFiles\Adobe\Acrobat DC\Acrobat\$Name"
+	$BackupPath = "$FullPath.org"
+
+	If (Test-Path -Path $FullPath) {
+		If (Test-Path -Path $BackupPath) {
+			Remove-Item $BackupPath -Force -ErrorAction SilentlyContinue
+		}
+		Write-Output " Rename AdobeCollabSync.exe"
+		Rename-Item -Path $FullPath -NewName "$Name.org" -Force
+	}
+}
+
+# Enable
+Function TweakEnableAdobeCollabSync { # RESINFO
+	Write-Output "Disabling AdobeCollabSync..."
+	$Name = "AdobeCollabSync.exe"
+	$FullPath = "$Env:ProgramFiles\Adobe\Acrobat DC\Acrobat\$Name"
+	$BackupPath = "$FullPath.org"
+
+	If (Test-Path -Path $FullPath) {
+		Return
+	}
+	If (Test-Path -Path $BackupPath) {
+		Write-Output " Rename AdobeCollabSync.exe.org"
+		Rename-Item -Path $BackupPath -NewName "$Name" -Force
+	}
+}
+
+# View
+Function TweakViewAdobeCollabSync { # RESINFO
+	Write-Output "Viewing AdobeCollabSync..."
+	$Name = "AdobeCollabSync.exe"
+	$FullPath = "$Env:ProgramFiles\Adobe\Acrobat DC\Acrobat\$Name"
+	$BackupPath = "$FullPath.org"
+
+	if (Test-Path -Path $FullPath) {
+		Write-Output " AdobeCollabSync is enabled"
+	} Else {
+		Write-Output " AdobeCollabSync is disabled"
+	}
+}
+
+################################################################
 ###### Export Functions
 ################################################################
 
