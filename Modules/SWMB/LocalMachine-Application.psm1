@@ -1382,7 +1382,7 @@ Function TweakDisableAdobeCollabSync { # RESINFO
 
 # Enable
 Function TweakEnableAdobeCollabSync { # RESINFO
-	Write-Output "Disabling AdobeCollabSync..."
+	Write-Output "Enabling AdobeCollabSync..."
 	$Name = "AdobeCollabSync.exe"
 	$FullPath = "$Env:ProgramFiles\Adobe\Acrobat DC\Acrobat\$Name"
 	$BackupPath = "$FullPath.org"
@@ -1412,8 +1412,11 @@ Function TweakViewAdobeCollabSync { # RESINFO
 
 ################################################################
 
+# Disables automatic updates service from Adobe
+# (enabled by default after a new installation)
+
 # Disable
-Function TweakDisableAdobeAutoUpdateService { # RESINFO
+Function TweakDisableAdobeAutoUpdate { # RESINFO
 	Write-Output "Disabling Adobe AutoUpdate (ARM) Service..."
 	$ServiceName = "AdobeARMservice"
 	# Status  | Name            | DisplayName
@@ -1424,7 +1427,7 @@ Function TweakDisableAdobeAutoUpdateService { # RESINFO
 }
 
 # Enable
-Function TweakEnableAdobeAutoUpdateService { # RESINFO
+Function TweakEnableAdobeAutoUpdate { # RESINFO
 	Write-Output "Enabling Adobe AutoUpdate (ARM) Service..."
 	$ServiceName = "AdobeARMservice"
 	#Set-Service "$ServiceName" -StartupType Automatic
@@ -1435,7 +1438,7 @@ Function TweakEnableAdobeAutoUpdateService { # RESINFO
 }
 
 # View
-Function TweakViewAdobeAutoUpdateService { # RESINFO
+Function TweakViewAdobeAutoUpdate { # RESINFO
 	Write-Output "Viewing Adobe AutoUpdate (ARM) Service..."
 	$ServiceName = "AdobeARMservice"
 	Get-Service -Name "$ServiceName" -ErrorAction SilentlyContinue | Select-Object Name, StartType, Status

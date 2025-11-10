@@ -15,6 +15,8 @@ PowerShell scripts and modules are now checked before Git commit using the `anal
 
 New presets/rules:
 
+* 2025/11/07 - `DisableAdobeAutoUpdate`/`EnableAdobeAutoUpdate`/`ViewAdobeAutoUpdate` -> Disables automatic updates service from Adobe (enabled by default after a new installation)
+* 2025/11/07 - `DisableAdobeCollabSync`/`EnableAdobeCollabSync`/`ViewAdobeCollabSync` -> Deletes the binary file that enables synchronization with Adobe cloud collaboration.
 * 2025/05/23 - `DisableRemovableStorageExe`/`EnableRemovableStorageExe`/`ViewRemovableStorageExe` -> Disable program execution on removable media (USB)
 * 2025/05/14 - `UninstallSkype`/`ViewSkype` -> Uninstall Skype
 * 2025/04/29 - `UninstallPDFXChange`/`ViewPDFXChange` -> Uninstall PDF-XChange software (also PDF-Viewer)

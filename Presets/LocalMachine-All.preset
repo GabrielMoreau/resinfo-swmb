@@ -264,6 +264,8 @@ DisableWindowsCopilot                           # EnableWindowsCopilot          
 EnableOffice2013AutoUpdate                      # DisableOffice2013AutoUpdate                   # ViewOffice2013AutoUpdate
 EnableOffice2016AutoUpdate                      # DisableOffice2016AutoUpdate                   # ViewOffice2016AutoUpdate
 RemoveAppxMsOfficeHub                           # AddAppxMsOfficeHub                            # ViewAppxMsOfficeHub           ## Removing Appx Microsoft OfficeHub (Microsoft 365 Copilot)
+# DisableAdobeAutoUpdate                        # EnableAdobeAutoUpdate                         # ViewAdobeAutoUpdate           ## Disables automatic updates service from Adobe (enabled by default after a new installation)
+DisableAdobeCollabSync                          # EnableAdobeCollabSync                         # ViewAdobeCollabSync           ## Deletes the binary file that enables synchronization with Adobe cloud collaboration.
 
 ### Server Specific Tweaks ###
 # HideServerManagerOnLogin                      # ShowServerManagerOnLogin
