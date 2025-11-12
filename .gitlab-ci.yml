@@ -12,7 +12,7 @@ pages:
     GIT_STRATEGY: clone
     GIT_DEPTH: 200
     KEEP_PKG: 50
-    KEEP_PKG_LOW: 30
+    KEEP_PKG_LOW: 20
   script:
     - mkdir -p public
     - $(wget --no-check-certificate ${CI_PAGES_URL}/download.tar.gz -O download.tar.gz || exit 0)
