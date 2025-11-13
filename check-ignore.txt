@@ -25,3 +25,4 @@ InstallUltraVNC
 InstallPDFXChange
 InstallSkype
 InstallTeamViewer
+InstallCCleaner

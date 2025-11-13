@@ -1154,6 +1154,68 @@ Function TweakViewTeamViewer { # RESINFO
 
 ################################################################
 
+# Suppress CCleaner
+# https://www.ccleaner.com/
+# | Hive | DisplayName | Publisher | DisplayVersion | KeyProduct   | UninstallExe |
+# |:---- |:----------- |:--------- |:-------------- |:------------ |:------------ |
+# | HKLM | CCleaner    | Piriform  | 6.22           | `CCleaner`   | `"C:\Program Files\CCleaner\uninst.exe"` |
+# | HKLM | CCleaner    | Piriform  | 6.33           | `CCleaner`   | `"C:\Program Files\CCleaner\uninst.exe"` |
+# | HKLM | CCleaner 7  | Piriform  | 7.0.1010.1196  | `CCleaner 7` | `"C:\Program Files\Common Files\Piriform\Icarus\piriform-ccl\icarus.exe" /manual_update /uninstall:piriform-ccl` |
+
+# Uninstall
+Function TweakUninstallCCleaner { # RESINFO
+	Write-Output "Uninstalling software CCleaner..."
+	$RefName = 'CCleaner'
+	@(Get-ChildItem -Recurse 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall';
+	  Get-ChildItem -Recurse "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall") |
+		ForEach {
+			$Key = $_
+			$App = (Get-ItemProperty -Path $Key.PSPath)
+			$DisplayName  = $App.DisplayName
+			If (!($DisplayName -match $RefName)) { Return }
+			$DisplayVersion = $App.DisplayVersion
+			$KeyProduct = $Key | Split-Path -Leaf
+
+			If ($($App.UninstallString) -match 'uninst.exe') {
+				$UninstallSplit = ($App.UninstallString -Split "exe")[0] -Replace '"', ''
+				$Exe = $UninstallSplit + 'exe'
+				$Args = '/S'
+			} ElseIf ($($App.UninstallString) -match 'icarus.exe') {
+				$UninstallSplit = ($App.UninstallString -Split "exe")[0] -Replace '"', ''
+				$Exe = $UninstallSplit + 'exe'
+				$Args = '/manual_update /uninstall:piriform-ccl /silent'
+			} Else {
+				Write-Output " Uninstall string $($App.UninstallString) unknwon for version $DisplayVersion"
+				Return
+			}
+
+			Write-Output " Uninstalling $DisplayName version $DisplayVersion"
+			Write-Output " Exe: $Exe $Args"
+			SWMB_RunExec -FilePath "$Exe" -ArgumentList "$Args" -Name "$RefName" -Timeout 300
+		}
+}
+
+# View
+Function TweakViewCCleaner { # RESINFO
+	Write-Output "Viewing software CCleaner..."
+	$RefName = 'CCleaner'
+	@(Get-ChildItem -Recurse 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall';
+	  Get-ChildItem -Recurse "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall") |
+		ForEach {
+			$Key = $_
+			$App = (Get-ItemProperty -Path $Key.PSPath)
+			$DisplayName  = $App.DisplayName
+			If ($DisplayName -match $RefName) {
+				$DisplayVersion = $App.DisplayVersion
+				$KeyProduct = $Key | Split-Path -Leaf
+				$UninstallString = $App.UninstallString
+				Write-Output " $DisplayName / $DisplayVersion / $KeyProduct / $UninstallString"
+			}
+		}
+}
+
+################################################################
+
 # Dell Appx
 # Uninstall
 Function TweakUninstallDellBuiltInApps { # RESINFO

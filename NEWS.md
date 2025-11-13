@@ -15,6 +15,7 @@ PowerShell scripts and modules are now checked before Git commit using the `anal
 
 New presets/rules:
 
+* 2025/11/13 - `UninstallCCleaner`/`ViewCCleaner` -> Uninstall Piriform CCleaner
 * 2025/11/13 - `UninstallTeamViewer`/`ViewTeamViewer` -> Uninstall TeamViewer
 * 2025/11/07 - `DisableAdobeAutoUpdate`/`EnableAdobeAutoUpdate`/`ViewAdobeAutoUpdate` -> Disables automatic updates service from Adobe (enabled by default after a new installation)
 * 2025/11/07 - `DisableAdobeCollabSync`/`EnableAdobeCollabSync`/`ViewAdobeCollabSync` -> Deletes the binary file that enables synchronization with Adobe cloud collaboration.
