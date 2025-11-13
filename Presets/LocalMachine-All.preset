@@ -320,3 +320,4 @@ DisableAdobeCollabSync                          # EnableAdobeCollabSync         
 # UninstallUltraVNC                                                                             # ViewUltraVNC
 # UninstallPDFXChange                                                                           # ViewPDFXChange                ## Uninstall PDF-XChange software (also PDF-Viewer)
 # UninstallSkype                                                                                # ViewSkype                     ## Uninstall Microsoft Skype software
+# UninstallTeamViewer                                                                           # ViewTeamViewer                ## Uninstall TeamViewer software

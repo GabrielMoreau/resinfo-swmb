@@ -1045,8 +1045,8 @@ Function TweakViewPDFXChange { # RESINFO
 # https://en.wikipedia.org/wiki/Skype
 # | Hive | DisplayName | Publisher | DisplayVersion | KeyProduct | UninstallExe |
 # |:---- |:----------- |:--------- |:-------------- |:---------- |:------------ |
-#  | HKLM | Skype version 8.137 | Skype Technologies S.A. | 8.137 | Skype_is1 | "C:\Program Files (x86)\Microsoft\Skype for Desktop\unins000.exe" |
-#  | HKLM | Skype version 8.138 | Skype Technologies S.A. | 8.138 | Skype_is1 | "C:\Program Files (x86)\Microsoft\Skype for Desktop\unins000.exe" |
+# | HKLM | Skype version 8.137 | Skype Technologies S.A. | 8.137 | Skype_is1 | "C:\Program Files (x86)\Microsoft\Skype for Desktop\unins000.exe" |
+# | HKLM | Skype version 8.138 | Skype Technologies S.A. | 8.138 | Skype_is1 | "C:\Program Files (x86)\Microsoft\Skype for Desktop\unins000.exe" |
 
 # Uninstall
 Function TweakUninstallSkype { # RESINFO
@@ -1081,6 +1081,62 @@ Function TweakUninstallSkype { # RESINFO
 Function TweakViewSkype { # RESINFO
 	Write-Output "Viewing software Skype..."
 	$RefName = 'Skype version'
+	@(Get-ChildItem -Recurse 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall';
+	  Get-ChildItem -Recurse "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall") |
+		ForEach {
+			$Key = $_
+			$App = (Get-ItemProperty -Path $Key.PSPath)
+			$DisplayName  = $App.DisplayName
+			If ($DisplayName -match $RefName) {
+				$DisplayVersion = $App.DisplayVersion
+				$KeyProduct = $Key | Split-Path -Leaf
+				$UninstallString = $App.UninstallString
+				Write-Output " $DisplayName / $DisplayVersion / $KeyProduct / $UninstallString"
+			}
+		}
+}
+
+################################################################
+
+# Suppress TeamViewer
+# https://www.teamviewer.com
+# | Hive | DisplayName | Publisher | DisplayVersion | KeyProduct | UninstallExe |
+# |:---- |:----------- |:--------- |:-------------- |:---------- |:------------ |
+# | HKLM | TeamViewer | TeamViewer | 15.52.4 | `TeamViewer` | `"C:\Program Files\TeamViewer\uninstall.exe"` |
+
+# Uninstall
+Function TweakUninstallTeamViewer { # RESINFO
+	Write-Output "Uninstalling software TeamViewer..."
+	$RefName = 'TeamViewer'
+	@(Get-ChildItem -Recurse 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall';
+	  Get-ChildItem -Recurse "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall") |
+		ForEach {
+			$Key = $_
+			$App = (Get-ItemProperty -Path $Key.PSPath)
+			$DisplayName  = $App.DisplayName
+			If (!($DisplayName -match $RefName)) { Return }
+			$DisplayVersion = $App.DisplayVersion
+			$KeyProduct = $Key | Split-Path -Leaf
+
+			If ($($App.UninstallString) -match 'MsiExec.exe') {
+				$Exe = 'MsiExec.exe'
+				$Args = '/x "' + $KeyProduct + '" /qn'
+			} Else {
+				$UninstallSplit = ($App.UninstallString -Split "exe")[0] -Replace '"', ''
+				$Exe = $UninstallSplit + 'exe'
+				$Args = '/S'
+			}
+
+			Write-Output " Uninstalling $DisplayName version $DisplayVersion"
+			Write-Output " Exe: $Exe $Args"
+			SWMB_RunExec -FilePath "$Exe" -ArgumentList "$Args" -Name "$RefName" -Timeout 300
+		}
+}
+
+# View
+Function TweakViewTeamViewer { # RESINFO
+	Write-Output "Viewing software TeamViewer..."
+	$RefName = 'TeamViewer'
 	@(Get-ChildItem -Recurse 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall';
 	  Get-ChildItem -Recurse "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall") |
 		ForEach {
