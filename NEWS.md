@@ -13,6 +13,8 @@ Here's a quick summary:
 
 PowerShell scripts and modules are now checked before Git commit using the `analyze-ps` script (see `make check`).
 
+Add the link to [FlyOOBE](https://github.com/builtbybel/FlyOOBE) to the [REFERENCES](REFERENCES.md) file.
+
 New presets/rules:
 
 * 2025/11/13 - `UninstallCCleaner`/`ViewCCleaner` -> Uninstall Piriform CCleaner

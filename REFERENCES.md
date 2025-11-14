@@ -27,7 +27,7 @@
 * [Harden Community](https://hardenad.net/) (script in PowerShell)
 	* [Hardening Microsoft 365 tenant with CIS and Microsoft recommendations](https://github.com/Harden365/Harden365)
 	* [Hardening Active Directory](https://github.com/LoicVeirman/SecureAD)
-
+* [FlyOOBE](https://github.com/builtbybel/FlyOOBE) (code in C#) - installing Windows 11 on unsupported hardware and more
 
 ## 2025
 
