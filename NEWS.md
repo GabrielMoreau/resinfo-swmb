@@ -17,6 +17,7 @@ Add the link to [FlyOOBE](https://github.com/builtbybel/FlyOOBE) to the [REFEREN
 
 New presets/rules:
 
+* 2025/11/14 - `UninstallNordVPN`/`ViewNordVPN` -> Uninstall NordVPN - Lithuanian VPN service
 * 2025/11/13 - `UninstallCCleaner`/`ViewCCleaner` -> Uninstall Piriform CCleaner
 * 2025/11/13 - `UninstallTeamViewer`/`ViewTeamViewer` -> Uninstall TeamViewer
 * 2025/11/07 - `DisableAdobeAutoUpdate`/`EnableAdobeAutoUpdate`/`ViewAdobeAutoUpdate` -> Disables automatic updates service from Adobe (enabled by default after a new installation)

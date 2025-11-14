@@ -322,3 +322,4 @@ DisableAdobeCollabSync                          # EnableAdobeCollabSync         
 # UninstallSkype                                                                                # ViewSkype                     ## Uninstall Microsoft Skype software
 # UninstallTeamViewer                                                                           # ViewTeamViewer                ## Uninstall TeamViewer software
 # UninstallCCleaner                                                                             # ViewCCleaner                  ## Uninstall Piriform CCleaner software
+# UninstallNordVPN                                                                              # ViewNordVPN                   ## Uninstall NordVPN - Lithuanian VPN service

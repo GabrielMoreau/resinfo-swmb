@@ -1216,6 +1216,63 @@ Function TweakViewCCleaner { # RESINFO
 
 ################################################################
 
+# Suppress NordVPN - Lithuanian VPN service
+# https://nordvpn.com/
+# | Hive | DisplayName | Publisher | DisplayVersion | KeyProduct | UninstallExe |
+# |:---- |:----------- |:--------- |:-------------- |:---------- |:------------ |
+# | HKLM | NordUpdater | Nord Security | 1.4.4.821 | {6E35DB82-3D19-4DD6-B8CB-F082815FDE18}_is1 | "C:\Program Files\NordUpdater\unins000.exe" |
+# | HKLM | NordVPN | Nord Security | 7.30.6.0 | {19465C24-3D5D-4327-B99F-3CC0A1D38151}_is1 | "C:\Program Files\NordVPN\unins000.exe" /LOG |
+
+# Uninstall
+Function TweakUninstallNordVPN { # RESINFO
+	Write-Output "Uninstalling software NordVPN..."
+	$RefName = 'NordVPN'
+	@(Get-ChildItem -Recurse 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall';
+	  Get-ChildItem -Recurse "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall") |
+		ForEach {
+			$Key = $_
+			$App = (Get-ItemProperty -Path $Key.PSPath)
+			$DisplayName  = $App.DisplayName
+			If (!($DisplayName -match $RefName)) { Return }
+			$DisplayVersion = $App.DisplayVersion
+			$KeyProduct = $Key | Split-Path -Leaf
+
+			If ($($App.UninstallString) -match 'unins000.exe') {
+				$UninstallSplit = ($App.UninstallString -Split "exe")[0] -Replace '"', ''
+				$Exe = $UninstallSplit + 'exe'
+				$Args = '/VERYSILENT /NORESTART'
+			} Else {
+				Write-Output " Uninstall string $($App.UninstallString) unknwon for version $DisplayVersion"
+				Return
+			}
+
+			Write-Output " Uninstalling $DisplayName version $DisplayVersion"
+			Write-Output " Exe: $Exe $Args"
+			SWMB_RunExec -FilePath "$Exe" -ArgumentList "$Args" -Name "$RefName" -Timeout 300
+		}
+}
+
+# View
+Function TweakViewNordVPN { # RESINFO
+	Write-Output "Viewing software NordVPN..."
+	$RefName = 'NordVPN'
+	@(Get-ChildItem -Recurse 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall';
+	  Get-ChildItem -Recurse "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall") |
+		ForEach {
+			$Key = $_
+			$App = (Get-ItemProperty -Path $Key.PSPath)
+			$DisplayName  = $App.DisplayName
+			If ($DisplayName -match $RefName) {
+				$DisplayVersion = $App.DisplayVersion
+				$KeyProduct = $Key | Split-Path -Leaf
+				$UninstallString = $App.UninstallString
+				Write-Output " $DisplayName / $DisplayVersion / $KeyProduct / $UninstallString"
+			}
+		}
+}
+
+################################################################
+
 # Dell Appx
 # Uninstall
 Function TweakUninstallDellBuiltInApps { # RESINFO
