@@ -26,8 +26,8 @@ New presets/rules:
 * 2025/05/23 - `DisableRemovableStorageExe`/`EnableRemovableStorageExe`/`ViewRemovableStorageExe` -> Disable program execution on removable media (USB)
 * 2025/05/14 - `UninstallSkype`/`ViewSkype` -> Uninstall Skype
 * 2025/04/29 - `UninstallPDFXChange`/`ViewPDFXChange` -> Uninstall PDF-XChange software (also PDF-Viewer)
-* 2025/04/15 - `ViewHibernation` - View Hibernation status, inversion of tweak Enable and Disable in the preset file
-* 2025/04/15 - `RemoveAppxMsOfficeHub`/`AddAppxMsOfficeHub`/`ViewAppxMsOfficeHub` - Remove Appx Microsoft OfficeHub (Microsoft 365 Copilot) (already part of the `UninstallMsftBloat` tweak)
+* 2025/04/15 - `ViewHibernation` -> View Hibernation status, inversion of tweak Enable and Disable in the preset file
+* 2025/04/15 - `RemoveAppxMsOfficeHub`/`AddAppxMsOfficeHub`/`ViewAppxMsOfficeHub` -> Remove Appx Microsoft OfficeHub (Microsoft 365 Copilot) (already part of the `UninstallMsftBloat` tweak)
 
 
 ## Version 3.18 (2025/02/25)
@@ -50,12 +50,12 @@ Add the link to [Win11Debloat](https://github.com/Raphire/Win11Debloat) and to t
 
 New presets/rules:
 
-* 2025/02/17 - `ViewInsecureGuestLogons` - Disable SMB client to use insecure guest logons to an SMB server
-* 2025/02/17 - `EnableSMBClientSigning`/`DisableSMBClientSigning`/`ViewSMBClientSigning` - Require SMB client to sign message
-* 2025/02/17 - `EnableSMBServerSigning`/`DisableSMBServerSigning`/`ViewSMBServerSigning` - Require SMB server to sign message
-* 2025/02/14 - `DisableMSOfficeFeedback_CU`/`EnableMSOfficeFeedback_CU`/`ViewMSOfficeFeedback_CU` - Disable Feedback and Telemetry in MS Office
-* 2025/02/13 - `ViewWebSearch_CU` - Add view tweak
-* 2025/02/13 - `DisableMSOfficeConnectedExperiences_CU`/`EnableMSOfficeConnectedExperiences_CU`/`ViewMSOfficeConnectedExperiences_CU` - Disable Connected Experiences in Microsoft Office
+* 2025/02/17 - `ViewInsecureGuestLogons` -> Disable SMB client to use insecure guest logons to an SMB server
+* 2025/02/17 - `EnableSMBClientSigning`/`DisableSMBClientSigning`/`ViewSMBClientSigning` -> Require SMB client to sign message
+* 2025/02/17 - `EnableSMBServerSigning`/`DisableSMBServerSigning`/`ViewSMBServerSigning` -> Require SMB server to sign message
+* 2025/02/14 - `DisableMSOfficeFeedback_CU`/`EnableMSOfficeFeedback_CU`/`ViewMSOfficeFeedback_CU` -> Disable Feedback and Telemetry in MS Office
+* 2025/02/13 - `ViewWebSearch_CU` -> Add view tweak
+* 2025/02/13 - `DisableMSOfficeConnectedExperiences_CU`/`EnableMSOfficeConnectedExperiences_CU`/`ViewMSOfficeConnectedExperiences_CU` -> Disable Connected Experiences in Microsoft Office
 * 2025/01/29 - `UninstallRealVNC4` -> Uninstall old RealVNC version 4
 * 2025/01/29 - `UninstallRealVNCServer`/`ViewRealVNCServer` -> Uninstall RealVNC version 4 server software
 * 2025/01/29 - `UninstallRealVNCViewer`/`ViewRealVNCViewer` -> Uninstall RealVNC version 4 server client (viewer)
@@ -304,7 +304,7 @@ New presets/rules:
 * 2022/06/01 - `DisableMSDT`/`EnableMSDT`/`ViewMSDT` -> Disable MSDT - Microsoft Support Diagnostic Tool Vulnerability - CVE-2022-30190
 * 2022/05/09 - `ViewKasperskyProduct` -> View all the Kaspersky product
 * 2022/05/09 - `UninstallKasperskyConsole` -> Remove the Kaspersky Console
-* 2022/03/16 - `UninstallKasperskyEndpoint` ([see more](dists/uninstall-kaspersky/)) - use Custom configuration module
+* 2022/03/16 - `UninstallKasperskyEndpoint` ([see more](dists/uninstall-kaspersky/)) -> use Custom configuration module
 * 2022/03/16 - `SetTargetRelease`/`UnsetTargetRelease` -> For fix the target Feature Update version ([see more](https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.WindowsUpdate::TargetReleaseVersion))
 * 2022/03/02 - `EnableClearPageFile`/`DisableClearPageFile` -> Clean PAGEFILE.SYS at shutdown
 * 2022/02/02 - `EnableASLR`/`DisableASLR` -> Address Space Layout Randomisation
@@ -448,23 +448,23 @@ Preset file could now include other files with the $INCLUDE directive
 
 New presets/rules:
 
-* 2021/09/10 - `DisableMSHTMLActiveX`/`EnableMSHTMLActiveX`/`View...` Disable ActiveX in MSHTML (Internet Explorer) CVE-2021-40444
+* 2021/09/10 - `DisableMSHTMLActiveX`/`EnableMSHTMLActiveX`/`ViewMSHTMLActiveX` -> Disable ActiveX in MSHTML (Internet Explorer) CVE-2021-40444
 * 2021/08/28 - `DisableAutoloadDriver`/`EnableAutoloadDriver` -> Zero day on autoload driver on network
 * 2021/07/10 - `SysRequireAdmin` replace `RequireAdmin`
-* 2021/07/07 - `SysAutoUpgrade` - Auto Upgrade your SWMB folder! Need an internet access to the Git repository
+* 2021/07/07 - `SysAutoUpgrade` -> Auto Upgrade your SWMB folder! Need an internet access to the Git repository
 * 2021/07/02 - `DisablePrintForSystem`/`EnablePrintForSystem`/`ViewPrintForSystem` -> Pseudo patch for CVE-2021-34527
 * 2021/06/14 - `EnableInsecureGuestLogons`/`DisableInsecureGuestLogons` -> Disable by default
 * 2021/06/13 - `DisableSMB1Protocol`/`EnableSMB1Protocol` -> SMBv1 protocol
 * 2021/06/13 - `DisableSMB1`/`EnableSMB1` rename -> `DisableSMB1Server`/`EnableSMB1Server`
-* 2021/06/05 - `SetNTPConfig`/`UnsetNTPConfig` - NTP service configuration
-* 2021/06/05 - `EnableGodMod_CU`/`DisableGodMod_CU` - God Mod for Current user
+* 2021/06/05 - `SetNTPConfig`/`UnsetNTPConfig` -> NTP service configuration
+* 2021/06/05 - `EnableGodMod_CU`/`DisableGodMod_CU` -> God Mod for Current user
 * 2021/06/05 - Rename `Restart` -> `SysRestart` and `WaitForKey` -> `SysPause`
-* 2021/06/05 - `SysHalt` - Halt computer and not Reboot
-* 2021/06/04 - `SysMessage` - Just write a message on terminal for debugging purpose (like WaitForKey)
-* 2021/06/04 - `DisableUWPAccessLocation`/`EnableUWPAccessLocation` - Let UWP Apps Access Location
-* 2021/06/01 - `DisableWindowsFeeds`/`EnableWindowsFeeds` - News and Interests on Taskbar
-* 2021/05/12 - `EnableBitlocker`/`DisableBitlocker` - Crypt hard drive with bitlocker
-* 2021/04/29 - `DisableWindowsHello`/`EnableWindowsHello` - Windows Hello Authentification
+* 2021/06/05 - `SysHalt` -> Halt computer and not Reboot
+* 2021/06/04 - `SysMessage` -> Just write a message on terminal for debugging purpose (like WaitForKey)
+* 2021/06/04 - `DisableUWPAccessLocation`/`EnableUWPAccessLocation` -> Let UWP Apps Access Location
+* 2021/06/01 - `DisableWindowsFeeds`/`EnableWindowsFeeds` -> News and Interests on Taskbar
+* 2021/05/12 - `EnableBitlocker`/`DisableBitlocker` -> Crypt hard drive with bitlocker
+* 2021/04/29 - `DisableWindowsHello`/`EnableWindowsHello` -> Windows Hello Authentification
 
 
 ## Version 3.11 (never publish)
