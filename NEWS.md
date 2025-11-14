@@ -17,6 +17,7 @@ Add the link to [FlyOOBE](https://github.com/builtbybel/FlyOOBE) to the [REFEREN
 
 New presets/rules:
 
+* 2025/11/14 - `ViewDellBuiltInApps` -> View all Dell Appx
 * 2025/11/14 - `UninstallNordVPN`/`ViewNordVPN` -> Uninstall NordVPN - Lithuanian VPN service
 * 2025/11/13 - `UninstallCCleaner`/`ViewCCleaner` -> Uninstall Piriform CCleaner
 * 2025/11/13 - `UninstallTeamViewer`/`ViewTeamViewer` -> Uninstall TeamViewer
@@ -103,7 +104,7 @@ New presets/rules:
 * 2024/05/28 - `DisableBluetoothAdvertising`/`EnableBluetoothAdvertising`/`ViewBluetoothAdvertising` -> Disable Advertisements via Bluetooth
 * 2024/05/27 - `DisableTypingRecognition_CU`/`EnableTypingRecognition_CU`/`ViewTypingRecognition_CU` -> Don't send inking and typing data to Microsoft to improve the language recognition
 * 2024/05/16 - `UninstallDellSoftware` -> Uninstall Dell MSI or Setup.exe software
-* 2024/05/16 - `UninstallDellBuiltInApps` -> Uninstall Dell Appx
+* 2024/05/16 - `UninstallDellBuiltInApps` -> Uninstall some Dell Appx - use the global variable `$Global:SWMB_Custom.DellAppx`
 * 2024/05/09 - `EnableOffice2016AutoUpdate`/`DisableOffice2016AutoUpdate`/`ViewOffice2016AutoUpdate` -> Enable auto update for MS Office 2016 Click-To-Run installations
 * 2024/05/09 - `EnableOffice2013AutoUpdate`/`DisableOffice2013AutoUpdate`/`ViewOffice2013AutoUpdate` -> Enable auto update for MS Office 2013 Click-To-Run installations
 * 2024/04/10 - `DisableAutoLogon`/`EnableAutoLogon`/`ViewAutoLogon` -> Disable or Enable AutoLogon (`$Global:SWMB_Custom` key `AutoLogon_UserName`)

@@ -311,7 +311,7 @@ DisableAdobeCollabSync                          # EnableAdobeCollabSync         
 # UninstallHPBloatware
 # UninstallNovaPDF                                                                              # ViewNovaPDF
 # UninstallAnyDesk                                                                              # ViewAnyDesk
-# UninstallDellBuiltInApps
+# UninstallDellBuiltInApps                                                                      # ViewDellBuiltInApps           ## Uninstall some Dell Appx - use the global variable $Global:SWMB_Custom.DellAppx
 # UninstallDellSoftware
 # UninstallVMwarePlayer                                                                         # ViewVMwarePlayer
 # UninstallRealVNC4

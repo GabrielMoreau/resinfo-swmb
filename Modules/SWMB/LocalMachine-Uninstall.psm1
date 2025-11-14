@@ -1273,10 +1273,11 @@ Function TweakViewNordVPN { # RESINFO
 
 ################################################################
 
-# Dell Appx
+# Suppress some Dell Appx - use the global variable $Global:SWMB_Custom.DellAppx
+
 # Uninstall
 Function TweakUninstallDellBuiltInApps { # RESINFO
-	Write-Output "Uninstalling software Dell BuiltIn Apps..."
+	Write-Output "Uninstalling some software Dell BuiltIn Apps..."
 
 	$InstalledPackages = Get-AppxPackage -AllUsers | Where-Object {($Global:SWMB_Custom.DellAppx -contains $_.Name)}
 	$ProvisionedPackages = Get-AppxProvisionedPackage -Online | Where-Object {($Global:SWMB_Custom.DellAppx -contains $_.DisplayName)}
@@ -1302,6 +1303,19 @@ Function TweakUninstallDellBuiltInApps { # RESINFO
 		} Catch {
 			Write-Output " Failed to remove Appx package: [$($AppxPackage.Name)]"
 		}
+	}
+}
+
+# View
+Function TweakViewDellBuiltInApps { # RESINFO
+	Write-Output "Viewing all software Dell BuiltIn Apps..."
+	# Remove appx provisioned packages - AppxProvisionedPackage
+	ForEach ($ProvPackage in (Get-AppxProvisionedPackage -Online | Where-Object { $_.Name -match 'Dell' }).DisplayName) {
+		Write-Output " Provisioned package: $ProvPackage"
+	}
+	# Remove appx packages - AppxPackage
+	ForEach ($AppxPackage in (Get-AppxPackage -AllUsers | Where-Object { $_.Name -match 'Dell' }).Name) {
+		Write-Output " Appx package: $AppxPackage"
 	}
 }
 
