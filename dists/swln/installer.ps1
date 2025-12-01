@@ -58,6 +58,19 @@ ForEach ($FileItem in @(
 	}
 }
 
+# Add exception for Microsoft Defender
+If ($(Get-MpComputerStatus).AntivirusEnabled  -eq $True ) {
+	Write-Host "Microsoft Defender Antivirus is enabled"
+	Write-Host "Microsoft Defender exclude OCS Temporary file"
+	Write-Host "Script path $PSScriptRoot"
+	Add-MpPreference -ExclusionPath "${Env:ProgramFiles}\$SWLN_Name" -Force
+	Add-MpPreference -ExclusionPath "$PSScriptRoot" -Force
+	Write-Host "Current path $PWD"
+	Add-MpPreference -ExclusionPath "$PWD" -Force
+} Else {
+	Write-Host "Microsoft Defender Antivirus is disabled"
+}
+
 # Allow PowerShell scripts in the SWLN directory
 Write-Output " Unblock scripts"
 Get-ChildItem -LiteralPath "${Env:ProgramFiles}\$SWLN_Name\"  -Recurse | Unblock-File
