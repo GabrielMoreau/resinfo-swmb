@@ -10,6 +10,10 @@ SWMB_HOME=${HOME}/resinfo/swmb
 while [ ! -d "${SWMB_HOME}" ]
 do
   read -p "Enter path to the SWMB project: " SWMB_HOME
+  if [[ "${SWMB_HOME}" =~ ^~/ ]]
+  then
+    SWMB_HOME="${SWMB_HOME/#~/${HOME}}"
+  fi
 done
 
 function mydiff () {
