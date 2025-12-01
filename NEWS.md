@@ -17,6 +17,7 @@ Add the link to [FlyOOBE](https://github.com/builtbybel/FlyOOBE) to the [REFEREN
 
 New presets/rules:
 
+* 2025/12/01 - `DisableRecall`/`EnableRecall`/`ViewRecall` -> Recall is a feature that allows you to quickly access your documents, applications, and personal information through indexing
 * 2025/11/14 - `ViewDellBuiltInApps` -> View all Dell Appx
 * 2025/11/14 - `UninstallNordVPN`/`ViewNordVPN` -> Uninstall NordVPN - Lithuanian VPN service
 * 2025/11/13 - `UninstallCCleaner`/`ViewCCleaner` -> Uninstall Piriform CCleaner

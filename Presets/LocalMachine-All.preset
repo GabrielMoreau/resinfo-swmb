@@ -15,6 +15,7 @@ DisableTelemetry                                # EnableTelemetry
 DisableCortana                                  # EnableCortana
 DisableCortanaAboveLock                         # EnableCortanaAboveLock
 DisableDisplayWebResults                        # EnableDisplayWebResults
+DisableRecall                                   # EnableRecall                                  # ViewRecall                    ## Recall is a feature that allows you to quickly access your documents, applications, and personal information through indexing
 DisableWiFiSense                                # EnableWiFiSense
 # DisableSmartScreen                            # EnableSmartScreen
 DisableWebSearch                                # EnableWebSearch
