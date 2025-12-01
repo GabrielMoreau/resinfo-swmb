@@ -4,7 +4,7 @@
 
 SOFT:=SWLN
 SWLN_NAME:=SWLN
-SWMB_VERSION:=$(shell curl -s -L 'https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/version.txt')
+SWMB_VERSION:=$(shell curl --silent --location --insecure 'https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/version.txt')
 SWLN_VERSION:=5.20.$(shell echo $(SWMB_VERSION) | sed -e 's/\./ /g;' | xargs -r printf "%i%02i%02i%03i")
 REVISION:=1
 
