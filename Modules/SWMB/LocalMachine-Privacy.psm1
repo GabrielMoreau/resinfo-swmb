@@ -116,6 +116,46 @@ Function TweakEnableCortana {
 
 ################################################################
 
+# Recall is a feature that allows you to quickly access your documents, applications, and personal information through indexing.
+# https://www.malekal.com/desactiver-recall-windows-11/
+# https://www.justgeek.fr/windows-11-desactiver-recall-141674/
+
+# Disable Recall
+Function TweakDisableRecall { # RESINFO
+	Write-Output "Disabling Recall..."
+	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Recall")) {
+		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Recall" -Force | Out-Null
+	}
+	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Recall" -Name "AllowRecall" -Type DWord -Value 0
+}
+
+# Enable Recall
+Function TweakEnableRecall { # RESINFO
+	Write-Output "Enabling Recall..."
+	Remove-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Recall" -Force -ErrorAction SilentlyContinue | Out-Null
+}
+
+# View
+Function TweakViewRecall { # RESINFO
+	Write-Output "Viewing Recall (0: Disable, 1 or not exist: Enable)..."
+	If (!(Test-Path -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Recall')) {
+		Write-Output ' Recall is enabled'
+		Return
+		}
+
+	Try {
+		Get-ItemPropertyValue -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Recall' -Name 'AllowRecall' | Out-Null
+	} Catch {
+		Write-Output ' Recall not exists: enable'
+		Return
+	}
+	ForEach ($Field in 'AllowRecall') {
+		Write-Output " ${Field}: $((Get-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Recall').${Field})"
+	}
+}
+
+################################################################
+
 # Disable Wi-Fi Sense
 Function TweakDisableWiFiSense {
 	Write-Output "Disabling Wi-Fi Sense..."
