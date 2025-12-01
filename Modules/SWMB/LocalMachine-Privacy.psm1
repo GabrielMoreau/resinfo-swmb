@@ -116,7 +116,10 @@ Function TweakEnableCortana {
 
 ################################################################
 
-# Recall is a feature that allows you to quickly access your documents, applications, and personal information through indexing.
+# Recall is a feature that allows you to quickly access your documents, applications, and personal information through indexing
+# Disable Disable-WindowsOptionalFeature -Online -FeatureName "Recall" -Norestart -WarningAction SilentlyContinue
+# Enable   Enable-WindowsOptionalFeature -online -FeatureName "Recall" -NoRestart -WarningAction SilentlyContinue
+# View     Get-WindowsOptionalFeature -Online | Where-Object {$_.FeatureName -eq 'Recall'}
 # https://www.malekal.com/desactiver-recall-windows-11/
 # https://www.justgeek.fr/windows-11-desactiver-recall-141674/
 
