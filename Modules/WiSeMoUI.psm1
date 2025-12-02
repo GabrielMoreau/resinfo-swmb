@@ -128,45 +128,41 @@ Function SWMB_GetOSVersionReadable {
 Function SWMB_GetOSVersionColor {
 	$OSVersion = SWMB_GetOSVersion
 	$Build = $OSVersion.Build
+	$MajorMinorBuild = "$($OSVersion.Major).$($OSVersion.Minor).$Build"
 	$UBR = $OSVersion.Revision
 
 	# Last OS revision
 	# See ./get-ubr
-	$UBR10_21H2 = 6575 # 21H2 https://learn.microsoft.com/en-us/windows/release-health/release-information
-	$UBR10_22H2 = 6575 # 22H2 https://learn.microsoft.com/en-us/windows/release-health/release-information
-	$UBR11_22H2 = 6060 # 22H2 https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
-	$UBR11_23H2 = 6276 # 23H2 https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
-	$UBR11_24H2 = 7178 # 24H2 https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
-	$UBR11_25H2 = 7171 # 25H2 https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+	$UBR = @(
+		@{Os = '11'; Name = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 7171; Level = 0} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; Name = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 7019; Level = 1} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; Name = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 6901; Level = 2} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; Name = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 6899; Level = 3} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; Name = '24H2'; MajorMinor = '10.0'; Build = 26100; UBR = 7178; Level = 0} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; Name = '24H2'; MajorMinor = '10.0'; Build = 26100; UBR = 7171; Level = 1} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; Name = '24H2'; MajorMinor = '10.0'; Build = 26100; UBR = 7019; Level = 2} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; Name = '23H2'; MajorMinor = '10.0'; Build = 22631; UBR = 6276; Level = 0} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; Name = '23H2'; MajorMinor = '10.0'; Build = 22631; UBR = 6199; Level = 1} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; Name = '22H2'; MajorMinor = '10.0'; Build = 22621; UBR = 6060; Level = 3} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '10'; Name = '22H2'; MajorMinor = '10.0'; Build = 19045; UBR = 6575; Level = 3} # https://learn.microsoft.com/en-us/windows/release-health/release-information
+		@{Os = '10'; Name = '21H2'; MajorMinor = '10.0'; Build = 19044; UBR = 6575; Level = 3} # https://learn.microsoft.com/en-us/windows/release-health/release-information
+	)
 
-	$Color = "Red"
-	If ($OSVersion -ge [version]"10.0.26200.0") {
-		# Windows 11_25H2
-		If ($OSVersion -ge [version]"10.0.26200.$UBR11_25H2") {
-			$Color = "Green"
-		}
-	} ElseIf ($OSVersion -ge [version]"10.0.26100.0") {
-		# Windows 11_24H2
-		If ($OSVersion -ge [version]"10.0.26100.$UBR11_24H2") {
-			$Color = "Green"
-		}
-	} ElseIf ($OSVersion -ge [version]"10.0.22000.0") {
-		# Windows 11_23H2
-		If ($OSVersion -ge [version]"10.0.22631.$UBR11_23H2") {
-			$Color = "Orange"
-		}
-	} ElseIf ($OSVersion -ge [version]"10.0.22000.0") {
-		# Windows 11_22H2
-		If ($OSVersion -ge [version]"10.0.22621.$UBR11_22H2") {
-			$Color = "Red"
-		}
-	} ElseIf ($OSVersion -ge [version]"10.0.10240.0") {
-		# Windows 10
-		If ($OSVersion -ge [version]"10.0.19045.$UBR10_22H2") {
-			$Color = "Orange"
+	$Color = @("Green", "Yellow", "Orange", "Red")
+
+	ForEach ($Item in $UBR) {
+		If ([version]"$MajorMinorBuild.0" -eq [version]"$($Item.MajorMinor).$($Item.Build).0") {
+			If ($OSVersion -ge [version]"$($Item.MajorMinor).$($Item.Build).$($Item.UBR)") {
+				$Level = $Item.Level
+				If ($Level -ge $Color.Count) {
+					$Level = $Color.Count - 1
+				}
+				Return $Color[$Level]
+			}
 		}
 	}
-	Return $Color
+
+	Return $Color[$Color.Count - 1]
 }
 
 ################################################################

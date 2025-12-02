@@ -12,31 +12,45 @@ get_ubr () {
 	local version=$2
 	local build=$3
 	local url=$4
+	local number=$5
+	local levelmin=$6
 
-	local ubr=$(curl -s -L "${url}" \
-		| grep -A20 "Version ${version} (OS build ${build})" \
+	[ "${number}" -ge 4 ] && number=4 # 4 colors max
+
+	local -a ubr2
+
+	mapfile -t ubr < <(
+		curl -s -L "${url}" \
+		| grep -A30 "Version ${version} (OS build ${build})" \
 		| grep -E '^<td>[[:digit:]][[:digit:]]*\.[[:digit:]][[:digit:]]*</td>' \
 		| grep "${build}\." \
 		| cut -f 2 -d '.' \
 		| cut -f 1 -d '<' \
-		| head -1)
-	echo "	\$UBR${os}_${version} = ${ubr} # ${version} ${url}"
+		| head -n ${number}
+	)
+	for item in "${!ubr[@]}"
+	do
+		# $UBR10_21H2 = 6575 # 21H2 https://learn.microsoft.com/en-us/windows/release-health/release-information
+		# echo "	\$UBR${os}_${version}_$item = ${ubr[$item]} # ${version} ${url}"
+		# @{Os = '11'; Name = '22H2'; MajorMinor = '10.0'; Build = 22621; UBR = 6060; Level=3 },
+		echo "		@{Os = '${os}'; Name = '${version}'; MajorMinor = '10.0'; Build = ${build}; UBR = ${ubr[$item]}; Level = $((item + levelmin))} # ${url}"
+	done
 }
 
-# Windows 10 / version 21H2
-get_ubr 10 21H2 19044 'https://learn.microsoft.com/en-us/windows/release-health/release-information'
-
-# Windows 10 / version 22H2
-get_ubr 10 22H2 19045 'https://learn.microsoft.com/en-us/windows/release-health/release-information'
-
-# Windows 11 / version 22H2
-get_ubr 11 22H2 22621 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information'
-
-# Windows 11 / version 23H2
-get_ubr 11 23H2 22631 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information'
+# Windows 11 / version 25H2
+get_ubr 11 25H2 26200 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 4 0
 
 # Windows 11 / version 24H2
-get_ubr 11 24H2 26100 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information'
+get_ubr 11 24H2 26100 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 3 0
 
-# Windows 11 / version 25H2
-get_ubr 11 25H2 26200 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information'
+# Windows 11 / version 23H2
+get_ubr 11 23H2 22631 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 2 0
+
+# Windows 11 / version 22H2
+get_ubr 11 22H2 22621 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 1 3
+
+# Windows 10 / version 22H2
+get_ubr 10 22H2 19045 'https://learn.microsoft.com/en-us/windows/release-health/release-information' 1 3
+
+# Windows 10 / version 21H2
+get_ubr 10 21H2 19044 'https://learn.microsoft.com/en-us/windows/release-health/release-information' 1 3
