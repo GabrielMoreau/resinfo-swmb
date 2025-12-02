@@ -32,8 +32,8 @@ get_ubr () {
 	do
 		# $UBR10_21H2 = 6575 # 21H2 https://learn.microsoft.com/en-us/windows/release-health/release-information
 		# echo "	\$UBR${os}_${version}_$item = ${ubr[$item]} # ${version} ${url}"
-		# @{Os = '11'; Name = '22H2'; MajorMinor = '10.0'; Build = 22621; UBR = 6060; Level=3 },
-		echo "		@{Os = '${os}'; Name = '${version}'; MajorMinor = '10.0'; Build = ${build}; UBR = ${ubr[$item]}; Level = $((item + levelmin))} # ${url}"
+		# @{Os = '11'; DisplayVersion = '22H2'; MajorMinor = '10.0'; Build = 22621; UBR = 6060; Level=3 },
+		echo "		@{Os = '${os}'; DisplayVersion = '${version}'; MajorMinor = '10.0'; Build = ${build}; UBR = ${ubr[$item]}; Level = $((item + levelmin))} # ${url}"
 	done
 }
 
