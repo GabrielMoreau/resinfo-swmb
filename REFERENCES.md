@@ -24,7 +24,7 @@
 * [Bulk Crap Uninstaller](https://github.com/Klocman/Bulk-Crap-Uninstaller) (Apache 2.0 open source license)
 * [Ultimate Windows Tweaker 5 for Windows 11](https://www.thewindowsclub.com/ultimate-windows-tweaker-5-for-windows-11) (Freeware)
 * [HardeningKitty and Windows 10 Hardening](https://github.com/0x6d69636b/windows_hardening) (script in PowerShell)
-* [Harden Community](https://hardenad.net/) (script in PowerShell)
+* [Hardenad - Harden Community](https://hardenad.net/) (script in PowerShell)
 	* [Hardening Microsoft 365 tenant with CIS and Microsoft recommendations](https://github.com/Harden365/Harden365)
 	* [Hardening Active Directory](https://github.com/LoicVeirman/SecureAD)
 * [FlyOOBE](https://github.com/builtbybel/FlyOOBE) (code in C#) - installing Windows 11 on unsupported hardware and more
