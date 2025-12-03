@@ -731,7 +731,7 @@ $BtnConsoleNet = New-Object System.Windows.Forms.Button
 $BtnConsoleNet.Location = New-Object System.Drawing.Point(490,335)
 $BtnConsoleNet.Width = 40
 $BtnConsoleNet.Height = 30
-$BtnConsoleNet.Text = "Net Interface"
+$BtnConsoleNet.Text = "Net Cards"
 $Form.controls.Add($BtnConsoleNet)
 $BtnConsoleNet.Add_Click({
 	# control.exe ncpa.cpl
