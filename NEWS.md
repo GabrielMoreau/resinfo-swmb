@@ -10,8 +10,12 @@ Here's a quick summary:
 * A new `Help` button  opens the online documentation.
 * Clicking on the logo opens the SWMB Git URL in a browser.
 * Add a task manager button (`T`).
+* A better color (green, yellow, orange, red) depending on the version number of Windows and UBR.
+  The less up-to-date the computer is, the redder the color!
 
 PowerShell scripts and modules are now checked before Git commit using the `analyze-ps` script (see `make check`).
+
+Tilde (HOME) management in the script that compares your files with the SWMB files in your version of SWLN.
 
 Add the link to [FlyOOBE](https://github.com/builtbybel/FlyOOBE) to the [REFERENCES](REFERENCES.md) file.
 
