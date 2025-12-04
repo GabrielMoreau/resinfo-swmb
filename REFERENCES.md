@@ -13,9 +13,11 @@
 * All the tools to secure Windows and privacy
   [Comparison of Windows 10 Privacy tools](https://www.ghacks.net/2015/08/14/comparison-of-windows-10-privacy-tools/) (english)
 * Upstream SWMB project [Win10-Initial-Setup-Script](https://github.com/Disassembler0/Win10-Initial-Setup-Script) (english)
-* [STIG](https://www.stigviewer.com/stigs) (Security Technical Implementation Guides) 
-	* [Microsoft Windows 11 Security Technical Implementation Guide](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide)
-	* [Adobe Acrobat Reader DC Continuous Track Security Technical Implementation Guide](https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track)
+* [STIG - Security Technical Implementation Guides](https://www.stigviewer.com/stigs) (english) 
+	* [Microsoft Windows 11](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide)
+	* [Adobe Acrobat Reader DC Continuous Track](https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track)
+	* [Mozilla Firefox](https://www.stigviewer.com/stigs/mozilla_firefox)
+	* [Microsoft Edge](https://www.stigviewer.com/stigs/microsoft_edge)
 
 ## Other interesting tools
 
