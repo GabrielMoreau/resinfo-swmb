@@ -1445,6 +1445,62 @@ Function TweakViewAdobeAutoUpdate { # RESINFO
 }
 
 ################################################################
+
+# Adobe Reader DC must enable Enhanced Security in a Standalone Application or In Browser
+# https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213168
+# https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213169
+# https://helpx.adobe.com/fr/acrobat/using/enhanced-security-setting-pdfs.html
+# https://www.adobe.com/devnet-docs/acrobatetk/tools/QuickKeys/EnhancedSecurityQuickKeyAll.pdf
+
+# Enable
+Function TweakEnableAdobeEnhancedSecurity { # RESINFO
+	Write-Output "Enabling Adobe EnhancedSecurity (Standalone and InBrowser)..."
+	$RegPath = 'HKLM:\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown'
+	$RegFields = @("bEnhancedSecurityStandalone", "bEnhancedSecurityInBrowser")
+
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
+	}
+	ForEach ($Field in $RegFields) {
+		Set-ItemProperty -Path $RegPath -Name $Field -Type DWord -Value 1
+	}
+}
+
+# Disable
+Function TweakDisableAdobeEnhancedSecurity { # RESINFO
+	Write-Output "Disabling Adobe EnhancedSecurity (Standalone and InBrowser)..."
+	$RegPath = 'HKLM:\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown'
+	$RegFields = @("bEnhancedSecurityStandalone", "bEnhancedSecurityInBrowser")
+
+	If (Test-Path $RegPath) {
+		ForEach ($Field in $RegFields) {
+			Remove-ItemProperty -Path $RegPath -Name $Field -ErrorAction SilentlyContinue
+		}
+	}
+}
+
+# View
+Function TweakViewAdobeEnhancedSecurity { # RESINFO
+	Write-Output "Viewing Adobe EnhancedSecurity (Standalone and InBrowser) (0 or not exist: Disable, 1: Enable)..."
+	$RegPath = 'HKLM:\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown'
+	$RegFields = @("bEnhancedSecurityStandalone", "bEnhancedSecurityInBrowser")
+
+	If (!(Test-Path -Path $RegPath)) {
+		Write-Output ' Adobe EnhancedSecurity (Standalone and InBrowser) is disable'
+		Return
+		}
+
+	$Props = Get-ItemProperty -Path $RegPath
+	ForEach ($Field in $RegFields) {
+		If ($Props.PSObject.Properties.Name -notcontains $Field) {
+			Write-Output "$Field: not exist"
+			Continue
+		}
+		Write-Output "$Field: $($Props.$Field)"
+	}
+}
+
+################################################################
 ###### Export Functions
 ################################################################
 
