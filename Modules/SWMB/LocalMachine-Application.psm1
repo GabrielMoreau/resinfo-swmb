@@ -1493,10 +1493,10 @@ Function TweakViewAdobeEnhancedSecurity { # RESINFO
 	$Props = Get-ItemProperty -Path $RegPath
 	ForEach ($Field in $RegFields) {
 		If ($Props.PSObject.Properties.Name -notcontains $Field) {
-			Write-Output "$Field: not exist"
+			Write-Output "${Field}: not exist"
 			Continue
 		}
-		Write-Output "$Field: $($Props.$Field)"
+		Write-Output "${Field}: $($Props.$Field)"
 	}
 }
 
