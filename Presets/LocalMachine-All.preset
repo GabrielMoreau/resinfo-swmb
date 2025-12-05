@@ -267,6 +267,7 @@ EnableOffice2016AutoUpdate                      # DisableOffice2016AutoUpdate   
 RemoveAppxMsOfficeHub                           # AddAppxMsOfficeHub                            # ViewAppxMsOfficeHub           ## Removing Appx Microsoft OfficeHub (Microsoft 365 Copilot)
 # DisableAdobeAutoUpdate                        # EnableAdobeAutoUpdate                         # ViewAdobeAutoUpdate           ## Disables automatic updates service from Adobe (enabled by default after a new installation)
 DisableAdobeCollabSync                          # EnableAdobeCollabSync                         # ViewAdobeCollabSync           ## Deletes the binary file that enables synchronization with Adobe cloud collaboration.
+# EnableAdobeEnhancedSecurity                   # DisableAdobeEnhancedSecurity                  # ViewAdobeEnhancedSecurity     ## Adobe Enhanced Security in a Standalone Application or In Browser https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213168 https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213169
 
 ### Server Specific Tweaks ###
 # HideServerManagerOnLogin                      # ShowServerManagerOnLogin
