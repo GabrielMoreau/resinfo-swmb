@@ -7,6 +7,12 @@
 ## Tweak for CurrentUser
 ##########
 
+## Use local module
+# $IMPORT "C:\Program Files\SWLN\Local-Addon.psm1"
+
+## Use Resinfo recommanded preset
+# $PRESET "C:\Program Files\SWMB\Presets\CurrentUser-Logon-Recommanded.preset"
+
 ### Privacy Tweaks ###
 DisableCortana_CU                               # EnableCortana_CU
 DisableTailoredExperiences_CU                   # EnableTailoredExperiences_CU
