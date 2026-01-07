@@ -83,7 +83,7 @@ $ToolTip = New-Object System.Windows.Forms.ToolTip
 $ToolTip.AutoPopDelay = 5000
 $ToolTip.InitialDelay = 500
 $ToolTip.ReshowDelay = 500
-$ToolTip.ShowAlways = true
+$ToolTip.ShowAlways = "true"
 
 ################################################################
 # Bitlocker Frame

@@ -61,7 +61,13 @@ Function SWMB_GetLastPublishedVersion {
 	$Url = (SWMB_GetDownloadURL)
 	[System.Net.ServicePointManager]::MaxServicePointIdleTime = 3000
 	Try {
-		$NextVersion = ((Invoke-WebRequest -Uri "$Url/version.txt" -Method Get -TimeoutSec 3).Content)
+		If ($PSVersionTable.PSVersion.Major -lt 6) {
+			# Windows PowerShell 5.1 and before
+			$NextVersion = ((Invoke-WebRequest -Uri "$Url/version.txt" -Method Get -TimeoutSec 3 -UseBasicParsing).Content)
+		} Else {
+			# PowerShell 6 / 7+
+			$NextVersion = ((Invoke-WebRequest -Uri "$Url/version.txt" -Method Get -TimeoutSec 3).Content)
+		}
 	} Catch {
 		$NextVersion = ""
 	}
