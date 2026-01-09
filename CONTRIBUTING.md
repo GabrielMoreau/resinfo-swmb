@@ -177,6 +177,21 @@ git push origin HEAD~1:master
 Obviously, by putting 2 instead of 1,
 pushes all the commits except the last two!
 
+#### Create a new release
+
+Make all your commit (update the `NEWS.md` and the `package.nsi` files with the new tag version).
+
+Add a new annoted tag
+```bash
+git tag -a 3.19 -m "3.19"
+git tag
+```
+
+Push with the annoted tag
+```bash
+git push --follow-tags
+```
+
 
 ## Contribution guidelines
 
