@@ -4,7 +4,7 @@
 
 * [Maintaining own forks](#maintaining-own-forks)
 * [Contribution guidelines](#contribution-guidelines)
-* [Windows builds overview](#windows-builds-overview)
+* [Tools and ancillary data](#tools-and-ancillary-data)
 
 
 ## Maintaining own Git forks
@@ -149,6 +149,19 @@ then I suggest doing it in a following way:
 The upside is that your adjustments will always stay on top of the commit history.
 The downside is that everybody remote-tracking your repository will always have to rebase and force-push too,
 otherwise their commit history will not match yours.
+
+#### Integration into another Git project
+
+One way to use SWMB is to integrate it in one of your projects as a Git subtree.
+```bash
+git remote add -f SWMB https://gitlab.in2p3.fr/resinfo-gt/swmb/resinfo-swmb.git
+git subtree add --prefix SWMB/ SWMB master --squash
+```
+
+To update (synchronize) your repository with the SWMB project repository:
+```bash
+git subtree pull --prefix SWMB/ https://gitlab.in2p3.fr/resinfo-gt/swmb/resinfo-swmb.git master --squash
+```
 
 
 ### Advanced features

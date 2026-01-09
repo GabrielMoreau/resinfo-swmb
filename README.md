@@ -518,19 +518,3 @@ For example:
 The logging is done using PowerShell `Start-Transcript` cmdlet,
 which writes extra information about current environment (date, machine and user name, command used for execution etc.)
 to the beginning of the file and logs both standard output and standard error streams.
-
-
-### Integration into another Git project
-
-One way to use SWMB is to integrate it in one of your projects as a Git subtree.
-```bash
-git remote add -f SWMB https://gitlab.in2p3.fr/resinfo-gt/swmb/resinfo-swmb.git
-git subtree add --prefix SWMB/ SWMB master --squash
-```
-
-To update (synchronize) your repository with the SWMB project repository:
-```bash
-git subtree pull --prefix SWMB/ https://gitlab.in2p3.fr/resinfo-gt/swmb/resinfo-swmb.git master --squash
-```
-
-See [CONTRIBUTING](./CONTRIBUTING.md).
