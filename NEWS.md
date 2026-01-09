@@ -1,6 +1,9 @@
 # NEWS
 
-## Version 3.19 (in progress)
+## Version 3.20 (in progress)
+
+
+## Version 3.19 (2026/01/09)
 
 Updated HTML documentation theme, switching to mkdocs material theme.
 
