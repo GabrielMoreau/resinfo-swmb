@@ -7,6 +7,18 @@
 # https://learn.microsoft.com/fr-fr/windows/release-health/release-information
 # https://learn.microsoft.com/fr-fr/windows/release-health/windows11-release-information
 
+################################################################
+
+function usage() {
+   cat <<END_USAGE
+get-ubr - get Windows UBR version from Microsoft website
+
+ get-ubr [--help|-h] [--print|-p] --update|-u]
+END_USAGE
+}
+
+################################################################
+
 get_ubr () {
 	local os=$1
 	local version=$2
@@ -35,40 +47,81 @@ get_ubr () {
 	done
 }
 
+################################################################
+
+get_osbuild () {
+	# Windows 11 / version 25H2
+	OSBUILD+=("$(get_ubr 11 25H2 26200 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 4 0)")
+
+	# Windows 11 / version 24H2
+	OSBUILD+=("$(get_ubr 11 24H2 26100 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 3 0)")
+
+	# Windows 11 / version 23H2
+	OSBUILD+=("$(get_ubr 11 23H2 22631 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 2 0)")
+
+	# Windows 11 / version 22H2
+	OSBUILD+=("$(get_ubr 11 22H2 22621 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 1 3)")
+
+	# Windows 10 / version 22H2
+	OSBUILD+=("$(get_ubr 10 22H2 19045 'https://learn.microsoft.com/en-us/windows/release-health/release-information' 1 3)")
+
+	# Windows 10 / version 21H2
+	OSBUILD+=("$(get_ubr 10 21H2 19044 'https://learn.microsoft.com/en-us/windows/release-health/release-information' 1 3)")
+}
+
+################################################################
+
+replace_osbuild () {
+	local CHECKSUM=$(printf "%s\n" "${OSBUILD[@]}" | md5sum | cut -f 1 -d ' ')
+
+	if ! grep -Pq "^[[:space:]]*# BeginAutoEdit - UBR - ${CHECKSUM}\r?$" Modules/WiSeMoUI.psm1
+	then
+		BLOCK=$(
+			printf "\r\n"
+			printf "\t\t# BeginAutoEdit - UBR - %s\r\n" "${CHECKSUM}"
+			printf "%s\r\n" "${OSBUILD[@]}"
+			printf "\t\t# EndAutoEdit"
+		)
+
+		export BLOCK
+		printf '%s\n' "${OSBUILD[@]}"
+		perl -0777 -pi -e 's{\s*#\sBeginAutoEdit\s-\sUBR\s-\s.*?#\sEndAutoEdit}{$ENV{BLOCK}}ms;' 'Modules/WiSeMoUI.psm1'
+	fi
+}
+
+################################################################
+################################################################
+
+# command line
+OPT_SHORT=hpu
+OPT_LONG=help,print,update
+OPT_PARSED=$(getopt --options $OPT_SHORT --longoptions $OPT_LONG --name "$0" -- "$@")
+eval set -- "${OPT_PARSED}"
+
 OSBUILD=()
 
-# Windows 11 / version 25H2
-OSBUILD+=("$(get_ubr 11 25H2 26200 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 4 0)")
+# get options
+while true
+do
+	case "$1" in
+		-p|--print)
+			[ ${#OSBUILD[@]} -eq 0 ] && get_osbuild
+			printf '%s\n' "${OSBUILD[@]}"
+			shift
+			;;
+		-u|--update)
+			[ ${#OSBUILD[@]} -eq 0 ] && get_osbuild
+			replace_osbuild
+			shift
+			;;
+		-h|--help)
+			usage
+			exit
+			;;
+		--)
+			break
+			;;
+	esac
+done
 
-# Windows 11 / version 24H2
-OSBUILD+=("$(get_ubr 11 24H2 26100 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 3 0)")
-
-# Windows 11 / version 23H2
-OSBUILD+=("$(get_ubr 11 23H2 22631 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 2 0)")
-
-# Windows 11 / version 22H2
-OSBUILD+=("$(get_ubr 11 22H2 22621 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 1 3)")
-
-# Windows 10 / version 22H2
-OSBUILD+=("$(get_ubr 10 22H2 19045 'https://learn.microsoft.com/en-us/windows/release-health/release-information' 1 3)")
-
-# Windows 10 / version 21H2
-OSBUILD+=("$(get_ubr 10 21H2 19044 'https://learn.microsoft.com/en-us/windows/release-health/release-information' 1 3)")
-
-# printf '%s\n' "${OSBUILD[@]}"
-
-
-CHECKSUM=$(printf "%s\n" "${OSBUILD[@]}" | md5sum | cut -f 1 -d ' ')
-if ! grep -Pq "^[[:space:]]*# BeginAutoEdit - UBR - ${CHECKSUM}\r?$" Modules/WiSeMoUI.psm1
-then
-	BLOCK=$(
-		printf "\r\n"
-		printf "\t\t# BeginAutoEdit - UBR - %s\r\n" "${CHECKSUM}"
-		printf "%s\r\n" "${OSBUILD[@]}"
-		printf "\t\t# EndAutoEdit"
-	)
-
-	export BLOCK
-	printf '%s\n' "${OSBUILD[@]}"
-	perl -0777 -pi -e 's{\s*#\sBeginAutoEdit\s-\sUBR\s-\s.*?#\sEndAutoEdit}{$ENV{BLOCK}}ms;' 'Modules/WiSeMoUI.psm1'
-fi
+[ ${#OSBUILD[@]} -eq 0 ] && usage
