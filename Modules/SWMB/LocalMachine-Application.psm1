@@ -437,7 +437,7 @@ Function TweakDisableEdgeDoNtoTrack { # RESINFO
 
 # View
 Function TweakViewEdgeDoNtoTrack { # RESINFO
-	Write-Output "Viewing Edge Configure Do Not Track (0:Do Not Tracker requests are always sent to websites asking for tracking info, 1:Do Not Track requests are never sent to websites asking for tracking info, error: Default )..."
+	Write-Output "Viewing Edge Configure Do Not Track - Do not send trackers to websites that request tracking information (0: Enable (Not send), 1: Disable, not exist: Default)..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\" -Name "ConfigureDoNotTrack" -ErrorAction SilentlyContinue
 }
 
@@ -463,7 +463,7 @@ Function TweakEnableEdgeSendBrowsingHistory { # RESINFO
 
 # View
 Function TweakViewEdgeSendBrowsingHistory { # RESINFO
-	Write-Output "Viewing Edge Configure Do Not Track (0:Disable sending browsing history to Microsoft, 1:Enable sending browsing history to Microsoft, error: Default )..."
+	Write-Output "Viewing Edge Configure Do Not Track - Sending browsing history to Microsoft (0: Disable, 1 or not exist: Enable (Default))..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\" -Name "PersonalizationReportingEnabled" -ErrorAction SilentlyContinue
 }
 
@@ -998,7 +998,7 @@ Function TweakEnableVisualStudioCache { # RESINFO
 
 # View Visual Studio Cache
 Function TweakViewVisualStudioCache { # RESINFO
-	Write-Output "Viewing Visual Studio Cache (0: Disable, 1: Enable (default), nothing: not install..."
+	Write-Output "Viewing Visual Studio Cache (0: Disable, 1: Enable (default), not exist: Not install)..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\VisualStudio\Setup"    -Name "KeepDownloadedPayloads"
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\VisualStudio\Setup"             -Name "KeepDownloadedPayloads"
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\VisualStudio\Setup" -Name "KeepDownloadedPayloads"

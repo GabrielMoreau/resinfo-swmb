@@ -249,7 +249,7 @@ Function TweakEnableHighlightsSearch { # RESINFO
 
 # View
 Function TweakViewHighlightsSearch { # RESINFO
-	Write-Output "Viewing Highlights Search (1: Disable, Error: Not configured = Enable)..."
+	Write-Output "Viewing Highlights Search (1: Disable, not exist: Enable (Default))..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "EnableDynamicContentInWSB"
 }
 
@@ -273,7 +273,7 @@ Function TweakEnableCloudSearch { # RESINFO
 
 # View
 Function TweakViewCloudSearch { # RESINFO
-	Write-Output "Viewing Cloud Search (0: Disable, Error: Not configured = Enable)..."
+	Write-Output "Viewing Cloud Search (0: Disable, not exist: Enable (Default))..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "AllowCloudSearch"
 }
 
@@ -298,7 +298,7 @@ Function TweakEnableSearchUseLocation { # RESINFO
 
 # View
 Function TweakViewSearchUseLocation { # RESINFO
-	Write-Output "Viewing search and Cortana to use location (0: Disable, Error: Not configured = Enable)..."
+	Write-Output "Viewing search and Cortana to use location (0: Disable, not exist: Enable (Default))..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "AllowSearchToUseLocation"
 }
 
@@ -332,7 +332,7 @@ Function TweakEnableSearchOnTaskbar { # RESINFO
 
 # View
 Function TweakViewSearchOnTaskbar { # RESINFO
-	Write-Output "Viewing search on taskbar (0: Disable, Error: Not configured = Enable)..."
+	Write-Output "Viewing search on taskbar (0: Disable, not exist: Enable (Default))..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "DisableSearch"
 }
 
@@ -484,7 +484,7 @@ Function TweakEnableDiagnosticLogs { # RESINFO
 
 # View DiagnosticLogs
 Function TweakViewDiagnosticLogs { # RESINFO
-	Write-Output "Viewing Collect diagnostic log (error => not configured, 1 => Diagnostic logs not be collected)..."
+	Write-Output "Viewing Collect diagnostic log (not exist: Enable (Default), 1: Disable)..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "LimitDiagnosticLogCollection"  | Format-List
 }
 
@@ -508,7 +508,7 @@ Function TweakEnableOneSettingsDownloads { # RESINFO
 
 # View OneSettings Downloads
 Function TweakViewOneSettingsDownloads { # RESINFO
-	Write-Output "Viewing Download configuration settings from the OneSettings service (error => not configured, 1 => Disable)..."
+	Write-Output "Viewing Download configuration settings from the OneSettings service (not exist: Enable (Default), 1: Disable)..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "DisableOneSettingsDownloads"  | Format-List
 }
 
@@ -687,7 +687,7 @@ Function TweakEnableDiagTrack {
 
 # View
 Function TweakViewDiagTrack {
-	Write-Output "Viewing Connected User Experiences and Telemetry (2 activated, 4 no)..."
+	Write-Output "Viewing Connected User Experiences and Telemetry (2: Enable, 4: Disable)..."
 	Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\DiagTrack" -Name "Start" | Select-Object -Property Start*  | Format-List
 }
 
@@ -748,8 +748,8 @@ Function TweakEnableRecentFiles {
 ###############################################################
 
 # From BSI document
-# La session "Autologger-DiagTrack-Listener" doit être désactivée en mettant sa clé de registre à zéro
-# Par défaut cette clé ne semble pas exister, on l'efface donc en fonction Disable, comme avant
+# The “Autologger-DiagTrack-Listener” session must be disabled by setting its registry key to zero.
+# By default, this key does not seem to exist, so we delete it using Disable, as before.
 
 # Disable
 Function TweakDisableAutologgerDiagTrack { # RESINFO
@@ -770,7 +770,7 @@ Function TweakEnableAutologgerDiagTrack { # RESINFO
 
 # View
 Function TweakViewAutologgerDiagTrack { # RESINFO
-	Write-Output "Viewing Autologger-DiagTrack-Listener (0 no or not exist, 2 activated)..."
+	Write-Output "Viewing Autologger-DiagTrack-Listener (0 or not exist: Disable, 2: Enable)..."
 	Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener" -Name "Start"
 }
 
