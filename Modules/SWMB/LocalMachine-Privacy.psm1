@@ -1116,7 +1116,7 @@ Function TweakEnableBluetoothAdvertising { # RESINFO
 
 # View
 Function TweakViewBluetoothAdvertising { # RESINFO
-	Write-Output "Viewing Bluetooth advertising (not exist - Enable, 0 Disable)..."
+	Write-Output "Viewing Bluetooth advertising (not exist: Enable, 0 Disable)..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\Bluetooth\" -Name "AllowAdvertising" -ErrorAction SilentlyContinue
 }
 
@@ -1141,7 +1141,7 @@ Function TweakEnableBackupMessages { # RESINFO
 
 # View
 Function TweakViewBackupMessages { # RESINFO
-	Write-Output "Viewing backup of text messages into the cloud (not exist - Enable, 0 Disable)..."
+	Write-Output "Viewing backup of text messages into the cloud (not exist: Enable, 0 Disable)..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Messaging\" -Name "AllowMessageSync" -ErrorAction SilentlyContinue
 }
 
@@ -1166,7 +1166,7 @@ Function TweakEnableCloudOptimizedContent { # RESINFO
 
 # View
 Function TweakViewCloudOptimizedContent { # RESINFO
-	Write-Output "Viewing cloud optimized content (not exist - Enable, 1 Disable)..."
+	Write-Output "Viewing cloud optimized content (not exist: Enable, 1 Disable)..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" -Name "DisableCloudOptimizedContent" -ErrorAction SilentlyContinue
 }
 
@@ -1193,7 +1193,7 @@ Function TweakEnableWindowsTips { # RESINFO
 
 # View
 Function TweakViewWindowsTips { # RESINFO
-	Write-Output "Viewing Windows Tips (not exist - Enable, 1 Disable)..."
+	Write-Output "Viewing Windows Tips (not exist: Enable, 1 Disable)..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" -Name "DisableSoftLanding" -ErrorAction SilentlyContinue
 }
 
