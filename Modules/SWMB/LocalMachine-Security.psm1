@@ -666,7 +666,7 @@ Function TweakEnableUpgradesOnUnsupportedHard { # RESINFO
 
 # View
 Function TweakViewUpgradesOnUnsupportedHard { # RESINFO
-	Write-Output "Viewing Windows 11 upgrades with unsupported hardware (0 no or not exist: Disable, 1 Enable)..."
+	Write-Output "Viewing Windows 11 upgrades with unsupported hardware (0 no or not exist: Disable, 1: Enable)..."
 	If ([System.Environment]::OSVersion.Version.Build -ge 22000) {
 		Get-ItemProperty -Path 'HKLM:\SYSTEM\Setup\MoSetup' -Name 'AllowUpgradesWithUnsupportedTPMOrCPU'
 	} Else {
