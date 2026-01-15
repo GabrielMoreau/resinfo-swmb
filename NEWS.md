@@ -4,6 +4,10 @@
 
 Move the `git subtree` documentation from the [README](README.md) file to the [CONTRIBUTING](CONTRIBUTING.md) document.
 
+New presets/rules:
+
+* 2026/01/15 - `DisableAutoRun_CU`/`EnableAutoRun_CU`/`ViewAutoRun_CU` -> Disable AutoRun Key for all drive type (same exist by default for HKLM)
+* 2026/01/15 - `ViewAutoplay_CU` -> Add view Autoplay tweak
 
 ## Version 3.19 (2026/01/09)
 
