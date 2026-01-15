@@ -342,7 +342,7 @@ Function TweakEnableASLR { # RESINFO
 
 # View
 Function TweakViewASLR { # RESINFO
-	Write-Output "Viewing ASLR (Address Space Layout Randomisation) (not exist - enable, 0 disable)..."
+	Write-Output "Viewing ASLR (Address Space Layout Randomisation) (not exist - Enable, 0 Disable)..."
 	$Path = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
 		If ((Get-ItemProperty $Path -Name "MoveImages" -ea 0)."MoveImages" -ne $null) {
 			Get-ItemProperty -Path $Path -Name "MoveImages"
@@ -474,7 +474,7 @@ Function TweakEnableAutoloadDriver { # RESINFO
 
 # View
 Function TweakViewAutoloadDriver { # RESINFO
-	Write-Output "Viewing Autoload driver from network (0 no or not exist - enable, 1 disable)..."
+	Write-Output "Viewing Autoload driver from network (0 or not exist: Enable, 1: Disable)..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata" -Name "PreventDeviceMetadataFromNetwork"
 }
 
@@ -666,7 +666,7 @@ Function TweakEnableUpgradesOnUnsupportedHard { # RESINFO
 
 # View
 Function TweakViewUpgradesOnUnsupportedHard { # RESINFO
-	Write-Output "Viewing Windows 11 upgrades with unsupported hardware (0 no or not exist - disable, 1 enable)..."
+	Write-Output "Viewing Windows 11 upgrades with unsupported hardware (0 no or not exist - Disable, 1 Enable)..."
 	If ([System.Environment]::OSVersion.Version.Build -ge 22000) {
 		Get-ItemProperty -Path 'HKLM:\SYSTEM\Setup\MoSetup' -Name 'AllowUpgradesWithUnsupportedTPMOrCPU'
 	} Else {

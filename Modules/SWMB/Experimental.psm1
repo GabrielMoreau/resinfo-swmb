@@ -30,7 +30,7 @@ Function TweakDisableClearPageFile { # RESINFO
 
 # View
 Function TweakViewClearPageFile { # RESINFO
-	Write-Output "Viewing Clear PageFile.sys (0 nothing enable, 1 clear at shutdown)..."
+	Write-Output "Viewing Clear PageFile.sys at shutdown (0 or not exist: Disable, 1: Enable)..."
 	$KeyPath = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
 	Get-ItemProperty -Path $KeyPath -Name "ClearPageFileAtShutdown"
 }

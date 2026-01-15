@@ -998,7 +998,7 @@ Function TweakEnableVisualStudioCache { # RESINFO
 
 # View Visual Studio Cache
 Function TweakViewVisualStudioCache { # RESINFO
-	Write-Output "Viewing Visual Studio Cache (0: disable, 1: enable (default), nothing: not install..."
+	Write-Output "Viewing Visual Studio Cache (0: Disable, 1: Enable (default), nothing: not install..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\VisualStudio\Setup"    -Name "KeepDownloadedPayloads"
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\VisualStudio\Setup"             -Name "KeepDownloadedPayloads"
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\VisualStudio\Setup" -Name "KeepDownloadedPayloads"

@@ -80,7 +80,7 @@ Function TweakEnableMSHTMLActiveX { # RESINFO
 
 # View
 Function TweakViewMSHTMLActiveX { # RESINFO
-	Write-Output "Viewing ActiveX in MSHTML (not exist - enable, 3 disable)..."
+	Write-Output "Viewing ActiveX in MSHTML (not exist - Enable, 3 Disable)..."
 	For ($Zone = 0 ; $Zone -le 3 ; $Zone++) {
 		$path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\$Zone"
 		If ((Get-ItemProperty $path -Name "1001" -ea 0)."1001" -ne $null) {
@@ -144,7 +144,7 @@ Function TweakEnableMSDT { # RESINFO
 
 # View
 Function TweakViewMSDT { # RESINFO
-	Write-Output "Viewing MSDT (ms-msdt exist - enable, not exist - disable)..."
+	Write-Output "Viewing MSDT (ms-msdt exist - Enable, not exist - Disable)..."
 	If (!(Test-Path "HKCR:")) {
 		New-PSDrive -Name "HKCR" -PSProvider "Registry" -Root "HKEY_CLASSES_ROOT" | Out-Null
 	}
