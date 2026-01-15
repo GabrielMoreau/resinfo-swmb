@@ -74,7 +74,7 @@ Function TweakViewAutoplay_CU { # RESINFO
 
 ################################################################
 
-# Disables AutoRun on all kinds of drives (NoDriveTypeAutoRun)
+# Disable AutoRun on all kinds of drives (NoDriveTypeAutoRun)
 # https://learn.microsoft.com/en-us/windows/win32/shell/autoplay-reg
 # https://superuser.com/questions/37569/disable-autoplay-of-audio-cds-and-usb-drives-with-registry#37575
 

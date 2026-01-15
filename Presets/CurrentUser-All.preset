@@ -33,7 +33,8 @@ HideAccountProtectionWarn_CU                    # ShowAccountProtectionWarn_CU
 
 ### Service Tweaks ###
 DisableSharedExperiences_CU                     # EnableSharedExperiences_CU
-DisableAutoplay_CU                              # EnableAutoplay_CU
+DisableAutoplay_CU                              # EnableAutoplay_CU                         # ViewAutoplay_CU                       ## Disable Autoplay
+DisableAutoRun_CU                               # EnableAutoRun_CU                          # ViewAutoRun_CU                        ## Disable AutoRun on all kinds of drives (NoDriveTypeAutoRun)
 # EnableClipboardHistory_CU                     # DisableClipboardHistory_CU
 # DisableRecycleBin_CU                          # EnableRecycleBin_CU
 # EnableStorageSense_CU                         # DisableStorageSense_CU
