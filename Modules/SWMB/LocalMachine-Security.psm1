@@ -342,7 +342,7 @@ Function TweakEnableASLR { # RESINFO
 
 # View
 Function TweakViewASLR { # RESINFO
-	Write-Output "Viewing ASLR (Address Space Layout Randomisation) (not exist: Enable, 0 Disable)..."
+	Write-Output "Viewing ASLR (Address Space Layout Randomisation) (not exist: Enable, 0: Disable)..."
 	$Path = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
 		If ((Get-ItemProperty $Path -Name "MoveImages" -ea 0)."MoveImages" -ne $null) {
 			Get-ItemProperty -Path $Path -Name "MoveImages"

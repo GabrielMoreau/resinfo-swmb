@@ -80,7 +80,7 @@ Function TweakEnableMSHTMLActiveX { # RESINFO
 
 # View
 Function TweakViewMSHTMLActiveX { # RESINFO
-	Write-Output "Viewing ActiveX in MSHTML (not exist: Enable, 3 Disable)..."
+	Write-Output "Viewing ActiveX in MSHTML (not exist: Enable, 3: Disable)..."
 	For ($Zone = 0 ; $Zone -le 3 ; $Zone++) {
 		$path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\$Zone"
 		If ((Get-ItemProperty $path -Name "1001" -ea 0)."1001" -ne $null) {
