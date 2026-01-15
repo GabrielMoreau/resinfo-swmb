@@ -43,7 +43,7 @@ Function TweakDisableClipboardHistory_CU {
 
 ################################################################
 
-# A priori obsolete, see NoDriveTypeAutoRun
+# See also AutoRun / NoDriveTypeAutoRun
 # Disable Autoplay
 Function TweakDisableAutoplay_CU {
 	Write-Output "Disabling Autoplay for CU..."
@@ -61,6 +61,42 @@ Function TweakViewAutoplay_CU { # RESINFO
 	Write-Output "Viewing Autoplay for CU (0 or not exist: Enable, 1: Disable)..."
 	$RegPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers'
 	$RegFields = @("DisableAutoplay")
+
+	$Props = Get-ItemProperty -Path $RegPath
+	ForEach ($Field in $RegFields) {
+		If ($Props.PSObject.Properties.Name -notcontains $Field) {
+			Write-Output " ${Field}: not exist"
+			Continue
+		}
+		Write-Output " ${Field}: $($Props.$Field)"
+	}
+}
+
+################################################################
+
+# Disables AutoRun on all kinds of drives (NoDriveTypeAutoRun)
+# https://learn.microsoft.com/en-us/windows/win32/shell/autoplay-reg
+# https://superuser.com/questions/37569/disable-autoplay-of-audio-cds-and-usb-drives-with-registry#37575
+
+# Disable
+Function TweakDisableAutoRun_CU {
+	Write-Output "Disabling AutoRun for CU..."
+	$RegPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
+	Set-ItemProperty -Path $RegPath -Name "NoDriveTypeAutoRun" -Type DWord -Value 0xFF
+}
+
+# Enable
+Function TweakEnableAutoRun_CU {
+	Write-Output "Enabling AutoRun for CU..."
+	$RegPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
+	Remove-ItemProperty -Path $RegPath -Name "NoDriveTypeAutoRun" -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewAutoRun_CU { # RESINFO
+	Write-Output "Viewing AutoRun for CU (0 or not exist: Enable, 22: Disable (All drive))..."
+	$RegPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
+	$RegFields = @("NoDriveTypeAutoRun")
 
 	$Props = Get-ItemProperty -Path $RegPath
 	ForEach ($Field in $RegFields) {
