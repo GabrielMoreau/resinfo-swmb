@@ -43,17 +43,22 @@ Function TweakDisableClipboardHistory_CU {
 
 ################################################################
 
-# See also AutoRun / NoDriveTypeAutoRun
 # Disable Autoplay
+# See also AutoRun / NoDriveTypeAutoRun
+# https://system32.eventsentry.com/stig/search?query=Autoplay
+
+# Disable
 Function TweakDisableAutoplay_CU {
 	Write-Output "Disabling Autoplay for CU..."
-	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers" -Name "DisableAutoplay" -Type DWord -Value 1
+	$RegPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers'
+	Set-ItemProperty -Path $RegPath -Name "DisableAutoplay" -Type DWord -Value 1
 }
 
-# Enable Autoplay
+# Enable
 Function TweakEnableAutoplay_CU {
 	Write-Output "Enabling Autoplay for CU..."
-	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers" -Name "DisableAutoplay" -Type DWord -Value 0
+	$RegPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers'
+	Set-ItemProperty -Path $RegPath -Name "DisableAutoplay" -Type DWord -Value 0
 }
 
 # View
