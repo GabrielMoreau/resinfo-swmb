@@ -79,7 +79,7 @@ replace_osbuild () {
 		BLOCK=$(
 			printf "\r\n"
 			printf "\t\t# BeginAutoEdit - UBR - %s\r\n" "${CHECKSUM}"
-			printf "%s\r\n" "${OSBUILD[@]}"
+			printf "%s\n" "${OSBUILD[@]}" | sed -e 's/\r//g; s/$/\r/'
 			printf "\t\t# EndAutoEdit"
 		)
 
