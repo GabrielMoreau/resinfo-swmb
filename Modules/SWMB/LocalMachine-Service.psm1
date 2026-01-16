@@ -143,6 +143,42 @@ Function TweakEnableAutoRestartSignOn {
 
 ################################################################
 
+# Disable Autoplay for non Volume / NoAutoplayfornonVolume
+# STIG V-253386
+# https://system32.eventsentry.com/stig/search?query=NoAutoplayfornonVolume
+
+# Disable
+Function TweakDisableAutoplay { # RESINFO
+	Write-Output "Disabling Autoplay for non Volume..."
+	$RegPath = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer'
+	Set-ItemProperty -Path $RegPath -Name "NoAutoplayfornonVolume" -Type DWord -Value 1
+}
+
+# Enable
+Function TweakEnableAutoplay { # RESINFO
+	Write-Output "Enabling Autoplay for non Volume..."
+	$RegPath = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer'
+	Remove-ItemProperty -Path $RegPath -Name "NoAutoplayfornonVolume" -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewAutoplay { # RESINFO
+	Write-Output "Viewing Autoplay for non Volume (0 or not exist: Enable, 1: Disable)..."
+	$RegPath = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer'
+	$RegFields = @("NoAutoplayfornonVolume")
+
+	$Props = Get-ItemProperty -Path $RegPath
+	ForEach ($Field in $RegFields) {
+		If ($Props.PSObject.Properties.Name -notcontains $Field) {
+			Write-Output " ${Field}: not exist"
+			Continue
+		}
+		Write-Output " ${Field}: $($Props.$Field)"
+	}
+}
+
+################################################################
+
 # Disable Autorun for all drives
 # https://system32.eventsentry.com/stig/search?query=NoDriveTypeAutoRun
 
