@@ -74,29 +74,29 @@ Function TweakViewAutoplay_CU { # RESINFO
 
 ################################################################
 
-# Disable AutoRun on all kinds of drives (NoDriveTypeAutoRun)
+# Disable Autorun on all kinds of drives (NoDriveTypeAutorun)
 # https://learn.microsoft.com/en-us/windows/win32/shell/autoplay-reg
 # https://superuser.com/questions/37569/disable-autoplay-of-audio-cds-and-usb-drives-with-registry#37575
 
 # Disable
-Function TweakDisableAutoRun_CU {
-	Write-Output "Disabling AutoRun for CU..."
+Function TweakDisableAutorun_CU {
+	Write-Output "Disabling Autorun for CU..."
 	$RegPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
-	Set-ItemProperty -Path $RegPath -Name "NoDriveTypeAutoRun" -Type DWord -Value 0xFF
+	Set-ItemProperty -Path $RegPath -Name "NoDriveTypeAutorun" -Type DWord -Value 0xFF
 }
 
 # Enable
-Function TweakEnableAutoRun_CU {
-	Write-Output "Enabling AutoRun for CU..."
+Function TweakEnableAutorun_CU {
+	Write-Output "Enabling Autorun for CU..."
 	$RegPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
-	Remove-ItemProperty -Path $RegPath -Name "NoDriveTypeAutoRun" -ErrorAction SilentlyContinue
+	Remove-ItemProperty -Path $RegPath -Name "NoDriveTypeAutorun" -ErrorAction SilentlyContinue
 }
 
 # View
-Function TweakViewAutoRun_CU { # RESINFO
-	Write-Output "Viewing AutoRun for CU (0 or not exist: Enable, 22: Disable (All drive))..."
+Function TweakViewAutorun_CU { # RESINFO
+	Write-Output "Viewing Autorun for CU (0 or not exist: Enable, 22: Disable (All drive))..."
 	$RegPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
-	$RegFields = @("NoDriveTypeAutoRun")
+	$RegFields = @("NoDriveTypeAutorun")
 
 	$Props = Get-ItemProperty -Path $RegPath
 	ForEach ($Field in $RegFields) {
