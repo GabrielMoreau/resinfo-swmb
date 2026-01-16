@@ -144,7 +144,7 @@ Function TweakEnableAutoRestartSignOn {
 ################################################################
 
 # Disable Autoplay for non Volume / NoAutoplayfornonVolume
-# STIG V-253386
+# STIG V-253386 (Window 11)
 # https://system32.eventsentry.com/stig/search?query=NoAutoplayfornonVolume
 
 # Disable
@@ -181,6 +181,7 @@ Function TweakViewAutoplay { # RESINFO
 
 # Disable Autorun for all drives
 # https://system32.eventsentry.com/stig/search?query=NoDriveTypeAutoRun
+# STIG V-220829 (Windows 10) et V-253388 (Window 11)
 
 # Disable
 Function TweakDisableAutorun {

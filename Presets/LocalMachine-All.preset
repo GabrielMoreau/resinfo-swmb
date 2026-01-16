@@ -160,8 +160,8 @@ EnableUpdateMSProducts                          # DisableUpdateMSProducts
 DisableUpdateRestart                            # EnableUpdateRestart
 DisableMaintenanceWakeUp                        # EnableMaintenanceWakeUp
 # DisableAutoRestartSignOn                      # EnableAutoRestartSignOn
-DisableAutoplay                                 # EnableAutoplay                                # ViewAutoplay                  ## Disable Autoplay for non Volume https://system32.eventsentry.com/stig/search?query=NoAutoplayfornonVolume 
-DisableAutorun                                  # EnableAutorun                                 # ViewAutorun                   ## Disable Autorun on all kinds of drives https://system32.eventsentry.com/stig/search?query=NoDriveTypeAutoRun
+DisableAutoplay                                 # EnableAutoplay                                # ViewAutoplay                  ## Disable Autoplay for non Volume - STIG V-253386 https://system32.eventsentry.com/stig/search?query=NoAutoplayfornonVolume
+DisableAutorun                                  # EnableAutorun                                 # ViewAutorun                   ## Disable Autorun on all kinds of drives - STIG V-253388 https://system32.eventsentry.com/stig/search?query=NoDriveTypeAutoRun
 # DisableRestorePoints                          # EnableRestorePoints
 # DisableDefragmentation                        # EnableDefragmentation
 # DisableSuperfetch                             # EnableSuperfetch
