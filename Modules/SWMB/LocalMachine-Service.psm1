@@ -146,16 +146,34 @@ Function TweakEnableAutoRestartSignOn {
 # Disable Autorun for all drives
 Function TweakDisableAutorun {
 	Write-Output "Disabling Autorun for all drives..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer")) {
-		New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" | Out-Null
+	$RegPath = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoDriveTypeAutoRun" -Type DWord -Value 255
+	Set-ItemProperty -Path $RegPath -Name "NoDriveTypeAutoRun" -Type DWord -Value 0xFF
 }
 
 # Enable Autorun for removable drives
 Function TweakEnableAutorun {
 	Write-Output "Enabling Autorun for all drives..."
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoDriveTypeAutoRun" -ErrorAction SilentlyContinue
+	$RegPath = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
+	Remove-ItemProperty -Path $RegPath -Name "NoDriveTypeAutoRun" -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewAutorun { # RESINFO
+	Write-Output "Viewing Autorun (0 or not exist: Enable, 22: Disable (All drive))..."
+	$RegPath = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
+	$RegFields = @("NoDriveTypeAutoRun")
+
+	$Props = Get-ItemProperty -Path $RegPath
+	ForEach ($Field in $RegFields) {
+		If ($Props.PSObject.Properties.Name -notcontains $Field) {
+			Write-Output " ${Field}: not exist"
+			Continue
+		}
+		Write-Output " ${Field}: $($Props.$Field)"
+	}
 }
 
 ################################################################

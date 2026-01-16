@@ -160,7 +160,7 @@ EnableUpdateMSProducts                          # DisableUpdateMSProducts
 DisableUpdateRestart                            # EnableUpdateRestart
 DisableMaintenanceWakeUp                        # EnableMaintenanceWakeUp
 # DisableAutoRestartSignOn                      # EnableAutoRestartSignOn
-DisableAutorun                                  # EnableAutorun
+DisableAutorun                                  # EnableAutorun                                 # ViewAutorun                   ## Disable Autorun for all drives
 # DisableRestorePoints                          # EnableRestorePoints
 # DisableDefragmentation                        # EnableDefragmentation
 # DisableSuperfetch                             # EnableSuperfetch
