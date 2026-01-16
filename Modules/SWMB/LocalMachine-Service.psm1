@@ -144,6 +144,9 @@ Function TweakEnableAutoRestartSignOn {
 ################################################################
 
 # Disable Autorun for all drives
+# https://system32.eventsentry.com/stig/search?query=NoDriveTypeAutoRun
+
+# Disable
 Function TweakDisableAutorun {
 	Write-Output "Disabling Autorun for all drives..."
 	$RegPath = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
@@ -153,7 +156,7 @@ Function TweakDisableAutorun {
 	Set-ItemProperty -Path $RegPath -Name "NoDriveTypeAutoRun" -Type DWord -Value 0xFF
 }
 
-# Enable Autorun for removable drives
+# Enable
 Function TweakEnableAutorun {
 	Write-Output "Enabling Autorun for all drives..."
 	$RegPath = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
