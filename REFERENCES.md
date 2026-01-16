@@ -14,6 +14,7 @@
   [Comparison of Windows 10 Privacy tools](https://www.ghacks.net/2015/08/14/comparison-of-windows-10-privacy-tools/) (english)
 * Upstream SWMB project [Win10-Initial-Setup-Script](https://github.com/Disassembler0/Win10-Initial-Setup-Script) (english)
 * [STIG - Security Technical Implementation Guides](https://www.stigviewer.com/stigs) (english)
+  is a security protocol framework designed to safeguard the U.S. Department of Defense (DoD) and developed by the Defense Information Systems Agency (DISA).
 	* [Microsoft Windows 11](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide)
 		(
 		[STIG GUI](https://stigui.com/stigs/Microsoft_Windows_11_STIG),
