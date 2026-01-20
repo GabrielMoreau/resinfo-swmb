@@ -286,7 +286,7 @@ DisableAdobeCollabSync                          # EnableAdobeCollabSync         
 # EnableAudio                                   # DisableAudio
 
 ### Bitlocker Tweaks ###
-# EnableBitlocker                               # DisableBitlocker
+# EnableBitlocker                               # DisableBitlocker                              # ViewBitlocker                 ## Enable Bitlocker on all fixed drives (Tweak Enable is done interactively)
 # SetBitlockerActive                            # UnsetBitlockerActive
 
 ### TemporaryBypass Tweaks ###

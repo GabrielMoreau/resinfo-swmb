@@ -422,9 +422,9 @@ The middle column is a global summary (All).
  | Warn   | Number of Pin and Unpin tweaks         |    0 |    0 |    2 |    0 |    2 |
  | Info   | Number of total tweaks GPO             |      |      |  694 |      |      |
  | Info   | Number of Sys tweaks (system)          |      |      |    9 |      |      |
- | Info   | Number of View tweaks (debug)          |      |      |   88 |      |      |
+ | Info   | Number of View tweaks (debug)          |      |      |   89 |      |      |
  | Info   | Number of Obsolete tweaks              |      |      |    3 |      |      |
- | Info   | Number of total tweaks functions       |      |      |  794 |      |      |
+ | Info   | Number of total tweaks functions       |      |      |  795 |      |      |
 
 ### Import your lib
 
