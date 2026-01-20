@@ -142,6 +142,7 @@ DisableSMB1Protocol                             # EnableSMB1Protocol            
 # DisableIPv6                                   # EnableIPv6
 # DisableNCSIProbe                              # EnableNCSIProbe
 # DisableConnectionSharing                      # EnableConnectionSharing
+DisableAnonymousShareAccess                     # EnableAnonymousShareAccess                    # ViewAnonymousShareAccess      ## Disable Anonymous access to Named Pipes and Shares - STIG V-253456 https://system32.eventsentry.com/stig/search?query=RestrictNullSessAccessValue
 DisableRemoteAssistance                         # EnableRemoteAssistance
 # EnableRemoteDesktop                           # DisableRemoteDesktop
 # SetRemoteDesktopPort                          # UnsetRemoteDesktopPort                        # ViewRemoteDesktopPort

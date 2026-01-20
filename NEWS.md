@@ -6,6 +6,7 @@ Move the `git subtree` documentation from the [README](README.md) file to the [C
 
 New presets/rules:
 
+* 2026/01/20 - `DisableAnonymousShareAccess`/`EnableAnonymousShareAccess`/`ViewAnonymousShareAccess` -> Disable Anonymous access to Named Pipes and Shares (RestrictNullSessAccessValue)
 * 2026/01/16 - `DisableAutoplay`/`EnableAutoplay`/`ViewAutoplay` -> Disable Autoplay for non Volume (NoAutoplayfornonVolume)
 * 2026/01/16 - `ViewAutorun` -> View AutoRun status (NoDriveTypeAutoRun)
 * 2026/01/15 - `DisableAutorun_CU`/`EnableAutorun_CU`/`ViewAutorun_CU` -> Disable AutoRun Key for all drive type (same exist by default for HKLM)

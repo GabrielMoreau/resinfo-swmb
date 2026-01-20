@@ -287,6 +287,42 @@ Function TweakEnableConnectionSharing {
 
 ################################################################
 
+# Disable Anonymous access to Named Pipes and Shares
+# STIG V-253456 (Window 11)
+# https://system32.eventsentry.com/stig/search?query=RestrictNullSessAccessValue
+
+# Disable
+Function TweakDisableAnonymousShareAccess { # RESINFO
+	Write-Output "Disabling Anonymous access to Named Pipes and Shares..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
+	Set-ItemProperty -Path $RegPath -Name "RestrictNullSessAccessValue" -Type DWord -Value 1
+}
+
+# Enable
+Function TweakEnableAnonymousShareAccess { # RESINFO
+	Write-Output "Enabling Anonymous access to Named Pipes and Shares..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
+	Remove-ItemProperty -Path $RegPath -Name "RestrictNullSessAccessValue" -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewAnonymousShareAccess { # RESINFO
+	Write-Output "Viewing Anonymous access to Named Pipes and Shares (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
+	$RegFields = @("RestrictNullSessAccessValue")
+
+	$Props = Get-ItemProperty -Path $RegPath
+	ForEach ($Field in $RegFields) {
+		If ($Props.PSObject.Properties.Name -notcontains $Field) {
+			Write-Output " ${Field}: not exist"
+			Continue
+		}
+		Write-Output " ${Field}: $($Props.$Field)"
+	}
+}
+
+################################################################
+
 # Disable Remote Assistance - Not applicable to Server (unless Remote Assistance is explicitly installed)
 Function TweakDisableRemoteAssistance {
 	Write-Output "Disabling Remote Assistance..."
