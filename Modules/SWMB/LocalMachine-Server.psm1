@@ -48,21 +48,39 @@ Function TweakEnableShutdownTracker {
 # Disable password complexity and maximum age requirements
 Function TweakDisablePasswordPolicy {
 	Write-Output "Disabling password complexity and maximum age requirements..."
-	$tmpfile = New-TemporaryFile
-	secedit /export /cfg $tmpfile /quiet
-	(Get-Content $tmpfile).Replace("PasswordComplexity = 1", "PasswordComplexity = 0").Replace("MaximumPasswordAge = 42", "MaximumPasswordAge = -1") | Out-File $tmpfile
-	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $tmpfile /areas SECURITYPOLICY | Out-Null
-	Remove-Item -Path $tmpfile
+	$TmpFile = New-TemporaryFile
+	secedit /export /cfg $TmpFile /quiet
+	(Get-Content $TmpFile).Replace("PasswordComplexity = 1", "PasswordComplexity = 0").Replace("MaximumPasswordAge = 42", "MaximumPasswordAge = -1") | Out-File $TmpFile
+	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $TmpFile /areas SECURITYPOLICY | Out-Null
+	Remove-Item -Path $TmpFile
 }
 
 # Enable password complexity and maximum age requirements
 Function TweakEnablePasswordPolicy {
 	Write-Output "Enabling password complexity and maximum age requirements..."
-	$tmpfile = New-TemporaryFile
-	secedit /export /cfg $tmpfile /quiet
-	(Get-Content $tmpfile).Replace("PasswordComplexity = 0", "PasswordComplexity = 1").Replace("MaximumPasswordAge = -1", "MaximumPasswordAge = 42") | Out-File $tmpfile
-	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $tmpfile /areas SECURITYPOLICY | Out-Null
-	Remove-Item -Path $tmpfile
+	$TmpFile = New-TemporaryFile
+	secedit /export /cfg $TmpFile /quiet
+	(Get-Content $TmpFile).Replace("PasswordComplexity = 0", "PasswordComplexity = 1").Replace("MaximumPasswordAge = -1", "MaximumPasswordAge = 42") | Out-File $TmpFile
+	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $TmpFile /areas SECURITYPOLICY | Out-Null
+	Remove-Item -Path $TmpFile
+}
+
+################################################################
+
+# Reversible password encryption must be disabled
+# STIG V-253305 (Window 11)
+
+Function TweakViewTextPassword { # RESINFO
+	Write-Output "Viewing Reversible Text Password (0 or not exist: Disable (Default, Recommanded), 1: Enable)..."
+	$TmpFile = New-TemporaryFile
+	secedit /export /cfg $TmpFile /quiet | Out-Null
+
+	$ClearTextPassword = 0
+	If (Select-String "ClearTextPassword\s*=\s*1" $TmpFile) {
+		$ClearTextPassword = 1
+	}
+	Remove-Item -Path $TmpFile
+	Write-Output " ClearTextPassword: ${ClearTextPassword}"
 }
 
 ################################################################
