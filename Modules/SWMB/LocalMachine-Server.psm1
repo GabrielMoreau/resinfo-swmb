@@ -46,6 +46,10 @@ Function TweakEnableShutdownTracker {
 ################################################################
 
 # Disable password complexity and maximum age requirements
+# MaximumPasswordAge = Number of week (52 = 1 year)
+# PasswordComplexity (0: Simple, 1: Complexe)
+
+# Disable
 Function TweakDisablePasswordPolicy {
 	Write-Output "Disabling password complexity and maximum age requirements..."
 	$TmpFile = New-TemporaryFile
@@ -65,21 +69,43 @@ Function TweakEnablePasswordPolicy {
 	Remove-Item -Path $TmpFile
 }
 
+# View
+Function TweakViewPasswordPolicy { # RESINFO
+	Write-Output "Viewing Password Policy (Recommanded - PasswordComplexity: 1 (Complex), MaximumPasswordAge: X weeks, MinimumPasswordLength: >12, PasswordHistorySize: ?, ClearTextPassword: 0 (Not reversible))..."
+
+	$TmpFile = New-TemporaryFile
+	secedit /export /cfg $TmpFile /quiet | Out-Null
+	$SystemAccess = (SWMB_LoadIniFile -Path $TmpFile)['System Access']
+	Remove-Item -Path $TmpFile
+
+	$SecFields = @("PasswordComplexity", "MaximumPasswordAge", "MinimumPasswordLength", "PasswordHistorySize", "ClearTextPassword")
+	ForEach ($Field in $SecFields) {
+		If ($SystemAccess.ContainsKey($Field)) {
+			Write-Output " ${Field}: $($SystemAccess[$Field])"
+		} Else {
+			Write-Output " ${Field}: Default / Not set"
+		}
+	}
+}
+
 ################################################################
 
 # Reversible password encryption must be disabled
 # STIG V-253305 (Window 11)
 
-Function TweakViewTextPassword { # RESINFO
+# View
+Function TweakViewPasswordClearText { # RESINFO
 	Write-Output "Viewing Reversible Text Password (0 or not exist: Disable (Default, Recommanded), 1: Enable)..."
+
 	$TmpFile = New-TemporaryFile
 	secedit /export /cfg $TmpFile /quiet | Out-Null
+	$SystemAccess = (SWMB_LoadIniFile -Path $TmpFile)['System Access']
+	Remove-Item -Path $TmpFile
 
 	$ClearTextPassword = 0
-	If (Select-String "ClearTextPassword\s*=\s*1" $TmpFile) {
-		$ClearTextPassword = 1
+	If ($SystemAccess.ContainsKey('ClearTextPassword')) {
+		$ClearTextPassword = $SystemAccess['ClearTextPassword']
 	}
-	Remove-Item -Path $TmpFile
 	Write-Output " ClearTextPassword: ${ClearTextPassword}"
 }
 
