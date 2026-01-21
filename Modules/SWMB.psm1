@@ -485,6 +485,36 @@ Function SWMB_ViewAppx {
 	}
 }
 
+################################################################
+
+# Load .ini config file (use to parse secedit export)
+Function SWMB_LoadIniFile {
+	Param(
+		[Parameter(Mandatory)] [string]$Path
+	)
+
+	$Ini = @{}
+	$CurrentSection = ''
+	
+	ForEach ($Line in Get-Content $Path) {
+		$Line = $Line.Trim()
+		If ($Line -match '^\s*#') { Continue }
+		If ($Line -match '^\s*\[([^\]]+)\]\s*$') {
+			$CurrentSection = $Matches[1]
+			if (-not $Ini.ContainsKey($CurrentSection)) {
+				$Ini[$CurrentSection] = @{}
+			}
+			Continue
+		}
+		If ($Line -match '^\s*(\w+)\s*=\s*(.+)$') {
+			$Key = $Matches[1]
+			$Value = $Matches[2]
+			$Ini[$CurrentSection][$Key] = $Value
+		}
+	}
+	return $Ini
+}
+
 
 ################################################################
 ###### Export Functions
