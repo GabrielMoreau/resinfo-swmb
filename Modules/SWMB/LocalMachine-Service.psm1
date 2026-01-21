@@ -202,7 +202,7 @@ Function TweakEnableAutorun {
 
 # View
 Function TweakViewAutorun { # RESINFO
-	Write-Output "Viewing Autorun (0 or not exist: Enable, 22: Disable (All drive))..."
+	Write-Output "Viewing Autorun (0 or not exist: Enable, 255: Disable (All drive))..."
 	$RegPath = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
 	$RegFields = @("NoDriveTypeAutoRun")
 
