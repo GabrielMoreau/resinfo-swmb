@@ -165,16 +165,13 @@ Function TweakEnableAutoplay { # RESINFO
 Function TweakViewAutoplay { # RESINFO
 	Write-Output "Viewing Autoplay for non Volume (0 or not exist: Enable, 1: Disable)..."
 	$RegPath = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer'
-	$RegFields = @("NoAutoplayfornonVolume")
-
-	$Props = Get-ItemProperty -Path $RegPath
-	ForEach ($Field in $RegFields) {
-		If ($Props.PSObject.Properties.Name -notcontains $Field) {
-			Write-Output " ${Field}: not exist"
-			Continue
+	$RegFields = @{
+		NoAutoplayfornonVolume = @{
+			OkValues = @(1)
+			Description = "Disable Autoplay for non Volume"
 		}
-		Write-Output " ${Field}: $($Props.$Field)"
 	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteRegistrySetting
 }
 
 ################################################################
@@ -204,16 +201,13 @@ Function TweakEnableAutorun {
 Function TweakViewAutorun { # RESINFO
 	Write-Output "Viewing Autorun (0 or not exist: Enable, 255: Disable (All drive))..."
 	$RegPath = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
-	$RegFields = @("NoDriveTypeAutoRun")
-
-	$Props = Get-ItemProperty -Path $RegPath
-	ForEach ($Field in $RegFields) {
-		If ($Props.PSObject.Properties.Name -notcontains $Field) {
-			Write-Output " ${Field}: not exist"
-			Continue
+	$RegFields = @{
+		NoDriveTypeAutoRun = @{
+			OkValues = @(255)
+			Description = "Disable Autorun for all drives"
 		}
-		Write-Output " ${Field}: $($Props.$Field)"
 	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteRegistrySetting
 }
 
 ################################################################
