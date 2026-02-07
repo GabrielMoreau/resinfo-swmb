@@ -552,10 +552,28 @@ Function SWMB_GetRegistrySettings {
 		$Value = $Props.$Name
 		If (-not $HasOkDef) {
 			$Status = 'INFO'
-		} ElseIf ($Rule.OkValues -contains $Value) {
-			$Status = 'OK'
 		} Else {
-			$Status = 'NOT OK'
+			$Status = 'NOT OK' # By default
+			# Check OkValues
+			ForEach ($OkValue in $Rule.OkValues) {
+				# If OkValue is a test (cf '>8')
+				If ($OkValue -match '^>(\d+)$') {  # OkValue is a test >
+					$Threshold = [int]$Matches[1]
+					If ($Value -gt $Threshold) {
+						$Status = 'OK'
+						Break
+					}
+				} ElseIf ($OkValue -match '^<(\d+)$') {  # OkValue is a test <
+					$Threshold = [int]$Matches[1]
+					If ($Value -lt $Threshold) {
+						$Status = 'OK'
+						Break
+					}
+				} ElseIf ($Value -eq $OkValue) {  # OkValue is a value
+					$Status = 'OK'
+					Break
+				}
+			}
 		}
 
 		[PSCustomObject]@{
