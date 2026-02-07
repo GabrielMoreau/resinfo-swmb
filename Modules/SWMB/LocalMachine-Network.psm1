@@ -309,17 +309,14 @@ Function TweakEnableAnonymousShareAccess { # RESINFO
 Function TweakViewAnonymousShareAccess { # RESINFO
 	Write-Output "Viewing Anonymous access to Named Pipes and Shares (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
-	$RegFields = @("RestrictNullSessAccessValue")
-
-	$Props = Get-ItemProperty -Path $RegPath
-	ForEach ($Field in $RegFields) {
-		If ($Props.PSObject.Properties.Name -notcontains $Field) {
-			Write-Output " ${Field}: not exist"
-			Continue
+	$RegFields = @{
+		RestrictNullSessAccessValue = @{
+			OkValues = @(1, $Null)   # 1 or not exist
+			Description = "Disable anonymous access to Named Pipes and Shares"
 		}
-		Write-Output " ${Field}: $($Props.$Field)"
 	}
-}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteRegistrySetting
+	}
 
 ################################################################
 
