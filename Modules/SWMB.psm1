@@ -495,7 +495,7 @@ Function SWMB_LoadIniFile {
 
 	$Ini = @{}
 	$CurrentSection = ''
-	
+
 	ForEach ($Line in Get-Content $Path) {
 		$Line = $Line.Trim()
 		If ($Line -match '^\s*#') { Continue }
@@ -515,6 +515,81 @@ Function SWMB_LoadIniFile {
 	return $Ini
 }
 
+################################################################
+
+Function SWMB_GetRegistrySettings {
+	Param (
+		[Parameter(Mandatory)] [string]$Path,
+		[Parameter(Mandatory)] [hashtable]$Rules
+	)
+
+	$Props = Get-ItemProperty -Path $Path -ErrorAction SilentlyContinue
+
+	ForEach ($Name in $Rules.Keys) {
+		$Rule     = $Rules[$Name]
+		$HasValue = $Props -and ($Props.PSObject.Properties.Name -contains $Name)
+		$HasOkDef = $Rule -and $Rule.ContainsKey('OkValues')
+
+		If (-not $HasValue) {
+			If ($HasOkDef -and ($Rule.OkValues -contains $Null)) {
+				$Status = 'OK'
+			} ElseIf ($HasOkDef) {
+				$Status = 'NOT OK'
+			} Else {
+				$Status = 'INFO'
+			}
+
+			[PSCustomObject]@{
+				Path   = $Path
+				Name   = $Name
+				Value  = $null
+				Exists = $False
+				Status = $Status
+			}
+			Continue
+		}
+
+		$Value = $Props.$Name
+		If (-not $HasOkDef) {
+			$Status = 'INFO'
+		} ElseIf ($Rule.OkValues -contains $Value) {
+			$Status = 'OK'
+		} Else {
+			$Status = 'NOT OK'
+		}
+
+		[PSCustomObject]@{
+			Path   = $Path
+			Name   = $Name
+			Value  = $Value
+			Exists = $True
+			Status = $Status
+		}
+	}
+}
+
+################################################################
+
+Function SWMB_WriteRegistrySetting {
+	Param (
+		[Parameter(Mandatory, ValueFromPipeline)] [PSCustomObject]$InputObject
+	)
+
+	Process {
+		$DisplayValue = If ($InputObject.Exists) {
+			$InputObject.Value
+		} Else {
+			'not exist'
+		}
+
+		$Icon = @{
+			'OK'     = '✅'
+			'NOT OK' = '❌'
+			'INFO'   = 'ℹ️'
+		}
+		Write-Output " $($InputObject.Name): $DisplayValue  $($Icon[$InputObject.Status]) $($InputObject.Status)"
+	}
+}
 
 ################################################################
 ###### Export Functions
