@@ -493,7 +493,7 @@ Function SWMB_LoadIniFile {
 		[Parameter(Mandatory)] [string]$Path
 	)
 
-	$Ini = @{}
+	$Ini = [ordered]@{}
 	$CurrentSection = ''
 
 	ForEach ($Line in Get-Content $Path) {
@@ -501,8 +501,8 @@ Function SWMB_LoadIniFile {
 		If ($Line -match '^\s*#') { Continue }
 		If ($Line -match '^\s*\[([^\]]+)\]\s*$') {
 			$CurrentSection = $Matches[1]
-			if (-not $Ini.ContainsKey($CurrentSection)) {
-				$Ini[$CurrentSection] = @{}
+			if (-not $Ini.Contains($CurrentSection)) {
+				$Ini[$CurrentSection] = [ordered]@{}
 			}
 			Continue
 		}
@@ -520,7 +520,7 @@ Function SWMB_LoadIniFile {
 Function SWMB_GetRegistrySettings {
 	Param (
 		[Parameter(Mandatory)] [string]$Path,
-		[Parameter(Mandatory)] [hashtable]$Rules
+		[Parameter(Mandatory)] [System.Collections.IDictionary]$Rules
 	)
 
 	$Props = Get-ItemProperty -Path $Path -ErrorAction SilentlyContinue
@@ -545,6 +545,7 @@ Function SWMB_GetRegistrySettings {
 				Value  = $null
 				Exists = $False
 				Status = $Status
+				Remediation = If ($Rule.ContainsKey('Remediation')) { $Rule.Remediation } Else { $Null }
 			}
 			Continue
 		}
@@ -582,13 +583,92 @@ Function SWMB_GetRegistrySettings {
 			Value  = $Value
 			Exists = $True
 			Status = $Status
+			Remediation = If ($Rule.ContainsKey('Remediation')) { $Rule.Remediation } Else { $Null }
 		}
 	}
 }
 
 ################################################################
 
-Function SWMB_WriteRegistrySetting {
+Function SWMB_GetIniSettings {
+	Param (
+		[Parameter(Mandatory)] [System.Collections.IDictionary]$IniData,
+		[Parameter(Mandatory)] [string]$Section,
+		[Parameter(Mandatory)] [System.Collections.IDictionary]$Rules
+	)
+
+	$SectionData = $IniData[$Section]
+
+	If (-not $SectionData) {
+		Write-Output "Section '$Section' not exist in INI database."
+		Return
+	}
+
+	ForEach ($Name in $Rules.Keys) {
+		$Rule	 = $Rules[$Name]
+		$HasValue = $SectionData.Contains($Name)  # Check Key exist
+		$HasOkDef = $Rule -and $Rule.ContainsKey('OkValues')
+
+		If (-not $HasValue) {
+			# No value for Key
+			If ($HasOkDef -and ($Rule.OkValues -contains $Null)) {
+				$Status = 'OK'
+			} ElseIf ($HasOkDef) {
+				$Status = 'NOT OK'
+			} Else {
+				$Status = 'INFO'
+			}
+
+			[PSCustomObject]@{
+				Section = $Section
+				Name    = $Name
+				Value   = $Null
+				Exists  = $False
+				Status  = $Status
+				Remediation = If ($Rule.ContainsKey('Remediation')) { $Rule.Remediation } Else { $Null }
+			}
+			Continue
+		}
+
+		$Value = $SectionData[$Name]
+		If (-not $HasOkDef) {
+			$Status = 'INFO'
+		} Else {
+			$Status = 'NOT OK'
+			ForEach ($OkValue in $Rule.OkValues) {
+				If ($OkValue -match '^>(\d+)$') {
+					$Threshold = [int]$Matches[1]
+					If ($Value -gt $Threshold) {
+						$Status = 'OK'
+						Break
+					}
+				} ElseIf ($OkValue -match '^<(\d+)$') {
+					$Threshold = [int]$Matches[1]
+					If ($Value -lt $Threshold) {
+						$Status = 'OK'
+						Break
+					}
+				} ElseIf ($Value -eq $OkValue) {
+					$Status = 'OK'
+					Break
+				}
+			}
+		}
+
+		[PSCustomObject]@{
+			Section = $Section
+			Name    = $Name
+			Value   = $Value
+			Exists  = $True
+			Status  = $Status
+			Remediation = If ($Rule.ContainsKey('Remediation')) { $Rule.Remediation } Else { $Null }
+		}
+	}
+}
+
+################################################################
+
+Function SWMB_WriteSettings {
 	Param (
 		[Parameter(Mandatory, ValueFromPipeline)] [PSCustomObject]$InputObject
 	)
@@ -605,7 +685,11 @@ Function SWMB_WriteRegistrySetting {
 			'NOT OK' = '❌'
 			'INFO'   = 'ℹ️'
 		}
-		Write-Output " $($InputObject.Name): $DisplayValue  $($Icon[$InputObject.Status]) $($InputObject.Status)"
+		$OutPut = " {0,-25} {1,-10} {2} {3}" -F $InputObject.Name, $DisplayValue, $Icon[$InputObject.Status], $InputObject.Status
+		If ($InputObject.Status -ne 'OK' -and $InputObject.Remediation -ne $Null) {
+			$OutPut += " → Suggested fix: $($InputObject.Remediation)"
+			}
+		Write-Output $OutPut
 	}
 }
 
