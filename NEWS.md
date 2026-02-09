@@ -4,6 +4,14 @@
 
 Move the `git subtree` documentation from the [README](README.md) file to the [CONTRIBUTING](CONTRIBUTING.md) document.
 
+Begin the project Secure Windows Config Enforcement (SWCE).
+Some Tweak Views have been adapted to the new way of displaying results and remediation proposals.
+
+* Secure - Security, protection
+* Windows - Target all Windows PCs
+* Config - Configurations/settings/GPO
+* Enforcement - Strict check and verification
+
 New presets/rules:
 
 * 2026/01/20 - `ViewBitlocker` -> View Bitlocker status on all fixed drives
