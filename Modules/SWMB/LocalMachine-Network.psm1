@@ -313,9 +313,10 @@ Function TweakViewAnonymousShareAccess { # RESINFO
 		RestrictNullSessAccessValue = @{
 			OkValues = @(1, $Null)   # 1 or not exist
 			Description = "Disable anonymous access to Named Pipes and Shares"
+			Remediation = "DisableAnonymousShareAccess"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteRegistrySetting
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 	}
 
 ################################################################

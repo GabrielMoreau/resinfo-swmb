@@ -75,17 +75,35 @@ Function TweakViewPasswordPolicy { # RESINFO
 
 	$TmpFile = New-TemporaryFile
 	secedit /export /cfg $TmpFile /quiet | Out-Null
-	$SystemAccess = (SWMB_LoadIniFile -Path $TmpFile)['System Access']
+	$SecurityConf = SWMB_LoadIniFile -Path $TmpFile
 	Remove-Item -Path $TmpFile
 
-	$SecFields = @("PasswordComplexity", "MaximumPasswordAge", "MinimumPasswordLength", "PasswordHistorySize", "ClearTextPassword")
-	ForEach ($Field in $SecFields) {
-		If ($SystemAccess.ContainsKey($Field)) {
-			Write-Output " ${Field}: $($SystemAccess[$Field])"
-		} Else {
-			Write-Output " ${Field}: Default / Not set"
+	$Rules = [ordered]@{
+		PasswordComplexity = @{
+			OkValues = @(1)
+			Description = "Password Complexity"
+			Remediation = "EnablePasswordPolicy / PasswordComplexity=1"
+		}
+		MaximumPasswordAge = @{
+			#OkValues = $Null
+			Description = "Maximum Password Age in weeks"
+		}
+		MinimumPasswordLength = @{
+			OkValues = @('>12')
+			Description = "Minimum Password Length"
+			Remediation = "EnablePasswordPolicy / MinimumPasswordLength=13"
+		}
+		PasswordHistorySize = @{
+			#OkValues = $Null
+			Description = "Disable Reversible Text Password"
+		}
+		ClearTextPassword = @{
+			OkValues = @(0, $Null)
+			Description = "Disable Reversible Text Password"
+			Remediation = "DisablePasswordClearText"
 		}
 	}
+	SWMB_GetIniSettings -IniData $SecurityConf -Section 'System Access' -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################
@@ -99,14 +117,17 @@ Function TweakViewPasswordClearText { # RESINFO
 
 	$TmpFile = New-TemporaryFile
 	secedit /export /cfg $TmpFile /quiet | Out-Null
-	$SystemAccess = (SWMB_LoadIniFile -Path $TmpFile)['System Access']
+	$SecurityConf = SWMB_LoadIniFile -Path $TmpFile
 	Remove-Item -Path $TmpFile
 
-	$ClearTextPassword = 0
-	If ($SystemAccess.ContainsKey('ClearTextPassword')) {
-		$ClearTextPassword = $SystemAccess['ClearTextPassword']
+	$Rules = @{
+		ClearTextPassword = @{
+			OkValues = @(0, $Null)
+			Description = "Disable Reversible Text Password"
+			Remediation = "DisablePasswordClearText"
+		}
 	}
-	Write-Output " ClearTextPassword: ${ClearTextPassword}"
+	SWMB_GetIniSettings -IniData $SecurityConf -Section 'System Access' -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################
