@@ -1105,26 +1105,26 @@ Function TweakDisableBitlocker { # RESINFO
 Function TweakViewBitlocker { # RESINFO
 	Write-Output "Viewing Bitlocker on all fixed drives (XtsAes256 Recommanded)..."
 	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" }
+	$DriveIni = @{ Drives = [ordered]@{} }
+	$DriveRules = [ordered]@{}
 	ForEach ($Volume in $ListVolume) {
 		If (!($Volume.DriveLetter)) { Continue }
 
 		$Letter = $Volume.DriveLetter
 		$LetterColon = $Letter + ":"
-
-		# Test if partition is already encrypted (like for C:)
+		$DriveIni['Drives'][$LetterColon] = 'OFF'
+		$Action = 'Encrypt'
 		If ((Get-BitLockerVolume $Letter).ProtectionStatus -eq "On") {
-			# Get encryption method
-			$DriveEMethod = (Get-BitLockerVolume $Letter).EncryptionMethod
-			If ($DriveEMethod -eq "XtsAes256") {
-				Write-Output " Bitlocker on drive $Letter is OK (XtsAes256)"
-			} Else {
-				Write-Output " Bitlocker on drive $Letter is encrypted with $DriveEMethod (Please re-encrypt with XtsAes256)"
-			}
-			Continue
+			$DriveIni['Drives'][$LetterColon] = (Get-BitLockerVolume $Letter).EncryptionMethod
+			$Action = 'Re-encrypt'
 		}
-
-		Write-Output " Bitlocker on drive $Letter is OFF (Please encrypt with XtsAes256)"
+		$DriveRules[$LetterColon] = @{
+			OkValues = @('XtsAes256')
+			Description = "Encrytion on drive $LetterColon"
+			Remediation = "$Action drive $LetterColon with XtsAes256"
+		}
 	}
+	SWMB_GetIniSettings -IniData $DriveIni -Section 'Drives' -Rules $DriveRules | SWMB_WriteSettings
 }
 
 ################################################################
