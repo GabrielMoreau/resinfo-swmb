@@ -7,23 +7,24 @@ REVISION:=1
 
 .PHONY: all clean ocs check-exe version
 
-all: swce.ps1 $(SOFT)_$(VERSION)-$(REVISION)_x64.zip
+all: tmp/swce.ps1 $(SOFT)_$(VERSION)-$(REVISION)_x64.zip
 
 tmp/version-$(VERSION).txt: Makefile
 	@mkdir -p tmp
-	@echo "$(VERSION)" > tmp/version-$(VERSION).txt
+	@echo "$(VERSION)" > $@
 
-swce.ps1: make-swce extract-swce LocalMachine-SWCE.preset Makefile tmp/version-$(VERSION).txt
-	@./make-swce > swce.ps1
+tmp/swce.ps1: make-swce extract-swce LocalMachine-SWCE.preset Makefile tmp/version-$(VERSION).txt
+	@mkdir -p tmp
+	@./make-swce > $@
 
 clean:
-	rm -rf swce.ps1 tmp
+	rm -rf tmp $(SOFT)_$(VERSION)-$(REVISION)_x64.zip
 
 version:
 	@echo "VERSION: $(VERSION)"
 
-%.zip: Makefile README.md swce.ps1 tmp/version-$(VERSION).txt
+%.zip: Makefile README.md tmp/swce.ps1 tmp/version-$(VERSION).txt
 	@rm -f $@
-	@zip --quiet -r ./$@ README.md swce.ps1
-	@(cd tmp ; zip --quiet -r ../$@ version-$(VERSION).txt)
+	@zip --quiet -r ./$@ README.md
+	@(cd tmp ; zip --quiet -r ../$@ swce.ps1 version-$(VERSION).txt)
 	@chmod ug+rw,o+r $@
