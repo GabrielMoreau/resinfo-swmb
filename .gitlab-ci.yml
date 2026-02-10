@@ -12,16 +12,16 @@ pages:
     GIT_STRATEGY: clone
     GIT_DEPTH: 200
     KEEP_PKG: 50
-    KEEP_PKG_LOW: 14
+    KEEP_PKG_LOW: 10
   script:
     - mkdir -p public
     - $(wget --no-check-certificate ${CI_PAGES_URL}/download.tar.gz -O download.tar.gz || exit 0)
     - '[ -s download.tar.gz ] && ( cd public ; tar -xzf ../download.tar.gz )'
-    - ls -t public/Kasperky-Uninstall-*.zip 2> /dev/null | tail -n +$((${KEEP_PKG_LOW} + 1)) | xargs -r rm -f
-    - ls -t public/SWCE-*.zip               2> /dev/null | tail -n +$((${KEEP_PKG_LOW} + 1)) | xargs -r rm -f
-    - ls -t public/SWMB-WAPT-*.zip          2> /dev/null | tail -n +$((${KEEP_PKG_LOW} + 1)) | xargs -r rm -f
-    - ls -t public/SWMB-OCS-*.zip           2> /dev/null | tail -n +$((${KEEP_PKG_LOW} + 1)) | xargs -r rm -f
-    - ls -t public/SWMB-Setup-*.exe         2> /dev/null | tail -n +$((${KEEP_PKG} + 1)) | xargs -r rm -f
+    - (shopt -s nullglob; ls -t public/Kasperky-Uninstall-*.zip 2> /dev/null | tail -n +$((KEEP_PKG_LOW + 1)) | xargs -r rm -f)
+    - (shopt -s nullglob; ls -t public/SWCE-*.zip               2> /dev/null | tail -n +$((KEEP_PKG_LOW + 1)) | xargs -r rm -f)
+    - (shopt -s nullglob; ls -t public/SWMB-WAPT-*.zip          2> /dev/null | tail -n +$((KEEP_PKG_LOW + 1)) | xargs -r rm -f)
+    - (shopt -s nullglob; ls -t public/SWMB-OCS-*.zip           2> /dev/null | tail -n +$((KEEP_PKG_LOW + 1)) | xargs -r rm -f)
+    - (shopt -s nullglob; ls -t public/SWMB-Setup-*.exe         2> /dev/null | tail -n +$((KEEP_PKG + 1))     | xargs -r rm -f)
     - git checkout master
     - git fetch --all --tags
     - git tag
