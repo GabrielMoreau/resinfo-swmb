@@ -1,0 +1,31 @@
+#!/usr/bin/env perl
+#
+# extract-swce
+#
+# 2026/02/10 Gabriel Moreau <Gabriel.Moreau@univ-grenoble-alpes.fr>
+
+use strict;
+use warnings;
+
+my $func = shift or die "Usage: extract-swce FunctionName files...\n";
+
+my $found = 0;
+my $level = 0;
+
+while (<>) {
+	# Début de la fonction
+	if (!$found && /^\s*Function\s+\Q$func\E\s*\{/) {
+		$found = 1;
+	}
+
+	if ($found) {
+		print;
+
+		# Compte des accolades
+		$level += tr/{/{/;
+		$level -= tr/}/}/;
+
+		# Fin de la fonction
+		last if $level == 0;
+	}
+}
