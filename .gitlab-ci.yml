@@ -18,7 +18,6 @@ pages:
     - $(wget --no-check-certificate ${CI_PAGES_URL}/download.tar.gz -O download.tar.gz || exit 0)
     - '[ -s download.tar.gz ] && ( cd public ; tar -xzf ../download.tar.gz )'
     - ls -t public/Kasperky-Uninstall-*.zip 2> /dev/null | tail -n +$((KEEP_PKG_LOW + 1)) | xargs -r rm -f
-    - ls -t public/SWCE-*.zip               2> /dev/null | tail -n +$((KEEP_PKG_LOW + 1)) | xargs -r rm -f
     - find public -maxdepth 1 -name 'SWCE-*.zip' -type f -printf '%T@ %p\n' | sort -nr | tail -n +$((KEEP_PKG_LOW + 1)) | cut -d' ' -f2- | xargs -r rm -f
     - ls -t public/SWMB-WAPT-*.zip          2> /dev/null | tail -n +$((KEEP_PKG_LOW + 1)) | xargs -r rm -f
     - ls -t public/SWMB-OCS-*.zip           2> /dev/null | tail -n +$((KEEP_PKG_LOW + 1)) | xargs -r rm -f
