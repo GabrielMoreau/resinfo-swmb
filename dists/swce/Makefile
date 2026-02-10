@@ -7,7 +7,7 @@ REVISION:=1
 
 .PHONY: all clean ocs check-exe version
 
-all: tmp/swce.ps1 $(SOFT)_$(VERSION)-$(REVISION)_x64.zip
+all: tmp/swce.ps1 $(SOFT)-$(VERSION)-$(REVISION).zip
 
 tmp/version-$(VERSION).txt: Makefile
 	@mkdir -p tmp
