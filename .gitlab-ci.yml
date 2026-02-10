@@ -18,6 +18,7 @@ pages:
     - $(wget --no-check-certificate ${CI_PAGES_URL}/download.tar.gz -O download.tar.gz || exit 0)
     - '[ -s download.tar.gz ] && ( cd public ; tar -xzf ../download.tar.gz )'
     - ls -t public/Kasperky-Uninstall-*.zip 2> /dev/null | tail -n +$((${KEEP_PKG_LOW} + 1)) | xargs -r rm -f
+    - ls -t public/SWCE-*.zip               2> /dev/null | tail -n +$((${KEEP_PKG_LOW} + 1)) | xargs -r rm -f
     - ls -t public/SWMB-WAPT-*.zip          2> /dev/null | tail -n +$((${KEEP_PKG_LOW} + 1)) | xargs -r rm -f
     - ls -t public/SWMB-OCS-*.zip           2> /dev/null | tail -n +$((${KEEP_PKG_LOW} + 1)) | xargs -r rm -f
     - ls -t public/SWMB-Setup-*.exe         2> /dev/null | tail -n +$((${KEEP_PKG} + 1)) | xargs -r rm -f
@@ -32,20 +33,23 @@ pages:
     - make version > public/version.txt
     - (cd dists/ocs-inventory/; make)
     - mv dists/ocs-inventory/SWMB-OCS-*.zip public/
+    - (cd dists/swce/; make)
+    - mv dists/swce/SWCE-*.zip public/
     - (cd dists/wapt/; make)
     - mv dists/wapt/SWMB-WAPT-*.zip public/
     - (cd dists/uninstall-kaspersky/; make zip)
     - mv dists/uninstall-kaspersky/Kasperky-Uninstall-*.zip public/
     - rm -f public/*-Latest.*
-    - (cd public/; ../only-keep-1pkg-day 'Kasperky-Uninstall-[123456789]*.zip' 'SWMB-WAPT-[123456789]*.zip' 'SWMB-OCS-[123456789]*.zip' 'SWMB-Setup-[123456789]*.exe' | tee >(cat 1>&2) | bash)
+    - (cd public/; ../only-keep-1pkg-day 'Kasperky-Uninstall-[123456789]*.zip' 'SWCE-[123456789]*.zip' 'SWMB-WAPT-[123456789]*.zip' 'SWMB-OCS-[123456789]*.zip' 'SWMB-Setup-[123456789]*.exe' | tee >(cat 1>&2) | bash)
     - (cd public/; ln -sf $(ls -1t SWMB-Setup-*.exe | head -1) SWMB-Setup-Latest.exe)
     - (cd public/; ln -sf $(ls -1t SWMB-OCS-*.zip   | head -1) SWMB-OCS-Latest.zip)
     - (cd public/; ln -sf $(ls -1t SWMB-WAPT-*.zip  | head -1) SWMB-WAPT-Latest.zip)
+    - (cd public/; ln -sf $(ls -1t SWCE-*.zip       | head -1) SWCE-Latest.zip)
     - (cd public/; ln -sf $(ls -1t Kasperky-Uninstall-*.zip  | head -1) Kasperky-Uninstall-Latest.zip)
     - echo '<html><body><h1>SWMB Setup and OCS / WAPT (zip) Package (last update ' $(date '+%Y/%m/%d %H:%M') UTC')</h1><ul>' > public/index.html
     - (cd public; while read file; do printf '<li>%s %s / <a href="%s" style="width:17em; display:inline-block;">%s</a> (SHA-1 <span style="font-family:monospace;">%s</span>)</li>\n' $(stat -c %y $file | cut -f 1,2 -d ':') $file $file $(shasum -a 1 $file | cut -f 1 -d ' '); done < <(ls -1t *.exe *.zip) >> index.html)
     - echo '</ul></body></html>' >> public/index.html
-    - (cd public ; tar --exclude '*-Latest.*' -czf ../download.tar.gz SWMB-Setup-*.exe SWMB-OCS-*.zip SWMB-WAPT-*.zip Kasperky-Uninstall-*.zip)
+    - (cd public ; tar --exclude '*-Latest.*' -czf ../download.tar.gz SWMB-Setup-*.exe SWMB-OCS-*.zip SWMB-WAPT-*.zip SWCE-*.zip Kasperky-Uninstall-*.zip)
     - mv download.tar.gz public/
     - mkdir -p public/docs
     - make env
