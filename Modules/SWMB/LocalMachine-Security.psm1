@@ -1143,6 +1143,77 @@ Function TweakUnsetBitlockerActive { # RESINFO
 }
 
 ################################################################
+
+# The Windows 11 system must use an antivirus program
+# STIG V-253264 https://system32.eventsentry.com/stig/viewer/V-253264
+
+Function TweakViewAntivirusServices { # RESINFO
+	Write-Output "Viewing Active Antivirus Services..."
+	# List of antivirus-specific keywords
+	$AntivirusKeywords = @(
+		"hlab_hurukai",           # Harfang Hurukai
+		"WinDefend",              # Microsoft Defender
+		"AshServ",                # Avast 
+		"avgsvc",                 # AVG service
+		"vsserv",                 # Bitdefender
+		"ekrn",                   # ESET
+		"hlab_hurukai",           # Harfang Hurukai
+		"avp",                    # Kaspersky
+		"McAfeeFrameworkService", # McAfee Framework Service (example)
+		"McAfeeRealTimeScan",     # McAfee Real-Time Scan
+		"ccSvcHst",               # Symantec/Norton
+		"SEP",                    # Symantec Endpoint Protection
+		"tmsrv"                   # Trend Micro
+	)
+	# Initialize the list of objects to store results
+	$ServiceResults = @()
+
+	# Get the services and filter by their names
+	$AntivirusServices = Get-Service | Where-Object {
+		$AntivirusKeywords -contains $_.Name
+	}
+
+	$OneAntivirusIsUp = $False
+	# Check if any antivirus services are found
+	If ($AntivirusServices) {
+		ForEach ($Service in $AntivirusServices) {
+			# Create a custom object for each service result
+			$ServiceObject = [PSCustomObject]@{
+				Name        = $Service.Name
+				Value       = If ($Service.Status -eq 'Running') { 'Running' } Else { 'Stopped' }
+				Exists      = $True
+				Status      = If ($Service.Status -eq 'Running') { 'OK' } Else { 'NOT OK' }
+				Remediation = If ($Service.Status -ne 'Running') { "Start the service $($Service.DisplayName)" } Else { $Null }
+			}
+
+			If ($Service.Status -eq 'Running') {
+				$OneAntivirusIsUp = $True
+			}
+
+			# Add the service result object to the list
+			$ServiceResults += $ServiceObject
+		}
+	} Else {
+		# Add a result if no antivirus service is found
+		$ServiceObject = [PSCustomObject]@{
+			Name        = 'No Antivirus Found'
+			Value       = 'not exist'
+			Exists      = $False
+			Status      = 'NOT OK'
+			Remediation = 'Install an antivirus'
+		}
+		$ServiceResults += $ServiceObject
+	}
+
+	If ($OneAntivirusIsUp) {
+		$ServiceResults = $ServiceResults | Where-Object { $_.Status -eq 'OK' }
+	}
+
+	# Pass the results to the SWMB_WriteSettings function for output
+	$ServiceResults | SWMB_WriteSettings
+}
+
+################################################################
 ###### Export Functions
 ################################################################
 
