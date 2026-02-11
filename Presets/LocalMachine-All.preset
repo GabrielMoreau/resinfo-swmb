@@ -144,7 +144,7 @@ DisableSMB1Protocol                             # EnableSMB1Protocol            
 # DisableConnectionSharing                      # EnableConnectionSharing
 DisableAnonymousShareAccess                     # EnableAnonymousShareAccess                    # ViewAnonymousShareAccess      ## Disable Anonymous access to Named Pipes and Shares - STIG V-253456 https://system32.eventsentry.com/stig/search?query=RestrictNullSessAccessValue
 DisableRemoteAssistance                         # EnableRemoteAssistance
-# EnableRemoteDesktop                           # DisableRemoteDesktop
+# EnableRemoteDesktop                           # DisableRemoteDesktop                          # ViewRemoteDesktop             ## Disable Remote Desktop
 # SetRemoteDesktopPort                          # UnsetRemoteDesktopPort                        # ViewRemoteDesktopPort
 # SetWorkgroupName                              # UnsetWorkgroupName                            # ViewWorkgroupName
 # UnsetInterfaceMetricOn1Gbps                   # SetInterfaceMetricOn1Gbps                     # ViewInterfaceMetricOn1Gbps
@@ -280,7 +280,7 @@ DisableAdobeCollabSync                          # EnableAdobeCollabSync         
 ### Server Specific Tweaks ###
 # HideServerManagerOnLogin                      # ShowServerManagerOnLogin
 # DisableShutdownTracker                        # EnableShutdownTracker
-# DisablePasswordPolicy                         # EnablePasswordPolicy
+# DisablePasswordPolicy                         # EnablePasswordPolicy                          # ViewPasswordPolicy            ## Disable password complexity and maximum age requirements
 # DisableCtrlAltDelLogin                        # EnableCtrlAltDelLogin
 # DisableIEEnhancedSecurity                     # EnableIEEnhancedSecurity
 # EnableAudio                                   # DisableAudio
@@ -288,6 +288,7 @@ DisableAdobeCollabSync                          # EnableAdobeCollabSync         
 ### Bitlocker Tweaks ###
 # EnableBitlocker                               # DisableBitlocker                              # ViewBitlocker                 ## Enable Bitlocker on all fixed drives (Tweak Enable is done interactively)
 # SetBitlockerActive                            # UnsetBitlockerActive
+                                                                                                # ViewAntivirusServices         ## Windows must use an antivirus program - STIG V-253264 https://system32.eventsentry.com/stig/viewer/V-253264
 
 ### TemporaryBypass Tweaks ###
 # DisablePrintForSystem                         # EnablePrintForSystem                          # ViewPrintForSystem

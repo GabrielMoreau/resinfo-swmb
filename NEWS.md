@@ -14,6 +14,9 @@ Some Tweak Views have been adapted to the new way of displaying results and reme
 
 New presets/rules:
 
+* 2026/02/11 - `ViewRemoteDesktop` -> View Remote Desktop
+* 2026/02/11 - `ViewAntivirusServices` -> View active antivirus program
+* 2026/01/21 - `ViewPasswordPolicy` -> View Password Policy
 * 2026/01/20 - `ViewBitlocker` -> View Bitlocker status on all fixed drives
 * 2026/01/20 - `DisableAnonymousShareAccess`/`EnableAnonymousShareAccess`/`ViewAnonymousShareAccess` -> Disable Anonymous access to Named Pipes and Shares (RestrictNullSessAccessValue)
 * 2026/01/16 - `DisableAutoplay`/`EnableAutoplay`/`ViewAutoplay` -> Disable Autoplay for non Volume (NoAutoplayfornonVolume)
