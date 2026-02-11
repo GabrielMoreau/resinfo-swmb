@@ -351,6 +351,20 @@ Function TweakDisableRemoteDesktop {
 	Disable-NetFirewallRule -Name "RemoteDesktop*"
 }
 
+# View
+Function TweakViewRemoteDesktop { # RESINFO
+	Write-Output "Viewing Remote Desktop (0: Enable (Default), 1: Disable (Recommanded))..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server'
+	$RegFields = @{
+		fDenyTSConnections = @{
+			OkValues = @(1)
+			Description = "Disable Remote Desktop"
+			Remediation = "DisableRemoteDesktop"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
 ################################################################
 
 # https://www.it-connect.fr/chapitres/gerer-le-pare-feu-en-powershell/
