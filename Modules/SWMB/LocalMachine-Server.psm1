@@ -95,7 +95,7 @@ Function TweakViewPasswordPolicy { # RESINFO
 		}
 		PasswordHistorySize = @{
 			#OkValues = $Null
-			Description = "Disable Reversible Text Password"
+			Description = "Password History Size "
 		}
 		ClearTextPassword = @{
 			OkValues = @(0, $Null)
