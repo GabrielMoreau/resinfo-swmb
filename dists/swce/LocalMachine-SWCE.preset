@@ -5,3 +5,4 @@ ViewPasswordPolicy
 ViewPasswordClearText
 ViewAnonymousShareAccess
 ViewAntivirusServices
+ViewRemoteDesktop
