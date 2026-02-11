@@ -3,3 +3,5 @@ ViewAutorun
 ViewBitlocker
 ViewPasswordPolicy
 ViewPasswordClearText
+ViewAnonymousShareAccess
+ViewAntivirusServices
