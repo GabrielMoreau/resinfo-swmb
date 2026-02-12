@@ -1144,6 +1144,31 @@ Function TweakUnsetBitlockerActive { # RESINFO
 
 ################################################################
 
+# Windows 10 must use a BitLocker PIN for pre-boot authentication
+# STIG V-220703
+# BitLocker network unlock may be used in conjunction with a BitLocker PIN.
+# See https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-how-to-enable-network-unlock
+
+Function TweakViewBitlockerTPM { # RESINFO
+	Write-Output "Viewing Bitlocker TPM PIN (2: Enable (Recommanded))..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\FVE'
+	$RegFields = @{
+		UseTPM = @{
+			OkValues = @(2)
+			Description = "Use TPM"
+			Remediation = "EnableBitlocker - interactive tweak (STIG V-220703)"
+		}
+		UseTPMPIN = @{
+			OkValues = @(2)
+			Description = "Use TPM PIN"
+			Remediation = "EnableBitlocker - interactive tweak (STIG V-220703)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
+################################################################
+
 # The Windows 11 system must use an antivirus program
 # STIG V-253264 https://system32.eventsentry.com/stig/viewer/V-253264
 
@@ -1153,7 +1178,7 @@ Function TweakViewAntivirusServices { # RESINFO
 	$AntivirusKeywords = @(
 		"hlab_hurukai",           # Harfang Hurukai
 		"WinDefend",              # Microsoft Defender
-		"AshServ",                # Avast 
+		"AshServ",                # Avast
 		"avgsvc",                 # AVG service
 		"vsserv",                 # Bitdefender
 		"ekrn",                   # ESET
