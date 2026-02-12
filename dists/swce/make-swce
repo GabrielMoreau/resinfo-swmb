@@ -41,7 +41,7 @@ for tweak in $(cat LocalMachine-SWCE.preset | sed -e 's/#.*//; s/[[:space:]]$//;
 do
   comment=$(grep "\b${tweak}\b" ../../Presets/LocalMachine-All.preset | awk -F '##' '{print $2}' | sed -e 's/^[[:space:]]//;' | head -1)
   doc=$(echo "${comment}" | sed -e "s#https\?://[^[:space:]]\+##g; s#\(STIG \(V-[[:digit:]][[:digit:]]*\)\)#[\1](${urlref}/\2)#g; s/[[:space:]]\+$//;")
-  printf "| %-32s | %s |\n" "${tweak}" "${doc}" 1>&2
+  printf " | %-32s | %s |\n" "${tweak}" "${doc}" 1>&2
   printf "Tweak%-32s ## %s\n" "${tweak}" "${comment}"
 done
 echo ''
