@@ -36,12 +36,16 @@ cat <<END
 END
 
 urlref='https://system32.eventsentry.com/stig/viewer'
+cat <<'END' 1>&2
+| Rule Name       | Description |
+|-----------------|-------------|
+END
 
 for tweak in $(cat LocalMachine-SWCE.preset | sed -e 's/#.*//; s/[[:space:]]$//;' | awk '{print $1}' | grep .)
 do
   comment=$(grep "\b${tweak}\b" ../../Presets/LocalMachine-All.preset | awk -F '##' '{print $2}' | sed -e 's/^[[:space:]]//;' | head -1)
   doc=$(echo "${comment}" | sed -e "s#https\?://[^[:space:]]\+##g; s#\(STIG \(V-[[:digit:]][[:digit:]]*\)\)#[\1](${urlref}/\2)#g; s/[[:space:]]\+$//;")
-  printf " | %-32s | %s |\n" "${tweak}" "${doc}" 1>&2
+  printf "| %-32s | %s |\n" "\`${tweak}\`" "${doc}" 1>&2
   printf "Tweak%-32s ## %s\n" "${tweak}" "${comment}"
 done
 echo ''
