@@ -321,18 +321,74 @@ Function TweakViewAnonymousShareAccess { # RESINFO
 
 ################################################################
 
+# Remote Assistance and Solicited Remote Assistance
+# Remote assistance allows another user to view or take control of the local session of a user.
 # Disable Remote Assistance - Not applicable to Server (unless Remote Assistance is explicitly installed)
-Function TweakDisableRemoteAssistance {
+# Solicited assistance is help that is specifically requested by the local user.
+# This may allow unauthorized parties access to the resources on the computer.
+# STIG V-253382 - https://system32.eventsentry.com/stig/viewer/V-253382
+# https://learn.microsoft.com/fr-fr/windows-hardware/customize/desktop/unattend/microsoft-windows-remoteassistance-exe-fallowtogethelp
+
+# Disable
+Function TweakDisableRemoteAssistance { # RESINFO
 	Write-Output "Disabling Remote Assistance..."
-	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance" -Name "fAllowToGetHelp" -Type DWord -Value 0
+	$RegPath = 'HKLM:\System\CurrentControlSet\Control\Remote Assistance'
+	$RegField = 'fAllowToGetHelp'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
+	}
+	Set-ItemProperty -Path $RegPath -Name $RegField -Type DWord -Value 0
+
+	$RegPath = 'HKLM:\\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\Value'
+	$RegField = 'fAllowToGetHelpValue'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
+	}
+	Set-ItemProperty -Path $RegPath -Name $RegField -Type DWord -Value 0
 	Get-WindowsCapability -Online | Where-Object { $_.Name -like "App.Support.QuickAssist*" } | Remove-WindowsCapability -Online | Out-Null
 }
 
-# Enable Remote Assistance - Not applicable to Server (unless Remote Assistance is explicitly installed)
-Function TweakEnableRemoteAssistance {
+# Enable
+Function TweakEnableRemoteAssistance { # RESINFO
 	Write-Output "Enabling Remote Assistance..."
-	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance" -Name "fAllowToGetHelp" -Type DWord -Value 1
 	Get-WindowsCapability -Online | Where-Object { $_.Name -like "App.Support.QuickAssist*" } | Add-WindowsCapability -Online | Out-Null
+	$RegPath = 'HKLM:\System\CurrentControlSet\Control\Remote Assistance'
+	$RegField = 'fAllowToGetHelp'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
+	}
+	Set-ItemProperty -Path $RegPath -Name $RegField -Type DWord -Value 1
+
+	$RegPath = 'HKLM:\\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\Value'
+	$RegField = 'fAllowToGetHelpValue'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
+	}
+	Set-ItemProperty -Path $RegPath -Name $RegField -Type DWord -Value 1
+}
+
+# View
+Function TweakViewRemoteAssistance { # RESINFO
+	Write-Output "Viewing  Remote Assistance (0: Disable (Recommanded), 1: Enable)..."
+	$RegPath = 'HKLM:\System\CurrentControlSet\Control\Remote Assistance'
+	$RegFields = @{
+		fAllowToGetHelp = @{
+			OkValues = @(0)
+			Description = "Remote Assistance"
+			Remediation = "DisableRemoteAssistance"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\Value'
+	$RegFields = @{
+		fAllowToGetHelpValue = @{
+			OkValues = @(0)
+			Description = "Solicited Remote Assistance"
+			Remediation = "DisableRemoteAssistance (Disable also Solicited Remote Assistance - STIG V-253382)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################
