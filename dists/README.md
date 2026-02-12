@@ -10,6 +10,8 @@
 
  * [ocs-inventory](./ocs-inventory) / Creating SWMB package for [OCS Inventory](https://ocsinventory-ng.org/)
 
+ * [swce](./swce) / Secure Windows Compliance Enforcement
+
  * [swln](./swln) / Template to have your own SWMB extend on your Local Network
 
  * [uninstall-kaspersky](./uninstall-kaspersky) / Uninstall Kaspersky Endpoint
