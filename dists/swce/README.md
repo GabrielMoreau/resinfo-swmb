@@ -12,6 +12,8 @@ It is a PowerShell script (`swce.ps1`).
 The lines of code are extracted from SWMB modules.
 These are only read-only functions on the system.
 
+Download: [SWCE](https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/SWCE-Latest.zip) - lastest version.
+
 ## List of GPOs tested for compliance
 
 Run the “make” command in the current folder and read the “tmp/swce.ps1” file in the temporary folder to get a more accurate list.
