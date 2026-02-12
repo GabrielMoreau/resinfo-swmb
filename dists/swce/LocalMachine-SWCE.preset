@@ -1,11 +1,22 @@
+
+### Service Tweaks ###
 ViewAutoplay
 ViewAutorun
-ViewBitlocker
+
+### Network Tweaks ###
+ViewAnonymousShareAccess
+ViewRemoteAssistance
+ViewRemoteDesktop
+
+### Application Tweaks ###
+ViewAdobeEnhancedSecurity
+
+### Server Specific Tweaks ###
 ViewPasswordPolicy
 ViewPasswordClearText
-ViewAnonymousShareAccess
+
+### Bitlocker Tweaks ###
+ViewBitlocker
 ViewAntivirusServices
-ViewRemoteDesktop
-ViewRemoteAssistance
-ViewAdobeEnhancedSecurity
 ViewVolumeBadlyFormatted
+ViewBitlockerTPM
