@@ -14,6 +14,8 @@ These are only read-only functions on the system.
 
 ## List of GPOs tested for compliance
 
+Run the “make” command in the current folder and read the “tmp/swce.ps1” file in the temporary folder to get a more accurate list.
+
  | ViewAutoplay                     | Disable Autoplay for non Volume - [STIG V-253386](https://system32.eventsentry.com/stig/viewer/V-253386) |
  | ViewAutorun                      | Disable Autorun on all kinds of drives - [STIG V-253388](https://system32.eventsentry.com/stig/viewer/V-253388) |
  | ViewBitlocker                    | Enable Bitlocker on all fixed drives (Tweak Enable is done interactively) |
