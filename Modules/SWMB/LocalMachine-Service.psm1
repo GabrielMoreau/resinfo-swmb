@@ -169,7 +169,7 @@ Function TweakViewAutoplay { # RESINFO
 		NoAutoplayfornonVolume = @{
 			OkValues = @(1)
 			Description = "Disable Autoplay for non Volume"
-			Remediation = "DisableViewAutoplay"
+			Remediation = "DisableViewAutoplay (STIG V-253386)"
 		}
 	}
 	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
@@ -206,7 +206,7 @@ Function TweakViewAutorun { # RESINFO
 		NoDriveTypeAutoRun = @{
 			OkValues = @(255)
 			Description = "Disable Autorun for all drives"
-			Remediation = "DisableAutorun"
+			Remediation = "DisableAutorun (STIG V-253388)"
 		}
 	}
 	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings

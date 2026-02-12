@@ -1200,7 +1200,7 @@ Function TweakViewAntivirusServices { # RESINFO
 			Value       = 'not exist'
 			Exists      = $False
 			Status      = 'NOT OK'
-			Remediation = 'Install an antivirus'
+			Remediation = 'Install an antivirus (STIG V-253264)'
 		}
 		$ServiceResults += $ServiceObject
 	}

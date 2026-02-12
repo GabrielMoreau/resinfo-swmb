@@ -100,7 +100,7 @@ Function TweakViewPasswordPolicy { # RESINFO
 		ClearTextPassword = @{
 			OkValues = @(0, $Null)
 			Description = "Disable Reversible Text Password"
-			Remediation = "DisablePasswordClearText"
+			Remediation = "DisablePasswordClearText (STIG V-253305)"
 		}
 	}
 	SWMB_GetIniSettings -IniData $SecurityConf -Section 'System Access' -Rules $Rules | SWMB_WriteSettings
@@ -124,7 +124,7 @@ Function TweakViewPasswordClearText { # RESINFO
 		ClearTextPassword = @{
 			OkValues = @(0, $Null)
 			Description = "Disable Reversible Text Password"
-			Remediation = "DisablePasswordClearText"
+			Remediation = "DisablePasswordClearText (STIG V-253305)"
 		}
 	}
 	SWMB_GetIniSettings -IniData $SecurityConf -Section 'System Access' -Rules $Rules | SWMB_WriteSettings
