@@ -1214,6 +1214,36 @@ Function TweakViewAntivirusServices { # RESINFO
 }
 
 ################################################################
+
+# Local volumes must be formatted using NTFS
+# STIG V-253265 https://system32.eventsentry.com/stig/viewer/V-253265
+
+# View
+Function TweakViewVolumeBadlyFormatted {
+	Write-Output "Viewing Local Volumes that are Badly Formatted (non-NTFS)..."
+	$DriveIni   = @{ Drives = [ordered]@{} }
+	$DriveRules = @{}
+
+	Get-Volume | Where-Object {
+		$_.DriveType -eq "Fixed" -and
+		$_.DriveLetter -ne $Null
+	} | ForEach-Object {
+		$LetterColon = "$($_.DriveLetter):"
+
+		# ---- DriveIni ----
+		$DriveIni['Drives'][$LetterColon] = $_.FileSystem
+
+		# ---- DriveRules ----
+		$DriveRules[$LetterColon] = @{
+			OkValues    = @('NTFS')
+			Description = "Format of the $LetterColon drive"
+			Remediation = "Reformat the $LetterColon drive in NTFS (STIG V-253265)"
+		}
+	}
+	SWMB_GetIniSettings -IniData $DriveIni -Section 'Drives' -Rules $DriveRules | SWMB_WriteSettings
+}
+
+################################################################
 ###### Export Functions
 ################################################################
 

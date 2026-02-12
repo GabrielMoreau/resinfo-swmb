@@ -289,6 +289,7 @@ DisableAdobeCollabSync                          # EnableAdobeCollabSync         
 # EnableBitlocker                               # DisableBitlocker                              # ViewBitlocker                 ## Enable Bitlocker on all fixed drives (Tweak Enable is done interactively)
 # SetBitlockerActive                            # UnsetBitlockerActive
                                                                                                 # ViewAntivirusServices         ## Windows must use an antivirus program - STIG V-253264 https://system32.eventsentry.com/stig/viewer/V-253264
+                                                                                                # ViewVolumeBadlyFormatted      ## Local volumes must be formatted using NTFS - STIG V-253265 https://system32.eventsentry.com/stig/viewer/V-253265
 
 ### TemporaryBypass Tweaks ###
 # DisablePrintForSystem                         # EnablePrintForSystem                          # ViewPrintForSystem
