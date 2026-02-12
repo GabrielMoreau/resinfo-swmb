@@ -1447,8 +1447,8 @@ Function TweakViewAdobeAutoUpdate { # RESINFO
 ################################################################
 
 # Adobe Reader DC must enable Enhanced Security in a Standalone Application or In Browser
-# https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213168
-# https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213169
+# STIG V-213168 https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213168
+# STIG V-213169 https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213169
 # https://helpx.adobe.com/fr/acrobat/using/enhanced-security-setting-pdfs.html
 # https://www.adobe.com/devnet-docs/acrobatetk/tools/QuickKeys/EnhancedSecurityQuickKeyAll.pdf
 
@@ -1484,20 +1484,19 @@ Function TweakViewAdobeEnhancedSecurity { # RESINFO
 	Write-Output "Viewing Adobe EnhancedSecurity (Standalone and InBrowser) (0 or not exist: Disable, 1: Enable)..."
 	$RegPath = 'HKLM:\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown'
 	$RegFields = @("bEnhancedSecurityStandalone", "bEnhancedSecurityInBrowser")
-
-	If (!(Test-Path -Path $RegPath)) {
-		Write-Output ' Adobe EnhancedSecurity (Standalone and InBrowser) is disable'
-		Return
+	$RegFields = @{
+		bEnhancedSecurityStandalone = @{
+			OkValues = @(1)
+			Description = "Remote Assistance"
+			Remediation = "EnableAdobeEnhancedSecurity (STIG V-213168)"
 		}
-
-	$Props = Get-ItemProperty -Path $RegPath
-	ForEach ($Field in $RegFields) {
-		If ($Props.PSObject.Properties.Name -notcontains $Field) {
-			Write-Output "${Field}: not exist"
-			Continue
+		bEnhancedSecurityInBrowser = @{
+			OkValues = @(1)
+			Description = "Remote Assistance"
+			Remediation = "EnableAdobeEnhancedSecurity (STIG V-213169)"
 		}
-		Write-Output "${Field}: $($Props.$Field)"
 	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################
