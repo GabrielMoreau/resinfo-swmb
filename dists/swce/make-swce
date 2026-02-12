@@ -35,8 +35,9 @@ cat <<END
 
 END
 
-for tweak in $(cat LocalMachine-SWCE.preset)
+for tweak in $(cat LocalMachine-SWCE.preset | sed -e 's/#.*//; s/[[:space:]]$//;' | awk '{print $1}' | grep .)
 do
-  echo "Tweak${tweak}"
+  comment=$(grep "\b${tweak}\b" ../../Presets/LocalMachine-All.preset | awk -F '##' '{print $2}' | sed -e 's/^[[:space:]]//;' | head -1)
+  printf "Tweak%-32s ## %s\n" "${tweak}" "${comment}"
 done
 echo ''
