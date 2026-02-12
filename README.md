@@ -116,6 +116,10 @@ uninstall [Kasperky Endpoint](dists/uninstall-kaspersky/README.md)...).
   for deploying and extending SWMB for use on your local network machines
   (SWMB for your Local Network).
 
+* The [SWCE](dists/swce/README.md) is a compliance script designed to verify your secure Windows environment after applying GPOs or SWMB.
+  This script is standalone, does not modify your system in any way, and does not apply any GPOs.
+  It simply checks the status of the system and suggests corrections if necessary.
+
 * The [README](dists/manual-use/README.md) file in the "manual-use" directory
   reminds some principles about PowerShell execution policies.
 
