@@ -262,6 +262,7 @@ Section "Program files (Required)"
   File "Tasks\LocalMachine-PostInstall.ps1"
   File "Tasks\LocalMachine-Crypt-With-Bitlocker.ps1"
   File "Tasks\View-All-Software.ps1"
+  File "dists\swce\tmp\LocalMachine-SWCE.ps1"
 SectionEnd
 
 Section "Task Scheduler"

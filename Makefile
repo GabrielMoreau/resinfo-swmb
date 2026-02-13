@@ -25,6 +25,7 @@ version: ## Print software version
 	@echo "@{ ModuleVersion = '$(VERSION)' }" > tmp/Version.psd1
 	@(which unix2dos && unix2dos tmp/Version.psd1) > /dev/null 2>&1
 	@sed -e 's/$(VERSION_NSI)/$(VERSION)/;' package.nsi > tmp/package.nsi
+	@(cd dists/swce; make --quiet all 2> /dev/null)
 	makensis -NOCD tmp/package.nsi
 
 check: ## Check tweaks and code quality
@@ -32,6 +33,7 @@ check: ## Check tweaks and code quality
 
 clean: ## Clean setup.exe and temporary files
 	@rm -rf SWMB*.exe tmp resources 2> /dev/null
+	@(cd dists/swce; make --quiet clean 2> /dev/null)
 
 doc: env ## Build documentation
 	mkdir -p /tmp/swmb/site
