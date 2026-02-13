@@ -599,7 +599,7 @@ $Form.Controls.Add($BtnVersionFrame)
 
 ################################################################
 
-# Compliance Enforcement
+# Compliance Enforcement - Local Machine
 $BtnSWCELM = New-Object System.Windows.Forms.Button
 $BtnSWCELM.Location = New-Object System.Drawing.Point(300,205)
 $BtnSWCELM.Width = 80
@@ -739,14 +739,15 @@ $ToolTip.SetToolTip($BtnConsoleTaskMgr, "Task Manager")
 
 # Computer Managment Console
 $BtnConsoleMgmt = New-Object System.Windows.Forms.Button
-$BtnConsoleMgmt.Location = New-Object System.Drawing.Point(395,335)
-$BtnConsoleMgmt.Width = 80
+$BtnConsoleMgmt.Location = New-Object System.Drawing.Point(405,335)
+$BtnConsoleMgmt.Width = 70
 $BtnConsoleMgmt.Height = 30
-$BtnConsoleMgmt.Text = "Managment"
+$BtnConsoleMgmt.Text = "Mngmt"
 $Form.controls.Add($BtnConsoleMgmt)
 $BtnConsoleMgmt.Add_Click({
 	Start-Process -FilePath "${Env:SystemRoot}\System32\compmgmt.msc"
 })
+$ToolTip.SetToolTip($BtnConsoleMgmt, "Managment Console")
 
 # Network Interfaces Console
 $BtnConsoleNet = New-Object System.Windows.Forms.Button
@@ -760,6 +761,7 @@ $BtnConsoleNet.Add_Click({
 	# control.exe /name Microsoft.NetworkAndSharingCenter
 	Start-Process -FilePath "${Env:SystemRoot}\System32\control.exe" -ArgumentList "netconnections"
 })
+$ToolTip.SetToolTip($BtnConsoleNet, "Network Interface Console")
 
 # Console Frame
 $BtnConsoleFrame = New-Object System.Windows.Forms.GroupBox
