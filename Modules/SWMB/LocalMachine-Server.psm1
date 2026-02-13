@@ -100,7 +100,7 @@ Function TweakViewPasswordPolicy { # RESINFO
 		ClearTextPassword = @{
 			OkValues = @(0, $Null)
 			Description = "Disable Reversible Text Password"
-			Remediation = "DisablePasswordClearText (STIG V-253305)"
+			Remediation = "DisablePasswordClearText (W11 STIG V-253305)"
 		}
 	}
 	SWMB_GetIniSettings -IniData $SecurityConf -Section 'System Access' -Rules $Rules | SWMB_WriteSettings
@@ -109,7 +109,7 @@ Function TweakViewPasswordPolicy { # RESINFO
 ################################################################
 
 # Reversible password encryption must be disabled
-# STIG V-253305 (Window 11)
+# W11 STIG V-253305
 
 # View
 Function TweakViewPasswordClearText { # RESINFO
@@ -124,7 +124,7 @@ Function TweakViewPasswordClearText { # RESINFO
 		ClearTextPassword = @{
 			OkValues = @(0, $Null)
 			Description = "Disable Reversible Text Password"
-			Remediation = "DisablePasswordClearText (STIG V-253305)"
+			Remediation = "DisablePasswordClearText (W11 STIG V-253305)"
 		}
 	}
 	SWMB_GetIniSettings -IniData $SecurityConf -Section 'System Access' -Rules $Rules | SWMB_WriteSettings

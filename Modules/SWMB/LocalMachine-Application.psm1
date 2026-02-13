@@ -1447,8 +1447,8 @@ Function TweakViewAdobeAutoUpdate { # RESINFO
 ################################################################
 
 # Adobe Reader DC must enable Enhanced Security in a Standalone Application or In Browser
-# STIG V-213168 https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213168
-# STIG V-213169 https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213169
+# W11 STIG V-213168 https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213168
+# W11 STIG V-213169 https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213169
 # https://helpx.adobe.com/fr/acrobat/using/enhanced-security-setting-pdfs.html
 # https://www.adobe.com/devnet-docs/acrobatetk/tools/QuickKeys/EnhancedSecurityQuickKeyAll.pdf
 
@@ -1488,12 +1488,12 @@ Function TweakViewAdobeEnhancedSecurity { # RESINFO
 		bEnhancedSecurityStandalone = @{
 			OkValues = @(1)
 			Description = "Remote Assistance"
-			Remediation = "EnableAdobeEnhancedSecurity (STIG V-213168)"
+			Remediation = "EnableAdobeEnhancedSecurity (W11 STIG V-213168)"
 		}
 		bEnhancedSecurityInBrowser = @{
 			OkValues = @(1)
 			Description = "Remote Assistance"
-			Remediation = "EnableAdobeEnhancedSecurity (STIG V-213169)"
+			Remediation = "EnableAdobeEnhancedSecurity (W11 STIG V-213169)"
 		}
 	}
 	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings

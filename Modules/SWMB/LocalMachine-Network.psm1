@@ -288,7 +288,7 @@ Function TweakEnableConnectionSharing {
 ################################################################
 
 # Disable Anonymous access to Named Pipes and Shares
-# STIG V-253456 (Window 11)
+# W11 STIG V-253456
 # https://system32.eventsentry.com/stig/search?query=RestrictNullSessAccessValue
 
 # Disable
@@ -326,7 +326,7 @@ Function TweakViewAnonymousShareAccess { # RESINFO
 # Disable Remote Assistance - Not applicable to Server (unless Remote Assistance is explicitly installed)
 # Solicited assistance is help that is specifically requested by the local user.
 # This may allow unauthorized parties access to the resources on the computer.
-# STIG V-253382 - https://system32.eventsentry.com/stig/viewer/V-253382
+# W11 STIG V-253382 - https://system32.eventsentry.com/stig/viewer/V-253382
 # https://learn.microsoft.com/fr-fr/windows-hardware/customize/desktop/unattend/microsoft-windows-remoteassistance-exe-fallowtogethelp
 
 # Disable
@@ -385,7 +385,7 @@ Function TweakViewRemoteAssistance { # RESINFO
 		fAllowToGetHelpValue = @{
 			OkValues = @(0)
 			Description = "Solicited Remote Assistance"
-			Remediation = "DisableRemoteAssistance (Disable also Solicited Remote Assistance - STIG V-253382)"
+			Remediation = "DisableRemoteAssistance (Disable also Solicited Remote Assistance - W11 STIG V-253382)"
 		}
 	}
 	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings

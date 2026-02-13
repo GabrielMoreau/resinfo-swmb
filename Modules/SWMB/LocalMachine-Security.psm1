@@ -1145,7 +1145,7 @@ Function TweakUnsetBitlockerActive { # RESINFO
 ################################################################
 
 # Windows 10 must use a BitLocker PIN for pre-boot authentication
-# STIG V-220703
+# W11 STIG V-220703
 # BitLocker network unlock may be used in conjunction with a BitLocker PIN.
 # See https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-how-to-enable-network-unlock
 
@@ -1156,12 +1156,12 @@ Function TweakViewBitlockerTPM { # RESINFO
 		UseTPM = @{
 			OkValues = @(2)
 			Description = "Use TPM"
-			Remediation = "EnableBitlocker - interactive tweak (STIG V-220703)"
+			Remediation = "EnableBitlocker - interactive tweak (W11 STIG V-220703)"
 		}
 		UseTPMPIN = @{
 			OkValues = @(2)
 			Description = "Use TPM PIN"
-			Remediation = "EnableBitlocker - interactive tweak (STIG V-220703)"
+			Remediation = "EnableBitlocker - interactive tweak (W11 STIG V-220703)"
 		}
 	}
 	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
@@ -1170,7 +1170,7 @@ Function TweakViewBitlockerTPM { # RESINFO
 ################################################################
 
 # The Windows 11 system must use an antivirus program
-# STIG V-253264 https://system32.eventsentry.com/stig/viewer/V-253264
+# W11 STIG V-253264 https://system32.eventsentry.com/stig/viewer/V-253264
 
 Function TweakViewAntivirusServices { # RESINFO
 	Write-Output "Viewing Active Antivirus Services..."
@@ -1225,7 +1225,7 @@ Function TweakViewAntivirusServices { # RESINFO
 			Value       = 'not exist'
 			Exists      = $False
 			Status      = 'NOT OK'
-			Remediation = 'Install an antivirus (STIG V-253264)'
+			Remediation = 'Install an antivirus (W11 STIG V-253264)'
 		}
 		$ServiceResults += $ServiceObject
 	}
@@ -1241,7 +1241,7 @@ Function TweakViewAntivirusServices { # RESINFO
 ################################################################
 
 # Local volumes must be formatted using NTFS
-# STIG V-253265 https://system32.eventsentry.com/stig/viewer/V-253265
+# W11 STIG V-253265 https://system32.eventsentry.com/stig/viewer/V-253265
 
 # View
 Function TweakViewVolumeBadlyFormatted {
@@ -1262,7 +1262,7 @@ Function TweakViewVolumeBadlyFormatted {
 		$DriveRules[$LetterColon] = @{
 			OkValues    = @('NTFS')
 			Description = "Format of the $LetterColon drive"
-			Remediation = "Reformat the $LetterColon drive in NTFS (STIG V-253265)"
+			Remediation = "Reformat the $LetterColon drive in NTFS (W11 STIG V-253265)"
 		}
 	}
 	SWMB_GetIniSettings -IniData $DriveIni -Section 'Drives' -Rules $DriveRules | SWMB_WriteSettings

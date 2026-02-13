@@ -144,7 +144,7 @@ Function TweakEnableAutoRestartSignOn {
 ################################################################
 
 # Disable Autoplay for non Volume / NoAutoplayfornonVolume
-# STIG V-253386 (Window 11)
+# W11 STIG V-253386
 # https://system32.eventsentry.com/stig/search?query=NoAutoplayfornonVolume
 
 # Disable
@@ -169,7 +169,7 @@ Function TweakViewAutoplay { # RESINFO
 		NoAutoplayfornonVolume = @{
 			OkValues = @(1)
 			Description = "Disable Autoplay for non Volume"
-			Remediation = "DisableViewAutoplay (STIG V-253386)"
+			Remediation = "DisableViewAutoplay (W11 STIG V-253386)"
 		}
 	}
 	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
@@ -179,7 +179,7 @@ Function TweakViewAutoplay { # RESINFO
 
 # Disable Autorun for all drives
 # https://system32.eventsentry.com/stig/search?query=NoDriveTypeAutoRun
-# STIG V-220829 (Windows 10) et V-253388 (Window 11)
+# W10 STIG V-220829 et W11 STIG V-253388
 
 # Disable
 Function TweakDisableAutorun {
@@ -206,7 +206,7 @@ Function TweakViewAutorun { # RESINFO
 		NoDriveTypeAutoRun = @{
 			OkValues = @(255)
 			Description = "Disable Autorun for all drives"
-			Remediation = "DisableAutorun (STIG V-253388)"
+			Remediation = "DisableAutorun (W11 STIG V-253388)"
 		}
 	}
 	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
