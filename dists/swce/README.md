@@ -28,7 +28,7 @@ Run the “make” command in the current folder and read the “tmp/swce.ps1”
 | `ViewAdobeEnhancedSecurity`      | Adobe Enhanced Security in a Standalone Application or In Browser - [W11 STIG V-213168](https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213168) - [W11 STIG V-213169](https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213169) |
 | `ViewPasswordPolicy`             | Disable password complexity and maximum age requirements |
 | `ViewPasswordClearText`          |  |
-| `ViewBitlocker`                  | Enable Bitlocker on all fixed drives (Tweak Enable is done interactively) |
+| `ViewBitlocker`                  | Enable Bitlocker on all fixed drives (Tweak Enable is done interactively) - [W10 STIG V-220702](https://stigviewer.cyberprotection.com/stigs/microsoft_windows_10/2025-02-25/finding/V-220702) |
 | `ViewAntivirusServices`          | Windows must use an antivirus program - [W11 STIG V-253264](https://system32.eventsentry.com/stig/viewer/V-253264) |
 | `ViewVolumeBadlyFormatted`       | Local volumes must be formatted using NTFS - [W11 STIG V-253265](https://system32.eventsentry.com/stig/viewer/V-253265) |
 | `ViewBitlockerTPM`               | Windows 10 must use a BitLocker PIN for pre-boot authentication - [W10 STIG V-220703](https://www.stigviewer.com/stigs/microsoft_windows_10/2025-02-25/finding/V-220703) |
