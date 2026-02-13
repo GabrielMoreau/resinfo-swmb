@@ -689,7 +689,16 @@ Function SWMB_WriteSettings {
 		If ($InputObject.Status -ne 'OK' -and $InputObject.Remediation -ne $Null) {
 			$OutPut += " → Suggested fix: $($InputObject.Remediation)"
 			}
-		Write-Output $OutPut
+		If ([Console]::IsOutputRedirected) {
+			Write-Output $OutPut
+			Return
+		}
+		Switch ($InputObject.Status) {
+			"OK"     { Write-Host $OutPut -ForegroundColor Green }
+			"NOT OK" { Write-Host $OutPut -ForegroundColor Red }
+			'INFO'   { Write-Host $OutPut -ForegroundColor Cyan }
+			default  { Write-Host $OutPut }
+		}
 	}
 }
 
