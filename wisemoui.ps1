@@ -70,8 +70,8 @@ $BtnHelp.Add_Click({
 
 # Logo
 $Logo = New-Object System.Windows.Forms.PictureBox
-$Logo.Location = New-Object Drawing.Point(320,30)
-$Logo.Size = New-Object System.Drawing.Size(200,201)
+$Logo.Location = New-Object Drawing.Point(380,30)
+$Logo.Size = New-Object System.Drawing.Size(140,141)
 $Logo.image = [system.drawing.image]::FromFile("$PSScriptRoot\logo-swmb.ico")
 $Form.Controls.Add($Logo)
 $Logo.Add_Click({
@@ -596,6 +596,20 @@ $BtnVersionFrame.Width = 250
 $BtnVersionFrame.Height = 135
 $BtnVersionFrame.Text = "Host features"
 $Form.Controls.Add($BtnVersionFrame)
+
+################################################################
+
+# Compliance Enforcement
+$BtnSWCE = New-Object System.Windows.Forms.Button
+$BtnSWCE.Location = New-Object System.Drawing.Point(300,175)
+$BtnSWCE.Width = 80
+$BtnSWCE.Height = 50
+$BtnSWCE.Text = "Compliance Enforcement"
+$Form.controls.Add($BtnSWCE)
+$BtnSWCE.Add_Click({
+	Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -NoExit -File `"$PSScriptRoot\Tasks\LocalMachine-SWCE.ps1`"" -WindowStyle Maximized
+})
+$ToolTip.SetToolTip($BtnSWCE, "SWCE - LocalMachine")
 
 ################################################################
 
