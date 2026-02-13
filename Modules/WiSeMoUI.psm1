@@ -156,7 +156,7 @@ Function SWMB_GetOSVersionColor {
 		# EndAutoEdit
 	)
 
-	$Color = @("Green", "Yellow", "Orange", "Red")
+	$Color = @("Green", "Blue", "Orange", "Red")
 
 	ForEach ($Item in $UBR) {
 		If ([version]"$MajorMinorBuild.0" -eq [version]"$($Item.MajorMinor).$($Item.Build).0") {
