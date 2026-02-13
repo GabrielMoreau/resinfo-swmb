@@ -7,6 +7,9 @@
 cat <<END
 END
 
+# BOM UTF-8
+echo -e '\xEF\xBB\xBF'
+
 for func in SWMB_LoadIniFile \
   SWMB_GetRegistrySettings \
   SWMB_GetIniSettings \
