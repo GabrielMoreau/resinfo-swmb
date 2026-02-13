@@ -607,7 +607,7 @@ $BtnSWCELM.Height = 30
 $BtnSWCELM.Text = "Check LM"
 $Form.controls.Add($BtnSWCELM)
 $BtnSWCELM.Add_Click({
-	Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -NoExit -File `"$PSScriptRoot\Tasks\LocalMachine-SWCELM.ps1`"" -WindowStyle Maximized
+	Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -NoExit -File `"$PSScriptRoot\Tasks\LocalMachine-SWCE.ps1`"" -WindowStyle Maximized
 })
 $ToolTip.SetToolTip($BtnSWCELM, "SWCE - LocalMachine")
 
