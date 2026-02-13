@@ -45,9 +45,11 @@ Function TweakEnableShutdownTracker {
 
 ################################################################
 
-# Disable password complexity and maximum age requirements
+# Password complexity and maximum age requirements
 # MaximumPasswordAge = Number of week (52 = 1 year)
-# PasswordComplexity (0: Simple, 1: Complexe)
+# PasswordComplexity (0: Simple, 1: Complex) - W11 STIG V-253304 https://system32.eventsentry.com/stig/viewer/V-253304
+# MinimumPasswordLength (>13: Recommanded) - W10 STIG V-220745 https://www.stigviewer.com/stigs/microsoft_windows_10/2025-02-25/finding/V-220745
+# PasswordHistorySize (>23: Recommanded) - W11 STIG V-253300 https://system32.eventsentry.com/stig/viewer/V-253300
 
 # Disable
 Function TweakDisablePasswordPolicy {
@@ -82,20 +84,21 @@ Function TweakViewPasswordPolicy { # RESINFO
 		PasswordComplexity = @{
 			OkValues = @(1)
 			Description = "Password Complexity"
-			Remediation = "EnablePasswordPolicy / PasswordComplexity=1"
+			Remediation = "EnablePasswordPolicy / PasswordComplexity=1 (W11 STIG V-253304)"
 		}
 		MaximumPasswordAge = @{
 			#OkValues = $Null
 			Description = "Maximum Password Age in weeks"
 		}
 		MinimumPasswordLength = @{
-			OkValues = @('>12')
+			OkValues = @('>13')
 			Description = "Minimum Password Length"
-			Remediation = "EnablePasswordPolicy / MinimumPasswordLength=13"
+			Remediation = "EnablePasswordPolicy / MinimumPasswordLength>13 (W10 STIG V-220745)"
 		}
 		PasswordHistorySize = @{
-			#OkValues = $Null
-			Description = "Password History Size "
+			OkValues = @('>23')
+			Description = "Password History Size"
+			Remediation = "EnablePasswordPolicy / PasswordHistorySize>23 (W11 STIG V-253300)"
 		}
 		ClearTextPassword = @{
 			OkValues = @(0, $Null)
@@ -109,7 +112,7 @@ Function TweakViewPasswordPolicy { # RESINFO
 ################################################################
 
 # Reversible password encryption must be disabled
-# W11 STIG V-253305
+# ClearTextPassword (0 or not exist: Recommanded) - W11 STIG V-253305 https://system32.eventsentry.com/stig/viewer/V-253305
 
 # View
 Function TweakViewPasswordClearText { # RESINFO
