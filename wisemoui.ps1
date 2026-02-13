@@ -600,16 +600,24 @@ $Form.Controls.Add($BtnVersionFrame)
 ################################################################
 
 # Compliance Enforcement
-$BtnSWCE = New-Object System.Windows.Forms.Button
-$BtnSWCE.Location = New-Object System.Drawing.Point(300,175)
-$BtnSWCE.Width = 80
-$BtnSWCE.Height = 50
-$BtnSWCE.Text = "Compliance Enforcement"
-$Form.controls.Add($BtnSWCE)
-$BtnSWCE.Add_Click({
-	Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -NoExit -File `"$PSScriptRoot\Tasks\LocalMachine-SWCE.ps1`"" -WindowStyle Maximized
+$BtnSWCELM = New-Object System.Windows.Forms.Button
+$BtnSWCELM.Location = New-Object System.Drawing.Point(300,205)
+$BtnSWCELM.Width = 80
+$BtnSWCELM.Height = 30
+$BtnSWCELM.Text = "Check LM"
+$Form.controls.Add($BtnSWCELM)
+$BtnSWCELM.Add_Click({
+	Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -NoExit -File `"$PSScriptRoot\Tasks\LocalMachine-SWCELM.ps1`"" -WindowStyle Maximized
 })
-$ToolTip.SetToolTip($BtnSWCE, "SWCE - LocalMachine")
+$ToolTip.SetToolTip($BtnSWCELM, "SWCE - LocalMachine")
+
+# Compliance Enforcement Frame
+$BtnSWCEFrame = New-Object System.Windows.Forms.GroupBox
+$BtnSWCEFrame.Location = New-Object System.Drawing.Size(285,185)
+$BtnSWCEFrame.Width = 255
+$BtnSWCEFrame.Height = 60
+$BtnSWCEFrame.Text = "Check Compliance Enforcement"
+$Form.Controls.Add($BtnSWCEFrame)
 
 ################################################################
 
