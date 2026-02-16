@@ -4,16 +4,24 @@
 
 Move the `git subtree` documentation from the [README](README.md) file to the [CONTRIBUTING](CONTRIBUTING.md) document.
 
-Begin the project Secure Windows Config Enforcement (SWCE).
+Begin the project Secure Windows Compliance Enforcement (SWCE).
 Some Tweak Views have been adapted to the new way of displaying results and remediation proposals.
 
 * Secure - Security, protection
 * Windows - Target all Windows PCs
-* Config - Configurations/settings/GPO
+* Compliance - Configurations/settings/GPO
 * Enforcement - Strict check and verification
+
+The `wisemoui.ps1` graphical interface has been updated.
+Here's a quick summary:
+
+* The operating system version is now in fours color (Green, Blue, Orange, Red). Yellow has been replace by Bue.
+* LThe size of the SWMB logo has been reduced.
+* A new `Compliance Enforcement` frame has appeared with the `LocalMachine` check button.
 
 New presets/rules:
 
+* 2026/02/16 - `DisableCameraFromLockScreen`/`EnableCameraFromLockScreen`/`ViewCameraFromLockScreen` -> Disable Camera access from the lock screen
 * 2026/02/11 - `ViewRemoteDesktop` -> View Remote Desktop
 * 2026/02/11 - `ViewAntivirusServices` -> View active antivirus program
 * 2026/01/21 - `ViewPasswordPolicy` -> View Password Policy
