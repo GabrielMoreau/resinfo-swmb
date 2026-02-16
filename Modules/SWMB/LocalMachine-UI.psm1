@@ -92,6 +92,43 @@ Function TweakEnableLockScreenBlur {
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "DisableAcrylicBackgroundOnLogon" -ErrorAction SilentlyContinue
 }
 
+
+################################################################
+
+# Camera access from the lock screen must be disabled.
+# W11 STIG V-253350 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253350
+
+# Disable
+Function TweakDisableCameraFromLockScreen { # RESINFO
+	Write-Output "Disabling Camera access from Lock Screen..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath | Out-Null
+	}
+	Set-ItemProperty -Path $RegPath -Name "NoLockScreenCamera" -Type DWord -Value 1
+}
+
+# Enable
+Function TweakEnableCameraFromLockScreen { # RESINFO
+	Write-Output "Enabling Camera access from Lock Screen..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization'
+	Remove-ItemProperty -Path $RegPath -Name "NoLockScreenCamera" -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewCameraFromLockScreen { # RESINFO
+	Write-Output "Viewing Camera access from Lock Screen (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization'
+	$RegFields = @{
+		NoLockScreenCamera = @{
+			OkValues = @(1)   # 1
+			Description = "Camera access from Lock Screen"
+			Remediation = "DisableCameraFromLockScreen (W11 STIG V-253350)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
 ################################################################
 
 # Disable search for app in store for unknown extensions
