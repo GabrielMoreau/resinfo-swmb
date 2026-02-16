@@ -179,7 +179,7 @@ Function TweakViewAutoplay { # RESINFO
 
 # Disable Autorun for all drives
 # https://system32.eventsentry.com/stig/search?query=NoDriveTypeAutoRun
-# W10 STIG V-220829 et W11 STIG V-253388
+# W10 STIG V-220829 and W11 STIG V-253388
 
 # Disable
 Function TweakDisableAutorun {
