@@ -20,15 +20,16 @@ Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE
 
 | Rule Name       | Description |
 |-----------------|-------------|
-| `ViewAutoplay`                   | Disable Autoplay for non Volume - [W11 STIG V-253386](https://system32.eventsentry.com/stig/search?query=NoAutoplayfornonVolume) |
-| `ViewAutorun`                    | Disable Autorun on all kinds of drives - [W11 STIG V-253388](https://system32.eventsentry.com/stig/search?query=NoDriveTypeAutoRun) |
 | `ViewAnonymousShareAccess`       | Disable Anonymous access to Named Pipes and Shares - [W11 STIG V-253456](https://system32.eventsentry.com/stig/search?query=RestrictNullSessAccessValue) |
 | `ViewRemoteAssistance`           | Disable (Solicited) Remote Assistance - [W11 STIG V-253382](https://system32.eventsentry.com/stig/viewer/V-253382) |
 | `ViewRemoteDesktop`              | Disable Remote Desktop |
+| `ViewAutoplay`                   | Disable Autoplay for non Volume - [W11 STIG V-253386](https://system32.eventsentry.com/stig/search?query=NoAutoplayfornonVolume) |
+| `ViewAutorun`                    | Disable Autorun on all kinds of drives - [W11 STIG V-253388](https://system32.eventsentry.com/stig/search?query=NoDriveTypeAutoRun) |
+| `ViewCameraFromLockScreen`       | Camera access from the lock screen must be disabled - [W11 STIG V-253350](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253350) |
 | `ViewAdobeEnhancedSecurity`      | Adobe Enhanced Security in a Standalone Application or In Browser - [W11 STIG V-213168](https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213168) - [W11 STIG V-213169](https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213169) |
 | `ViewPasswordPolicy`             | Disable password complexity and maximum age requirements |
 | `ViewPasswordClearText`          |  |
-| `ViewBitlocker`                  | Enable Bitlocker on all fixed drives (Tweak Enable is done interactively) - [W10 STIG V-220702](https://stigviewer.cyberprotection.com/stigs/microsoft_windows_10/2025-02-25/finding/V-220702) |
+| `ViewBitlocker`                  | Enable Bitlocker on all fixed drives (Tweak Enable is done interactively) - [W10 STIG V-220702](https://stigviewer.cyberprotection.com/stigs/microsoft_windows_10/2025-02-25/finding/V-220702) - [W11 STIG V-253259](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253259) |
 | `ViewAntivirusServices`          | Windows must use an antivirus program - [W11 STIG V-253264](https://system32.eventsentry.com/stig/viewer/V-253264) |
 | `ViewVolumeBadlyFormatted`       | Local volumes must be formatted using NTFS - [W11 STIG V-253265](https://system32.eventsentry.com/stig/viewer/V-253265) |
-| `ViewBitlockerTPM`               | Windows 10 must use a BitLocker PIN for pre-boot authentication - [W10 STIG V-220703](https://www.stigviewer.com/stigs/microsoft_windows_10/2025-02-25/finding/V-220703) |
+| `ViewBitlockerTPM`               | Windows 10 must use a BitLocker PIN for pre-boot authentication - [W10 STIG V-220703](https://www.stigviewer.com/stigs/microsoft_windows_10/2025-02-25/finding/V-220703) - [W11 STIG V-253260](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253260) - [W11 STIG V-253261](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253261) |

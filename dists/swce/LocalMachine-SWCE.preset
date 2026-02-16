@@ -1,12 +1,23 @@
 
-### Service Tweaks ###
-ViewAutoplay
-ViewAutorun
+### Privacy Tweaks ###
+
+### UWP Privacy Tweaks ###
+
+### Security Tweaks ###
 
 ### Network Tweaks ###
 ViewAnonymousShareAccess
 ViewRemoteAssistance
 ViewRemoteDesktop
+
+### Service Tweaks ###
+ViewAutoplay
+ViewAutorun
+
+### UI Tweaks ###
+ViewCameraFromLockScreen
+
+### Explorer UI Tweaks ###
 
 ### Application Tweaks ###
 ViewAdobeEnhancedSecurity
@@ -20,3 +31,11 @@ ViewBitlocker
 ViewAntivirusServices
 ViewVolumeBadlyFormatted
 ViewBitlockerTPM
+
+### TemporaryBypass Tweaks ###
+
+### Auxiliary Functions Tweaks ###
+
+### Tweaks that needs to be classified ###
+
+### Uninstall Application only Tweaks ###
