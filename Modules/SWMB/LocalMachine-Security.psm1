@@ -763,6 +763,7 @@ Function TweakViewRemovableStorageExe { # RESINFO
 
 # Systems must use BitLocker to encrypt all disks to protect the confidentiality and integrity of all information at rest
 # W10 STIG V-220702 https://stigviewer.cyberprotection.com/stigs/microsoft_windows_10/2025-02-25/finding/V-220702
+# W11 STIG V-253259 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253259
 
 # Enable
 Function TweakEnableBitlocker { # RESINFO
@@ -968,6 +969,8 @@ Function TweakEnableBitlocker { # RESINFO
 		# Disable PIN change by a standard user
 		# https://admx.help/?Category=Windows_8.1_2012R2&Policy=Microsoft.Policies.VolumeEncryption::DisallowStandardUsersCanChangePIN_Name
 		Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\FVE" -Name "DisallowStandardUserPINReset" -Value 1
+		# W11 STIG V-253261 Windows 11 systems must use a BitLocker PIN with a minimum length of six digits for pre-boot authentication
+		Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\FVE" -Name "MinimumPIN" -Value 6
 
 		# Allowed recovery method
 		# https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.VolumeEncryption::OSRecoveryUsage_Name
@@ -1148,9 +1151,12 @@ Function TweakUnsetBitlockerActive { # RESINFO
 ################################################################
 
 # Windows 10 must use a BitLocker PIN for pre-boot authentication
-# W11 STIG V-220703
+# W10 STIG V-220703
+# W11 STIG V-253260 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253260
 # BitLocker network unlock may be used in conjunction with a BitLocker PIN.
 # See https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-how-to-enable-network-unlock
+# Windows 11 systems must use a BitLocker PIN with a minimum length of six digits for pre-boot authentication
+# W11 STIG V-253261 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253261
 
 Function TweakViewBitlockerTPM { # RESINFO
 	Write-Output "Viewing Bitlocker TPM PIN (2: Enable (Recommanded))..."
@@ -1165,6 +1171,11 @@ Function TweakViewBitlockerTPM { # RESINFO
 			OkValues = @(2)
 			Description = "Use TPM PIN"
 			Remediation = "EnableBitlocker - interactive tweak (W11 STIG V-220703)"
+		}
+		MinimumPIN = @{
+			OkValues = @('>5')
+			Description = " Minimum PIN length"
+			Remediation = "EnableBitlocker - interactive tweak (W11 STIG V-253261)"
 		}
 	}
 	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
