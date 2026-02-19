@@ -685,7 +685,7 @@ Function SWMB_WriteSettings {
 			'NOT OK' = '❌'
 			'INFO'   = 'ℹ️'
 		}
-		$OutPut = " {0,-27} {1,-10} {2} {3}" -F $InputObject.Name, $DisplayValue, $Icon[$InputObject.Status], $InputObject.Status
+		$OutPut = " {0,-32} {1,-10} {2} {3}" -F $InputObject.Name, $DisplayValue, $Icon[$InputObject.Status], $InputObject.Status
 		If ($InputObject.Status -ne 'OK' -and $InputObject.Remediation -ne $Null) {
 			$OutPut += " → Suggested fix: $($InputObject.Remediation)"
 			}
