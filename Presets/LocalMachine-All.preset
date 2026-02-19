@@ -337,3 +337,4 @@ DisableAdobeCollabSync                          # EnableAdobeCollabSync         
 # UninstallTeamViewer                                                                           # ViewTeamViewer                ## Uninstall TeamViewer software
 # UninstallCCleaner                                                                             # ViewCCleaner                  ## Uninstall Piriform CCleaner software
 # UninstallNordVPN                                                                              # ViewNordVPN                   ## Uninstall NordVPN - Lithuanian VPN service
+UninstallTelnetClient                                                                           # ViewTelnetClient              ## Uninstall TelnetClient - W11 STIG V-253278 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253278

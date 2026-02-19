@@ -1320,6 +1320,36 @@ Function TweakViewDellBuiltInApps { # RESINFO
 }
 
 ################################################################
+
+# The Telnet Client must not be installed on the system
+# W11 STIG V-253278 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253278
+
+# Uninstall
+Function TweakUninstallTelnetClient { # RESINFO
+	Write-Output "Uninstalling TelnetClient..."
+	Disable-WindowsOptionalFeature -Online -FeatureName TelnetClient -Remove -NoRestart
+}
+
+# View
+Function TweakViewTelnetClient { # RESINFO
+	Write-Output "Viewing TelnetClient..."
+	$Ini =  @{ Features = [ordered]@{} }
+	Get-WindowsOptionalFeature -Online -FeatureName TelnetClient |
+		ForEach-Object {
+			$Ini['Features'][$_.FeatureName] = $_.State
+		}
+	$Rules = @{
+		'TelnetClient' = @{
+			OkValues = @('Disabled', 'DisabledWithPayloadRemoved', $Null)
+			Description = "Server Message Block (SMB) v1 protocol"
+			Remediation = "UninstallTelnetClient (W11 STIG V-253278)"
+		}
+	}
+	SWMB_GetIniSettings -IniData $Ini -Section 'Features' -Rules $Rules | SWMB_WriteSettings
+}
+
+
+################################################################
 ###### Export Functions
 ################################################################
 

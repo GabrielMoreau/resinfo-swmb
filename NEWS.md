@@ -21,6 +21,7 @@ Here's a quick summary:
 
 New presets/rules:
 
+* 2026/02/19 - `UninstallTelnetClient`/`ViewTelnetClient` -> Uninstall TelnetClient
 * 2026/02/16 - `DisableCameraFromLockScreen`/`EnableCameraFromLockScreen`/`ViewCameraFromLockScreen` -> Disable Camera access from the lock screen
 * 2026/02/11 - `ViewRemoteDesktop` -> View Remote Desktop
 * 2026/02/11 - `ViewAntivirusServices` -> View active antivirus program
