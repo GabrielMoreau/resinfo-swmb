@@ -1483,7 +1483,6 @@ Function TweakDisableAdobeEnhancedSecurity { # RESINFO
 Function TweakViewAdobeEnhancedSecurity { # RESINFO
 	Write-Output "Viewing Adobe EnhancedSecurity (Standalone and InBrowser) (0 or not exist: Disable, 1: Enable)..."
 	$RegPath = 'HKLM:\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown'
-	$RegFields = @("bEnhancedSecurityStandalone", "bEnhancedSecurityInBrowser")
 	$RegFields = @{
 		bEnhancedSecurityStandalone = @{
 			OkValues = @(1)
