@@ -353,9 +353,18 @@ Function TweakViewASLR { # RESINFO
 
 ################################################################
 
+# Disable SMB client to use insecure guest logons to an SMB server
 # https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.LanmanWorkstation::Pol_EnableInsecureGuestLogons
 # https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/microsoft-windows-workstationservice-allowinsecureguestauth
-# Enable SMB client to use insecure guest logons to an SMB server
+# W11 STIG V-253360 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253360
+
+# Disable
+Function TweakDisableInsecureGuestLogons { # RESINFO
+	Write-Output "Disabling (reject) SMB client to use insecure guest logons to an SMB server (default)..."
+	Remove-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation" -Name "AllowInsecureGuestAuth" -ErrorAction SilentlyContinue
+}
+
+# Enable
 Function TweakEnableInsecureGuestLogons { # RESINFO
 	Write-Output "Enabling (allow) SMB client to use insecure guest logons to an SMB server..."
 	If (!(Test-Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation")) {
@@ -364,20 +373,19 @@ Function TweakEnableInsecureGuestLogons { # RESINFO
 	Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation" -Name "AllowInsecureGuestAuth" -Value 1
 }
 
-# Disable (default)
-Function TweakDisableInsecureGuestLogons { # RESINFO
-	Write-Output "Disabling (reject) SMB client to use insecure guest logons to an SMB server (default)..."
-	Remove-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation" -Name "AllowInsecureGuestAuth" -ErrorAction SilentlyContinue
-}
 
 # View
 Function TweakViewInsecureGuestLogons { # RESINFO
 	Write-Output "Viewing SMB client to use insecure guest logons to an SMB server (0 or not exist: Disable, 1: Enable)..."
-	If (Test-Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation") {
-			Write-Output " AllowInsecureGuestAuth: $((Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation').AllowInsecureGuestAuth)"
-	} Else {
-		Write-Output " Not configure: Disable"
+	$RegPath = 'HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation'
+	$RegFields = @{
+		AllowInsecureGuestAuth = @{
+			OkValues = @(0, $Null)
+			Description = "Insecure guest logons to an SMB server"
+			Remediation = "DisableInsecureGuestLogons (W11 STIG V-253360)"
+		}
 	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################
