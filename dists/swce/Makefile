@@ -16,7 +16,7 @@ tmp/version-$(VERSION).txt: Makefile
 tmp/LocalMachine-SWCE.ps1: make-swce extract-swce LocalMachine-SWCE.preset Makefile tmp/version-$(VERSION).txt
 	@mkdir -p tmp
 	@./make-swce > $@
-	@unix2dos $@
+	@unix2dos $@ 2> /dev/null
 
 clean:
 	@rm -rf tmp *.zip
