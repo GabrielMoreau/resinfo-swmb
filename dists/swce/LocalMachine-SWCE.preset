@@ -4,6 +4,9 @@
 ### UWP Privacy Tweaks ###
 
 ### Security Tweaks ###
+ViewInsecureGuestLogons
+ViewPowershell2
+ViewSMB1Protocol
 
 ### Network Tweaks ###
 ViewAnonymousShareAccess
