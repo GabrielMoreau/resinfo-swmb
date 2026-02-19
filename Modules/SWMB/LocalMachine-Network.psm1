@@ -82,6 +82,9 @@ Function TweakEnableHomeGroups {
 
 ################################################################
 
+# The Server Message Block (SMB) v1 protocol must be disabled on the SMB server
+# W11 STIG V-253287 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253287
+
 # Disable obsolete SMB 1.0 protocol - Disabled by default since 1709
 Function TweakDisableSMB1Protocol { # RESINFO
 	Write-Output "Disabling SMB 1.0 protocol..."
@@ -102,7 +105,35 @@ Function TweakEnableSMB1Protocol { # RESINFO
 
 Function TweakViewSMB1Protocol { # RESINFO
 	Write-Output "Viewing SMB 1.0 protocol..."
-	Get-WindowsOptionalFeature -Online | Where-Object {$_.FeatureName -match 'SMB1'}
+	$Ini =  @{ Features = [ordered]@{} }
+	Get-WindowsOptionalFeature -Online |
+		Where-Object FeatureName -match 'SMB1' |
+		ForEach-Object {
+			$Ini['Features'][$_.FeatureName] = $_.State
+		}
+	$Rules = @{
+		'SMB1Protocol-Deprecation' = @{
+			OkValues = @('Disabled', $Null)
+			Description = "Server Message Block (SMB) v1 protocol"
+			Remediation = "DisableSMB1Protocol (W11 STIG V-253287)"
+		}
+		'SMB1Protocol' = @{
+			OkValues = @('Disabled', $Null)
+			Description = "Server Message Block (SMB) v1 protocol"
+			Remediation = "DisableSMB1Protocol (W11 STIG V-253287)"
+		}
+		'SMB1Protocol-Client' = @{
+			OkValues = @('Disabled', $Null)
+			Description = "Server Message Block (SMB) v1 protocol"
+			Remediation = "DisableSMB1Protocol (W11 STIG V-253287)"
+		}
+		'SMB1Protocol-Server' = @{
+			OkValues = @('Disabled', $Null)
+			Description = "Server Message Block (SMB) v1 protocol"
+			Remediation = "DisableSMB1Protocol (W11 STIG V-253287)"
+		}
+	}
+	SWMB_GetIniSettings -IniData $Ini -Section 'Features' -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################

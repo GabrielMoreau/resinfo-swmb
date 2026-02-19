@@ -129,7 +129,7 @@ SetCurrentNetworkPrivate                        # SetCurrentNetworkPublic
 # SetUnknownNetworksPrivate                     # SetUnknownNetworksPublic
 # DisableNetDevicesAutoInst                     # EnableNetDevicesAutoInst
 # DisableHomeGroups                             # EnableHomeGroups
-DisableSMB1Protocol                             # EnableSMB1Protocol                            # ViewSMB1Protocol
+DisableSMB1Protocol                             # EnableSMB1Protocol                            # ViewSMB1Protocol              ## Disable Server Message Block (SMB) v1 protocol W11 STIG V-253287 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253287
 # DisableSMB1Server                             # EnableSMB1Server
 # DisableSMBServer                              # EnableSMBServer
 # DisableNetBIOS                                # EnableNetBIOS
