@@ -532,9 +532,9 @@ Function SWMB_GetRegistrySettings {
 
 		If (-not $HasValue) {
 			If ($HasOkDef -and ($Rule.OkValues -contains $Null)) {
-				$Status = 'OK'
+				$Status = 'PASS'
 			} ElseIf ($HasOkDef) {
-				$Status = 'NOT OK'
+				$Status = 'FAIL'
 			} Else {
 				$Status = 'INFO'
 			}
@@ -554,24 +554,24 @@ Function SWMB_GetRegistrySettings {
 		If (-not $HasOkDef) {
 			$Status = 'INFO'
 		} Else {
-			$Status = 'NOT OK' # By default
+			$Status = 'FAIL' # By default
 			# Check OkValues
 			ForEach ($OkValue in $Rule.OkValues) {
 				# If OkValue is a test (cf '>8')
 				If ($OkValue -match '^>(\d+)$') {  # OkValue is a test >
 					$Threshold = [int]$Matches[1]
 					If ($Value -gt $Threshold) {
-						$Status = 'OK'
+						$Status = 'PASS'
 						Break
 					}
 				} ElseIf ($OkValue -match '^<(\d+)$') {  # OkValue is a test <
 					$Threshold = [int]$Matches[1]
 					If ($Value -lt $Threshold) {
-						$Status = 'OK'
+						$Status = 'PASS'
 						Break
 					}
 				} ElseIf ($Value -eq $OkValue) {  # OkValue is a value
-					$Status = 'OK'
+					$Status = 'PASS'
 					Break
 				}
 			}
@@ -612,9 +612,9 @@ Function SWMB_GetIniSettings {
 		If (-not $HasValue) {
 			# No value for Key
 			If ($HasOkDef -and ($Rule.OkValues -contains $Null)) {
-				$Status = 'OK'
+				$Status = 'PASS'
 			} ElseIf ($HasOkDef) {
-				$Status = 'NOT OK'
+				$Status = 'FAIL'
 			} Else {
 				$Status = 'INFO'
 			}
@@ -634,22 +634,22 @@ Function SWMB_GetIniSettings {
 		If (-not $HasOkDef) {
 			$Status = 'INFO'
 		} Else {
-			$Status = 'NOT OK'
+			$Status = 'FAIL'
 			ForEach ($OkValue in $Rule.OkValues) {
 				If ($OkValue -match '^>(\d+)$') {
 					$Threshold = [int]$Matches[1]
 					If ($Value -gt $Threshold) {
-						$Status = 'OK'
+						$Status = 'PASS'
 						Break
 					}
 				} ElseIf ($OkValue -match '^<(\d+)$') {
 					$Threshold = [int]$Matches[1]
 					If ($Value -lt $Threshold) {
-						$Status = 'OK'
+						$Status = 'PASS'
 						Break
 					}
 				} ElseIf ($Value -eq $OkValue) {
-					$Status = 'OK'
+					$Status = 'PASS'
 					Break
 				}
 			}
@@ -684,12 +684,12 @@ Function SWMB_WriteSettings {
 		}
 
 		$Icon = @{
-			'OK'     = '✅'
-			'NOT OK' = '❌'
-			'INFO'   = 'ℹ️'
+			'PASS' = '✅'
+			'FAIL' = '❌'
+			'INFO' = 'ℹ️'
 		}
 		$OutPut = " {0,-32} {1,-10} {2} {3}" -F $InputObject.Name, $DisplayValue, $Icon[$InputObject.Status], $InputObject.Status
-		If ($InputObject.Status -ne 'OK' -and $InputObject.Remediation -ne $Null) {
+		If ($InputObject.Status -ne 'PASS' -and $InputObject.Remediation -ne $Null) {
 			$OutPut += " → Suggested fix: $($InputObject.Remediation)"
 			}
 		If ([Console]::IsOutputRedirected) {
@@ -697,10 +697,10 @@ Function SWMB_WriteSettings {
 			Return
 		}
 		Switch ($InputObject.Status) {
-			"OK"     { Write-Host $OutPut -ForegroundColor Green }
-			"NOT OK" { Write-Host $OutPut -ForegroundColor Red }
-			'INFO'   { Write-Host $OutPut -ForegroundColor Cyan }
-			default  { Write-Host $OutPut }
+			'PASS'  { Write-Host $OutPut -ForegroundColor Green }
+			'FAIL'  { Write-Host $OutPut -ForegroundColor Red }
+			'INFO'  { Write-Host $OutPut -ForegroundColor Cyan }
+			default { Write-Host $OutPut }
 		}
 	}
 }

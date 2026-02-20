@@ -1255,7 +1255,7 @@ Function TweakViewAntivirusServices { # RESINFO
 				Name        = $Service.Name
 				Value       = If ($Service.Status -eq 'Running') { 'Running' } Else { 'Stopped' }
 				Exists      = $True
-				Status      = If ($Service.Status -eq 'Running') { 'OK' } Else { 'NOT OK' }
+				Status      = If ($Service.Status -eq 'Running') { 'PASS' } Else { 'FAIL' }
 				Remediation = If ($Service.Status -ne 'Running') { "Start the service $($Service.DisplayName)" } Else { $Null }
 			}
 
@@ -1269,17 +1269,17 @@ Function TweakViewAntivirusServices { # RESINFO
 	} Else {
 		# Add a result if no antivirus service is found
 		$ServiceObject = [PSCustomObject]@{
-			Name        = 'No Antivirus Found'
-			Value       = 'not exist'
+			Name        = 'NoAntivirusFound'
+			Value       = 'NotExist'
 			Exists      = $False
-			Status      = 'NOT OK'
+			Status      = 'FAIL'
 			Remediation = 'Install an antivirus (W11 STIG V-253264)'
 		}
 		$ServiceResults += $ServiceObject
 	}
 
 	If ($OneAntivirusIsUp) {
-		$ServiceResults = $ServiceResults | Where-Object { $_.Status -eq 'OK' }
+		$ServiceResults = $ServiceResults | Where-Object { $_.Status -eq 'PASS' }
 	}
 
 	# Pass the results to the SWMB_WriteSettings function for output
