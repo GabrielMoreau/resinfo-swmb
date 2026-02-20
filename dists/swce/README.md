@@ -12,7 +12,25 @@ It is a PowerShell script (`LocalMachine-SWCE.ps1`).
 The lines of code are extracted from SWMB modules.
 These are only read-only functions on the system.
 
-Download: [SWCE](https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/SWCE-Latest.zip) - latest version.
+## Download
+
+* [SWCE](https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/SWCE-Latest.zip) - latest version.
+
+
+## Usage
+
+Unzip the SWCE archive, for example into a temporary folder (this is not best practice, however).
+Open a PowerShell console in administrator mode.
+Then, if necessary, unlock the script to allow it to run.
+
+```ps1
+cd C:\Temp
+powershell.exe Set-ExecutionPolicy RemoteSigned -Force -Scope LocalMachine
+powershell.exe "Unblock-File -Path .\LocalMachine-SWCE.ps1"
+& .\LocalMachine-SWCE.ps1
+```
+
+And that's it!
 
 ## List of GPOs tested for compliance
 
