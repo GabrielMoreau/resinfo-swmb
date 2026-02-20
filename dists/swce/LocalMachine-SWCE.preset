@@ -23,6 +23,8 @@ ViewCameraFromLockScreen
 ### Explorer UI Tweaks ###
 
 ### Application Tweaks ###
+ViewTelnetClient
+ViewTFTPClient
 ViewAdobeEnhancedSecurity
 
 ### Server Specific Tweaks ###
