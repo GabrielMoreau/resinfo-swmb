@@ -1187,11 +1187,10 @@ Function TweakUnsetBitlockerActive { # RESINFO
 
 # Windows 10 must use a BitLocker PIN for pre-boot authentication
 # W10 STIG V-220703
-# W11 STIG V-253260 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253260
+# BitLocker PIN for pre-boot authentication - W11 STIG V-253260 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253260
 # BitLocker network unlock may be used in conjunction with a BitLocker PIN.
 # See https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-how-to-enable-network-unlock
-# Windows 11 systems must use a BitLocker PIN with a minimum length of six digits for pre-boot authentication
-# W11 STIG V-253261 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253261
+# BitLocker PIN with a minimum length for pre-boot authentication - W11 STIG V-253261 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253261
 
 Function TweakViewBitlockerTPM { # RESINFO
 	Write-Output "Viewing Bitlocker TPM PIN (2: Enable (Recommanded))..."
