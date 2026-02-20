@@ -816,24 +816,88 @@ Function TweakUninstallSSHServer {
 
 ################################################################
 
-# Install Telnet Client
-Function TweakInstallTelnetClient {
+# The Telnet Client must not be installed on the system
+# W11 STIG V-253278 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253278
+
+# Uninstall
+Function TweakUninstallTelnetClient { # RESINFO
+	Write-Output "Uninstalling Telnet Client..."
+	If ((Get-CimInstance -Class "Win32_OperatingSystem").ProductType -eq 1) {
+		Disable-WindowsOptionalFeature -Online -FeatureName 'TelnetClient' -Remove -NoRestart -WarningAction SilentlyContinue | Out-Null
+	} Else {
+		Uninstall-WindowsFeature -Name "Telnet-Client" -WarningAction SilentlyContinue | Out-Null
+	}
+}
+
+# Install
+Function TweakInstallTelnetClient { # RESINFO
 	Write-Output "Installing Telnet Client..."
 	If ((Get-CimInstance -Class "Win32_OperatingSystem").ProductType -eq 1) {
-		Get-WindowsOptionalFeature -Online | Where-Object { $_.FeatureName -eq "TelnetClient" } | Enable-WindowsOptionalFeature -Online -NoRestart -WarningAction SilentlyContinue | Out-Null
+		Enable-WindowsOptionalFeature -Online -FeatureName 'TelnetClient' -NoRestart -WarningAction SilentlyContinue | Out-Null
 	} Else {
 		Install-WindowsFeature -Name "Telnet-Client" -WarningAction SilentlyContinue | Out-Null
 	}
 }
 
-# Uninstall Telnet Client
-Function TweakUninstallTelnetClient {
-	Write-Output "Uninstalling Telnet Client..."
-	If ((Get-CimInstance -Class "Win32_OperatingSystem").ProductType -eq 1) {
-		Get-WindowsOptionalFeature -Online | Where-Object { $_.FeatureName -eq "TelnetClient" } | Disable-WindowsOptionalFeature -Online -NoRestart -WarningAction SilentlyContinue | Out-Null
-	} Else {
-		Uninstall-WindowsFeature -Name "Telnet-Client" -WarningAction SilentlyContinue | Out-Null
+# View
+Function TweakViewTelnetClient { # RESINFO
+	Write-Output "Viewing Telnet Client..."
+	$Ini =  @{ Features = [ordered]@{} }
+	Get-WindowsOptionalFeature -Online -FeatureName TelnetClient |
+		ForEach-Object {
+			$Ini['Features'][$_.FeatureName] = $_.State
+		}
+	$Rules = @{
+		'TelnetClient' = @{
+			OkValues = @('Disabled', 'DisabledWithPayloadRemoved', $Null)
+			Description = "Telnet Client on the system"
+			Remediation = "UninstallTelnetClient (W11 STIG V-253278)"
+		}
 	}
+	SWMB_GetIniSettings -IniData $Ini -Section 'Features' -Rules $Rules | SWMB_WriteSettings
+}
+
+################################################################
+
+# The TFTP Client must not be installed on the system
+# W11 STIG V-253279 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253279
+
+# Uninstall
+Function TweakUninstallTFTPClient { # RESINFO
+	Write-Output "Uninstalling TFTP Client..."
+	If ((Get-CimInstance -Class "Win32_OperatingSystem").ProductType -eq 1) {
+		Disable-WindowsOptionalFeature -Online -FeatureName 'TFTP' -Remove -NoRestart -WarningAction SilentlyContinue | Out-Null
+	} Else {
+		Uninstall-WindowsFeature -Name "TFTP-Client" -WarningAction SilentlyContinue | Out-Null
+	}
+}
+
+# Install
+Function TweakInstallTFTPClient { # RESINFO
+	Write-Output "Installing TFTP Client..."
+	If ((Get-CimInstance -Class "Win32_OperatingSystem").ProductType -eq 1) {
+		Enable-WindowsOptionalFeature -Online -FeatureName 'TFTP' -NoRestart -WarningAction SilentlyContinue | Out-Null
+	} Else {
+		Install-WindowsFeature -Name "TFTP-Client" -WarningAction SilentlyContinue | Out-Null
+	}
+}
+
+# View
+Function TweakViewTFTPClient { # RESINFO
+	Write-Output "Viewing TFTP Client..."
+	$Ini =  @{ Features = [ordered]@{} }
+	Get-WindowsOptionalFeature -Online -FeatureName TFTP |
+		ForEach-Object {
+			$Ini['Features'][$_.FeatureName] = $_.State
+		}
+	$Rules = @{
+		'TFTP' = @{
+			OkValues = @('Disabled', 'DisabledWithPayloadRemoved', $Null)
+			Description = "TFTP Client on the system"
+			Remediation = "UninstallTFTPClient (W11 STIG V-253279)"
+		}
+	}
+	SWMB_GetIniSettings -IniData $Ini -Section 'Features' -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################
