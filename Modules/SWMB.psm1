@@ -680,7 +680,7 @@ Function SWMB_WriteSettings {
 				default { $InputObject.Value }
 			}
 		} Else {
-			'not exist'
+			'NotExist'
 		}
 
 		$Icon = @{
