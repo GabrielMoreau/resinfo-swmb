@@ -344,7 +344,7 @@ Function TweakEnableASLR { # RESINFO
 Function TweakViewASLR { # RESINFO
 	Write-Output "Viewing ASLR (Address Space Layout Randomisation) (not exist: Enable, 0: Disable)..."
 	$Path = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
-		If ((Get-ItemProperty $Path -Name "MoveImages" -ea 0)."MoveImages" -ne $null) {
+		If ((Get-ItemProperty $Path -Name "MoveImages" -ea 0)."MoveImages" -ne $Null) {
 			Get-ItemProperty -Path $Path -Name "MoveImages"
 		} Else {
 			Write-Output "$Path name MoveImages not exist"
@@ -814,7 +814,7 @@ Function TweakEnableBitlocker { # RESINFO
 		If ($WantToSave -eq $False) {
 			$IsNetWorkBackup = Read-Host -Prompt "Do you want to save recovery keys on a network drive? [y/N]"
 			If ($IsNetWorkBackup.ToLower() -ne "y") {
-				Return $null
+				Return $Null
 			}
 		}
 
@@ -862,7 +862,7 @@ Function TweakEnableBitlocker { # RESINFO
 		If ($UseCodePin.ToLower() -ne "n") {
 			$Secure = Read-Host -AsSecureString -Prompt "Code PIN (6 digits)"
 			Write-Output "Enabling bitlocker on system drive $SystemDrive with PIN code"
-			Enable-BitLocker -MountPoint "$SystemDrive" -TpmAndPinProtector -Pin $Secure -EncryptionMethod "XtsAes256" 3> $null
+			Enable-BitLocker -MountPoint "$SystemDrive" -TpmAndPinProtector -Pin $Secure -EncryptionMethod "XtsAes256" 3> $Null
 			Write-EventLog -LogName Application -Source "SWMB" -EntryType Information -EventID 2 `
 				-Message "SWMB: Enable bitlocker on system drive $SystemDrive with PIN code"
 		} Else {
@@ -928,7 +928,7 @@ Function TweakEnableBitlocker { # RESINFO
 
 			Write-Output "Bitlocker activation on drive $Letter is going to start"
 
-			Enable-BitLocker -MountPoint $Letter -RecoveryPasswordProtector -UsedSpaceOnly -EncryptionMethod "XtsAes256" 3> $null
+			Enable-BitLocker -MountPoint $Letter -RecoveryPasswordProtector -UsedSpaceOnly -EncryptionMethod "XtsAes256" 3> $Null
 			Resume-BitLocker -MountPoint $Letter
 			Write-EventLog -LogName Application -Source "SWMB" -EntryType Information -EventID 1 -Message "SWMB: Bitlocker enable drive $Letter"
 

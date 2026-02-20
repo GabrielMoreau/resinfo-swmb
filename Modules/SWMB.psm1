@@ -542,7 +542,7 @@ Function SWMB_GetRegistrySettings {
 			[PSCustomObject]@{
 				Path   = $Path
 				Name   = $Name
-				Value  = $null
+				Value  = $Null
 				Exists = $False
 				Status = $Status
 				Remediation = If ($Rule.ContainsKey('Remediation')) { $Rule.Remediation } Else { $Null }

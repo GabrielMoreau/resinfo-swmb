@@ -389,7 +389,7 @@ Function TweakUninstallGlassWire { # RESINFO
 			$App = (Get-ItemProperty -Path $_.PSPath)
 			$Version = $App.DisplayVersion
 			$Exe = $App.UninstallString
-			If ($Exe -eq $null) {
+			If ($Exe -eq $Null) {
 				Return
 			}
 			$Exe = $Exe.Trim('"')
