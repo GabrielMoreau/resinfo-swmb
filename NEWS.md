@@ -6,6 +6,7 @@ Move the `git subtree` documentation from the [README](README.md) file to the [C
 
 Begin the project Secure Windows Compliance Enforcement (SWCE).
 Some (many) Tweak Views have been adapted to the new way of displaying results and remediation proposals.
+A specific Zip archive is available on the download webpage, allowing you to distribute the `LocalMachine-SWCE.ps1` script without having to install SWMB.
 
 * Secure - Security, protection
 * Windows - Target all Windows PCs
@@ -24,10 +25,13 @@ In Bitlocker tweak GPO, now force the PIN pre-boot authentication to the minimum
 New presets/rules:
 
 * 2026/02/20 - `UninstallTFTPClient`/`InstallTFTPClient`/`ViewTFTPClient` -> Uninstall TFTP Client
-* 2026/02/19 - `ViewBitlockerTPM` -> View Bitlocker TPM and PIN pre-boot authentication
 * 2026/02/19 - `ViewTelnetClient` -> View Telnet Client
 * 2026/02/19 - `ViewPowershell2` -> View Powershell v2 Status
 * 2026/02/16 - `DisableCameraFromLockScreen`/`EnableCameraFromLockScreen`/`ViewCameraFromLockScreen` -> Disable Camera access from the lock screen
+* 2026/02/12 - `ViewBitlockerTPM` -> View Bitlocker TPM and PIN pre-boot authentication
+* 2026/02/12 - `ViewVolumeBadlyFormatted` -> View Volume Badly Formatted (not NTFS)
+* 2026/02/12 - `ViewRemoteAssistance` -> View Remote Assistance
+* 2026/02/12 - `ViewAdobeEnhancedSecurity` -> View Adobe Enhanced Security
 * 2026/02/11 - `ViewRemoteDesktop` -> View Remote Desktop
 * 2026/02/11 - `ViewAntivirusServices` -> View active antivirus program
 * 2026/01/21 - `ViewPasswordPolicy` -> View Password Policy
