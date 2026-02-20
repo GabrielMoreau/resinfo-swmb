@@ -5,7 +5,7 @@
 Move the `git subtree` documentation from the [README](README.md) file to the [CONTRIBUTING](CONTRIBUTING.md) document.
 
 Begin the project Secure Windows Compliance Enforcement (SWCE).
-Some Tweak Views have been adapted to the new way of displaying results and remediation proposals.
+Some (many) Tweak Views have been adapted to the new way of displaying results and remediation proposals.
 
 * Secure - Security, protection
 * Windows - Target all Windows PCs
@@ -19,10 +19,14 @@ Here's a quick summary:
 * LThe size of the SWMB logo has been reduced.
 * A new `Compliance Enforcement` frame has appeared with the `LocalMachine` check button.
 
+In Bitlocker tweak GPO, now force the PIN pre-boot authentication to the minimum of 6.
+
 New presets/rules:
 
 * 2026/02/20 - `UninstallTFTPClient`/`InstallTFTPClient`/`ViewTFTPClient` -> Uninstall TFTP Client
+* 2026/02/19 - `ViewBitlockerTPM` -> View Bitlocker TPM and PIN pre-boot authentication
 * 2026/02/19 - `ViewTelnetClient` -> View Telnet Client
+* 2026/02/19 - `ViewPowershell2` -> View Powershell v2 Status
 * 2026/02/16 - `DisableCameraFromLockScreen`/`EnableCameraFromLockScreen`/`ViewCameraFromLockScreen` -> Disable Camera access from the lock screen
 * 2026/02/11 - `ViewRemoteDesktop` -> View Remote Desktop
 * 2026/02/11 - `ViewAntivirusServices` -> View active antivirus program

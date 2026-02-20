@@ -797,7 +797,8 @@ Function TweakViewRemovableStorageExe { # RESINFO
 
 # Systems must use BitLocker to encrypt all disks to protect the confidentiality and integrity of all information at rest
 # W10 STIG V-220702 https://stigviewer.cyberprotection.com/stigs/microsoft_windows_10/2025-02-25/finding/V-220702
-# W11 STIG V-253259 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253259
+# Encrypt all disks - W11 STIG V-253259 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253259
+# Minimum PIN length - W11 STIG V-253261 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253261
 
 # Enable
 Function TweakEnableBitlocker { # RESINFO
