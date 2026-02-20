@@ -675,7 +675,10 @@ Function SWMB_WriteSettings {
 
 	Process {
 		$DisplayValue = If ($InputObject.Exists) {
-			$InputObject.Value
+			Switch ($InputObject.Value) {
+				'DisabledWithPayloadRemoved' { 'NoPayload' }
+				default { $InputObject.Value }
+			}
 		} Else {
 			'not exist'
 		}
