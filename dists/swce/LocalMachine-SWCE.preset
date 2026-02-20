@@ -33,9 +33,9 @@ ViewPasswordClearText
 
 ### Bitlocker Tweaks ###
 ViewBitlocker
+ViewBitlockerTPM
 ViewAntivirusServices
 ViewVolumeBadlyFormatted
-ViewBitlockerTPM
 
 ### TemporaryBypass Tweaks ###
 
