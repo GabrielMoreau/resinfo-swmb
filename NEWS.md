@@ -31,7 +31,6 @@ New presets/rules:
 * 2026/02/12 - `ViewBitlockerTPM` -> View Bitlocker TPM and PIN pre-boot authentication
 * 2026/02/12 - `ViewVolumeBadlyFormatted` -> View Volume Badly Formatted (not NTFS)
 * 2026/02/12 - `ViewRemoteAssistance` -> View Remote Assistance
-* 2026/02/12 - `ViewAdobeEnhancedSecurity` -> View Adobe Enhanced Security
 * 2026/02/11 - `ViewRemoteDesktop` -> View Remote Desktop
 * 2026/02/11 - `ViewAntivirusServices` -> View active antivirus program
 * 2026/01/21 - `ViewPasswordPolicy` -> View Password Policy
