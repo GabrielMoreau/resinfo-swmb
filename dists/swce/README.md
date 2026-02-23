@@ -38,10 +38,11 @@ Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE
 
 | Rule Name       | Description |
 |-----------------|-------------|
+| `ViewDEP`                        | Data Execution Prevention (DEP) must be configured for at least OptOut - [W11 STIG V-253283](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253283) |
 | `ViewInsecureGuestLogons`        | Disable SMB client to use insecure guest logons to an SMB server - [W11 STIG V-253360](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253360) - https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.LanmanWorkstation::Pol_EnableInsecureGuestLogons |
+| `ViewASLR`                       | Randomize memory allocations (Bottom-Up ASLR), must be on - W10 STIG V-220874 |
 | `ViewPowershell2`                | PowerShell 2.0 feature must be disabled - [W11 STIG V-253285](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253285) |
 | `ViewSMB1Protocol`               | Disable Server Message Block (SMB) v1 protocol [W11 STIG V-253287](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253287) |
-| `ViewDEP`                        | Data Execution Prevention (DEP) must be configured for at least OptOut - [W11 STIG V-253283](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253283) |
 | `ViewAnonymousShareAccess`       | Disable Anonymous access to Named Pipes and Shares - [W11 STIG V-253456](https://system32.eventsentry.com/stig/search?query=RestrictNullSessAccessValue) |
 | `ViewRemoteAssistance`           | Disable (Solicited) Remote Assistance - [W11 STIG V-253382](https://system32.eventsentry.com/stig/viewer/V-253382) |
 | `ViewRemoteDesktop`              | Disable Remote Desktop |

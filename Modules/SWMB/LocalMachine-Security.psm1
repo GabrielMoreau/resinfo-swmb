@@ -360,9 +360,17 @@ Function TweakViewDEP { # RESINFO
 ################################################################
 # 2022/02/02 - Enable is better
 # ASLR (Address Space Layout Randomisation)
+# Randomize memory allocations (Bottom-Up ASLR), must be on - W10 STIG V-220874 https://www.stigqter.com/stigs/SV-220874r569187_rule.html
 # Disable ASLR for Easier Malware Debugging
 # Disable : HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\MoveImages and set its value to 0x00000000.
 # https://oalabs.openanalysis.net/2019/06/12/disable-aslr-for-easier-malware-debugging/
+
+# Enable
+Function TweakEnableASLR { # RESINFO
+	Write-Output "Enabling (Turn On) ASLR (Address Space Layout Randomisation)..."
+	Remove-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" -Name "MoveImages" -ErrorAction SilentlyContinue
+}
+
 # Disable
 Function TweakDisableASLR { # RESINFO
 	Write-Output "Disabling (Turn Off) ASLR (Address Space Layout Randomisation)..."
@@ -372,21 +380,18 @@ Function TweakDisableASLR { # RESINFO
 	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" -Name "MoveImages" -Type DWord -Value 0
 }
 
-# Enable
-Function TweakEnableASLR { # RESINFO
-	Write-Output "Enabling (Turn On) ASLR (Address Space Layout Randomisation)..."
-	Remove-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" -Name "MoveImages" -ErrorAction SilentlyContinue
-}
-
 # View
 Function TweakViewASLR { # RESINFO
 	Write-Output "Viewing ASLR (Address Space Layout Randomisation) (not exist: Enable, 0: Disable)..."
-	$Path = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
-		If ((Get-ItemProperty $Path -Name "MoveImages" -ea 0)."MoveImages" -ne $Null) {
-			Get-ItemProperty -Path $Path -Name "MoveImages"
-		} Else {
-			Write-Output "$Path name MoveImages not exist"
+	$RegPath = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
+	$RegFields = @{
+		MoveImages = @{
+			OkValues = @($Null)
+			Description = "ASLR (Address Space Layout Randomisation)"
+			Remediation = "DisableASLR (W11 W10 STIG V-220874)"
 		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################
