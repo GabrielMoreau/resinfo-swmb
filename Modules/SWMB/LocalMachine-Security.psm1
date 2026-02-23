@@ -440,6 +440,8 @@ Function TweakViewInsecureGuestLogons { # RESINFO
 # https://www.blumira.com/integration/how-to-configure-smb-signing/
 # HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation
 # HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+# Windows SMB client must be configured to always perform SMB packet signing
+# Require SMB client to sign message - W11 STIG V-253449 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253449
 
 # Enable SMBClientSigning
 Function TweakEnableSMBClientSigning { # RESINFO
@@ -485,6 +487,8 @@ Function TweakViewSMBClientSigning { # RESINFO
 ################################################################
 
 # https://techcommunity.microsoft.com/blog/filecab/configure-smb-signing-with-confidence/2418102
+# Windows SMB server must be configured to always perform SMB packet signing
+# Require SMB server to sign message - W11 STIG V-253451 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253451
 
 # Enable SMBServerSigning
 Function TweakEnableSMBServerSigning { # RESINFO
