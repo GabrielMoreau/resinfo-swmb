@@ -9,6 +9,7 @@ ViewPowershell2
 ViewSMB1Protocol
 
 ### Network Tweaks ###
+ViewDEP
 ViewAnonymousShareAccess
 ViewRemoteAssistance
 ViewRemoteDesktop
