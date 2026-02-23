@@ -55,5 +55,6 @@ do
   doc=$(echo "${comment}" | sed -e "s#\(W[[:digit:]][[:digit:]][[:space:]]STIG V-[[:digit:]][[:digit:]]*\)[[:space:]]\(https\?://[^[:space:]]\+\)#[\1](\2)#g; s/[[:space:]]\+$//;")
   printf "| %-32s | %s |\n" "\`${tweak}\`" "${doc}" 1>&2
   printf "Tweak%-32s ## %s\n" "${tweak}" "${comment}"
+  echo 'Write-Output ""'
 done
 echo ''
