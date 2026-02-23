@@ -27,7 +27,7 @@ New presets/rules:
 * 2026/02/23 - `SetDEPAlwaysOn`/`ViewDEP` -> Data Execution Prevention (DEP) must be configured for at least OptOut
 * 2026/02/20 - `UninstallTFTPClient`/`InstallTFTPClient`/`ViewTFTPClient` -> Uninstall TFTP Client
 * 2026/02/19 - `ViewTelnetClient` -> View Telnet Client
-* 2026/02/19 - `ViewPowershell2` -> View Powershell v2 Status
+* 2026/02/19 - `ViewPowerShellV2` -> View Powershell v2 Status
 * 2026/02/16 - `DisableCameraFromLockScreen`/`EnableCameraFromLockScreen`/`ViewCameraFromLockScreen` -> Disable Camera access from the lock screen
 * 2026/02/12 - `ViewBitlockerTPM` -> View Bitlocker TPM and PIN pre-boot authentication
 * 2026/02/12 - `ViewVolumeBadlyFormatted` -> View Volume Badly Formatted (not NTFS)

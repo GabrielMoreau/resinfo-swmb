@@ -710,23 +710,52 @@ Function TweakInstallMathRecognizer {
 # Uninstall PowerShell 2.0 Environment
 # PowerShell 2.0 is deprecated since September 2018. This doesn't affect PowerShell 5 or newer which is the default PowerShell environment.
 # May affect Microsoft Diagnostic Tool and possibly other scripts. See https://blogs.msdn.microsoft.com/powershell/2017/08/24/windows-powershell-2-0-deprecation/
-Function TweakUninstallPowerShellV2 {
+# From BSI document, Disabling older versions of PowerShell (2.0) that do not offer advanced security features
+# The Windows PowerShell 2.0 feature must be disabled on the system
+# W11 STIG V-253285 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253285
+
+# Uninstall
+Function TweakUninstallPowerShellV2 { # RESINFO
 	Write-Output "Uninstalling PowerShell 2.0 Environment..."
 	If ((Get-CimInstance -Class "Win32_OperatingSystem").ProductType -eq 1) {
-		Get-WindowsOptionalFeature -Online | Where-Object { $_.FeatureName -eq "MicrosoftWindowsPowerShellV2Root" } | Disable-WindowsOptionalFeature -Online -NoRestart -WarningAction SilentlyContinue | Out-Null
+		Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root -NoRestart -WarningAction SilentlyContinue | Out-Null
 	} Else {
 		Uninstall-WindowsFeature -Name "PowerShell-V2" -WarningAction SilentlyContinue | Out-Null
 	}
 }
 
-# Install PowerShell 2.0 Environment
-Function TweakInstallPowerShellV2 {
+# Install
+Function TweakInstallPowerShellV2 { # RESINFO
 	Write-Output "Installing PowerShell 2.0 Environment..."
 	If ((Get-CimInstance -Class "Win32_OperatingSystem").ProductType -eq 1) {
-		Get-WindowsOptionalFeature -Online | Where-Object { $_.FeatureName -eq "MicrosoftWindowsPowerShellV2Root" } | Enable-WindowsOptionalFeature -Online -NoRestart -WarningAction SilentlyContinue | Out-Null
+		Enable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root -NoRestart -WarningAction SilentlyContinue | Out-Null
 	} Else {
 		Install-WindowsFeature -Name "PowerShell-V2" -WarningAction SilentlyContinue | Out-Null
 	}
+}
+
+# View
+Function TweakViewPowerShellV2 { # RESINFO
+	Write-Output "Viewing older versions of Powershell (version 2.0)..."
+	$Ini =  @{ Features = [ordered]@{} }
+	Get-WindowsOptionalFeature -Online |
+		Where-Object FeatureName -like "MicrosoftWindowsPowerShellV2*" |
+		ForEach-Object {
+			$Ini['Features'][$_.FeatureName] = $_.State
+		}
+	$Rules = @{
+		MicrosoftWindowsPowerShellV2Root = @{
+			OkValues = @('Disabled', $Null)
+			Description = "Windows PowerShell 2.0"
+			Remediation = "UninstallPowershellV2 (W11 STIG V-253285)"
+		}
+		MicrosoftWindowsPowerShellV2 = @{
+			OkValues = @('Disabled', $Null)
+			Description = "Windows PowerShell 2.0 Engine"
+			Remediation = "UninstallPowershellV2 (W11 STIG V-253285)"
+		}
+	}
+	SWMB_GetIniSettings -IniData $Ini -Section 'Features' -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################

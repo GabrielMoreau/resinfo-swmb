@@ -531,67 +531,6 @@ Function TweakViewAutoloadDriver { # RESINFO
 
 ################################################################
 
-# From BSI document
-# Disabling older versions of PowerShell (2.0) that do not offer advanced security features
-# The Windows PowerShell 2.0 feature must be disabled on the system
-# W11 STIG V-253285 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253285
-
-# Disable
-Function TweakDisablePowershell2 { # RESINFO
-	Write-Output "Disabling older versions of Powershell (version 2.0)..."
-	Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root
-}
-
-# Enable
-Function TweakEnablePowershell2 { # RESINFO
-	Write-Output "Enabling older versions of Powershell (version 2.0)..."
-	Enable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root
-}
-
-# View
-Function TweakViewPowershell2 { # RESINFO
-	Write-Output "Viewing older versions of Powershell (version 2.0)..."
-	$Ini =  @{ Features = [ordered]@{} }
-	Get-WindowsOptionalFeature -Online |
-		Where-Object FeatureName -like "MicrosoftWindowsPowerShellV2*" |
-		ForEach-Object {
-			$Ini['Features'][$_.FeatureName] = $_.State
-		}
-	$Rules = @{
-		MicrosoftWindowsPowerShellV2Root = @{
-			OkValues = @('Disabled', $Null)
-			Description = "Windows PowerShell 2.0"
-			Remediation = "DisablePowershell2 (W11 STIG V-253285)"
-		}
-		MicrosoftWindowsPowerShellV2 = @{
-			OkValues = @('Disabled', $Null)
-			Description = "Windows PowerShell 2.0 Engine"
-			Remediation = "DisablePowershell2 (W11 STIG V-253285)"
-		}
-	}
-	SWMB_GetIniSettings -IniData $Ini -Section 'Features' -Rules $Rules | SWMB_WriteSettings
-}
-
-################################################################
-
-# From BSI document
-# Désactivation de l'utilisation de PowerShell à distance
-# TODO
-
-# Disable
-# Function TweakDisableRemotePowershell { # RESINFO
-# 	Write-Output "Disabling remote use of PowerShell"
-# 	Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root
-# }
-
-# Enable
-# Function TweakEnableRemotePowershell { # RESINFO
-# 	Write-Output "Enabling remote use of PowerShell"
-# 	Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root
-# }
-
-################################################################
-
 # Turn off hybrid sleep
 # https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.PowerManagement::DCStandbyWithHiberfileEnable_2
 # https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.PowerManagement::ACStandbyWithHiberfileEnable_2

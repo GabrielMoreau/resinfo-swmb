@@ -114,7 +114,6 @@ EnableASLR                                      # DisableASLR                   
 # DisableMicrosoftAccount                       # EnableMicrosoftAccount
 # SetSecurityParamAccountPolicy                 # UnsetSecurityParamAccountPolicy
 # EnableSessionLockTimeout                      # DisableSessionLockTimeout
-# DisablePowershell2                            # EnablePowershell2                             # ViewPowershell2               ## PowerShell 2.0 feature must be disabled - W11 STIG V-253285 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253285
 # DisableDomainProfile                          # EnableDomainProfile
 # DisablePrivateProfile                         # EnablePrivateProfile
 # DisablePublicProfile                          # EnablePublicProfile
@@ -245,7 +244,7 @@ DisableMediaSharing                             # EnableMediaSharing
 # UninstallWorkFolders                          # InstallWorkFolders
 # UninstallHelloFace                            # InstallHelloFace
 # UninstallMathRecognizer                       # InstallMathRecognizer
-# UninstallPowerShellV2                         # InstallPowerShellV2
+UninstallPowerShellV2                           # InstallPowerShellV2                           # ViewPowerShellV2               ## PowerShell 2.0 feature must be disabled - W11 STIG V-253285 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253285
 # UninstallPowerShellISE                        # InstallPowerShellISE
 # UninstallKasperskyEndpoint                    # UninstallKasperskyConsole                     # ViewKasperskyProduct
 # InstallLinuxSubsystem                         # UninstallLinuxSubsystem

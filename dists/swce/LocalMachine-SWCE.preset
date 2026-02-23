@@ -10,7 +10,6 @@ SysRequireAdmin
 ViewDEP
 ViewInsecureGuestLogons
 ViewASLR
-ViewPowershell2
 ViewSMB1Protocol
 
 ### Network Tweaks ###
@@ -28,6 +27,7 @@ ViewCameraFromLockScreen
 ### Explorer UI Tweaks ###
 
 ### Application Tweaks ###
+ViewPowerShellV2
 ViewTelnetClient
 ViewTFTPClient
 ViewAdobeEnhancedSecurity
