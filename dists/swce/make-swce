@@ -32,7 +32,7 @@ for tweak in $(cat LocalMachine-SWCE.preset | sed -e 's/#.*//; s/[[:space:]]$//;
 do
   echo '################################################################'
   echo ''
-  ./extract-swce "Tweak${tweak}" ../../Modules/SWMB/*.psm1
+  ./extract-swce "Tweak${tweak}" ../../Modules/SWMB.psm1 ../../Modules/SWMB/*.psm1
   echo ''
 done
 
