@@ -342,14 +342,14 @@ Function TweakSetDEPOptIn {
 Function TweakViewDEP { # RESINFO
 	Write-Output "Viewing DEP (Data Execution Prevention) (AlwaysOff, OptIn, OptOut: Recommanded, AlwaysOn: Better)..."
 	$Hash = [ordered]@{}
-	$Hash['DEP'] = 'Unknown'
+	$Hash['DEP'] = $Null
 	If ((Get-CimInstance Win32_OperatingSystem).DataExecutionPrevention_Available) {
 		$CurrentNx = (bcdedit /enum '{current}' 2> $Null | Select-String "^\s*nx\s+").Line -replace "^\s*nx\s+", ""
 		$Hash['DEP'] = $CurrentNx
 	}
 	$Rules = @{
 		'DEP' = @{
-			OkValues = @('AlwaysOn', 'OptOut', $Null)
+			OkValues = @('AlwaysOn', 'OptOut')
 			Description = "Data Execution Prevention (DEP)"
 			Remediation = "SetDEPOptOut or SetDEPAlwaysOn (W11 STIG V-253283)"
 		}
@@ -404,23 +404,25 @@ Function TweakViewASLR { # RESINFO
 # Disable
 Function TweakDisableInsecureGuestLogons { # RESINFO
 	Write-Output "Disabling (reject) SMB client to use insecure guest logons to an SMB server (default)..."
-	Remove-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation" -Name "AllowInsecureGuestAuth" -ErrorAction SilentlyContinue
+	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters'
+	Remove-ItemProperty -Path $RegPath -Name "AllowInsecureGuestAuth" -ErrorAction SilentlyContinue
 }
 
 # Enable
 Function TweakEnableInsecureGuestLogons { # RESINFO
 	Write-Output "Enabling (allow) SMB client to use insecure guest logons to an SMB server..."
-	If (!(Test-Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation")) {
-		New-Item -Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation" -Force | Out-Null
+	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation" -Name "AllowInsecureGuestAuth" -Value 1
+	Set-ItemProperty -Path $RegPath -Name "AllowInsecureGuestAuth" -Value 1
 }
 
 
 # View
 Function TweakViewInsecureGuestLogons { # RESINFO
 	Write-Output "Viewing SMB client to use insecure guest logons to an SMB server (0 or not exist: Disable, 1: Enable)..."
-	$RegPath = 'HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation'
+	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters'
 	$RegFields = @{
 		AllowInsecureGuestAuth = @{
 			OkValues = @(0, $Null)
@@ -436,23 +438,27 @@ Function TweakViewInsecureGuestLogons { # RESINFO
 # https://techcommunity.microsoft.com/blog/filecab/configure-smb-signing-with-confidence/2418102
 # https://firesecure.fr/activer-les-signatures-smb/
 # https://www.blumira.com/integration/how-to-configure-smb-signing/
+# HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation
+# HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
 
 # Enable SMBClientSigning
 Function TweakEnableSMBClientSigning { # RESINFO
 	Write-Output "Enabling (require) SMB client to use signing messages..."
-	If (!(Test-Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation")) {
-		New-Item -Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation" -Force | Out-Null
+	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation" -Name "EnableSecuritySignature" -Value 1
-	Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation" -Name "RequireSecuritySignature" -Value 1
+	Set-ItemProperty -Path $RegPath -Name "EnableSecuritySignature" -Value 1
+	Set-ItemProperty -Path $RegPath -Name "RequireSecuritySignature" -Value 1
 }
 
 # Disable (default)
 Function TweakDisableSMBClientSigning { # RESINFO
 	Write-Output "Disabling (so allow) SMB client to use only signing messages..."
-	If (Test-Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation") {
+	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters'
+	If (Test-Path $RegPath) {
 		ForEach ($Field in 'EnableSecuritySignature', 'RequireSecuritySignature') {
-			Remove-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation" -Name "$Field" -ErrorAction SilentlyContinue
+			Remove-ItemProperty -Path $RegPath -Name "$Field" -ErrorAction SilentlyContinue
 		}
 	}
 }
@@ -460,13 +466,20 @@ Function TweakDisableSMBClientSigning { # RESINFO
 # View
 Function TweakViewSMBClientSigning { # RESINFO
 	Write-Output "Viewing (require) SMB client to use signing messages (0 or not exist: Disable, 1: Enable)..."
-	If (Test-Path "HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation") {
-		ForEach ($Field in 'EnableSecuritySignature', 'RequireSecuritySignature') {
-			Write-Output " ${Field}: $((Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation').${Field})"
+	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters'
+	$RegFields = @{
+		EnableSecuritySignature = @{
+			OkValues = @(1)
+			Description = "Enable Security Signature"
+			Remediation = "EnableSMBClientSigning and reboot"
 		}
-	} Else {
-		Write-Output " Not configure: Disable"
+		RequireSecuritySignature = @{
+			OkValues = @(1)
+			Description = "Require Security Signature"
+			Remediation = "EnableSMBClientSigning and reboot"
+		}
 	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################
@@ -476,57 +489,79 @@ Function TweakViewSMBClientSigning { # RESINFO
 # Enable SMBServerSigning
 Function TweakEnableSMBServerSigning { # RESINFO
 	Write-Output "Enabling (require) SMB server to use signing messages..."
-	If (!(Test-Path "HKLM:\Software\Policies\Microsoft\Windows\LanManServer")) {
-		New-Item -Path "HKLM:\Software\Policies\Microsoft\Windows\LanManServer" -Force | Out-Null
+	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\LanManServer" -Name "EnableSecuritySignature" -Value 1
-	Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\LanManServer" -Name "RequireSecuritySignature" -Value 1
+	Set-ItemProperty -Path $RegPath -Name "EnableSecuritySignature" -Value 1
+	Set-ItemProperty -Path $RegPath -Name "RequireSecuritySignature" -Value 1
 }
 
 # Disable (default)
 Function TweakDisableSMBServerSigning { # RESINFO
 	Write-Output "Disabling (so allow) SMB server to use signing messages..."
-	If (Test-Path "HKLM:\Software\Policies\Microsoft\Windows\LanManServer") {
+	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters'
+	If (Test-Path  $RegPath) {
 		ForEach ($Field in 'EnableSecuritySignature', 'RequireSecuritySignature') {
-			Remove-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\LanManServer" -Name "$Field" -ErrorAction SilentlyContinue
+			Remove-ItemProperty -Path $RegPath -Name "$Field" -ErrorAction SilentlyContinue
 		}
 	}
 }
 
 # View
 Function TweakViewSMBServerSigning { # RESINFO
-	Write-Output "Viewing (require) SMB server to use signing messages (0 or not exist: Disable, 1: Enable)..."
-	If (Test-Path "HKLM:\Software\Policies\Microsoft\Windows\LanManServer") {
-		ForEach ($Field in 'EnableSecuritySignature', 'RequireSecuritySignature') {
-			Write-Output " ${Field}: $((Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\LanManServer').${Field})"
+	Write-Output "Viewing (require) SMB server to use signing messages (0 or not exist: Disable, 1: Enable (Recommanded))..."
+	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters'
+	$RegFields = @{
+		EnableSecuritySignature = @{
+			OkValues = @(1)
+			Description = "Enable Security Signature"
+			Remediation = "EnableSMBServerSigning and reboot"
 		}
-	} Else {
-		Write-Output " Not configure: Disable"
+		RequireSecuritySignature = @{
+			OkValues = @(1)
+			Description = "Require Security Signature"
+			Remediation = "EnableSMBServerSigning and reboot"
+		}
 	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################
 
 # Disable offering of drivers through network
-# Is part of DisableUpdateDriver
+# Prevent device metadata retrieval from the Internet
+# https://www.windows-security.org/ea9773339e846046b904be53f19e009e/prevent-device-metadata-retrieval-from-the-internet
+
+# Disable
 Function TweakDisableAutoloadDriver { # RESINFO
 	Write-Output "Disabling autoload driver from network..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata")) {
-		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata" -Force | Out-Null
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata" -Name "PreventDeviceMetadataFromNetwork" -Type DWord -Value 1
+	Set-ItemProperty -Path $RegPath -Name "PreventDeviceMetadataFromNetwork" -Type DWord -Value 1
 }
 
-# Enable offering of drivers through network
+# Enable
 Function TweakEnableAutoloadDriver { # RESINFO
 	Write-Output "Enabling autoload driver from network..."
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata" -Name "PreventDeviceMetadataFromNetwork" -ErrorAction SilentlyContinue
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata'
+	Remove-ItemProperty -Path $RegPath -Name "PreventDeviceMetadataFromNetwork" -ErrorAction SilentlyContinue
 }
 
 # View
 Function TweakViewAutoloadDriver { # RESINFO
 	Write-Output "Viewing Autoload driver from network (0 or not exist: Enable, 1: Disable)..."
-	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata" -Name "PreventDeviceMetadataFromNetwork"
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata'
+	$RegFields = @{
+		PreventDeviceMetadataFromNetwork = @{
+			OkValues = @(1)
+			Description = "Prevent device metadata retrieval from the Internet "
+			Remediation = "DisableAutoloadDriver"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################
