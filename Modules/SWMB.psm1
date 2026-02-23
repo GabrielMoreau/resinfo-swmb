@@ -589,24 +589,15 @@ Function SWMB_GetRegistrySettings {
 }
 
 ################################################################
-
-Function SWMB_GetIniSettings {
+Function SWMB_GetHashSettings {
 	Param (
-		[Parameter(Mandatory)] [System.Collections.IDictionary]$IniData,
-		[Parameter(Mandatory)] [string]$Section,
+		[Parameter(Mandatory)] [System.Collections.IDictionary]$HashData,
 		[Parameter(Mandatory)] [System.Collections.IDictionary]$Rules
 	)
 
-	$SectionData = $IniData[$Section]
-
-	If (-not $SectionData) {
-		Write-Output "Section '$Section' not exist in INI database."
-		Return
-	}
-
 	ForEach ($Name in $Rules.Keys) {
 		$Rule	 = $Rules[$Name]
-		$HasValue = $SectionData.Contains($Name)  # Check Key exist
+		$HasValue = $Hash.Contains($Name)  # Check Key exist
 		$HasOkDef = $Rule -and $Rule.ContainsKey('OkValues')
 
 		If (-not $HasValue) {
@@ -630,7 +621,7 @@ Function SWMB_GetIniSettings {
 			Continue
 		}
 
-		$Value = $SectionData[$Name]
+		$Value = $Hash[$Name]
 		If (-not $HasOkDef) {
 			$Status = 'INFO'
 		} Else {
@@ -664,6 +655,24 @@ Function SWMB_GetIniSettings {
 			Remediation = If ($Rule.ContainsKey('Remediation')) { $Rule.Remediation } Else { $Null }
 		}
 	}
+}
+
+################################################################
+
+Function SWMB_GetIniSettings {
+	Param (
+		[Parameter(Mandatory)] [System.Collections.IDictionary]$IniData,
+		[Parameter(Mandatory)] [string]$Section,
+		[Parameter(Mandatory)] [System.Collections.IDictionary]$Rules
+	)
+
+	$SectionData = $IniData[$Section]
+
+	If (-not $SectionData) {
+		Write-Output " Section '$Section' not exist in the INI database."
+		Return
+	}
+	SWMB_GetHashSettings -Hash $SectionData -Rules $Rules
 }
 
 ################################################################
