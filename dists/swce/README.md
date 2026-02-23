@@ -38,10 +38,10 @@ Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE
 
 | Rule Name       | Description |
 |-----------------|-------------|
+| `SysRequireAdmin`                | Application must be run under an administrator account |
 | `ViewDEP`                        | Data Execution Prevention (DEP) must be configured for at least OptOut - [W11 STIG V-253283](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253283) |
 | `ViewInsecureGuestLogons`        | Disable SMB client to use insecure guest logons to an SMB server - [W11 STIG V-253360](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253360) - https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.LanmanWorkstation::Pol_EnableInsecureGuestLogons |
 | `ViewASLR`                       | Randomize memory allocations (Bottom-Up ASLR), must be on - W10 STIG V-220874 |
-| `ViewPowershell2`                | PowerShell 2.0 feature must be disabled - [W11 STIG V-253285](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253285) |
 | `ViewSMB1Protocol`               | Disable Server Message Block (SMB) v1 protocol [W11 STIG V-253287](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253287) |
 | `ViewAnonymousShareAccess`       | Disable Anonymous access to Named Pipes and Shares - [W11 STIG V-253456](https://system32.eventsentry.com/stig/search?query=RestrictNullSessAccessValue) |
 | `ViewRemoteAssistance`           | Disable (Solicited) Remote Assistance - [W11 STIG V-253382](https://system32.eventsentry.com/stig/viewer/V-253382) |
@@ -49,6 +49,7 @@ Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE
 | `ViewAutoplay`                   | Disable Autoplay for non Volume - [W11 STIG V-253386](https://system32.eventsentry.com/stig/search?query=NoAutoplayfornonVolume) |
 | `ViewAutorun`                    | Disable Autorun on all kinds of drives - [W11 STIG V-253388](https://system32.eventsentry.com/stig/search?query=NoDriveTypeAutoRun) |
 | `ViewCameraFromLockScreen`       | Camera access from the lock screen must be disabled - [W11 STIG V-253350](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253350) |
+| `ViewPowerShellV2`               | PowerShell 2.0 feature must be disabled - [W11 STIG V-253285](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253285) |
 | `ViewTelnetClient`               | Uninstall Telnet Client - [W11 STIG V-253278](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253278) |
 | `ViewTFTPClient`                 | Uninstall TFTP Client - [W11 STIG V-253279](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253279) |
 | `ViewAdobeEnhancedSecurity`      | Adobe Enhanced Security in a Standalone Application or In Browser - [W11 STIG V-213168](https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213168) - [W11 STIG V-213169](https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213169) |

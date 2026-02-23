@@ -8,7 +8,7 @@
 ##########
 
 ### Require administrator privileges ###
-SysRequireAdmin
+SysRequireAdmin                                                                                                                 ## Application must be run under an administrator account
 
 ## Use local module
 #$IMPORT "C:\Program Files\SWLN\Local-Addon.psm1"
