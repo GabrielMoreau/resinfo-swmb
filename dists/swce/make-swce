@@ -14,8 +14,10 @@ END
 
 for func in SWMB_LoadIniFile \
   SWMB_GetRegistrySettings \
+  SWMB_GetHashSettings \
   SWMB_GetIniSettings \
   SWMB_WriteSettings
+  TweakSysRequireAdmin
 do
   echo '################################################################'
   echo ''
@@ -40,6 +42,8 @@ cat <<END
 ################################################################
 
 # RUN
+
+TweakSysRequireAdmin
 
 END
 
