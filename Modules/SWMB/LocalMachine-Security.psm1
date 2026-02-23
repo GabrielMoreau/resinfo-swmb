@@ -307,16 +307,54 @@ Function TweakEnableRecoveryAndReset {
 
 ################################################################
 
+# Data Execution Prevention (DEP) must be configured for at least OptOut
+# W11 STIG V-253283 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253283
+# OptIn:     Only Windows
+# OptOut:    Everything except exceptions
+# AlwaysOn:  Everything
+# AlwaysOff: Nothing
+
+# Set Data Execution Prevention (DEP) policy to AlwaysOn
+Function TweakSetDEPAlwaysOn { # RESINFO
+	Write-Output "Setting Data Execution Prevention (DEP) policy to AlwaysOn..."
+	If ((Get-CimInstance Win32_OperatingSystem).DataExecutionPrevention_Available) {
+		bcdedit /set '{current}' nx AlwaysOn | Out-Null
+	}
+}
+
 # Set Data Execution Prevention (DEP) policy to OptOut - Turn on DEP for all 32-bit applications except manually excluded. 64-bit applications have DEP always on.
 Function TweakSetDEPOptOut {
 	Write-Output "Setting Data Execution Prevention (DEP) policy to OptOut..."
-	bcdedit /set `{current`} nx OptOut | Out-Null
+	If ((Get-CimInstance Win32_OperatingSystem).DataExecutionPrevention_Available) {
+		bcdedit /set '{current}' nx OptOut | Out-Null
+	}
 }
 
 # Set Data Execution Prevention (DEP) policy to OptIn - Turn on DEP only for essential 32-bit Windows executables and manually included applications. 64-bit applications have DEP always on.
 Function TweakSetDEPOptIn {
 	Write-Output "Setting Data Execution Prevention (DEP) policy to OptIn..."
-	bcdedit /set `{current`} nx OptIn | Out-Null
+	If ((Get-CimInstance Win32_OperatingSystem).DataExecutionPrevention_Available) {
+		bcdedit /set '{current}' nx OptIn | Out-Null
+	}
+}
+
+# View
+Function TweakViewDEP { # RESINFO
+	Write-Output "Viewing DEP (Data Execution Prevention) (AlwaysOff, OptIn, OptOut: Recommanded, AlwaysOn: Better)..."
+	$Hash = [ordered]@{}
+	$Hash['DEP'] = 'Unknown'
+	If ((Get-CimInstance Win32_OperatingSystem).DataExecutionPrevention_Available) {
+		$CurrentNx = (bcdedit /enum '{current}' 2> $Null | Select-String "^\s*nx\s+").Line -replace "^\s*nx\s+", ""
+		$Hash['DEP'] = $CurrentNx
+	}
+	$Rules = @{
+		'DEP' = @{
+			OkValues = @('AlwaysOn', 'OptOut', $Null)
+			Description = "Data Execution Prevention (DEP)"
+			Remediation = "SetDEPOptOut or SetDEPAlwaysOn (W11 STIG V-253283)"
+		}
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################

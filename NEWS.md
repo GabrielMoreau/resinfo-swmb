@@ -24,6 +24,7 @@ In Bitlocker tweak GPO, now force the PIN pre-boot authentication to the minimum
 
 New presets/rules:
 
+* 2026/02/23 - `SetDEPAlwaysOn`/`ViewDEP` -> Data Execution Prevention (DEP) must be configured for at least OptOut
 * 2026/02/20 - `UninstallTFTPClient`/`InstallTFTPClient`/`ViewTFTPClient` -> Uninstall TFTP Client
 * 2026/02/19 - `ViewTelnetClient` -> View Telnet Client
 * 2026/02/19 - `ViewPowershell2` -> View Powershell v2 Status
