@@ -420,4 +420,7 @@ The [admx](https://admx.help/) website has integrated most Windows GPOs into its
 It can be searched.
 It can be used to find most of the registry keys handled by SWMB and GPOs.It's a good place to start contributing.
 
+Unfortunately, the "admx" website has often been unavailable recently.
+Fortunately, there is the [GPSearch](https://gpsearch.azurewebsites.net) website, which does not replace it point by point, but can complement it.
+
 These tools are complementary to full-scale testing to fully validate new tweaks in SWMB, before release.
