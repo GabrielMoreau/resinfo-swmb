@@ -1,4 +1,7 @@
 
+### Require administrator privileges ###
+SysRequireAdmin
+
 ### Privacy Tweaks ###
 
 ### UWP Privacy Tweaks ###
