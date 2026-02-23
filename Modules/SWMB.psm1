@@ -591,7 +591,7 @@ Function SWMB_GetRegistrySettings {
 ################################################################
 Function SWMB_GetHashSettings {
 	Param (
-		[Parameter(Mandatory)] [System.Collections.IDictionary]$HashData,
+		[Parameter(Mandatory)] [System.Collections.IDictionary]$Hash,
 		[Parameter(Mandatory)] [System.Collections.IDictionary]$Rules
 	)
 
