@@ -50,6 +50,7 @@ Function TweakEnableShutdownTracker {
 # PasswordComplexity (0: Simple, 1: Complex) - W11 STIG V-253304 https://system32.eventsentry.com/stig/viewer/V-253304
 # MinimumPasswordLength (>13: Recommanded) - W10 STIG V-220745 https://www.stigviewer.com/stigs/microsoft_windows_10/2025-02-25/finding/V-220745
 # PasswordHistorySize (>23: Recommanded) - W11 STIG V-253300 https://system32.eventsentry.com/stig/viewer/V-253300
+# ClearTextPassword (0 or not exist: Recommanded) - W11 STIG V-253305 https://system32.eventsentry.com/stig/viewer/V-253305
 
 # Disable
 Function TweakDisablePasswordPolicy {
@@ -111,7 +112,7 @@ Function TweakViewPasswordPolicy { # RESINFO
 
 ################################################################
 
-# Reversible password encryption must be disabled
+# Disable Reversible password encryption
 # ClearTextPassword (0 or not exist: Recommanded) - W11 STIG V-253305 https://system32.eventsentry.com/stig/viewer/V-253305
 
 # View
