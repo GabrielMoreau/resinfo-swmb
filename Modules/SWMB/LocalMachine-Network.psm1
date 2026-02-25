@@ -363,7 +363,7 @@ Function TweakViewAnonymousShareAccess { # RESINFO
 # Disable
 Function TweakDisableRemoteAssistance { # RESINFO
 	Write-Output "Disabling Remote Assistance..."
-	$RegPath = 'HKLM:\System\CurrentControlSet\Control\Remote Assistance'
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance'
 	$RegField = 'fAllowToGetHelp'
 	If (!(Test-Path $RegPath)) {
 		New-Item -Path $RegPath -Force | Out-Null
@@ -383,7 +383,7 @@ Function TweakDisableRemoteAssistance { # RESINFO
 Function TweakEnableRemoteAssistance { # RESINFO
 	Write-Output "Enabling Remote Assistance..."
 	Get-WindowsCapability -Online | Where-Object { $_.Name -like "App.Support.QuickAssist*" } | Add-WindowsCapability -Online | Out-Null
-	$RegPath = 'HKLM:\System\CurrentControlSet\Control\Remote Assistance'
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance'
 	$RegField = 'fAllowToGetHelp'
 	If (!(Test-Path $RegPath)) {
 		New-Item -Path $RegPath -Force | Out-Null
@@ -401,7 +401,7 @@ Function TweakEnableRemoteAssistance { # RESINFO
 # View
 Function TweakViewRemoteAssistance { # RESINFO
 	Write-Output "Viewing  Remote Assistance (0: Disable (Recommanded), 1: Enable)..."
-	$RegPath = 'HKLM:\System\CurrentControlSet\Control\Remote Assistance'
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance'
 	$RegFields = @{
 		fAllowToGetHelp = @{
 			OkValues = @(0)

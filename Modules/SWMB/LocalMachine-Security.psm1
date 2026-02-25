@@ -404,14 +404,14 @@ Function TweakViewASLR { # RESINFO
 # Disable
 Function TweakDisableInsecureGuestLogons { # RESINFO
 	Write-Output "Disabling (reject) SMB client to use insecure guest logons to an SMB server (default)..."
-	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters'
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters'
 	Remove-ItemProperty -Path $RegPath -Name "AllowInsecureGuestAuth" -ErrorAction SilentlyContinue
 }
 
 # Enable
 Function TweakEnableInsecureGuestLogons { # RESINFO
 	Write-Output "Enabling (allow) SMB client to use insecure guest logons to an SMB server..."
-	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters'
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters'
 	If (!(Test-Path $RegPath)) {
 		New-Item -Path $RegPath -Force | Out-Null
 	}
@@ -422,7 +422,7 @@ Function TweakEnableInsecureGuestLogons { # RESINFO
 # View
 Function TweakViewInsecureGuestLogons { # RESINFO
 	Write-Output "Viewing SMB client to use insecure guest logons to an SMB server (0 or not exist: Disable, 1: Enable)..."
-	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters'
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters'
 	$RegFields = @{
 		AllowInsecureGuestAuth = @{
 			OkValues = @(0, $Null)
@@ -439,14 +439,14 @@ Function TweakViewInsecureGuestLogons { # RESINFO
 # https://firesecure.fr/activer-les-signatures-smb/
 # https://www.blumira.com/integration/how-to-configure-smb-signing/
 # HKLM:\Software\Policies\Microsoft\Windows\LanmanWorkstation
-# HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters
+# HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters
 # Windows SMB client must be configured to always perform SMB packet signing
 # Require SMB client to sign message - W11 STIG V-253449 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253449
 
 # Enable SMBClientSigning
 Function TweakEnableSMBClientSigning { # RESINFO
 	Write-Output "Enabling (require) SMB client to use signing messages..."
-	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters'
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters'
 	If (!(Test-Path $RegPath)) {
 		New-Item -Path $RegPath -Force | Out-Null
 	}
@@ -457,7 +457,7 @@ Function TweakEnableSMBClientSigning { # RESINFO
 # Disable (default)
 Function TweakDisableSMBClientSigning { # RESINFO
 	Write-Output "Disabling (so allow) SMB client to use only signing messages..."
-	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters'
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters'
 	If (Test-Path $RegPath) {
 		ForEach ($Field in 'EnableSecuritySignature', 'RequireSecuritySignature') {
 			Remove-ItemProperty -Path $RegPath -Name "$Field" -ErrorAction SilentlyContinue
@@ -468,7 +468,7 @@ Function TweakDisableSMBClientSigning { # RESINFO
 # View
 Function TweakViewSMBClientSigning { # RESINFO
 	Write-Output "Viewing (require) SMB client to use signing messages (0 or not exist: Disable, 1: Enable)..."
-	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters'
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters'
 	$RegFields = @{
 		EnableSecuritySignature = @{
 			OkValues = @(1)
@@ -493,7 +493,7 @@ Function TweakViewSMBClientSigning { # RESINFO
 # Enable SMBServerSigning
 Function TweakEnableSMBServerSigning { # RESINFO
 	Write-Output "Enabling (require) SMB server to use signing messages..."
-	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters'
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
 	If (!(Test-Path $RegPath)) {
 		New-Item -Path $RegPath -Force | Out-Null
 	}
@@ -504,7 +504,7 @@ Function TweakEnableSMBServerSigning { # RESINFO
 # Disable (default)
 Function TweakDisableSMBServerSigning { # RESINFO
 	Write-Output "Disabling (so allow) SMB server to use signing messages..."
-	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters'
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
 	If (Test-Path  $RegPath) {
 		ForEach ($Field in 'EnableSecuritySignature', 'RequireSecuritySignature') {
 			Remove-ItemProperty -Path $RegPath -Name "$Field" -ErrorAction SilentlyContinue
@@ -515,7 +515,7 @@ Function TweakDisableSMBServerSigning { # RESINFO
 # View
 Function TweakViewSMBServerSigning { # RESINFO
 	Write-Output "Viewing (require) SMB server to use signing messages (0 or not exist: Disable, 1: Enable (Recommanded))..."
-	$RegPath = 'HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters'
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
 	$RegFields = @{
 		EnableSecuritySignature = @{
 			OkValues = @(1)
