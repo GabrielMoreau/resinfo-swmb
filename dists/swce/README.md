@@ -50,6 +50,7 @@ Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE
 | `ViewRemoteDesktop`              | Disable Remote Desktop |
 | `ViewAutoplay`                   | Disable Autoplay for non Volume - [W11 STIG V-253386](https://system32.eventsentry.com/stig/search?query=NoAutoplayfornonVolume) |
 | `ViewAutorun`                    | Disable Autorun on all kinds of drives - [W11 STIG V-253388](https://system32.eventsentry.com/stig/search?query=NoDriveTypeAutoRun) |
+| `ViewIISCore`                    | Disable Internet Information System (IIS) Core - [W11 STIG V-253275](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253275) |
 | `ViewCameraFromLockScreen`       | Camera access from the lock screen must be disabled - [W11 STIG V-253350](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253350) |
 | `ViewPowerShellV2`               | PowerShell 2.0 feature must be disabled - [W11 STIG V-253285](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253285) |
 | `ViewTelnetClient`               | Uninstall Telnet Client - [W11 STIG V-253278](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253278) |
