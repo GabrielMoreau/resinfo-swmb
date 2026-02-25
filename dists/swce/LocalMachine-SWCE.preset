@@ -8,11 +8,12 @@ SysRequireAdmin
 
 ### Security Tweaks ###
 ViewDEP
+ViewASLR
 ViewInsecureGuestLogons
 ViewSMBClientSigning
 ViewSMBServerSigning
-ViewASLR
 ViewSMB1Protocol
+ViewSEHOP
 
 ### Network Tweaks ###
 ViewAnonymousShareAccess
