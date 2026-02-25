@@ -813,6 +813,44 @@ Function TweakViewRemovableStorageExe { # RESINFO
 }
 
 ################################################################
+
+# Structured Exception Handling Overwrite Protection (SEHOP) must be enabled
+# W11 STIG V-253284 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253284
+
+# Enable
+Function TweakEnableSEHOP { # RESINFO
+	Write-Output "Enabling Structured Exception Handling Overwrite Protection (SEHOP)..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\kernel'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
+	}
+	Set-ItemProperty -Path $RegPath -Name 'DisableExceptionChainValidation' -Value 0
+}
+
+# Disable
+Function TweakDisableSEHOP { # RESINFO
+	Write-Output "Disabling Structured Exception Handling Overwrite Protection (SEHOP)..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\kernel'
+	If (Test-Path  $RegPath) {
+		Remove-ItemProperty -Path $RegPath -Name 'DisableExceptionChainValidation' -ErrorAction SilentlyContinue
+	}
+}
+
+# View
+Function TweakViewSEHOP { # RESINFO
+	Write-Output "Viewing Structured Exception Handling Overwrite Protection (SEHOP) (0: Enable (Recommanded), 1 or not exist: Disable)..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\kernel'
+	$RegFields = @{
+		DisableExceptionChainValidation = @{
+			OkValues = @(0)
+			Description = "Enable Structured Exception Handling Overwrite Protection (SEHOP)"
+			Remediation = "EnableSEHOP (W11 STIG V-253284)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
+################################################################
 ###### Crypt Bitlocker
 ################################################################
 
