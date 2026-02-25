@@ -685,6 +685,8 @@ Function SWMB_WriteSettings {
 	Process {
 		$DisplayValue = If ($InputObject.Exists) {
 			Switch ($InputObject.Value) {
+				'EnablePending'  { 'Enading' }
+				'DisablePending' { 'Disading' }
 				'DisabledWithPayloadRemoved' { 'NoPayload' }
 				default { $InputObject.Value }
 			}
