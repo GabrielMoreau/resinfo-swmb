@@ -481,6 +481,60 @@ Function TweakViewTargetRelease { # RESINFO
 
 ################################################################
 
+# Internet Information System (IIS) or its subcomponents must not be installed on a workstation
+# W11 STIG V-253275 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253275
+
+# Disable
+Function TweakDisableIISCore { # RESINFO
+	Write-Output "Disabling Internet Information System (IIS) core..."
+	$Features = @('IIS-WebServerRole', 'IIS-HostableWebCore')
+	ForEach ($Feature in $Features) {
+		If ((Get-WindowsOptionalFeature -Online -FeatureName $Feature).State -contains 'Enable') {
+			Write-Host " Disable Feature $Feature"
+			Disable-WindowsOptionalFeature -Online -FeatureName $Feature -NoRestart -WarningAction SilentlyContinue | Out-Null
+		}
+	}
+}
+
+# Enable
+Function TweakEnableIISCore { # RESINFO
+	Write-Output "Enabling Internet Information System (IIS) core..."
+	$Features = @('IIS-WebServerRole', 'IIS-HostableWebCore')
+	ForEach ($Feature in $Features) {
+		If ((Get-WindowsOptionalFeature -Online -FeatureName $Feature).State -contains 'Disable') {
+			Write-Host " Disable Feature $Feature"
+			Enable-WindowsOptionalFeature -Online -FeatureName $Feature -NoRestart -WarningAction SilentlyContinue | Out-Null
+		}
+	}
+}
+
+# View
+Function TweakViewIISCore { # RESINFO
+	Write-Output "Viewing Internet Information System (IIS) core..."
+	$Hash = [ordered]@{}
+	$Rules = @{
+		'IIS-WebServerRole' = @{
+			OkValues = @('Disabled', 'DisabledWithPayloadRemoved', 'DisablePending')
+			Description = "IIS Web Server Role"
+			Remediation = "DisableIISCore (W11 STIG V-253275)"
+		}
+		'IIS-HostableWebCore' = @{
+			OkValues = @('Disabled', 'DisabledWithPayloadRemoved', 'DisablePending')
+			Description = "IIS Host local Web Core"
+			Remediation = "DisableIISCore (W11 STIG V-253275)"
+		}
+	}
+	$Features = $Rules.keys
+	Get-WindowsOptionalFeature -Online |
+		Where-Object {$Features -contains $_.FeatureName} |
+		ForEach-Object {
+			$Hash[$_.FeatureName] = $_.State
+		}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+}
+
+################################################################
+
 # Create a unique Host Id if it doesn't already exist,
 # which will be used in webhooks, for example, to uniquely identify each host
 # We could also use the GUID at HKLM:\SYSTEM\HardwareConfig that seems to be unique

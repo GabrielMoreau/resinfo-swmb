@@ -175,6 +175,7 @@ EnableNTFSLongPaths                             # DisableNTFSLongPaths
 # DisableFastStartup                            # EnableFastStartup
 # DisableAutoRebootOnCrash                      # EnableAutoRebootOnCrash
 # SetNTPConfig                                  # UnsetNTPConfig                                # ViewNTPConfig
+# DisableIISCore                                # EnableIISCore                                 # ViewIISCore                   ## Disable Internet Information System (IIS) Core - W11 STIG V-253275 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253275
 EnableSWMBUniqueId                              # DisableSWMBUniqueId                           # ViewSWMBUniqueId
 # SetPendingReboot                                                                              # ViewPendingReboot
 
