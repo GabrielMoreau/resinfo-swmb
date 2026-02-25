@@ -144,8 +144,7 @@ Function TweakEnableAutoRestartSignOn {
 ################################################################
 
 # Disable Autoplay for non Volume / NoAutoplayfornonVolume
-# W11 STIG V-253386
-# https://system32.eventsentry.com/stig/search?query=NoAutoplayfornonVolume
+# W11 STIG V-253386 https://system32.eventsentry.com/stig/search?query=NoAutoplayfornonVolume
 
 # Disable
 Function TweakDisableAutoplay { # RESINFO
@@ -177,9 +176,11 @@ Function TweakViewAutoplay { # RESINFO
 
 ################################################################
 
-# Disable Autorun for all drives
-# https://system32.eventsentry.com/stig/search?query=NoDriveTypeAutoRun
-# W10 STIG V-220829 and W11 STIG V-253388
+# Autoplay must be disabled for all drives
+# W11 STIG V-253388 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253388
+
+# The default autorun behavior must be configured to prevent autorun commands
+# W11 STIG V-253387 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253387
 
 # Disable
 Function TweakDisableAutorun {
@@ -189,6 +190,7 @@ Function TweakDisableAutorun {
 		New-Item -Path $RegPath | Out-Null
 	}
 	Set-ItemProperty -Path $RegPath -Name "NoDriveTypeAutoRun" -Type DWord -Value 0xFF
+	Set-ItemProperty -Path $RegPath -Name "NoAutorun" -Type DWord -Value 1
 }
 
 # Enable
@@ -196,17 +198,23 @@ Function TweakEnableAutorun {
 	Write-Output "Enabling Autorun for all drives..."
 	$RegPath = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
 	Remove-ItemProperty -Path $RegPath -Name "NoDriveTypeAutoRun" -ErrorAction SilentlyContinue
+	Remove-ItemProperty -Path $RegPath -Name "NoAutorun" -ErrorAction SilentlyContinue
 }
 
 # View
 Function TweakViewAutorun { # RESINFO
 	Write-Output "Viewing Autorun (0 or not exist: Enable, 255: Disable (All drive))..."
 	$RegPath = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer'
-	$RegFields = @{
+	$RegFields = [ordered]@{
 		NoDriveTypeAutoRun = @{
 			OkValues = @(255)
 			Description = "Disable Autorun for all drives"
 			Remediation = "DisableAutorun (W11 STIG V-253388)"
+		}
+		NoAutorun = @{
+			OkValues = @(1)
+			Description = "Disable Autorun commands"
+			Remediation = "DisableAutorun (W11 STIG V-253387)"
 		}
 	}
 	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
