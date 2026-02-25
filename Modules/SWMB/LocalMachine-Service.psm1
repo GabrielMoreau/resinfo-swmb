@@ -519,8 +519,8 @@ Function TweakEnableIISCore { # RESINFO
 # View
 Function TweakViewIISCore { # RESINFO
 	Write-Output "Viewing Internet Information System (IIS) core..."
-	$Hash = [ordered]@{}
-	$Rules = @{
+	$Hash = @{}
+	$Rules = [ordered]@{
 		'IIS-WebServerRole' = @{
 			OkValues = @('Disabled', 'DisabledWithPayloadRemoved', 'DisablePending')
 			Description = "IIS Web Server Role"
@@ -532,11 +532,8 @@ Function TweakViewIISCore { # RESINFO
 			Remediation = "DisableIISCore (W11 STIG V-253275)"
 		}
 	}
-	$Features = $Rules.keys
-	Get-WindowsOptionalFeature -Online |
-		Where-Object {$Features -contains $_.FeatureName} |
-		ForEach-Object {
-			$Hash[$_.FeatureName] = $_.State
+	ForEach ($Feature in $Rules.keys) {
+		$Hash[$Feature] = (Get-WindowsOptionalFeature -Online -FeatureName $Feature).State
 		}
 	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
 }

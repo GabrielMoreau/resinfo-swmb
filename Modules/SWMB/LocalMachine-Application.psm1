@@ -718,7 +718,11 @@ Function TweakInstallMathRecognizer {
 Function TweakUninstallPowerShellV2 { # RESINFO
 	Write-Output "Uninstalling PowerShell 2.0 Environment..."
 	If ((Get-CimInstance -Class "Win32_OperatingSystem").ProductType -eq 1) {
-		Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root -NoRestart -WarningAction SilentlyContinue | Out-Null
+		$Feature = 'MicrosoftWindowsPowerShellV2Root'
+		If ((Get-WindowsOptionalFeature -Online -FeatureName $Feature).State -contains 'Enable') {
+			Write-Output " Disable Feature $Feature"
+			Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root -NoRestart -WarningAction SilentlyContinue | Out-Null
+		}
 	} Else {
 		Uninstall-WindowsFeature -Name "PowerShell-V2" -WarningAction SilentlyContinue | Out-Null
 	}
@@ -728,7 +732,10 @@ Function TweakUninstallPowerShellV2 { # RESINFO
 Function TweakInstallPowerShellV2 { # RESINFO
 	Write-Output "Installing PowerShell 2.0 Environment..."
 	If ((Get-CimInstance -Class "Win32_OperatingSystem").ProductType -eq 1) {
-		Enable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root -NoRestart -WarningAction SilentlyContinue | Out-Null
+		If ((Get-WindowsOptionalFeature -Online -FeatureName $Feature).State -contains 'Disable') {
+			Write-Output " Enable Feature $Feature"
+			Enable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root -NoRestart -WarningAction SilentlyContinue | Out-Null
+		}
 	} Else {
 		Install-WindowsFeature -Name "PowerShell-V2" -WarningAction SilentlyContinue | Out-Null
 	}
@@ -737,13 +744,8 @@ Function TweakInstallPowerShellV2 { # RESINFO
 # View
 Function TweakViewPowerShellV2 { # RESINFO
 	Write-Output "Viewing older versions of Powershell (version 2.0)..."
-	$Ini =  @{ Features = [ordered]@{} }
-	Get-WindowsOptionalFeature -Online |
-		Where-Object FeatureName -like "MicrosoftWindowsPowerShellV2*" |
-		ForEach-Object {
-			$Ini['Features'][$_.FeatureName] = $_.State
-		}
-	$Rules = @{
+	$Hash = @{}
+	$Rules = [ordered]@{
 		MicrosoftWindowsPowerShellV2Root = @{
 			OkValues = @('Disabled', $Null)
 			Description = "Windows PowerShell 2.0"
@@ -755,7 +757,10 @@ Function TweakViewPowerShellV2 { # RESINFO
 			Remediation = "UninstallPowershellV2 (W11 STIG V-253285)"
 		}
 	}
-	SWMB_GetIniSettings -IniData $Ini -Section 'Features' -Rules $Rules | SWMB_WriteSettings
+	ForEach ($Feature in $Rules.keys) {
+		$Hash[$Feature] = (Get-WindowsOptionalFeature -Online -FeatureName $Feature).State
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################

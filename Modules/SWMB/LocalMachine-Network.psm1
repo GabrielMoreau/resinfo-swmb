@@ -105,13 +105,8 @@ Function TweakEnableSMB1Protocol { # RESINFO
 
 Function TweakViewSMB1Protocol { # RESINFO
 	Write-Output "Viewing SMB 1.0 protocol..."
-	$Ini =  @{ Features = [ordered]@{} }
-	Get-WindowsOptionalFeature -Online |
-		Where-Object FeatureName -match 'SMB1' |
-		ForEach-Object {
-			$Ini['Features'][$_.FeatureName] = $_.State
-		}
-	$Rules = @{
+	$Hash = @{}
+	$Rules = [ordered]@{
 		'SMB1Protocol-Deprecation' = @{
 			OkValues = @('Disabled', $Null)
 			Description = "Server Message Block (SMB) v1 protocol"
@@ -133,7 +128,10 @@ Function TweakViewSMB1Protocol { # RESINFO
 			Remediation = "DisableSMB1Protocol (W11 STIG V-253287)"
 		}
 	}
-	SWMB_GetIniSettings -IniData $Ini -Section 'Features' -Rules $Rules | SWMB_WriteSettings
+	ForEach ($Feature in $Rules.keys) {
+		$Hash[$Feature] = (Get-WindowsOptionalFeature -Online -FeatureName $Feature).State
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################
