@@ -1183,7 +1183,7 @@ Function TweakViewBitlocker { # RESINFO
 		$DriveRules[$LetterColon] = @{
 			OkValues = @('XtsAes256')
 			Description = "Encrytion on drive $LetterColon"
-			Remediation = "$Action drive $LetterColon with XtsAes256"
+			Remediation = "$Action drive $LetterColon with XtsAes256 (W11 STIG V-253259 + ANSSI)"
 		}
 	}
 	SWMB_GetIniSettings -IniData $DriveIni -Section 'Drives' -Rules $DriveRules | SWMB_WriteSettings
