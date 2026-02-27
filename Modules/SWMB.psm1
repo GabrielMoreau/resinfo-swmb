@@ -528,9 +528,9 @@ Function SWMB_SaveIniFile {
 	If ($SeceditFormat -and -not $IniData.Contains('Unicode')) {
 		$Output.Add("[Unicode]")
 		$Output.Add("Unicode = yes")
-		$Output.Add("") 
+		$Output.Add("")
 	}
-    
+
 	ForEach ($Section in $IniData.Keys) {
 		# If a section exists (avoid empty header if ever)
 		If ($Section -ne '') {
@@ -550,7 +550,7 @@ Function SWMB_SaveIniFile {
 		$Output.Add("[Version]")
 		$Output.Add('signature = "$CHICAGO$"')
 		$Output.Add("Revision = 1")
-		$Output.Add("") 
+		$Output.Add("")
 	}
 
 	# Writing to the file / Secedit use UTF-16 LE (Unicode Windows)
