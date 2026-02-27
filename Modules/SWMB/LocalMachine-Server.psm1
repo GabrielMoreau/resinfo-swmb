@@ -112,8 +112,88 @@ Function TweakViewPasswordPolicy { # RESINFO
 
 ################################################################
 
+# Enable Password complexity filter
+# PasswordComplexity (0: Simple, 1: Complex) - W11 STIG V-253304 https://system32.eventsentry.com/stig/viewer/V-253304
+
+# Enable
+Function TweakEnablePasswordComplexity { # RESINFO
+	Write-Output "Enabling Password Complexity..."
+	$IniData = [ordered]@{
+		'System Access' = [ordered]@{
+			"PasswordComplexity" = "1"
+		}
+	}
+	$TmpFile = New-TemporaryFile
+	SWMB_SaveIniFile -Path $TmpFile -IniData $IniData -SeceditFormat
+	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $TmpFile /areas SECURITYPOLICY | Out-Null
+	Remove-Item -Path $TmpFile
+}
+
+# Disable
+Function TweakDisablePasswordComplexity { # RESINFO
+	Write-Output "Disabling Password Complexity..."
+	$IniData = [ordered]@{
+		'System Access' = [ordered]@{
+			"PasswordComplexity" = "0"
+		}
+	}
+	$TmpFile = New-TemporaryFile
+	SWMB_SaveIniFile -Path $TmpFile -IniData $IniData -SeceditFormat
+	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $TmpFile /areas SECURITYPOLICY | Out-Null
+	Remove-Item -Path $TmpFile
+}
+
+# View
+Function TweakViewPasswordComplexity { # RESINFO
+	Write-Output "Viewing Password Complexity (0 or not exist: Disable (Default), 1: Enable (Recommanded))..."
+
+	$TmpFile = New-TemporaryFile
+	secedit /export /cfg $TmpFile /quiet | Out-Null
+	$SecurityConf = SWMB_LoadIniFile -Path $TmpFile
+	Remove-Item -Path $TmpFile
+
+	$Rules = @{
+		PasswordComplexity = @{
+			OkValues = @(1)
+			Description = "Password Complexity"
+			Remediation = "EnablePasswordComplexity (W11 STIG V-253304)"
+		}
+	}
+	SWMB_GetIniSettings -IniData $SecurityConf -Section 'System Access' -Rules $Rules | SWMB_WriteSettings
+}
+
+################################################################
+
 # Disable Reversible password encryption
 # ClearTextPassword (0 or not exist: Recommanded) - W11 STIG V-253305 https://system32.eventsentry.com/stig/viewer/V-253305
+
+# Disable
+Function TweakDisablePasswordClearText { # RESINFO
+	Write-Output "Disabling Reversible Text Password..."
+	$IniData = [ordered]@{
+		'System Access' = [ordered]@{
+			"ClearTextPassword" = "0"
+		}
+	}
+	$TmpFile = New-TemporaryFile
+	SWMB_SaveIniFile -Path $TmpFile -IniData $IniData -SeceditFormat
+	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $TmpFile /areas SECURITYPOLICY | Out-Null
+	Remove-Item -Path $TmpFile
+}
+
+# Disable
+Function TweakEnablePasswordClearText { # RESINFO
+	Write-Output "Enabling Reversible Text Password..."
+	$IniData = [ordered]@{
+		'System Access' = [ordered]@{
+			"ClearTextPassword" = "1"
+		}
+	}
+	$TmpFile = New-TemporaryFile
+	SWMB_SaveIniFile -Path $TmpFile -IniData $IniData -SeceditFormat
+	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $TmpFile /areas SECURITYPOLICY | Out-Null
+	Remove-Item -Path $TmpFile
+}
 
 # View
 Function TweakViewPasswordClearText { # RESINFO
