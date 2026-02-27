@@ -493,7 +493,7 @@ Function SWMB_LoadIniFile {
 		[Parameter(Mandatory)] [string]$Path
 	)
 
-	$Ini = [ordered]@{}
+	$IniData = [ordered]@{}
 	$CurrentSection = ''
 
 	ForEach ($Line in Get-Content $Path) {
@@ -501,18 +501,60 @@ Function SWMB_LoadIniFile {
 		If ($Line -match '^\s*#') { Continue }
 		If ($Line -match '^\s*\[([^\]]+)\]\s*$') {
 			$CurrentSection = $Matches[1]
-			if (-not $Ini.Contains($CurrentSection)) {
-				$Ini[$CurrentSection] = [ordered]@{}
+			if (-not $IniData.Contains($CurrentSection)) {
+				$IniData[$CurrentSection] = [ordered]@{}
 			}
 			Continue
 		}
 		If ($Line -match '^\s*(\w+)\s*=\s*(.+)$') {
 			$Key = $Matches[1]
 			$Value = $Matches[2]
-			$Ini[$CurrentSection][$Key] = $Value
+			$IniData[$CurrentSection][$Key] = $Value
 		}
 	}
-	return $Ini
+	return $IniData
+}
+
+# Save .ini config file
+Function SWMB_SaveIniFile {
+	Param(
+		[Parameter(Mandatory)] [string]$Path,
+		[Parameter(Mandatory)] [System.Collections.IDictionary]$IniData,
+		[Parameter()] [switch]$SeceditFormat
+	)
+
+	$Output = New-Object System.Collections.Generic.List[string]
+
+	If ($SeceditFormat -and -not $IniData.Contains('Unicode')) {
+		$Output.Add("[Unicode]")
+		$Output.Add("Unicode = yes")
+		$Output.Add("") 
+	}
+    
+	ForEach ($Section in $IniData.Keys) {
+		# If a section exists (avoid empty header if ever)
+		If ($Section -ne '') {
+			$Output.Add("[$Section]")
+		}
+
+		ForEach ($Key in $IniData[$Section].Keys) {
+			$Value = $IniData[$Section][$Key]
+			$Output.Add("$Key = $Value")
+		}
+
+		# Blank line between sections
+		$Output.Add("")
+	}
+
+	If ($SeceditFormat -and -not $IniData.Contains('Version')) {
+		$Output.Add("[Version]")
+		$Output.Add('signature = "$CHICAGO$"')
+		$Output.Add("Revision = 1")
+		$Output.Add("") 
+	}
+
+	# Writing to the file / Secedit use UTF-16 LE (Unicode Windows)
+	Set-Content -Path $Path -Value $Output -Encoding Unicode
 }
 
 ################################################################
