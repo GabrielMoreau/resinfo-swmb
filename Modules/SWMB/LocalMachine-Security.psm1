@@ -1205,17 +1205,17 @@ Function TweakDisableBitlocker { # RESINFO
 Function TweakViewBitlocker { # RESINFO
 	Write-Output "Viewing Bitlocker on all fixed drives (XtsAes256 Recommanded)..."
 	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" }
-	$DriveIni = @{ Drives = [ordered]@{} }
-	$DriveRules = [ordered]@{}
+	$Hash = @{}
+	$DriveRules = @{}
 	ForEach ($Volume in $ListVolume) {
 		If (!($Volume.DriveLetter)) { Continue }
 
 		$Letter = $Volume.DriveLetter
 		$LetterColon = $Letter + ":"
-		$DriveIni['Drives'][$LetterColon] = 'OFF'
+		$Hash[$LetterColon] = 'OFF'
 		$Action = 'Encrypt'
 		If ((Get-BitLockerVolume $Letter).ProtectionStatus -eq "On") {
-			$DriveIni['Drives'][$LetterColon] = (Get-BitLockerVolume $Letter).EncryptionMethod
+			$Hash[$LetterColon] = (Get-BitLockerVolume $Letter).EncryptionMethod
 			$Action = 'Re-encrypt'
 		}
 		$DriveRules[$LetterColon] = @{
@@ -1224,7 +1224,11 @@ Function TweakViewBitlocker { # RESINFO
 			Remediation = "$Action drive $LetterColon with XtsAes256 (W11 STIG V-253259 + ANSSI)"
 		}
 	}
-	SWMB_GetIniSettings -IniData $DriveIni -Section 'Drives' -Rules $DriveRules | SWMB_WriteSettings
+	$Rules = [ordered]@{}
+	$DriveRules.Keys | Sort-Object | ForEach-Object {
+		$Rules[$_] = $DriveRules[$_]
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################
