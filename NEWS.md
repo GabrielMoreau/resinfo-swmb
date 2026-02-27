@@ -21,6 +21,7 @@ Here's a quick summary:
 * A new `Compliance Enforcement` frame has appeared with the `LocalMachine` check button.
 
 In Bitlocker tweak GPO, now force the PIN pre-boot authentication to the minimum of 6.
+The list of internal hard drive volumes no longer includes USB, UASP, SD, and MMC technologies.
 
 New presets/rules:
 
