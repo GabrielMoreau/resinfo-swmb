@@ -42,10 +42,10 @@ ViewPasswordComplexity
 ViewPasswordClearText
 
 ### Bitlocker Tweaks ###
+ViewVolumeBadlyFormatted
 ViewBitlocker
 ViewBitlockerTPM
 ViewAntivirusServices
-ViewVolumeBadlyFormatted
 
 ### TemporaryBypass Tweaks ###
 
