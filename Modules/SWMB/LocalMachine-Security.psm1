@@ -1204,12 +1204,14 @@ Function TweakDisableBitlocker { # RESINFO
 # View
 Function TweakViewBitlocker { # RESINFO
 	Write-Output "Viewing Bitlocker on all fixed drives (XtsAes256 Recommanded)..."
-	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" }
+	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $Null } |
+		ForEach-Object {
+			$Disk = Get-Partition -DriveLetter $_.DriveLetter | Get-Disk
+			If ($Disk.BusType -notmatch "USB|UASP|SD|MMC") { $_ }
+		}
 	$Hash = @{}
 	$DriveRules = @{}
 	ForEach ($Volume in $ListVolume) {
-		If (!($Volume.DriveLetter)) { Continue }
-
 		$Letter = $Volume.DriveLetter
 		$LetterColon = $Letter + ":"
 		$Hash[$LetterColon] = 'OFF'
@@ -1357,17 +1359,18 @@ Function TweakViewAntivirusServices { # RESINFO
 # View
 Function TweakViewVolumeBadlyFormatted {
 	Write-Output "Viewing Local Volumes that are Badly Formatted (non-NTFS)..."
+	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $Null } |
+		ForEach-Object {
+			$Disk = Get-Partition -DriveLetter $_.DriveLetter | Get-Disk
+			If ($Disk.BusType -notmatch "USB|UASP|SD|MMC") { $_ }
+		}
 	$Hash = @{}
 	$DriveRules = @{}
-
-	Get-Volume | Where-Object {
-		$_.DriveType -eq "Fixed" -and
-		$_.DriveLetter -ne $Null
-	} | ForEach-Object {
-		$LetterColon = "$($_.DriveLetter):"
+	ForEach ($Volume in $ListVolume) {
+		$LetterColon = "$($Volume.DriveLetter):"
 
 		# ---- DriveIni ----
-		$Hash[$LetterColon] = $_.FileSystem
+		$Hash[$LetterColon] = $Volume.FileSystem
 
 		# ---- DriveRules ----
 		$DriveRules[$LetterColon] = @{
