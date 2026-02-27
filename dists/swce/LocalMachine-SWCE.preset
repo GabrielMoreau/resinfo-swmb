@@ -38,6 +38,7 @@ ViewAdobeEnhancedSecurity
 
 ### Server Specific Tweaks ###
 ViewPasswordPolicy
+ViewPasswordComplexity
 ViewPasswordClearText
 
 ### Bitlocker Tweaks ###
