@@ -398,7 +398,7 @@ Function TweakEnableRemoteAssistance { # RESINFO
 
 # View
 Function TweakViewRemoteAssistance { # RESINFO
-	Write-Output "Viewing  Remote Assistance (0: Disable (Recommanded), 1: Enable)..."
+	Write-Output "Viewing Remote Assistance (0: Disable (Recommanded), 1: Enable)..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance'
 	$RegFields = @{
 		fAllowToGetHelp = @{
