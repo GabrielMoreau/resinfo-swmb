@@ -24,6 +24,8 @@ In Bitlocker tweak GPO, now force the PIN pre-boot authentication to the minimum
 
 New presets/rules:
 
+* 2026/02/27 - `EnablePasswordComplexity`/`DisablePasswordComplexity`/`ViewPasswordComplexity` -> Enable Password complexity filter
+* 2026/02/27 - `DisablePasswordClearText`/`EnablePasswordClearText`/`ViewPasswordClearText` -> Disable Reversible password encryption
 * 2026/02/25 - `EnableSEHOP`/`DisableSEHOP`/`ViewSEHOP` -> Enable Structured Exception Handling Overwrite Protection (SEHOP)
 * 2026/02/25 - `DisableIISCore`/`EnableIISCore`/`ViewIISCore` -> Disable Internet Information System (IIS) Core
 * 2026/02/23 - `SetDEPAlwaysOn`/`ViewDEP` -> Data Execution Prevention (DEP) must be configured for at least OptOut
