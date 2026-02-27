@@ -1357,7 +1357,7 @@ Function TweakViewAntivirusServices { # RESINFO
 # View
 Function TweakViewVolumeBadlyFormatted {
 	Write-Output "Viewing Local Volumes that are Badly Formatted (non-NTFS)..."
-	$DriveIni   = @{ Drives = [ordered]@{} }
+	$Hash = @{}
 	$DriveRules = @{}
 
 	Get-Volume | Where-Object {
@@ -1367,7 +1367,7 @@ Function TweakViewVolumeBadlyFormatted {
 		$LetterColon = "$($_.DriveLetter):"
 
 		# ---- DriveIni ----
-		$DriveIni['Drives'][$LetterColon] = $_.FileSystem
+		$Hash[$LetterColon] = $_.FileSystem
 
 		# ---- DriveRules ----
 		$DriveRules[$LetterColon] = @{
@@ -1376,7 +1376,11 @@ Function TweakViewVolumeBadlyFormatted {
 			Remediation = "Reformat the $LetterColon drive in NTFS (W11 STIG V-253265)"
 		}
 	}
-	SWMB_GetIniSettings -IniData $DriveIni -Section 'Drives' -Rules $DriveRules | SWMB_WriteSettings
+	$Rules = [ordered]@{}
+	$DriveRules.Keys | Sort-Object | ForEach-Object {
+		$Rules[$_] = $DriveRules[$_]
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################
