@@ -289,6 +289,7 @@ DisablePasswordClearText                        # EnablePasswordClearText       
 # DisableCtrlAltDelLogin                        # EnableCtrlAltDelLogin
 # DisableIEEnhancedSecurity                     # EnableIEEnhancedSecurity
 # EnableAudio                                   # DisableAudio
+
 ### Bitlocker Tweaks ###
 # EnableBitlocker                               # DisableBitlocker                              # ViewBitlocker                 ## Enable Bitlocker on all fixed drives (Tweak Enable is done interactively) - W11 STIG V-253259 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253259
 # SetBitlockerActive                            # UnsetBitlockerActive
