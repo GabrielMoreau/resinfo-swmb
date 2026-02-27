@@ -970,14 +970,18 @@ Function TweakEnableBitlocker { # RESINFO
 		)
 
 		# Other drives encryption
-		$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $SystemDriveLetter }
+		$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $Null } |
+			ForEach-Object {
+				$Disk = Get-Partition -DriveLetter $_.DriveLetter | Get-Disk
+				If ($Disk.BusType -notmatch "USB|UASP|SD|MMC") { $_ }
+			}
 		ForEach ($Volume in $ListVolume) {
-			If (!($Volume.DriveLetter)) { continue }
+			If ($_.DriveLetter -eq $SystemDriveLetter) { Continue }
 
 			$Letter = $Volume.DriveLetter
 			$LetterColon = $Letter + ":"
 			$cryptDrive = Read-Host -Prompt "The $Letter drive is not removable and hosts a file system. Do you want to enable encryption on this drive? [Y/n]"
-			If ($cryptDrive.ToLower() -eq "n") { continue }
+			If ($cryptDrive.ToLower() -eq "n") { Continue }
 
 			# Test if partition is already encrypted (like for C:)
 			If ((Get-BitLockerVolume $Letter).ProtectionStatus -eq "On") {
