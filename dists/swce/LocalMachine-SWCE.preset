@@ -17,6 +17,7 @@ ViewSessionLockTimeout
 ViewSEHOP
 
 ### Network Tweaks ###
+ViewConnectionSharing
 ViewAnonymousShareAccess
 ViewRemoteAssistance
 ViewRemoteDesktop
@@ -27,6 +28,7 @@ ViewAutorun
 ViewIISCore
 
 ### UI Tweaks ###
+ViewNetworkOnLockScreen
 ViewCameraFromLockScreen
 
 ### Explorer UI Tweaks ###

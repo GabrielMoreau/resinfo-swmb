@@ -141,7 +141,7 @@ DisableSMB1Protocol                             # EnableSMB1Protocol            
 # DisableIPv4                                   # EnableIPv4
 # DisableIPv6                                   # EnableIPv6
 # DisableNCSIProbe                              # EnableNCSIProbe
-# DisableConnectionSharing                      # EnableConnectionSharing
+DisableConnectionSharing                        # EnableConnectionSharing                       # ViewConnectionSharing         ## Disable Internet Connection Sharing - W11 STIG V-253361 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253361
 DisableAnonymousShareAccess                     # EnableAnonymousShareAccess                    # ViewAnonymousShareAccess      ## Disable Anonymous access to Named Pipes and Shares - W11 STIG V-253456 https://system32.eventsentry.com/stig/search?query=RestrictNullSessAccessValue
 DisableRemoteAssistance                         # EnableRemoteAssistance                        # ViewRemoteAssistance          ## Disable (Solicited) Remote Assistance - W11 STIG V-253382 https://system32.eventsentry.com/stig/viewer/V-253382
 # EnableRemoteDesktop                           # DisableRemoteDesktop                          # ViewRemoteDesktop             ## Disable Remote Desktop
@@ -183,10 +183,10 @@ EnableSWMBUniqueId                              # DisableSWMBUniqueId           
 ### UI Tweaks ###
 DisableLockScreen                               # EnableLockScreen
 # DisableLockScreenRS1                          # EnableLockScreenRS1
-HideNetworkFromLockScreen                       # ShowNetworkOnLockScreen
+HideNetworkFromLockScreen                       # ShowNetworkOnLockScreen                       # ViewNetworkOnLockScreen       ## Hide network options from Logon and Lock Screen - W11 STIG V-253378 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253378
 HideShutdownFromLockScreen                      # ShowShutdownOnLockScreen
 DisableLockScreenBlur                           # EnableLockScreenBlur
-DisableCameraFromLockScreen                     # EnableCameraFromLockScreen                    # ViewCameraFromLockScreen       ## Camera access from the lock screen must be disabled - W11 STIG V-253350 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253350
+DisableCameraFromLockScreen                     # EnableCameraFromLockScreen                    # ViewCameraFromLockScreen      ## Camera access from the lock screen must be disabled - W11 STIG V-253350 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253350
 DisableSearchAppInStore                         # EnableSearchAppInStore
 DisableNewAppPrompt                             # EnableNewAppPrompt
 # HideRecentlyAddedApps                         # ShowRecentlyAddedApps
@@ -246,7 +246,7 @@ DisableMediaSharing                             # EnableMediaSharing
 # UninstallWorkFolders                          # InstallWorkFolders
 # UninstallHelloFace                            # InstallHelloFace
 # UninstallMathRecognizer                       # InstallMathRecognizer
-UninstallPowerShellV2                           # InstallPowerShellV2                           # ViewPowerShellV2               ## PowerShell 2.0 feature must be disabled - W11 STIG V-253285 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253285
+UninstallPowerShellV2                           # InstallPowerShellV2                           # ViewPowerShellV2              ## PowerShell 2.0 feature must be disabled - W11 STIG V-253285 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253285
 # UninstallPowerShellISE                        # InstallPowerShellISE
 # UninstallKasperskyEndpoint                    # UninstallKasperskyConsole                     # ViewKasperskyProduct
 # InstallLinuxSubsystem                         # UninstallLinuxSubsystem
