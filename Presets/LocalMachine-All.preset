@@ -113,7 +113,7 @@ DisableInsecureGuestLogons                      # EnableInsecureGuestLogons     
 # DisableIndexingEncryptedStores                # EnableIndexingEncryptedStores
 # DisableMicrosoftAccount                       # EnableMicrosoftAccount
 # SetSecurityParamAccountPolicy                 # UnsetSecurityParamAccountPolicy
-# EnableSessionLockTimeout                      # DisableSessionLockTimeout
+# EnableSessionLockTimeout                      # DisableSessionLockTimeout                     # ViewSessionLockTimeout        ## Lock System after Inactivity Timeout - W11 STIG V-253444 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253444
 # DisableDomainProfile                          # EnableDomainProfile
 # DisablePrivateProfile                         # EnablePrivateProfile
 # DisablePublicProfile                          # EnablePublicProfile

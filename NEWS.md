@@ -25,6 +25,7 @@ The list of internal hard drive volumes no longer includes USB, UASP, SD, and MM
 
 New presets/rules:
 
+* 2026/03/01 - `ViewSessionLockTimeout` -> View Lock System after Inactivity Timeout (`$Global:SWMB_Custom` key `InactivityTimeoutSecs`)
 * 2026/02/27 - `EnablePasswordComplexity`/`DisablePasswordComplexity`/`ViewPasswordComplexity` -> Enable Password complexity filter
 * 2026/02/27 - `DisablePasswordClearText`/`EnablePasswordClearText`/`ViewPasswordClearText` -> Disable Reversible password encryption
 * 2026/02/25 - `EnableSEHOP`/`DisableSEHOP`/`ViewSEHOP` -> Enable Structured Exception Handling Overwrite Protection (SEHOP)
