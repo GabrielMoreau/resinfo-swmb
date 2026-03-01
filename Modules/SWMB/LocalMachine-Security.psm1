@@ -388,7 +388,7 @@ Function TweakViewASLR { # RESINFO
 		MoveImages = @{
 			OkValues = @($Null)
 			Description = "ASLR (Address Space Layout Randomisation)"
-			Remediation = "DisableASLR (W11 W10 STIG V-220874)"
+			Remediation = "DisableASLR (W10 STIG V-220874)"
 		}
 	}
 	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
