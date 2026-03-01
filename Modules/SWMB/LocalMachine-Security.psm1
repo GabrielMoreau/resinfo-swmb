@@ -1208,26 +1208,33 @@ Function TweakDisableBitlocker { # RESINFO
 # View
 Function TweakViewBitlocker { # RESINFO
 	Write-Output "Viewing Bitlocker on all fixed drives (XtsAes256 Recommanded)..."
-	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $Null } |
-		ForEach-Object {
-			$Disk = Get-Partition -DriveLetter $_.DriveLetter | Get-Disk
-			If ($Disk.BusType -notmatch "USB|UASP|SD|MMC") { $_ }
-		}
+	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $Null }
+#		ForEach-Object {
+#			$Disk = Get-Partition -DriveLetter $_.DriveLetter | Get-Disk
+#			If ($Disk.BusType -notmatch "USB|UASP|SD|MMC") { $_ }
+#		}
 	$Hash = @{}
 	$DriveRules = @{}
 	ForEach ($Volume in $ListVolume) {
 		$Letter = $Volume.DriveLetter
 		$LetterColon = $Letter + ":"
+		$DiskBusType = (Get-Partition -DriveLetter $Volume.DriveLetter | Get-Disk).BusType
 		$Hash[$LetterColon] = 'OFF'
 		$Action = 'Encrypt'
 		If ((Get-BitLockerVolume $Letter).ProtectionStatus -eq "On") {
 			$Hash[$LetterColon] = (Get-BitLockerVolume $Letter).EncryptionMethod
 			$Action = 'Re-encrypt'
 		}
-		$DriveRules[$LetterColon] = @{
-			OkValues = @('XtsAes256')
-			Description = "Encrytion on drive $LetterColon"
-			Remediation = "$Action drive $LetterColon with XtsAes256 (W11 STIG V-253259 + ANSSI)"
+		If ($DiskBusType -match "USB|UASP|SD|MMC") {
+			$DriveRules[$LetterColon] = @{
+				Description = "External Disk $DiskBusType"
+			}
+		} Else {
+			$DriveRules[$LetterColon] = @{
+				OkValues = @('XtsAes256')
+				Description = "Encrytion on drive $LetterColon"
+				Remediation = "$Action drive $LetterColon with XtsAes256 (W11 STIG V-253259 + ANSSI)"
+			}
 		}
 	}
 	$Rules = [ordered]@{}
@@ -1363,24 +1370,31 @@ Function TweakViewAntivirusServices { # RESINFO
 # View
 Function TweakViewVolumeBadlyFormatted {
 	Write-Output "Viewing Local Volumes that are Badly Formatted (non-NTFS)..."
-	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $Null } |
-		ForEach-Object {
-			$Disk = Get-Partition -DriveLetter $_.DriveLetter | Get-Disk
-			If ($Disk.BusType -notmatch "USB|UASP|SD|MMC") { $_ }
-		}
+	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $Null }
+#		ForEach-Object {
+#			$Disk = Get-Partition -DriveLetter $_.DriveLetter | Get-Disk
+#			If ($Disk.BusType -notmatch "USB|UASP|SD|MMC") { $_ }
+#		}
 	$Hash = @{}
 	$DriveRules = @{}
 	ForEach ($Volume in $ListVolume) {
 		$LetterColon = "$($Volume.DriveLetter):"
+		$DiskBusType = (Get-Partition -DriveLetter $Volume.DriveLetter | Get-Disk).BusType
 
 		# ---- DriveIni ----
 		$Hash[$LetterColon] = $Volume.FileSystem
 
 		# ---- DriveRules ----
-		$DriveRules[$LetterColon] = @{
-			OkValues    = @('NTFS')
-			Description = "Format of the $LetterColon drive"
-			Remediation = "Reformat the $LetterColon drive in NTFS (W11 STIG V-253265)"
+		If ($DiskBusType -match "USB|UASP|SD|MMC") {
+			$DriveRules[$LetterColon] = @{
+				Description = "External Disk $DiskBusType"
+			}
+		} Else { # Internal disk
+			$DriveRules[$LetterColon] = @{
+				OkValues    = @('NTFS')
+				Description = "Format of the $LetterColon drive"
+				Remediation = "Reformat the $LetterColon drive in NTFS (W11 STIG V-253265)"
+			}
 		}
 	}
 	$Rules = [ordered]@{}
