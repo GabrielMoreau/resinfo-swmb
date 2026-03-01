@@ -52,16 +52,35 @@ Function TweakEnableLockScreenRS1 {
 
 ################################################################
 
-# Hide network options from Lock Screen
+# The network selection user interface (UI) must not be displayed on the logon screen
+# W11 STIG V-253378 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253378
+
+# Hide network options from Logon and Lock Screen
 Function TweakHideNetworkFromLockScreen {
 	Write-Output "Hiding network options from Lock Screen..."
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "DontDisplayNetworkSelectionUI" -Type DWord -Value 1
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System'
+	Set-ItemProperty -Path $RegPath -Name "DontDisplayNetworkSelectionUI" -Type DWord -Value 1
 }
 
-# Show network options on lock screen
+# Show
 Function TweakShowNetworkOnLockScreen {
 	Write-Output "Showing network options on Lock Screen..."
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "DontDisplayNetworkSelectionUI" -ErrorAction SilentlyContinue
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System'
+	Remove-ItemProperty -Path $RegPath -Name "DontDisplayNetworkSelectionUI" -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewNetworkOnLockScreen { # RESINFO
+	Write-Output "Viewing Internet Connection Sharing (1 : Hide (Recommanded), not exist: Show (Default))..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System'
+	$RegFields = @{
+		DontDisplayNetworkSelectionUI = @{
+			OkValues = @(1)
+			Description = "Hide network options from Logon and Lock Screen"
+			Remediation = "HideNetworkFromLockScreen (W11 STIG V-253378)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################
