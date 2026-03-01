@@ -151,27 +151,45 @@ Function TweakDisableDontDisplayLastUsername { # RESINFO
 
 ################################################################
 
-### Verrouillage de la session : timeout de session
-# https://www.stigviewer.com/stig/windows_server_2012_member_server/2014-01-07/finding/V-36773
+# The machine inactivity limit must be set to 15 minutes (900 seconds), locking the system with the screensaver
+# W11 STIG V-253444 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253444
 # https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.ControlPanelDisplay::CPL_Personalization_ScreenSaverTimeOut
 # https://www.groovypost.com/howto/make-windows-10-lock-automatically-after-a-set-amount-of-inactivity/
+# Variable $Global:SWMB_Custom.InactivityTimeoutSecs
 # max InactivityTimeoutSecs = 900 !
+
 # Enable
 Function TweakEnableSessionLockTimeout { # RESINFO
-	Write-Output "Enabling session timeout..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System")) {
-		New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Force | Out-Null
+	Write-Output "Enabling Session Lock Timeout (InactivityTimeoutSecs) after $($Global:SWMB_Custom.InactivityTimeoutSecs) seconds..."
+	$RegPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name InactivityTimeoutSecs  -Type DWord -Value $Global:SWMB_Custom.InactivityTimeoutSecs -ErrorAction SilentlyContinue
+	Set-ItemProperty -Path $RegPath -Name InactivityTimeoutSecs -Type DWord -Value $Global:SWMB_Custom.InactivityTimeoutSecs -ErrorAction SilentlyContinue
 }
 
 # Disable
 Function TweakDisableSessionLockTimeout { # RESINFO
-	Write-Output "Disabling session timeout..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System")) {
-		New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Force | Out-Null
+	Write-Output "Disabling Session Lock Timeout (InactivityTimeoutSecs)..."
+	$RegPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name InactivityTimeoutSecs  -Type DWord -Value 0 -ErrorAction SilentlyContinue
+	Set-ItemProperty -Path $RegPath -Name InactivityTimeoutSecs -Type DWord -Value 0 -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewSessionLockTimeout { # RESINFO
+	Write-Output "Viewing Session Lock Timeout (InactivityTimeoutSecs) (0 or not exist: Disable, 900: Enable after 15 min (Recommanded))"
+	$RegPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+	$RegFields = [ordered]@{
+		InactivityTimeoutSecs = @{
+			OkValues = @('>1', '<901')
+			Description = "Locking the system after inactivity timeout"
+			Remediation = "EnableSessionLockTimeout / InactivityTimeoutSecs<901 (W11 STIG V-253444)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################
