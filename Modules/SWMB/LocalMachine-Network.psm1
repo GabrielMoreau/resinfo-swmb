@@ -303,15 +303,34 @@ Function TweakEnableNCSIProbe {
 ################################################################
 
 # Disable Internet Connection Sharing (e.g. mobile hotspot)
+# W11 STIG V-253361 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253361
+
+# Disable
 Function TweakDisableConnectionSharing {
 	Write-Output "Disabling Internet Connection Sharing..."
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections" -Name "NC_ShowSharedAccessUI" -Type DWord -Value 0
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections'
+	Set-ItemProperty -Path $RegPath -Name "NC_ShowSharedAccessUI" -Type DWord -Value 0
 }
 
-# Enable Internet Connection Sharing (e.g. mobile hotspot)
+# Enable
 Function TweakEnableConnectionSharing {
 	Write-Output "Enabling Internet Connection Sharing..."
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections" -Name "NC_ShowSharedAccessUI" -ErrorAction SilentlyContinue
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections'
+	Remove-ItemProperty -Path $RegPath -Name "NC_ShowSharedAccessUI" -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewConnectionSharing { # RESINFO
+	Write-Output "Viewing Internet Connection Sharing (0 : Disable (Recommanded), not exist: Enable (Default))..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections'
+	$RegFields = @{
+		NC_ShowSharedAccessUI = @{
+			OkValues = @(0)
+			Description = "Disable Internet Connection Sharing"
+			Remediation = "DisableConnectionSharing (W11 STIG V-253361)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################
@@ -342,11 +361,11 @@ Function TweakViewAnonymousShareAccess { # RESINFO
 		RestrictNullSessAccessValue = @{
 			OkValues = @(1, $Null)   # 1 or not exist
 			Description = "Disable anonymous access to Named Pipes and Shares"
-			Remediation = "DisableAnonymousShareAccess"
+			Remediation = "DisableAnonymousShareAccess (W11 STIG V-253456)"
 		}
 	}
 	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
-	}
+}
 
 ################################################################
 
