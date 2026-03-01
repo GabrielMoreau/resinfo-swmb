@@ -45,29 +45,48 @@ Function TweakEnableShutdownTracker {
 
 ################################################################
 
-# Password complexity and maximum age requirements
+# Password Policy
 # MaximumPasswordAge = Number of week (52 = 1 year)
-# PasswordComplexity (0: Simple, 1: Complex) - W11 STIG V-253304 https://system32.eventsentry.com/stig/viewer/V-253304
-# MinimumPasswordLength (>13: Recommanded) - W10 STIG V-220745 https://www.stigviewer.com/stigs/microsoft_windows_10/2025-02-25/finding/V-220745
-# PasswordHistorySize (>23: Recommanded) - W11 STIG V-253300 https://system32.eventsentry.com/stig/viewer/V-253300
-# ClearTextPassword (0 or not exist: Recommanded) - W11 STIG V-253305 https://system32.eventsentry.com/stig/viewer/V-253305
 
-# Disable
-Function TweakDisablePasswordPolicy {
-	Write-Output "Disabling password complexity and maximum age requirements..."
+# PasswordHistorySize = $($Global:SWMB_Custom.PasswordHistorySize) (>23: Recommanded) - W11 STIG V-253300 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253300
+# MinimumPasswordAge = $($Global:SWMB_Custom.MinimumPasswordAge) - W11 STIG V-253301 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253301
+# MaximumPasswordAge = $($Global:SWMB_Custom.MaximumPasswordAge) - W11 STIG V-253302 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253302
+# MinimumPasswordLength = $($Global:SWMB_Custom.MinimumPasswordLength) (>13: Recommanded) - W11 STIG V-253303 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253303
+# LockoutBadCount = $($Global:SWMB_Custom.LockoutBadCount)
+# ResetLockoutCount = $($Global:SWMB_Custom.ResetLockoutCount)
+# LockoutDuration = $($Global:SWMB_Custom.LockoutDuration)
+# EnableGuestAccount = $($Global:SWMB_Custom.EnableGuestAccount)
+
+# Enable password complexity and maximum age requirements
+Function TweakEnablePasswordPolicy { # RESINFO
+	Write-Output "Enabling Password Policy (MinimumPasswordAge, MaximumPasswordAge, MinimumPasswordLength)..."
+	$IniData = [ordered]@{
+		'System Access' = [ordered]@{
+			"PasswordHistorySize"   = $($Global:SWMB_Custom.PasswordHistorySize)
+			"MinimumPasswordAge"    = $($Global:SWMB_Custom.MinimumPasswordAge)
+			"MaximumPasswordAge"    = $($Global:SWMB_Custom.MaximumPasswordAge)
+			"MinimumPasswordLength" = $($Global:SWMB_Custom.MinimumPasswordLength)
+		}
+	}
 	$TmpFile = New-TemporaryFile
-	secedit /export /cfg $TmpFile /quiet
-	(Get-Content $TmpFile).Replace("PasswordComplexity = 1", "PasswordComplexity = 0").Replace("MaximumPasswordAge = 42", "MaximumPasswordAge = -1") | Out-File $TmpFile
+	SWMB_SaveIniFile -Path $TmpFile -IniData $IniData -SeceditFormat
 	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $TmpFile /areas SECURITYPOLICY | Out-Null
 	Remove-Item -Path $TmpFile
 }
 
-# Enable password complexity and maximum age requirements
-Function TweakEnablePasswordPolicy {
-	Write-Output "Enabling password complexity and maximum age requirements..."
+# Disable
+Function TweakDisablePasswordPolicy { # RESINFO
+	Write-Output "Disabling (Reset to défault) (MinimumPasswordAge, MaximumPasswordAge, MinimumPasswordLength)..."
+	$IniData = [ordered]@{
+		'System Access' = [ordered]@{
+			"PasswordHistorySize"   = 0
+			"MinimumPasswordAge"    = 0
+			"MaximumPasswordAge"    = -1
+			"MinimumPasswordLength" = 0
+		}
+	}
 	$TmpFile = New-TemporaryFile
-	secedit /export /cfg $TmpFile /quiet
-	(Get-Content $TmpFile).Replace("PasswordComplexity = 0", "PasswordComplexity = 1").Replace("MaximumPasswordAge = -1", "MaximumPasswordAge = 42") | Out-File $TmpFile
+	SWMB_SaveIniFile -Path $TmpFile -IniData $IniData -SeceditFormat
 	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $TmpFile /areas SECURITYPOLICY | Out-Null
 	Remove-Item -Path $TmpFile
 }
@@ -82,29 +101,25 @@ Function TweakViewPasswordPolicy { # RESINFO
 	Remove-Item -Path $TmpFile
 
 	$Rules = [ordered]@{
-		PasswordComplexity = @{
-			OkValues = @(1)
-			Description = "Password Complexity"
-			Remediation = "EnablePasswordPolicy / PasswordComplexity=1 (W11 STIG V-253304)"
-		}
-		MaximumPasswordAge = @{
-			#OkValues = $Null
-			Description = "Maximum Password Age in weeks"
-		}
-		MinimumPasswordLength = @{
-			OkValues = @('>13')
-			Description = "Minimum Password Length"
-			Remediation = "EnablePasswordPolicy / MinimumPasswordLength>13 (W10 STIG V-220745)"
-		}
 		PasswordHistorySize = @{
 			OkValues = @('>23')
 			Description = "Password History Size"
 			Remediation = "EnablePasswordPolicy / PasswordHistorySize>23 (W11 STIG V-253300)"
 		}
-		ClearTextPassword = @{
-			OkValues = @(0, $Null)
-			Description = "Disable Reversible Text Password"
-			Remediation = "DisablePasswordClearText (W11 STIG V-253305)"
+		MinimumPasswordAge = @{
+			OkValues = @('>0')
+			Description = "Minimum Password Age in days"
+			Remediation = "EnablePasswordPolicy / MinimumPasswordAge=1 (W11 STIG V-253301)"
+		}
+		MaximumPasswordAge = @{
+			OkValues = @('0..60')
+			Description = "Maximum Password Age in days"
+			Remediation = "EnablePasswordPolicy / MaximumPasswordAge=60 (W11 STIG V-253302)"
+		}
+		MinimumPasswordLength = @{
+			OkValues = @('>13')
+			Description = "Minimum Password Length"
+			Remediation = "EnablePasswordPolicy / MinimumPasswordLength>13 (W11 STIG V-253303)"
 		}
 	}
 	SWMB_GetIniSettings -IniData $SecurityConf -Section 'System Access' -Rules $Rules | SWMB_WriteSettings
