@@ -612,6 +612,13 @@ Function SWMB_GetRegistrySettings {
 						$Status = 'PASS'
 						Break
 					}
+				} ElseIf ($OkValue -match '^(\d+)\.\.(\d+)$') { # Range 1..12
+					$Min = [int]$Matches[1]
+					$Max = [int]$Matches[2]
+					If ($Value -ge $Min -and $Value -le $Max) {
+						$Status = 'PASS'
+						Break
+					}
 				} ElseIf ($Value -eq $OkValue) {  # OkValue is a value
 					$Status = 'PASS'
 					Break
