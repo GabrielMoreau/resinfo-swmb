@@ -59,7 +59,7 @@ Function TweakEnableShutdownTracker {
 
 # Enable password complexity and maximum age requirements
 Function TweakEnablePasswordPolicy { # RESINFO
-	Write-Output "Enabling Password Policy (MinimumPasswordAge, MaximumPasswordAge, MinimumPasswordLength)..."
+	Write-Output "Enabling Password Policy (PasswordHistorySize, MinimumPasswordAge, MaximumPasswordAge, MinimumPasswordLength)..."
 	$IniData = [ordered]@{
 		'System Access' = [ordered]@{
 			"PasswordHistorySize"   = $($Global:SWMB_Custom.PasswordHistorySize)
@@ -76,7 +76,7 @@ Function TweakEnablePasswordPolicy { # RESINFO
 
 # Disable
 Function TweakDisablePasswordPolicy { # RESINFO
-	Write-Output "Disabling (Reset to défault) (MinimumPasswordAge, MaximumPasswordAge, MinimumPasswordLength)..."
+	Write-Output "Disabling (Reset to défault) (PasswordHistorySize, MinimumPasswordAge, MaximumPasswordAge, MinimumPasswordLength)..."
 	$IniData = [ordered]@{
 		'System Access' = [ordered]@{
 			"PasswordHistorySize"   = 0
@@ -93,7 +93,7 @@ Function TweakDisablePasswordPolicy { # RESINFO
 
 # View
 Function TweakViewPasswordPolicy { # RESINFO
-	Write-Output "Viewing Password Policy (Recommanded - PasswordComplexity: 1 (Complex), MaximumPasswordAge: X weeks, MinimumPasswordLength: >12, PasswordHistorySize: ?, ClearTextPassword: 0 (Not reversible))..."
+	Write-Output "Viewing Password Policy (Recommanded - PasswordHistorySize: >23, MinimumPasswordAge: >0, MaximumPasswordAge: X days, MinimumPasswordLength: >13)..."
 
 	$TmpFile = New-TemporaryFile
 	secedit /export /cfg $TmpFile /quiet | Out-Null
