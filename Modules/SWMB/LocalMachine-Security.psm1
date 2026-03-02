@@ -861,8 +861,8 @@ Function TweakViewSEHOP { # RESINFO
 
 # Enable
 Function TweakEnableBitlocker { # RESINFO
-	# Write-Output "Enabling bitlocker on all drive..."
-	## PowerShell bitlocker commands
+	# Write-Output "Enabling Bitlocker on all drive..."
+	## PowerShell Bitlocker commands
 	# https://docs.microsoft.com/en-us/powershell/module/bitlocker/?view=win10-ps
 
 	Function _NetworkKeyBackup() {
@@ -871,27 +871,27 @@ Function TweakEnableBitlocker { # RESINFO
 		)
 
 		If ($WantToSave -eq $False) {
-			$IsNetWorkBackup = Read-Host -Prompt "Do you want to save recovery keys on a network drive? [y/N]"
-			If ($IsNetWorkBackup.ToLower() -ne "y") {
+			$QueryNetWorkBackup = Read-Host -Prompt "Do you want to save recovery keys on a network drive? [y/N]"
+			If ($QueryNetWorkBackup.ToLower() -ne "y") {
 				Return $Null
 			}
 		}
 
 		Do {
-			$NetworkKeyBackup = Read-Host -Prompt "Provide a CIFS/SMB writable network path with UNC syntax \\serverName\SharedFolder"
-		} Until (($NetworkKeyBackup.Length -gt 2) -and ("\\" -ccontains $NetworkKeyBackup.Substring(0, 2)))
+			$QueryNetWorkBackupPath = Read-Host -Prompt "Provide a CIFS/SMB writable network path with UNC syntax \\serverName\SharedFolder"
+		} Until (($QueryNetWorkBackupPath.Length -gt 2) -and ("\\" -ccontains $QueryNetWorkBackupPath.Substring(0, 2)))
 
-		If ($NetworkKeyBackup.Substring($NetworkKeyBackup.Length - 1) -ne "\") {
-			$NetworkKeyBackup += "\"
+		If ($QueryNetWorkBackupPath.Substring($QueryNetWorkBackupPath.Length - 1) -ne "\") {
+			$QueryNetWorkBackupPath += "\"
 		}
 
 		Try {
-			New-Item -Name isWriteAllowed.txt -ItemType File -Path $NetworkKeyBackup -Force -ErrorAction stop | Out-Null
-			Return $NetworkKeyBackup
+			New-Item -Name isWriteAllowed.txt -ItemType File -Path $QueryNetWorkBackupPath -Force -ErrorAction stop | Out-Null
+			Return $QueryNetWorkBackupPath
 			# Todo question : do I delete the file afterwards?
 		} Catch {
-			Write-Output ("$NetworkKeyBackup is not writable! Choose another location!") -ForegroundColor Red
-			_NetworkKeyBackup -wantToSave $True
+			Write-Output ("$QueryNetWorkBackupPath is not writable! Choose another location!") -ForegroundColor Red
+			_NetworkKeyBackup -WantToSave $True
 		}
 	}
 
@@ -913,22 +913,22 @@ Function TweakEnableBitlocker { # RESINFO
 			[string]$NetworkKeyBackupFolder
 		)
 
-		#$title = 'Activation bitlocker'
+		#$title = 'Activation Bitlocker'
 		#$query = 'Do you want to use PIN?'
 		#$choices = '&Yes', '&No'
 		#$decision = $Host.UI.PromptForChoice($title, $query, $choices, 1)
-		$UseCodePin = Read-Host -Prompt "Activation bitlocker - Do you want to use PIN code? [Y/n]"
+		$UseCodePin = Read-Host -Prompt "Activation Bitlocker - Do you want to use PIN code? [Y/n]"
 		If ($UseCodePin.ToLower() -ne "n") {
 			$Secure = Read-Host -AsSecureString -Prompt "Code PIN (6 digits)"
-			Write-Output "Enabling bitlocker on system drive $SystemDrive with PIN code"
+			Write-Output "Enabling Bitlocker on system drive $SystemDrive with PIN code"
 			Enable-BitLocker -MountPoint "$SystemDrive" -TpmAndPinProtector -Pin $Secure -EncryptionMethod "XtsAes256" 3> $Null
 			Write-EventLog -LogName Application -Source "SWMB" -EntryType Information -EventID 2 `
-				-Message "SWMB: Enable bitlocker on system drive $SystemDrive with PIN code"
+				-Message "SWMB: Enable Bitlocker on system drive $SystemDrive with PIN code"
 		} Else {
-			Write-Output "Enabling bitlocker on system drive $SystemDrive without PIN code"
+			Write-Output "Enabling Bitlocker on system drive $SystemDrive without PIN code"
 			Enable-BitLocker -MountPoint "$SystemDrive" -TpmProtector -EncryptionMethod "XtsAes256"
 			Write-EventLog -LogName Application -Source "SWMB" -EntryType Information -EventID 3 `
-				-Message "SWMB: Enable bitlocker on system drive $SystemDrive without PIN code"
+				-Message "SWMB: Enable Bitlocker on system drive $SystemDrive without PIN code"
 		}
 
 		Write-Output "Add system drive key"
@@ -980,8 +980,8 @@ Function TweakEnableBitlocker { # RESINFO
 
 			$Letter = $Volume.DriveLetter
 			$LetterColon = $Letter + ":"
-			$cryptDrive = Read-Host -Prompt "The $Letter drive is not removable and hosts a file system. Do you want to enable encryption on this drive? [Y/n]"
-			If ($cryptDrive.ToLower() -eq "n") { Continue }
+			$QueryCryptDrive = Read-Host -Prompt "The $Letter drive is not removable and hosts a file system. Do you want to enable encryption on this drive? [Y/n]"
+			If ($QueryCryptDrive.ToLower() -eq "n") { Continue }
 
 			# Test if partition is already encrypted (like for C:)
 			If ((Get-BitLockerVolume $Letter).ProtectionStatus -eq "On") {
@@ -1057,7 +1057,7 @@ Function TweakEnableBitlocker { # RESINFO
 		# If you disable or do not configure this policy setting, users can configure only basic options on computers with a TPM.
 		# Active this GPO
 		Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\FVE" -Name "UseAdvancedStartup" -Value 1
-		# Don't allow bitlocker without TPM
+		# Don't allow Bitlocker without TPM
 		Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\FVE" -Name "EnableBDEWithNoTPM" -Value 0
 		# Dont allow =>0, allow =>2, require=>1
 		Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\FVE" -Name "UseTPM" -Value 2
@@ -1129,20 +1129,20 @@ Function TweakEnableBitlocker { # RESINFO
 
 		If ($DriveEMethod -eq "None") {
 			# use network to save key ?
-			$NetworkBackup = _NetworkKeyBackup -wantToSave $False
+			$NetworkBackup = _NetworkKeyBackup -WantToSave $False
 
 			# Disk ready for encryption
-			$applyGPO = Read-Host -Prompt "Your disk is ready for encryption. Are you agree to apply Resinfo GPO and start encryption [Y/n]"
-			If ($applyGPO.ToLower() -eq "n") {
+			$QueryApplyGPO = Read-Host -Prompt "Your disk is ready for encryption. Are you agree to apply Resinfo GPO and start encryption [Y/n]"
+			If ($QueryApplyGPO.ToLower() -eq "n") {
 				Write-Warning "Stop script. Your drive is not encrypted"
 				Return
 			}
 			_EnforceCryptGPO
-			_EncryptSytemDrive -networkKeyBackupFolder $NetworkBackup
-			_EncryptNonSytemDrives -networkKeyBackupFolder $NetworkBackup
+			_EncryptSytemDrive -NetworkKeyBackupFolder $NetworkBackup
+			_EncryptNonSytemDrives -NetworkKeyBackupFolder $NetworkBackup
 
-			$reboot = Read-Host -Prompt "The computer must be restarted to finish the system disk encryption. Reboot now? [Y/n]"
-			If ($reboot.ToLower() -ne "n") {
+			$QueryReboot = Read-Host -Prompt "The computer must be restarted to finish the system disk encryption. Reboot now? [Y/n]"
+			If ($QueryReboot.ToLower() -ne "n") {
 				Restart-Computer -Force
 			}
 		} ElseIf ($DriveEMethod -eq "XtsAes256") {
@@ -1157,8 +1157,8 @@ Function TweakEnableBitlocker { # RESINFO
 					Write-Output "Nothing to do on System drive !"
 
 					# use network to save key ?
-					$NetworkBackup = _NetworkKeyBackup -wantToSave $False
-					_EncryptNonSytemDrives -networkKeyBackupFolder $NetworkBackup
+					$NetworkBackup = _NetworkKeyBackup -WantToSave $False
+					_EncryptNonSytemDrives -NetworkKeyBackupFolder $NetworkBackup
 					Return
 				} Else {
 					Write-Output "Bitlocker is suspend, resume with :"
@@ -1169,18 +1169,19 @@ Function TweakEnableBitlocker { # RESINFO
 		} ElseIf ($DriveEMethod -ne "XtsAes256") {
 			# Disk crypt but not with XtsAes256
 			Write-Warning "Your ${Env:SystemDrive} is not encrypt in XtsAes256, the encryption is $DriveEMethod"
-			$decrypt = Read-Host -Prompt "Do you want to decrypt all fixed drive [Y/n]"
-			If ($decrypt.ToLower() -ne "n") {
+			$QueryDecrypt = Read-Host -Prompt "Do you want to decrypt all fixed drive [Y/n]"
+			If ($QueryDecrypt.ToLower() -ne "n") {
 				TweakDisableBitlocker
 				Write-Output "Wait for the end of decryption and launch this script again"
+			} Else {
+				Write-Output "You can decrypt with command : .\swmb.ps1 DisableBitlocker"
 			}
-			Else {Write-Output "You can decrypt with command : .\swmb.ps1 DisableBitlocker"}
 			Return
 		}
 	}
 
-	$AskCrypt = Read-Host -Prompt "Activation bitlocker - Do you really want to crypt your system? [Y/n]"
-	If ($AskCrypt.ToLower() -eq "n") {
+	$QueryCrypt = Read-Host -Prompt "Activation Bitlocker - Do you really want to crypt your system? [Y/n]"
+	If ($QueryCrypt.ToLower() -eq "n") {
 		Return
 	}
 
@@ -1190,13 +1191,13 @@ Function TweakEnableBitlocker { # RESINFO
 
 	_EncryptAllDrives
 
-	Write-Output "`nActivation bitlocker - Press any key to finish..."
+	Write-Output "`nActivation Bitlocker - Press any key to finish..."
 	[Console]::ReadKey($True) | Out-Null
 }
 
 # Disable
 Function TweakDisableBitlocker { # RESINFO
-	Write-Output "Disabling bitlocker on all drive..."
+	Write-Output "Disabling Bitlocker on all drive..."
 	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" }
 	ForEach ($Volume in $ListVolume) {
 		If (!($Volume.DriveLetter)) { continue }
@@ -1249,13 +1250,13 @@ Function TweakViewBitlocker { # RESINFO
 # Suspend or Resume Bitlocker
 # Set
 Function TweakSetBitlockerActive { # RESINFO
-	Write-Output "Setting bitlocker on all crypt drive (Resume)..."
+	Write-Output "Setting Bitlocker on all crypt drive (Resume)..."
 	Get-BitLockerVolume | Resume-BitLocker
 }
 
 # Unset
 Function TweakUnsetBitlockerActive { # RESINFO
-	Write-Output "Unsetting bitlocker on all crypt drive (Suspend)..."
+	Write-Output "Unsetting Bitlocker on all crypt drive (Suspend)..."
 	Get-BitLockerVolume | Suspend-BitLocker -RebootCount 0
 }
 
