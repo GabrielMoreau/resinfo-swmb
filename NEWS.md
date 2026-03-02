@@ -519,7 +519,7 @@ New presets/rules:
 * 2021/06/04 - `SysMessage` -> Just write a message on terminal for debugging purpose (like WaitForKey)
 * 2021/06/04 - `DisableUWPAccessLocation`/`EnableUWPAccessLocation` -> Let UWP Apps Access Location
 * 2021/06/01 - `DisableWindowsFeeds`/`EnableWindowsFeeds` -> News and Interests on Taskbar
-* 2021/05/12 - `EnableBitlocker`/`DisableBitlocker` -> Crypt hard drive with bitlocker
+* 2021/05/12 - `EnableBitlocker`/`DisableBitlocker` -> Crypt hard drive with Bitlocker
 * 2021/04/29 - `DisableWindowsHello`/`EnableWindowsHello` -> Windows Hello Authentification
 
 

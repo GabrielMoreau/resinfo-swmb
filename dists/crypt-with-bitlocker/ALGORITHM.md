@@ -1,4 +1,4 @@
-# Graphic for bitlocker script
+# Graphic for Bitlocker script
 
 ```mermaid
 graph TD
