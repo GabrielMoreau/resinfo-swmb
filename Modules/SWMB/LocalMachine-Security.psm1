@@ -910,7 +910,7 @@ Function TweakEnableBitlocker { # RESINFO
 
 	Function _EncryptSytemDrive() {
 		Param (
-			[string]$NetworkKeyBackupFolder
+			[Parameter(Mandatory = $True)] [string]$NetworkKeyBackupFolder
 		)
 
 		#$title = 'Activation Bitlocker'
@@ -966,7 +966,8 @@ Function TweakEnableBitlocker { # RESINFO
 	# ie we don't take into account the usb keys
 	Function _EncryptNonSytemDrives() {
 		Param (
-			[string]$NetworkKeyBackupFolder
+			[Parameter(Mandatory = $True)] [string]$NetworkKeyBackupFolder,
+			[Parameter(Mandatory = $True)] [string]$SystemDriveLetter
 		)
 
 		# Other drives encryption
@@ -986,7 +987,7 @@ Function TweakEnableBitlocker { # RESINFO
 			# Test if partition is already encrypted (like for C:)
 			If ((Get-BitLockerVolume $Letter).ProtectionStatus -eq "On") {
 				Write-Output "Bitlocker on drive $Letter is already ON!"
-				continue
+				Continue
 			}
 
 			Write-Output "Bitlocker activation on drive $Letter is going to start"
@@ -1139,7 +1140,7 @@ Function TweakEnableBitlocker { # RESINFO
 			}
 			_EnforceCryptGPO
 			_EncryptSytemDrive -NetworkKeyBackupFolder $NetworkBackup
-			_EncryptNonSytemDrives -NetworkKeyBackupFolder $NetworkBackup
+			_EncryptNonSytemDrives -NetworkKeyBackupFolder $NetworkBackup -SystemDriveLetter $SystemDriveLetter
 
 			$QueryReboot = Read-Host -Prompt "The computer must be restarted to finish the system disk encryption. Reboot now? [Y/n]"
 			If ($QueryReboot.ToLower() -ne "n") {
@@ -1158,7 +1159,7 @@ Function TweakEnableBitlocker { # RESINFO
 
 					# use network to save key ?
 					$NetworkBackup = _NetworkKeyBackup -WantToSave $False
-					_EncryptNonSytemDrives -NetworkKeyBackupFolder $NetworkBackup
+					_EncryptNonSytemDrives -NetworkKeyBackupFolder $NetworkBackup -SystemDriveLetter $SystemDriveLetter
 					Return
 				} Else {
 					Write-Output "Bitlocker is suspend, resume with :"
@@ -1200,7 +1201,7 @@ Function TweakDisableBitlocker { # RESINFO
 	Write-Output "Disabling Bitlocker on all drive..."
 	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" }
 	ForEach ($Volume in $ListVolume) {
-		If (!($Volume.DriveLetter)) { continue }
+		If (!($Volume.DriveLetter)) { Continue }
 		$Letter = $Volume.DriveLetter
 		Disable-BitLocker $Letter
 	}
