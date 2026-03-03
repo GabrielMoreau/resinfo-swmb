@@ -183,6 +183,45 @@ Function TweakEnableNetBIOS {
 
 ################################################################
 
+# The LanMan authentication level must be set to send NTLMv2 response only, and to refuse LM and NTLM
+# W11 STIG V-253462 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253462
+# 0: Send LM & NTLM responses
+# 1: Send LM & NTLM – use NTLMv2 session security if negotiated
+# 2: Send NTLM responses only
+# 3: Send NTLMv2 responses only
+# 4: Send NTLMv2 responses only. Refuse LM
+# 5: Send NTLMv2 responses only. Refuse LM & NTLM
+
+# Enable
+Function TweakEnableLanManAuthLevelHigh { # RESINFO
+	Write-Output "Enabling LanMan Authentication Level to NTLMv2 responses only..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
+	Set-ItemProperty -Path $RegPath -Name 'LmCompatibilityLevel' -Type DWord -Value 5
+}
+
+# Disable
+Function TweakDisableLanManAuthLevelHigh { # RESINFO
+	Write-Output "Disabling LanMan Authentication Level, all NTLM responses possibles..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
+	Remove-ItemProperty -Path $RegPath -Name 'LmCompatibilityLevel' -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewLanManAuthLevelHigh { # RESINFO
+	Write-Output "Viewing LanMan Authentication Level (not exist: Disable (Default), 5: Enable (Recommanded))..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
+	$RegFields = @{
+		LmCompatibilityLevel = @{
+			OkValues = @(5)
+			Description = "LanMan Authentication Level, NTLMv2 responses only"
+			Remediation = "EnableLanManAuthLevelHigh (W11 STIG V-253462)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
+################################################################
+
 # Disable Link-Local Multicast Name Resolution (LLMNR) protocol
 Function TweakDisableLLMNR {
 	Write-Output "Disabling Link-Local Multicast Name Resolution (LLMNR)..."

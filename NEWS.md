@@ -17,14 +17,15 @@ The `wisemoui.ps1` graphical interface has been updated.
 Here's a quick summary:
 
 * The operating system version is now in fours color (Green, Blue, Orange, Red). Yellow has been replace by Bue.
-* LThe size of the SWMB logo has been reduced.
-* A new `Compliance Enforcement` frame has appeared with the `LocalMachine` check button.
+* The size of the SWMB logo has been reduced.
+* A new `Compliance Enforcement` frame has appeared with the `LocalMachine` check button (see SWCE).
 
 In Bitlocker tweak GPO, now force the PIN pre-boot authentication to the minimum of 6.
 The list of internal hard drive volumes no longer includes USB, UASP, SD, and MMC technologies.
 
 New presets/rules:
 
+* 2026/03/03 - `EnableLanManAuthLevelHigh`/`DisableLanManAuthLevelHigh`/`ViewLanManAuthLevelHigh` -> Enable LanMan Authentication Level to NTLMv2 only
 * 2026/03/03 - `DisablePasswordLMHash`/`EnablePasswordLMHash`/`ViewPasswordLMHash` -> Disable Password LM Hash Storage
 * 2026/03/01 - `ViewNetworkOnLockScreen` -> View network options from Logon and Lock Screen
 * 2026/03/01 - `ViewConnectionSharing` -> View Disable Internet Connection Sharing

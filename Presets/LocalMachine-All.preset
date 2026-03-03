@@ -133,6 +133,7 @@ DisableSMB1Protocol                             # EnableSMB1Protocol            
 # DisableSMB1Server                             # EnableSMB1Server
 # DisableSMBServer                              # EnableSMBServer
 # DisableNetBIOS                                # EnableNetBIOS
+# EnableLanManAuthLevelHigh                     # DisableLanManAuthLevelHigh                    # ViewLanManAuthLevelHigh       ## Enable LanMan Authentication Level to NTLMv2 - W11 STIG V-253462 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253462
 # DisableLLMNR                                  # EnableLLMNR
 # DisableLLDP                                   # EnableLLDP
 # DisableLLTD                                   # EnableLLTD

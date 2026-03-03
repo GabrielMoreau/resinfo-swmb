@@ -17,6 +17,7 @@ ViewSessionLockTimeout
 ViewSEHOP
 
 ### Network Tweaks ###
+ViewLanManAuthLevelHigh
 ViewConnectionSharing
 ViewAnonymousShareAccess
 ViewRemoteAssistance
