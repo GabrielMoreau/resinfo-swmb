@@ -25,6 +25,7 @@ The list of internal hard drive volumes no longer includes USB, UASP, SD, and MM
 
 New presets/rules:
 
+* 2026/03/03 - `DisablePasswordLMHash`/`EnablePasswordLMHash`/`ViewPasswordLMHash` -> Disable Password LM Hash Storage
 * 2026/03/01 - `ViewNetworkOnLockScreen` -> View network options from Logon and Lock Screen
 * 2026/03/01 - `ViewConnectionSharing` -> View Disable Internet Connection Sharing
 * 2026/03/01 - `ViewSessionLockTimeout` -> View Lock System after Inactivity Timeout (`$Global:SWMB_Custom` key `InactivityTimeoutSecs`)

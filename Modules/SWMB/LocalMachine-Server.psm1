@@ -231,6 +231,40 @@ Function TweakViewPasswordClearText { # RESINFO
 
 ################################################################
 
+# The system must be configured to prevent the storage of the LAN Manager hash of passwords
+# Disable Password LM Hash Storage
+# W11 STIG V-253305 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253461
+
+# Disable
+Function TweakDisablePasswordLMHash { # RESINFO
+	Write-Output "Disabling LM Password Hash Storage..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
+	Set-ItemProperty -Path $RegPath -Name 'NoLMHash' -Type DWord -Value 1
+}
+
+# Enable
+Function TweakEnablePasswordLMHash { # RESINFO
+	Write-Output "Enabling LM Password Hash Storage..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
+	Remove-ItemProperty -Path $RegPath -Name 'NoLMHash' -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewPasswordLMHash { # RESINFO
+	Write-Output "Viewing LM Password Hash Storage (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
+	$RegFields = @{
+		NoLMHash = @{
+			OkValues = @(1)
+			Description = "LM Password Hash Storage"
+			Remediation = "DisablePasswordLMHash (W11 STIG V-253305)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
+################################################################
+
 # Disable Ctrl+Alt+Del requirement before login
 Function TweakDisableCtrlAltDelLogin {
 	Write-Output "Disabling Ctrl+Alt+Del requirement before login..."

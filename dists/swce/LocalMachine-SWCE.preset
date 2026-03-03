@@ -43,6 +43,7 @@ ViewAdobeEnhancedSecurity
 ViewPasswordPolicy
 ViewPasswordComplexity
 ViewPasswordClearText
+ViewPasswordLMHash
 
 ### Bitlocker Tweaks ###
 ViewVolumeBadlyFormatted
