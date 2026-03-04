@@ -1,6 +1,9 @@
 # NEWS
 
-## Version 3.20 (in progress)
+## Version 3.21 (in progress)
+
+
+## Version 3.20 (2026/03/04)
 
 Move the `git subtree` documentation from the [README](README.md) file to the [CONTRIBUTING](CONTRIBUTING.md) document.
 
