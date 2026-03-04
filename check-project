@@ -109,7 +109,7 @@ msg1 "Number of View tweaks (debug)" \
    $(grep -hEi '^Function[[:space:]]Tweak(View)' ${all_module} | awk '{print $2}' | wc -l)
 
 msg1 "Number of Obsolete tweaks" \
-   $(grep -hEi '^Function[[:space:]]Tweak.* # Obsolete' ${all_module} | awk '{print $2}' | wc -l)
+   $(grep -hEi '^Function[[:space:]]Tweak.* # OBSOLETE' ${all_module} | awk '{print $2}' | wc -l)
 
 msg1 "Number of total tweaks functions" \
    $(grep -hEi '^Function[[:space:]]Tweak' ${all_module} | awk '{print $2}' | wc -l)
@@ -119,7 +119,7 @@ echo ''
 echo "Check function that are not in case Enable|Disable|Show|Hide|Install|Uninstall|Add|Remove|Set|Unset|Pin|Unpin"
 grep -hEi '^Function[[:space:]]' ${all_module} \
    | grep -Eiv '^Function (SWMB_|Tweak(Enable|Disable|Show|Hide|Install|Uninstall|Add|Remove|Set|Unset|Pin|Unpin|Sys|View))' \
-   | grep -Ev '# (Obsolete|INTERNAL)' \
+   | grep -Ev '# (OBSOLETE|INTERNAL)' \
    | awk '{print $2}' \
    | xargs -r -n 1 printf "Warning: special function: %s\n"
 
@@ -185,7 +185,7 @@ done < <(grep -hEi '^Function[[:space:]]Tweak(Add|Remove)' ${all_module} \
 echo "Check tweaks that are not defined in a preset file"
 # Enable|Disable|Show|Hide|Install|Uninstall|Add|Remove|Set|Unset|Pin|Unpin...
 kind_rule=$(grep -i '^Function[[:space:]]Tweak' ${all_module} \
-   | grep -Ev '# (Obsolete|Experimental)' \
+   | grep -Ev '# (OBSOLETE|EXPERIMENTAL)' \
    | awk '{print $2}' \
    | sed -e 's/^Tweak//;' \
    | grep -Eo '^[A-Z][a-z]+' \
@@ -194,7 +194,7 @@ kind_rule=$(grep -i '^Function[[:space:]]Tweak' ${all_module} \
    | sed -e 's/|$//;')
 # detect the definition of a missing preset
 for rule in $(grep -hEi "^Function[[:space:]]Tweak(${kind_rule})" ${all_module} \
-   | grep -Ev '# (Obsolete|Experimental)' \
+   | grep -Ev '# (OBSOLETE|EXPERIMENTAL)' \
    | awk '{print $2}' \
    | sed -e 's/^Tweak//;' \
    | sort -u)
