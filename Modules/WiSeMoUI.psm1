@@ -140,7 +140,10 @@ Function SWMB_GetOSVersionColor {
 	# Last OS revision
 	# See ./get-ubr
 	$UBR = @(
-		# BeginAutoEdit - UBR - 21264293aae50315de5942f461c3c572
+		# BeginAutoEdit - UBR - 06bae5be6252e76625b0c1e6034463d6
+		@{Os = '11'; DisplayVersion = '26H1'; MajorMinor = '10.0'; Build = 28000; UBR = 1643; Level = 0} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; DisplayVersion = '26H1'; MajorMinor = '10.0'; Build = 28000; UBR = 1575; Level = 1} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; DisplayVersion = '26H1'; MajorMinor = '10.0'; Build = 28000; UBR = 1; Level = 2} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
 		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 7922; Level = 0} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
 		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 7840; Level = 1} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
 		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 7705; Level = 2} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
