@@ -121,6 +121,7 @@ $Global:SWMB_Custom = @{
 
 	# Admins Group Apps block
 	# No Internet Apps for Admins
+	# Use by tweak: DisableAdminNetApps, EnableAdminNetApps, ViewAdminNetApps
 	AdminNetAppsToBlock = @(
 		"${Env:ProgramFiles}\Adobe\Acrobat DC\Acrobat\Acrobat.exe"
 		"${Env:ProgramFiles}\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe"

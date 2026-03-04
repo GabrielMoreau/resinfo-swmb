@@ -487,6 +487,115 @@ Function SWMB_ViewAppx {
 
 ################################################################
 
+# Query if an Application is blocked for an Account
+Function SWMB_QueryAppBlockStatus {
+	Param(
+		[Parameter(Mandatory = $True)] [string]$Path,
+		[Parameter(Mandatory = $True)] [string]$Account
+	)
+
+	If (!(Test-Path $Path)) { Return $Null }
+
+	$ACL = Get-Acl $Path
+	$DenyRule = $ACL.Access | Where-Object {
+		$_.IdentityReference -eq $Account -and
+		$_.FileSystemRights -band [System.Security.AccessControl.FileSystemRights]::ReadAndExecute -and
+		$_.AccessControlType -eq "Deny"
+	}
+
+	If ($DenyRule) { Return $True }
+	Else { return $False }
+}
+
+# Block an Application for an Account
+Function SWMB_SetAppBlock {
+	Param(
+		[Parameter(Mandatory = $True)] [string]$Path,
+		[Parameter(Mandatory = $True)] [string]$Account
+	)
+
+	$Status = SWMB_QueryAppBlockStatus -Path $Path -Account $Account
+	if ($Status -eq $Null) {
+		Write-Host " File not found: $Path"
+		Return
+	} ElseIf ($Status -eq $True) {
+		Write-Host " Already block: $Path"
+		return
+	}
+
+	$ACL = Get-Acl $Path
+	$DenyRule = New-Object System.Security.AccessControl.FileSystemAccessRule (
+		$Account,
+		[System.Security.AccessControl.FileSystemRights]::ReadAndExecute,
+		[System.Security.AccessControl.InheritanceFlags]::None,
+		[System.Security.AccessControl.PropagationFlags]::None,
+		[System.Security.AccessControl.AccessControlType]::Deny
+	)
+
+	$ACL.AddAccessRule($DenyRule)
+	Set-Acl -Path $Path -AclObject $ACL
+	Write-Host " Block: $Path"
+}
+
+# Unblock an Application for an Account
+Function SWMB_SetAppUnblock {
+	Param(
+		[Parameter(Mandatory = $True)] [string]$Path,
+		[Parameter(Mandatory = $True)] [string]$Account
+	)
+
+	$Status = SWMB_QueryAppBlockStatus -Path $Path -Account $Account
+	if ($Status -eq $Null) {
+		Write-Host " File not found: $Path"
+		Return
+	} ElseIf ($Status -eq $False) {
+		Write-Host " Already unblock: $Path"
+		return
+	}
+
+	$ACL = Get-Acl $Path
+	$DenyRule = New-Object System.Security.AccessControl.FileSystemAccessRule (
+		$Account,
+		[System.Security.AccessControl.FileSystemRights]::ReadAndExecute,
+		[System.Security.AccessControl.InheritanceFlags]::None,
+		[System.Security.AccessControl.PropagationFlags]::None,
+		[System.Security.AccessControl.AccessControlType]::Deny
+	)
+
+	$ACL.RemoveAccessRule($DenyRule)
+	Set-Acl -Path $Path -AclObject $ACL
+	Write-Host " Unblock: $Path"
+}
+
+# View an Application Status for an Account
+Function SWMB_ViewAppBlockStatus {
+	Param(
+		[Parameter(Mandatory = $True)] [string]$Path,
+		[Parameter(Mandatory = $True)] [string]$Account
+	)
+
+	$Status = SWMB_QueryAppBlockStatus -Path $Path -Account $Account
+	if ($Status -eq $Null) {
+		Write-Host " File not found: $Path"
+	} ElseIf ($Status -eq $True) {
+		Write-Host " Block: $Path"
+	} Else {
+		Write-Host " Unblock: $Path"
+	}
+}
+
+# Get NT Admins Group Name Account
+Function SWMB_GetNTAdminsAccount {
+	# SID Administrator
+	$AdminSID = "S-1-5-32-544"
+
+	# Convert SID to NTAccount
+	$AdminAccount = New-Object System.Security.Principal.SecurityIdentifier($AdminSID)
+	Return $AdminAccount.Translate([System.Security.Principal.NTAccount]).Value
+}
+
+################################################################
+
 # Load .ini config file (use to parse secedit export)
 Function SWMB_LoadIniFile {
 	Param(

@@ -10,13 +10,23 @@ echo -e '\xEF\xBB\xBF'
 
 cat <<'END'
 ################################################################
+
+END
+
+grep -v '[[:space:]]*#' ../../Modules/SWMB/Custom-VarDefault.psm1 | sed -e 's/^[[:space:]][[:space:]]*$//;' | grep .
+
+cat <<'END'
+
+################################################################
 END
 
 for func in SWMB_LoadIniFile \
   SWMB_GetRegistrySettings \
   SWMB_GetHashSettings \
   SWMB_GetIniSettings \
-  SWMB_WriteSettings
+  SWMB_WriteSettings \
+  SWMB_GetNTAdminsAccount \
+  SWMB_QueryAppBlockStatus
 do
   echo '################################################################'
   echo ''
