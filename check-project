@@ -119,7 +119,7 @@ echo ''
 echo "Check function that are not in case Enable|Disable|Show|Hide|Install|Uninstall|Add|Remove|Set|Unset|Pin|Unpin"
 grep -hEi '^Function[[:space:]]' ${all_module} \
    | grep -Eiv '^Function (SWMB_|Tweak(Enable|Disable|Show|Hide|Install|Uninstall|Add|Remove|Set|Unset|Pin|Unpin|Sys|View))' \
-   | grep -v '# Obsolete' \
+   | grep -Ev '# (Obsolete|INTERNAL)' \
    | awk '{print $2}' \
    | xargs -r -n 1 printf "Warning: special function: %s\n"
 

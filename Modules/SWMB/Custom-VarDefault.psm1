@@ -119,4 +119,15 @@ $Global:SWMB_Custom = @{
 		#"Dell Touchpad"
 	)
 
+	# Admins Group Apps block
+	# No Internet Apps for Admins
+	AdminNetAppsToBlock = @(
+		"${Env:ProgramFiles}\Adobe\Acrobat DC\Acrobat\Acrobat.exe"
+		"${Env:ProgramFiles}\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe"
+		"${Env:ProgramFiles}\BraveSoftware\Brave-Browser\Application\brave.exe"
+		"${Env:ProgramFiles}\Google\Chrome\Application\chrome.exe"
+		"${Env:ProgramFiles}\Mozilla Firefox\firefox.exe"
+		"${Env:ProgramFiles}\Mozilla Thunderbird\thunderbird.exe"
+		#"${Env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe"
+	)
 }

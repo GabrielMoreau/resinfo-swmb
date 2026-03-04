@@ -39,6 +39,7 @@ ViewPowerShellV2
 ViewTelnetClient
 ViewTFTPClient
 ViewAdobeEnhancedSecurity
+ViewAdminNetApps
 
 ### Server Specific Tweaks ###
 ViewPasswordPolicy

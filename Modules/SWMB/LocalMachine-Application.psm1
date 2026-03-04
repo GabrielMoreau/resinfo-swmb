@@ -1597,6 +1597,159 @@ Function TweakViewAdobeEnhancedSecurity { # RESINFO
 }
 
 ################################################################
+
+# Disabling Net Applications for Admins
+# Administrative accounts must not be used with applications that access the internet, such as web browsers, or with potential internet sources, such as email
+# W11 STIG V-253294 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253294
+
+# Query if an Application is blocked
+Function _QueryAppBlocked { # INTERNAL
+	Param(
+		[Parameter(Mandatory = $True)] [string]$Path,
+		[Parameter(Mandatory = $True)] [string]$Account
+	)
+
+	If (!(Test-Path $Path)) { Return $Null }
+
+	$ACL = Get-Acl $Path
+	$DenyRule = $ACL.Access | Where-Object {
+		$_.IdentityReference -eq $Account -and
+		$_.FileSystemRights -band [System.Security.AccessControl.FileSystemRights]::ReadAndExecute -and
+		$_.AccessControlType -eq "Deny"
+	}
+
+	If ($DenyRule) { Return $True }
+	Else { return $False }
+}
+
+# Block an Application
+Function _AppBlock { # INTERNAL
+	Param(
+		[Parameter(Mandatory = $True)] [string]$Path,
+		[Parameter(Mandatory = $True)] [string]$Account
+	)
+
+	$Status = _QueryAppBlocked -Path $Path -Account $Account
+	if ($Status -eq $Null) {
+		Write-Host " File not found: $Path"
+		Return
+	} ElseIf ($Status -eq $True) {
+		Write-Host " Already block: $Path"
+		return
+	}
+
+	$ACL = Get-Acl $Path
+	$DenyRule = New-Object System.Security.AccessControl.FileSystemAccessRule (
+		$Account,
+		[System.Security.AccessControl.FileSystemRights]::ReadAndExecute,
+		[System.Security.AccessControl.InheritanceFlags]::None,
+		[System.Security.AccessControl.PropagationFlags]::None,
+		[System.Security.AccessControl.AccessControlType]::Deny
+	)
+
+	$ACL.AddAccessRule($DenyRule)
+	Set-Acl -Path $Path -AclObject $ACL
+	Write-Host " Block: $Path"
+}
+
+# Unblock an Application
+Function _AppUnblock { # INTERNAL
+	Param(
+		[Parameter(Mandatory = $True)] [string]$Path,
+		[Parameter(Mandatory = $True)] [string]$Account
+	)
+
+	$Status = _QueryAppBlocked -Path $Path -Account $Account
+	if ($Status -eq $Null) {
+		Write-Host " File not found: $Path"
+		Return
+	} ElseIf ($Status -eq $False) {
+		Write-Host " Already unblock: $Path"
+		return
+	}
+
+	$ACL = Get-Acl $Path
+	$DenyRule = New-Object System.Security.AccessControl.FileSystemAccessRule (
+		$Account,
+		[System.Security.AccessControl.FileSystemRights]::ReadAndExecute,
+		[System.Security.AccessControl.InheritanceFlags]::None,
+		[System.Security.AccessControl.PropagationFlags]::None,
+		[System.Security.AccessControl.AccessControlType]::Deny
+	)
+
+	$ACL.RemoveAccessRule($DenyRule)
+	Set-Acl -Path $Path -AclObject $ACL
+	Write-Host " Unblock: $Path"
+}
+
+# View an Application
+Function _AppView { # INTERNAL
+	Param(
+		[Parameter(Mandatory = $True)] [string]$Path,
+		[Parameter(Mandatory = $True)] [string]$Account
+	)
+
+	$Status = _QueryAppBlocked -Path $Path -Account $Account
+	if ($Status -eq $Null) {
+		Write-Host " File not found: $Path"
+	} ElseIf ($Status -eq $True) {
+		Write-Host " Block: $Path"
+	} Else {
+		Write-Host " Unblock: $Path"
+	}
+}
+
+# Get NT Admins Account
+Function _GetNTAdminsAccount { # INTERNAL
+	# SID Administrator
+	$AdminSID = "S-1-5-32-544"
+
+	# Convert SID to NTAccount
+	$AdminAccount = New-Object System.Security.Principal.SecurityIdentifier($AdminSID)
+	Return $AdminAccount.Translate([System.Security.Principal.NTAccount]).Value
+}
+
+# Disable
+Function TweakDisableAdminNetApps { # RESINFO
+	Write-Host "Disabling Net Applications for Admins..."
+	$NTAccount = _GetNTAdminsAccount
+	ForEach ($App in $Global:SWMB_Custom.AdminNetAppsToBlock) {
+		_AppBlock -Path $App -Account $NTAccount
+	}
+}
+
+# Enable
+Function TweakEnableAdminNetApps { # RESINFO
+	Write-Host "Enabling Net Applications for Admins..."
+	$NTAccount = _GetNTAdminsAccount
+	ForEach ($App in $Global:SWMB_Custom.AdminNetAppsToBlock) {
+		_AppUnblock -Path $App -Account $NTAccount
+	}
+}
+
+Function TweakViewAdminNetApps { # RESINFO
+	Write-Host "Viewing Net Applications for Admins..."
+	$AppResults = @()
+	$NTAccount = _GetNTAdminsAccount
+	ForEach ($App in $Global:SWMB_Custom.AdminNetAppsToBlock) {
+		$Status = _QueryAppBlocked -Path $App -Account $NTAccount
+		If ($Status -eq $Null) { Continue }
+		$Name = Split-Path $App -Leaf
+		$AppObject = [PSCustomObject]@{
+			Name        = $Name
+			Value       = If ($Status -eq $True) { 'Block' } Else { 'Unblock' }
+			Exists      = $True
+			Status      = If ($Status -eq $True) { 'PASS' } Else { 'FAIL' }
+			Remediation = 'DisableAdminNetApps (W11 STIG V-253294)'
+		}
+
+		# Add the result object to the list
+		$AppResults += $AppObject
+	}
+	$AppResults | SWMB_WriteSettings
+}
+
+################################################################
 ###### Export Functions
 ################################################################
 
