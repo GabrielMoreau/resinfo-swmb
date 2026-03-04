@@ -2,6 +2,11 @@
 
 ## Version 3.21 (in progress)
 
+Update UBR and take Windows 11 26H1 into account.
+
+New presets/rules:
+
+* 2026/03/04 - `DisableWinRMBasicAuth`/`EnableWinRMBasicAuth`/`ViewWinRMBasicAuth` -> Disable Windows Remote Management (WinRM) Basic Authentication (Client and Service)
 
 ## Version 3.20 (2026/03/04)
 
