@@ -198,45 +198,18 @@ Function TweakViewSessionLockTimeout { # RESINFO
 
 ################################################################
 
-### Application de paramètres de sécurité
-# cf : https://www.itninja.com/blog/view/using-secedit-to-apply-security-templates
-#      https://resources.infosecinstitute.com/topic/how-to-configure-password-policies-in-windows-10/
-# Configuration ordinateur / Paramètres Windows / Paramètres de sécurité / Stratégie de comptes / Stratégie de mots de passe
+# See PasswordPolicy tweaks
+
 # Set
-Function TweakSetSecurityParamAccountPolicy { # RESINFO
-	Write-Output "Setting password strategy..."
-	$TempFile = New-TemporaryFile
-	$TempInfFile = "$TempFile.inf"
-
-	Rename-Item -Path $TempFile.FullName -NewName $TempInfFile
-
-	$securityString = "[Unicode]
-Unicode=yes
-[Version]
-signature=`"`$CHICAGO`$`"
-Revision=10
-[System Access]
-MinimumPasswordAge = $($Global:SWMB_Custom.MinimumPasswordAge)
-MaximumPasswordAge = $($Global:SWMB_Custom.MaximumPasswordAge)
-MinimumPasswordLength = $($Global:SWMB_Custom.MinimumPasswordLength)
-PasswordComplexity = $($Global:SWMB_Custom.PasswordComplexity)
-PasswordHistorySize = $($Global:SWMB_Custom.PasswordHistorySize)
-LockoutBadCount = $($Global:SWMB_Custom.LockoutBadCount)
-ResetLockoutCount = $($Global:SWMB_Custom.ResetLockoutCount)
-LockoutDuration = $($Global:SWMB_Custom.LockoutDuration)
-EnableGuestAccount = $($Global:SWMB_Custom.EnableGuestAccount)
-"
-
-	$securityString | Out-File -FilePath $TempInfFile
-	secedit /configure  /db hisecws.sdb /cfg $TempInfFile /areas SECURITYPOLICY
-	Remove-Item -Path $TempInfFile
+Function TweakSetSecurityParamAccountPolicy { # OBSOLETE
+	Write-Output "Warning: obsolete tweak SetSecurityParamAccountPolicy, now use EnablePasswordPolicy"
+	EnablePasswordPolicy
 }
 
 # Unset
 Function TweakUnsetSecurityParamAccountPolicy { # RESINFO
-	Write-Output "Unsetting password strategy..."
-	# Nécessite un reboot
-	secedit /configure /cfg %windir%\inf\defltbase.inf /db defltbase.sdb
+	Write-Output "Warning: obsolete tweak UnsetSecurityParamAccountPolicy, now use DisablePasswordPolicy"
+	EnablePasswordPolicy
 }
 
 ################################################################

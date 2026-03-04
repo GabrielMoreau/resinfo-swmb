@@ -1,6 +1,5 @@
 # SetAdminAccountLogin           # UnsetAdminAccountLogin
 # DisableDontDisplayLastUsername # EnableDontDisplayLastUsername
 # EnableSessionLockTimeout       # DisableSessionLockTimeout
-# SetSecurityParamAccountPolicy  # UnsetSecurityParamAccountPolicy
 
 

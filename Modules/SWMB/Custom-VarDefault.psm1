@@ -27,16 +27,16 @@ $Global:SWMB_Custom = @{
 	InactivityTimeoutSecs  = 900 # max 900 seconds
 
 	# SecurityParamAccountPolicy
-	# Use by tweak: SetSecurityParamAccountPolicy, EnablePasswordPolicy
+	# Use by tweak: EnablePasswordPolicy
 	PasswordHistorySize    = 2
 	MinimumPasswordAge     = 1
 	MaximumPasswordAge     = -1
 	MinimumPasswordLength  = 14
-	PasswordComplexity     = 1
-	LockoutBadCount        = 5
-	ResetLockoutCount      = 30
-	LockoutDuration        = 30
-	EnableGuestAccount     = 0
+	#PasswordComplexity     = 1
+	#LockoutBadCount        = 5
+	#ResetLockoutCount      = 30
+	#LockoutDuration        = 30
+	#EnableGuestAccount     = 0
 
 	# NTP
 	# Use by tweak: SetNTPConfig

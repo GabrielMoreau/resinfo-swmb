@@ -112,7 +112,6 @@ DisableInsecureGuestLogons                      # EnableInsecureGuestLogons     
 # DisableAutoloadDriver                         # EnableAutoloadDriver                          # ViewAutoloadDriver            ## Prevent device metadata retrieval from the Internet https://www.windows-security.org/ea9773339e846046b904be53f19e009e/prevent-device-metadata-retrieval-from-the-internet
 # DisableIndexingEncryptedStores                # EnableIndexingEncryptedStores
 # DisableMicrosoftAccount                       # EnableMicrosoftAccount
-# SetSecurityParamAccountPolicy                 # UnsetSecurityParamAccountPolicy
 # EnableSessionLockTimeout                      # DisableSessionLockTimeout                     # ViewSessionLockTimeout        ## Lock System after Inactivity Timeout - W11 STIG V-253444 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253444
 # DisableDomainProfile                          # EnableDomainProfile
 # DisablePrivateProfile                         # EnablePrivateProfile
