@@ -23,8 +23,12 @@ Here's a quick summary:
 In Bitlocker tweak GPO, now force the PIN pre-boot authentication to the minimum of 6.
 The list of internal hard drive volumes no longer includes USB, UASP, SD, and MMC technologies.
 
+Tweaks `SetSecurityParamAccountPolicy` and `UnsetSecurityParamAccountPolicy` are now obsolete.
+Use `EnablePasswordPolicy` and `DisablePasswordPolicy` tweaks (rewrite from scratch).
+
 New presets/rules:
 
+* 2026/03/04 - `DisableAdminNetApps`/`EnableAdminNetApps`/`ViewAdminNetApps` -> Disabling Net Applications for Admins (`$Global:SWMB_Custom` key `AdminNetAppsToBlock`)
 * 2026/03/03 - `EnableLanManAuthLevelHigh`/`DisableLanManAuthLevelHigh`/`ViewLanManAuthLevelHigh` -> Enable LanMan Authentication Level to NTLMv2 only
 * 2026/03/03 - `DisablePasswordLMHash`/`EnablePasswordLMHash`/`ViewPasswordLMHash` -> Disable Password LM Hash Storage
 * 2026/03/01 - `ViewNetworkOnLockScreen` -> View network options from Logon and Lock Screen

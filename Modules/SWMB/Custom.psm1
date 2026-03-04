@@ -202,13 +202,13 @@ Function TweakViewSessionLockTimeout { # RESINFO
 
 # Set
 Function TweakSetSecurityParamAccountPolicy { # OBSOLETE
-	Write-Output "Warning: obsolete tweak SetSecurityParamAccountPolicy, now use EnablePasswordPolicy"
+	Write-Output "Setting [Warning] obsolete tweak SetSecurityParamAccountPolicy, now use EnablePasswordPolicy"
 	EnablePasswordPolicy
 }
 
 # Unset
-Function TweakUnsetSecurityParamAccountPolicy { # RESINFO
-	Write-Output "Warning: obsolete tweak UnsetSecurityParamAccountPolicy, now use DisablePasswordPolicy"
+Function TweakUnsetSecurityParamAccountPolicy { # OBSOLETE
+	Write-Output "Unsetting [Warning] obsolete tweak UnsetSecurityParamAccountPolicy, now use DisablePasswordPolicy"
 	EnablePasswordPolicy
 }
 
