@@ -146,6 +146,7 @@ DisableAnonymousShareAccess                     # EnableAnonymousShareAccess    
 DisableRemoteAssistance                         # EnableRemoteAssistance                        # ViewRemoteAssistance          ## Disable (Solicited) Remote Assistance - W11 STIG V-253382 https://system32.eventsentry.com/stig/viewer/V-253382
 # EnableRemoteDesktop                           # DisableRemoteDesktop                          # ViewRemoteDesktop             ## Disable Remote Desktop
 # SetRemoteDesktopPort                          # UnsetRemoteDesktopPort                        # ViewRemoteDesktopPort
+DisableWinRMBasicAuth                           # EnableWinRMBasicAuth                          # ViewWinRMBasicAuth            ## Disable Windows Remote Management Basic Authentication Client - W11 STIG V-253416 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253416 - Service - W11 STIG V-253418 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253418
 # SetWorkgroupName                              # UnsetWorkgroupName                            # ViewWorkgroupName
 # UnsetInterfaceMetricOn1Gbps                   # SetInterfaceMetricOn1Gbps                     # ViewInterfaceMetricOn1Gbps
 # UnsetInterfaceMetricOn10Gbps                  # SetInterfaceMetricOn10Gbps                    # ViewInterfaceMetricOn10Gbps

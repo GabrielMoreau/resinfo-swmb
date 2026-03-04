@@ -22,6 +22,7 @@ ViewConnectionSharing
 ViewAnonymousShareAccess
 ViewRemoteAssistance
 ViewRemoteDesktop
+ViewWinRMBasicAuth
 
 ### Service Tweaks ###
 ViewAutoplay

@@ -569,6 +569,71 @@ Function TweakUnsetRemoteDesktopPort { # RESINFO
 
 ################################################################
 
+# Disable Windows Remote Management Basic Authentication
+# The Windows Remote Management (WinRM) client must not use Basic authentication
+# W11 STIG V-253416 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253416
+# The Windows Remote Management (WinRM) service must not use Basic authentication
+# W11 STIG V-253418 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253418
+
+
+# Disable
+Function TweakDisableWinRMBasicAuth { # RESINFO
+	Write-Output "Disabling Windows Remote Management (WinRM) Basic authentication (Client and Service)..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Client'
+	$RegField = 'AllowBasic'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
+	}
+	Set-ItemProperty -Path $RegPath -Name $RegField -Type DWord -Value 0
+
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Service'
+	$RegField = 'AllowBasic'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
+	}
+	Set-ItemProperty -Path $RegPath -Name $RegField -Type DWord -Value 0
+}
+
+# Enable
+Function TweakEnableWinRMBasicAuth { # RESINFO
+	Write-Output "Enabling Windows Remote Management (WinRM) Basic authentication (Client and Service)..."
+	Get-WindowsCapability -Online | Where-Object { $_.Name -like "App.Support.QuickAssist*" } | Add-WindowsCapability -Online | Out-Null
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Client'
+	$RegField = 'AllowBasic'
+	Remove-ItemProperty -Path $RegPath -Name $RegField -ErrorAction SilentlyContinue
+
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Service'
+	$RegField = 'AllowBasic'
+	Remove-ItemProperty -Path $RegPath -Name $RegField -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewWinRMBasicAuth { # RESINFO
+	Write-Output "Viewing Windows Remote Management (WinRM) Basic authentication (Client and Service) (0: Disable (Recommanded), not exist: Enable (Default))..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Client'
+	$RegFields = @{
+		AllowBasic = @{
+			OkValues = @(0)
+			Description = "Remote Management Client Basic authentication"
+			Remediation = "DisableWinRMBasicAuth (W11 STIG V-253416)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Service'
+	$RegFields = @{
+		AllowBasic = @{
+			OkValues = @(0)
+			Description = "Remote Management Service Basic authentication"
+			Remediation = "DisableWinRMBasicAuth (W11 STIG V-253418)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
+
+################################################################
+
 # Set the priority of all interce 1Gbps with the global parameter $Global:SWMB_Custom.InterfaceMetricOn10Gbps
 # For example : $Global:SWMB_Custom.InterfaceMetricOn1Gbps = 100
 # Unset push default AutomaticMetric
