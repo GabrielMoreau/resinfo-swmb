@@ -6,6 +6,7 @@ VERSION:=$(shell cd ../..; make --quiet version)
 REVISION:=1
 
 ZIPFILES:=README.md push-on-gitlab.ps1 push-config.sample.ini $(wildcard push-config.ini)
+LOGDIR:=C:\\Temp
 
 
 .PHONY: all clean ocs check-exe version
@@ -30,6 +31,7 @@ version:
 tmp/install.bat: install.bat Makefile
 	@mkdir -p tmp
 	@sed -e 's/__VERSION__/$(VERSION)/; s#__LOGDIR__#$(LOGDIR)#;' $< > $@
+	@unix2dos $@ 2> /dev/null
 
 %.zip: Makefile $(ZIPFILES) tmp/install.bat tmp/LocalMachine-SWCE.ps1 tmp/version-$(VERSION).txt
 	@rm -f $@
