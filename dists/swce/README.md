@@ -40,7 +40,7 @@ Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE
 |-----------------|-------------|
 | `SysRequireAdmin`                | Application must be run under an administrator account |
 | `ViewDEP`                        | Data Execution Prevention (DEP) must be configured for at least OptOut - [W11 STIG V-253283](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253283) |
-| `ViewASLR`                       | Randomize memory allocations (Bottom-Up ASLR), must be on - W10 STIG V-220874 |
+| `ViewASLR`                       | Randomize memory allocations (Bottom-Up ASLR), must be on - Old W10 STIG V-220874 |
 | `ViewInsecureGuestLogons`        | Disable SMB client to use insecure guest logons to an SMB server - [W11 STIG V-253360](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253360) |
 | `ViewSMBClientSigning`           | Require SMB client to sign message - [W11 STIG V-253449](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253449) |
 | `ViewSMBServerSigning`           | Require SMB server to sign message - [W11 STIG V-253451](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253451) |
