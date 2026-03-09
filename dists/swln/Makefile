@@ -179,7 +179,7 @@ check-exe: tmp/SWMB-Setup-$(SWMB_VERSION).exe
 		which peres >/dev/null && { peres -a "SWMB-Setup-$(SWMB_VERSION).exe" | grep -q "^Product Version:[[:space:]]*$(SWMB_VERSION)" || { echo "Error: bad version for binary SWMB-Setup-$(SWMB_VERSION).exe" 1>&2 ; exit 1; } ; } ; \
 		)
 
-%.zip: Makefile extend-variables.mk $(FILES) $(TMPFILES) $(LM_BOOT_GROUP_PRESET) $(LM_POSTINSTALL_GROUP_PRESET) $(CU_LOGON_GROUP_PRESET) $(CUSTOM_VAROVERLOAD_GROUP_PSM1) $(CUSTOM_VARAUTODEL_GROUP_PSM1) $(LOCAL_ADDON_GROUP_PSM1)
+$(SOFT)_$(SWLN_VERSION)-$(REVISION)_x64.zip: Makefile extend-variables.mk $(FILES) $(TMPFILES) $(LM_BOOT_GROUP_PRESET) $(LM_POSTINSTALL_GROUP_PRESET) $(CU_LOGON_GROUP_PRESET) $(CUSTOM_VAROVERLOAD_GROUP_PSM1) $(CUSTOM_VARAUTODEL_GROUP_PSM1) $(LOCAL_ADDON_GROUP_PSM1)
 	@rm -f $@
 	@zip --quiet -r $@ $(FILES) -x @zipignore.txt
 	@(cd tmp ; zip --quiet -r ../$@ $(TFILES) -x @../zipignore.txt)
