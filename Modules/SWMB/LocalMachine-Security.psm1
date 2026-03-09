@@ -865,7 +865,7 @@ Function TweakEnableBitlocker { # RESINFO
 	## PowerShell Bitlocker commands
 	# https://docs.microsoft.com/en-us/powershell/module/bitlocker/?view=win10-ps
 
-	Function _NetworkKeyBackup() {
+	Function _GetNetworkKeyBackupFolder() {
 		Param (
 			[Parameter(Mandatory = $True)] [string]$WantToSave
 		)
@@ -891,7 +891,7 @@ Function TweakEnableBitlocker { # RESINFO
 			# Todo question : do I delete the file afterwards?
 		} Catch {
 			Write-Output ("$QueryNetWorkBackupPath is not writable! Choose another location!") -ForegroundColor Red
-			_NetworkKeyBackup -WantToSave $True
+			_GetNetworkKeyBackupFolder -WantToSave $True
 		}
 	}
 
@@ -910,7 +910,7 @@ Function TweakEnableBitlocker { # RESINFO
 
 	Function _EncryptSytemDrive() {
 		Param (
-			[Parameter(Mandatory = $True)] [string]$NetworkKeyBackupFolder
+			[AllowNull()][AllowEmptyString()] [string]$NetworkKeyBackupFolder
 		)
 
 		#$title = 'Activation Bitlocker'
@@ -966,8 +966,8 @@ Function TweakEnableBitlocker { # RESINFO
 	# ie we don't take into account the usb keys
 	Function _EncryptNonSytemDrives() {
 		Param (
-			[Parameter(Mandatory = $True)] [string]$NetworkKeyBackupFolder,
-			[Parameter(Mandatory = $True)] [string]$SystemDriveLetter
+			[Parameter(Mandatory = $True)] [string]$SystemDriveLetter,
+			[AllowNull()][AllowEmptyString()] [string]$NetworkKeyBackupFolder
 		)
 
 		# Other drives encryption
@@ -1130,8 +1130,8 @@ Function TweakEnableBitlocker { # RESINFO
 		}
 
 		If ($DriveEMethod -eq "None") {
-			# use network to save key ?
-			$NetworkBackup = _NetworkKeyBackup -WantToSave $False
+			# Use network to save key ?
+			$NetworkBackup = _GetNetworkKeyBackupFolder -WantToSave $False
 
 			# Disk ready for encryption
 			$QueryApplyGPO = Read-Host -Prompt "Your disk is ready for encryption. Are you agree to apply Resinfo GPO and start encryption [Y/n]"
@@ -1141,7 +1141,7 @@ Function TweakEnableBitlocker { # RESINFO
 			}
 			_EnforceCryptGPO
 			_EncryptSytemDrive -NetworkKeyBackupFolder $NetworkBackup
-			_EncryptNonSytemDrives -NetworkKeyBackupFolder $NetworkBackup -SystemDriveLetter $SystemDriveLetter
+			_EncryptNonSytemDrives -SystemDriveLetter $SystemDriveLetter -NetworkKeyBackupFolder $NetworkBackup
 
 			$QueryReboot = Read-Host -Prompt "The computer must be restarted to finish the system disk encryption. Reboot now? [Y/n]"
 			If ($QueryReboot.ToLower() -ne "n") {
@@ -1158,8 +1158,8 @@ Function TweakEnableBitlocker { # RESINFO
 					Write-Warning "Your ${Env:SystemDrive} is already encrypt (XtsAes256) and activated"
 					Write-Output "Nothing to do on System drive !"
 
-					# use network to save key ?
-					$NetworkBackup = _NetworkKeyBackup -WantToSave $False
+					# Use network to save key ?
+					$NetworkBackup = _GetNetworkKeyBackupFolder -WantToSave $False
 					_EncryptNonSytemDrives -NetworkKeyBackupFolder $NetworkBackup -SystemDriveLetter $SystemDriveLetter
 					Return
 				} Else {
