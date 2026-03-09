@@ -17,7 +17,7 @@ ForEach ($FileItem in @(
 )) {
 	If ("$FileItem" -match '^(install\.bat|installer\.ps1|post-install-.*|pre-install-.*)$') {
 		Continue
-	} ElseIf ($FileItem -like '*-Host-*' -and $FileItem -notlike "*-${HostExt}-*") {
+	} ElseIf (($FileItem -like '*-Host-*') -and ($FileItem -notlike "*-${HostExt}-*")) {
 		Continue
 	} ElseIf (Test-Path -LiteralPath $FileItem -PathType Leaf) {
 		Copy-Item -LiteralPath $FileItem -Destination "${Env:ProgramFiles}\$SWLN_Name" -Force
@@ -54,7 +54,7 @@ ForEach ($FileItem in @(
 		New-Item -Path "$FolderName" -ItemType "directory" -Force
 		}
 	If (Test-Path -LiteralPath "${Env:ProgramFiles}\$SWLN_Name\$FileName") {
-		If (Test-Path -LiteralPath $FileItem -and $FileName -notlike "*-VarAutodel-*") {
+		If ((Test-Path -LiteralPath $FileItem) -and ($FileName -notlike "*-VarAutodel-*")) {
 			# No backup for Autodel files
 			Rename-Item -LiteralPath $FileItem -NewName ("$FileItem" + ".old") -Force -ErrorAction Ignore
 		}
