@@ -17,10 +17,12 @@ ForEach ($FileItem in @(
 )) {
 	If ("$FileItem" -match '^(install\.bat|installer\.ps1|post-install-.*|pre-install-.*)$') {
 		Continue
-	} ElseIf (Test-Path -LiteralPath "$FileItem" -PathType Leaf) {
-		Copy-Item -LiteralPath "$FileItem" -Destination "${Env:ProgramFiles}\$SWLN_Name" -Force
-	} ElseIf (Test-Path -LiteralPath "$FileItem" -PathType Container) {
-		Copy-Item -LiteralPath "$FileItem" -Destination "${Env:ProgramFiles}\$SWLN_Name" -Force -Recurse
+	} ElseIf ($FileItem -like '*-Host-*' -and $FileItem -notlike "*-${HostExt}-*") {
+		Continue
+	} ElseIf (Test-Path -LiteralPath $FileItem -PathType Leaf) {
+		Copy-Item -LiteralPath $FileItem -Destination "${Env:ProgramFiles}\$SWLN_Name" -Force
+	} ElseIf (Test-Path -LiteralPath $FileItem -PathType Container) {
+		Copy-Item -LiteralPath $FileItem -Destination "${Env:ProgramFiles}\$SWLN_Name" -Force -Recurse
 	}
 }
 
@@ -36,30 +38,35 @@ ForEach ($FileItem in @(
 	"${Env:ProgramData}\SWMB\Presets\LocalMachine-Boot.preset"
 	"${Env:ProgramData}\SWMB\Presets\LocalMachine-PostInstall.preset"
 	"${Env:ProgramData}\SWMB\Modules\Custom-VarOverload.psm1"
+	"${Env:ProgramData}\SWMB\Modules\Custom-VarAutodel.psm1"
 	"${Env:ProgramData}\SWMB\Modules\Local-Addon.psm1"
 	"${Env:ProgramData}\SWMB\Presets\CurrentUser-Logon-$HostExt.preset"
 	"${Env:ProgramData}\SWMB\Presets\LocalMachine-Boot-$HostExt.preset"
 	"${Env:ProgramData}\SWMB\Presets\LocalMachine-PostInstall-$HostExt.preset"
 	"${Env:ProgramData}\SWMB\Modules\Custom-VarOverload-$HostExt.psm1"
+	"${Env:ProgramData}\SWMB\Modules\Custom-VarAutodel-$HostExt.psm1"
 	"${Env:ProgramData}\SWMB\Modules\Local-Addon-$HostExt.psm1"
 )) {
-	$FileName   = Split-Path -Path "$FileItem" -Leaf
-	$FolderName = Split-Path -Path "$FileItem" -Parent
+	$FileName   = Split-Path -Path $FileItem -Leaf
+	$FolderName = Split-Path -Path $FileItem -Parent
 	# If (!(Test-Path -LiteralPath "$FileName")) { Continue }
 	If (!(Test-Path -LiteralPath "$FolderName")) {
 		New-Item -Path "$FolderName" -ItemType "directory" -Force
 		}
 	If (Test-Path -LiteralPath "${Env:ProgramFiles}\$SWLN_Name\$FileName") {
-		If (Test-Path -LiteralPath "$FileItem") {
-			Rename-Item -LiteralPath "$FileItem" -NewName ("$FileItem" + ".old") -Force -ErrorAction Ignore
+		If (Test-Path -LiteralPath $FileItem -and $FileName -notlike "*-VarAutodel-*") {
+			# No backup for Autodel files
+			Rename-Item -LiteralPath $FileItem -NewName ("$FileItem" + ".old") -Force -ErrorAction Ignore
 		}
 		Write-Output "Copy ${Env:ProgramFiles}\$SWLN_Name\$FileName in $FileItem"
-		Copy-Item -LiteralPath "${Env:ProgramFiles}\$SWLN_Name\$FileName" -Destination "$FileItem" -Force
+		Copy-Item -LiteralPath "${Env:ProgramFiles}\$SWLN_Name\$FileName" -Destination $FileItem -Force
 	}
 }
 
 # Add exception for Microsoft Defender
-If ($(Get-MpComputerStatus).AntivirusEnabled  -eq $True ) {
+# AntivirusEnabled: Windows Defender real-time antivirus protection
+# AMServiceEnabled: Windows Defender Antimalware Service (antivirus protection manager) <- better
+If ($(Get-MpComputerStatus).AMServiceEnabled -eq $True ) {
 	Write-Host "Microsoft Defender Antivirus is enabled"
 	Write-Host "Microsoft Defender exclude OCS Temporary file"
 	Write-Host "Script path $PSScriptRoot"

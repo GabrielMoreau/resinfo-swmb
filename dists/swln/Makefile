@@ -10,16 +10,55 @@ REVISION:=1
 
 LOG_DIR:=%SystemRoot%\\Logs\\Deploy
 
-FILES:=logo-swmb.ico
-FILES+=$(shell ls -1 CurrentUser-Logon.preset        CurrentUser-Logon-Host-*.preset        2> /dev/null)
-FILES+=$(shell ls -1 LocalMachine-Boot.preset        LocalMachine-Boot-Host-*.preset        2> /dev/null)
-FILES+=$(shell ls -1 LocalMachine-PostInstall.preset LocalMachine-PostInstall-Host-*.preset 2> /dev/null)
-FILES+=$(shell ls -1 Custom-VarOverload.psm1         Custom-VarOverload-Host-*.psm1         2> /dev/null)
-FILES+=$(shell ls -1 Local-Addon.psm1                Local-Addon-Host-*.psm1                2> /dev/null)
-FILES+=pre-install-01copy.bat
-FILES+=post-install-01reg.bat
+FILES := logo-swmb.ico
+FILES += $(wildcard CurrentUser-Logon.preset)
+FILES += $(wildcard LocalMachine-Boot.preset)
+FILES += $(wildcard LocalMachine-PostInstall.preset)
+FILES += $(wildcard Custom-VarOverload.psm1)
+FILES += $(wildcard Custom-VarAutodel.psm1)
+FILES += $(wildcard Local-Addon.psm1)
+FILES += pre-install-01copy.bat
+FILES += post-install-01reg.bat
 
-TFILES:=install.bat
+RESET_FLAG := $(wildcard Group-*.hosts)
+RESET_FLAG += $(wildcard LocalMachine-Boot-Group-*.preset        LocalMachine-Boot-Host-*.preset)
+RESET_FLAG += $(wildcard LocalMachine-PostInstall-Group-*.preset LocalMachine-PostInstall-Host-*.preset)
+RESET_FLAG += $(wildcard CurrentUser-Logon-Group-*.preset        CurrentUser-Logon-Host-*.preset)
+RESET_FLAG += $(wildcard Custom-VarOverload-Group-*.psm1         Custom-VarOverload-Host-*.psm1)
+RESET_FLAG += $(wildcard Custom-VarAutodel-Group-*.psm1          Custom-VarAutodel-Host-*.psm1)
+RESET_FLAG += $(wildcard Local-Addon-Group-*.psm1                Local-Addon-Host-*.psm1)
+
+LM_BOOT_GROUP_PRESET          := $(addprefix tmp/,$(wildcard LocalMachine-Boot-Group-*.preset))
+LM_POSTINSTALL_GROUP_PRESET   := $(addprefix tmp/,$(wildcard LocalMachine-PostInstall-Group-*.preset))
+CU_LOGON_GROUP_PRESET         := $(addprefix tmp/,$(wildcard CurrentUser-Logon-Group-*.preset))
+CUSTOM_VAROVERLOAD_GROUP_PSM1 := $(addprefix tmp/,$(wildcard Custom-VarOverload-Group-*.psm1))
+CUSTOM_VARAUTODEL_GROUP_PSM1  := $(addprefix tmp/,$(wildcard Custom-VarAutodel-Group-*.psm1))
+LOCAL_ADDON_GROUP_PSM1        := $(addprefix tmp/,$(wildcard Local-Addon-Group-*.psm1))
+
+define GROUP_TO_HOST_TFILES
+$(shell \
+	for f in $(wildcard $1-Group-*.$2); do \
+		g=$${f#$1-Group-}; \
+		g=$${g%.$2}; \
+		grep -v '#' Group-$$g.hosts 2>/dev/null | sort -u | \
+		while read -r h; do echo $1-Host-$$h.$2; done; \
+	done )
+endef
+TFILES:=
+TFILES += $(wildcard LocalMachine-Boot-Host-*.preset)
+TFILES += $(wildcard LocalMachine-PostInstall-Host-*.preset)
+TFILES += $(wildcard CurrentUser-Logon-Host-*.preset)
+TFILES += $(wildcard Custom-VarOverload-Host-*.psm1)
+TFILES += $(wildcard Custom-VarAutodel-Host-*.psm1)
+TFILES += $(wildcard Local-Addon-Host-*.psm1)
+TFILES += $(call GROUP_TO_HOST_TFILES,LocalMachine-Boot,preset)
+TFILES += $(call GROUP_TO_HOST_TFILES,LocalMachine-PostInstall,preset)
+TFILES += $(call GROUP_TO_HOST_TFILES,CurrentUser-Logon,preset)
+TFILES += $(call GROUP_TO_HOST_TFILES,Custom-VarOverload,psm1)
+TFILES += $(call GROUP_TO_HOST_TFILES,Custom-VarAutodel,psm1)
+TFILES += $(call GROUP_TO_HOST_TFILES,Local-Addon,psm1)
+
+TFILES+=install.bat
 TFILES+=uninstall.bat
 TFILES+=installer.ps1
 
@@ -65,8 +104,74 @@ tmp/uninstall.bat: uninstall.bat Makefile extend-variables.mk tmp/SWMB-Setup-$(S
 tmp/SWMB-Setup-%.exe: Makefile extend-variables.mk
 	@mkdir -p tmp
 	@(cd tmp ; \
+		rm -f SWMB-Setup-*.exe ; \
 		curl -# --remote-name --insecure "https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/SWMB-Setup-$(SWMB_VERSION).exe" ; \
 		)
+
+tmp/reset.flag: $(RESET_FLAG) Makefile
+	mkdir -p tmp
+	rm -f tmp/*.preset tmp/*.psm1
+	touch $@
+
+tmp/LocalMachine-Boot-Group-%.preset: LocalMachine-Boot-Group-%.preset Group-%.hosts tmp/reset.flag
+	mkdir -p tmp
+	awk '{print $$1}' Group-$*.hosts 2> /dev/null | while read -r host; do (echo '' ; echo '# $<'; cat $<) >> tmp/LocalMachine-Boot-Host-$${host}.preset; unix2dos tmp/LocalMachine-Boot-Host-$${host}.preset; done
+	touch $@
+
+tmp/LocalMachine-Boot-Host-%.preset: LocalMachine-Boot-Host-%.preset $(LM_BOOT_GROUP_PRESET) tmp/reset.flag
+	mkdir -p tmp
+	(echo '' ; echo '# $<'; cat $<) >> $@
+	unix2dos $@
+
+tmp/LocalMachine-PostInstall-Group-%.preset: LocalMachine-PostInstall-Group-%.preset Group-%.hosts tmp/reset.flag
+	mkdir -p tmp
+	awk '{print $$1}' Group-$*.hosts 2> /dev/null | while read -r host; do (echo '' ; echo '# $<'; cat $<) >> tmp/LocalMachine-PostInstall-Host-$${host}.preset; unix2dos tmp/LocalMachine-PostInstall-Host-$${host}.preset; done
+	touch $@
+
+tmp/LocalMachine-PostInstall-Host-%.preset: LocalMachine-PostInstall-Host-%.preset $(LM_POSTINSTALL_GROUP_PRESET) tmp/reset.flag
+	mkdir -p tmp
+	(echo '' ; echo '# $<'; cat $<) >> $@
+	unix2dos $@
+
+tmp/CurrentUser-Logon-Group-%.preset: CurrentUser-Logon-Group-%.preset Group-%.hosts tmp/reset.flag
+	mkdir -p tmp
+	awk '{print $$1}' Group-$*.hosts 2> /dev/null | while read -r host; do (echo '' ; echo '# $<'; cat $<) >> tmp/CurrentUser-Logon-Host-$${host}.preset; unix2dos tmp/CurrentUser-Logon-Host-$${host}.preset; done
+	touch $@
+
+tmp/CurrentUser-Logon-Host-%.preset: CurrentUser-Logon-Host-%.preset $(CU_LOGON_GROUP_PRESET) tmp/reset.flag
+	mkdir -p tmp
+	(echo '' ; echo '# $<'; cat $<) >> $@
+	unix2dos $@
+
+tmp/Custom-VarOverload-Group-%.psm1: Custom-VarOverload-Group-%.psm1 Group-%.hosts tmp/reset.flag
+	mkdir -p tmp
+	awk '{print $$1}' Group-$*.hosts 2> /dev/null | while read -r host; do (echo '' ; echo '# $<'; cat $<) >> tmp/Custom-VarOverload-Host-$${host}.psm1; unix2dos tmp/Custom-VarOverload-Host-$${host}.psm1; done
+	touch $@
+
+tmp/Custom-VarOverload-Host-%.psm1: Custom-VarOverload-Host-%.psm1 $(CUSTOM_VAROVERLOAD_GROUP_PSM1) tmp/reset.flag
+	mkdir -p tmp
+	(echo '' ; echo '# $<'; cat $<) >> $@
+	@unix2dos $@
+
+tmp/Custom-VarAutodel-Group-%.psm1: Custom-VarAutodel-Group-%.psm1 Group-%.hosts tmp/reset.flag
+	mkdir -p tmp
+	awk '{print $$1}' Group-$*.hosts 2> /dev/null | while read -r host; do (echo '' ; echo '# $<'; cat $<) >> tmp/Custom-VarAutodel-Host-$${host}.psm1; unix2dos tmp/Custom-VarAutodel-Host-$${host}.psm1; done
+	touch $@
+
+tmp/Custom-VarAutodel-Host-%.psm1: Custom-VarAutodel-Host-%.psm1 $(CUSTOM_VARAUTODEL_GROUP_PSM1) tmp/reset.flag
+	mkdir -p tmp
+	(echo '' ; echo '# $<'; cat $<) >> $@
+	@unix2dos $@
+
+tmp/Local-Addon-Group-%.psm1: Local-Addon-Group-%.psm1 Group-%.hosts tmp/reset.flag
+	mkdir -p tmp
+	awk '{print $$1}' Group-$*.hosts 2> /dev/null | while read -r host; do (echo '' ; echo '# $<'; cat $<) >> tmp/Local-Addon-Host-$${host}.psm1; unix2dos tmp/Local-Addon-Host-$${host}.psm1; done
+	touch $@
+
+tmp/Local-Addon-Host-%.psm1: Local-Addon-Host-%.psm1 $(LOCAL_ADDON_GROUP_PSM1) tmp/reset.flag
+	mkdir -p tmp
+	(echo '' ; echo '# $<'; cat $<) >> $@
+	@unix2dos $@
 
 check-exe: tmp/SWMB-Setup-$(SWMB_VERSION).exe
 	@(cd tmp ; \
@@ -74,7 +179,7 @@ check-exe: tmp/SWMB-Setup-$(SWMB_VERSION).exe
 		which peres >/dev/null && { peres -a "SWMB-Setup-$(SWMB_VERSION).exe" | grep -q "^Product Version:[[:space:]]*$(SWMB_VERSION)" || { echo "Error: bad version for binary SWMB-Setup-$(SWMB_VERSION).exe" 1>&2 ; exit 1; } ; } ; \
 		)
 
-%.zip: Makefile extend-variables.mk $(FILES) $(TMPFILES)
+%.zip: Makefile extend-variables.mk $(FILES) $(TMPFILES) $(LM_BOOT_GROUP_PRESET) $(LM_POSTINSTALL_GROUP_PRESET) $(CU_LOGON_GROUP_PRESET) $(CUSTOM_VAROVERLOAD_GROUP_PSM1) $(CUSTOM_VARAUTODEL_GROUP_PSM1) $(LOCAL_ADDON_GROUP_PSM1)
 	@rm -f $@
 	@zip --quiet -r $@ $(FILES) -x @zipignore.txt
 	@(cd tmp ; zip --quiet -r ../$@ $(TFILES) -x @../zipignore.txt)
