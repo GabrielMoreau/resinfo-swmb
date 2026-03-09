@@ -16,13 +16,19 @@ ForEach ($FileItem in @(
 	__ALLINSTALLFILES__
 )) {
 	If ("$FileItem" -match '^(install\.bat|installer\.ps1|post-install-.*|pre-install-.*)$') {
+		Write-Output "[info] Installer specific file $FileItem -> pass"
 		Continue
-	} ElseIf (($FileItem -like '*-Host-*') -and ($FileItem -notlike "*-${HostExt}-*")) {
+	} ElseIf (($FileItem -like '*-Host-*') -and ($FileItem -notlike "*-$HostExt.*")) {
+		#  Other computer specific file -> pass and no trace
 		Continue
-	} ElseIf (Test-Path -LiteralPath $FileItem -PathType Leaf) {
-		Copy-Item -LiteralPath $FileItem -Destination "${Env:ProgramFiles}\$SWLN_Name" -Force
-	} ElseIf (Test-Path -LiteralPath $FileItem -PathType Container) {
-		Copy-Item -LiteralPath $FileItem -Destination "${Env:ProgramFiles}\$SWLN_Name" -Force -Recurse
+	} ElseIf (Test-Path -LiteralPath "$FileItem" -PathType Leaf) {
+		Write-Output "Copy file $FileItem in ${Env:ProgramFiles}\$SWLN_Name"
+		Copy-Item -LiteralPath "$FileItem" -Destination "${Env:ProgramFiles}\$SWLN_Name" -Force
+	} ElseIf (Test-Path -LiteralPath "$FileItem" -PathType Container) {
+		Write-Output "Copy folder $FileItem in ${Env:ProgramFiles}\$SWLN_Name"
+		Copy-Item -LiteralPath "$FileItem" -Destination "${Env:ProgramFiles}\$SWLN_Name" -Force -Recurse
+	} Else {
+		Write-Output "[warn] Item $FileItem not in the archive !"
 	}
 }
 
@@ -47,19 +53,25 @@ ForEach ($FileItem in @(
 	"${Env:ProgramData}\SWMB\Modules\Custom-VarAutodel-$HostExt.psm1"
 	"${Env:ProgramData}\SWMB\Modules\Local-Addon-$HostExt.psm1"
 )) {
-	$FileName   = Split-Path -Path $FileItem -Leaf
-	$FolderName = Split-Path -Path $FileItem -Parent
+	$FileName   = Split-Path -Path "$FileItem" -Leaf
+	$FolderName = Split-Path -Path "$FileItem" -Parent
 	# If (!(Test-Path -LiteralPath "$FileName")) { Continue }
 	If (!(Test-Path -LiteralPath "$FolderName")) {
 		New-Item -Path "$FolderName" -ItemType "directory" -Force
 		}
 	If (Test-Path -LiteralPath "${Env:ProgramFiles}\$SWLN_Name\$FileName") {
-		If ((Test-Path -LiteralPath $FileItem) -and ($FileName -notlike "*-VarAutodel-*")) {
+		If ((Test-Path -LiteralPath "$FileItem") -and ($FileName -notlike "*-VarAutodel-*")) {
 			# No backup for Autodel files
-			Rename-Item -LiteralPath $FileItem -NewName ("$FileItem" + ".old") -Force -ErrorAction Ignore
+			Rename-Item -LiteralPath "$FileItem" -NewName ("$FileItem" + ".old") -Force -ErrorAction Ignore
 		}
 		Write-Output "Copy ${Env:ProgramFiles}\$SWLN_Name\$FileName in $FileItem"
-		Copy-Item -LiteralPath "${Env:ProgramFiles}\$SWLN_Name\$FileName" -Destination $FileItem -Force
+		Copy-Item -LiteralPath "${Env:ProgramFiles}\$SWLN_Name\$FileName" -Destination "$FileItem" -Force
+		If ($FileName -like "*-VarAutodel-*") {
+			Write-Output "Delete unnecessary copies of $FileName"
+			Remove-Item -Path "${Env:ProgramFiles}\$SWLN_Name\$FileName" -Force -ErrorAction SilentlyContinue
+			Remove-Item -Path "${Env:ProgramFiles}\$SWLN_Name\$FileName.*" -Force -ErrorAction SilentlyContinue
+			Remove-Item -Path "FileItem.*" -Force -ErrorAction SilentlyContinue
+		}
 	}
 }
 
