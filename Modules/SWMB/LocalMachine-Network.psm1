@@ -374,40 +374,6 @@ Function TweakViewConnectionSharing { # RESINFO
 
 ################################################################
 
-# Disable Anonymous access to Named Pipes and Shares
-# W11 STIG V-253456
-# https://system32.eventsentry.com/stig/search?query=RestrictNullSessAccessValue
-
-# Disable
-Function TweakDisableAnonymousShareAccess { # RESINFO
-	Write-Output "Disabling Anonymous access to Named Pipes and Shares..."
-	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
-	Set-ItemProperty -Path $RegPath -Name "RestrictNullSessAccessValue" -Type DWord -Value 1
-}
-
-# Enable
-Function TweakEnableAnonymousShareAccess { # RESINFO
-	Write-Output "Enabling Anonymous access to Named Pipes and Shares..."
-	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
-	Remove-ItemProperty -Path $RegPath -Name "RestrictNullSessAccessValue" -ErrorAction SilentlyContinue
-}
-
-# View
-Function TweakViewAnonymousShareAccess { # RESINFO
-	Write-Output "Viewing Anonymous access to Named Pipes and Shares (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
-	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
-	$RegFields = @{
-		RestrictNullSessAccessValue = @{
-			OkValues = @(1, $Null)   # 1 or not exist
-			Description = "Disable anonymous access to Named Pipes and Shares"
-			Remediation = "DisableAnonymousShareAccess (W11 STIG V-253456)"
-		}
-	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
-}
-
-################################################################
-
 # Anonymous SID/Name translation must not be allowed
 # W11 STIG V-253452 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253452
 
@@ -467,6 +433,40 @@ Function TweakViewAnonymousShareEnumeration { # RESINFO
 			OkValues = @(1)
 			Description = "Disable Anonymous Share Enumeration"
 			Remediation = "DisableAnonymousShareEnumeration (W11 STIG V-253454)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
+################################################################
+
+# Disable Anonymous access to Named Pipes and Shares
+# W11 STIG V-253456
+# https://system32.eventsentry.com/stig/search?query=RestrictNullSessAccessValue
+
+# Disable
+Function TweakDisableAnonymousShareAccess { # RESINFO
+	Write-Output "Disabling Anonymous access to Named Pipes and Shares..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
+	Set-ItemProperty -Path $RegPath -Name "RestrictNullSessAccessValue" -Type DWord -Value 1
+}
+
+# Enable
+Function TweakEnableAnonymousShareAccess { # RESINFO
+	Write-Output "Enabling Anonymous access to Named Pipes and Shares..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
+	Remove-ItemProperty -Path $RegPath -Name "RestrictNullSessAccessValue" -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewAnonymousShareAccess { # RESINFO
+	Write-Output "Viewing Anonymous access to Named Pipes and Shares (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
+	$RegFields = @{
+		RestrictNullSessAccessValue = @{
+			OkValues = @(1, $Null)   # 1 or not exist
+			Description = "Disable anonymous access to Named Pipes and Shares"
+			Remediation = "DisableAnonymousShareAccess (W11 STIG V-253456)"
 		}
 	}
 	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings

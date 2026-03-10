@@ -19,9 +19,9 @@ ViewSEHOP
 ### Network Tweaks ###
 ViewLanManAuthLevelHigh
 ViewConnectionSharing
-ViewAnonymousShareAccess
 ViewAnonymousNameTranslation
 ViewAnonymousShareEnumeration
+ViewAnonymousShareAccess
 ViewRemoteAssistance
 ViewRemoteDesktop
 ViewWinRMBasicAuth
