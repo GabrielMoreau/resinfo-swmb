@@ -77,7 +77,7 @@ get_osbuild () {
 replace_osbuild () {
 	local CHECKSUM=$(printf "%s\n" "${OSBUILD[@]}" | md5sum | cut -f 1 -d ' ')
 
-	if ! grep -Pq "^[[:space:]]*# BeginAutoEdit - UBR - ${CHECKSUM}\r?$" Modules/WiSeMoUI.psm1
+	if ! grep -Pq "^[[:space:]]*# BeginAutoEdit - UBR - ${CHECKSUM}\r?$" Modules/SWMB.psm1
 	then
 		BLOCK=$(
 			printf "\r\n"
@@ -88,7 +88,7 @@ replace_osbuild () {
 
 		export BLOCK
 		printf '%s\n' "${OSBUILD[@]}"
-		perl -0777 -pi -e 's{\s*#\sBeginAutoEdit\s-\sUBR\s-\s.*?#\sEndAutoEdit}{$ENV{BLOCK}}ms;' 'Modules/WiSeMoUI.psm1'
+		perl -0777 -pi -e 's{\s*#\sBeginAutoEdit\s-\sUBR\s-\s.*?#\sEndAutoEdit}{$ENV{BLOCK}}ms;' 'Modules/SWMB.psm1'
 	fi
 }
 

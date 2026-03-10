@@ -357,6 +357,54 @@ Function SWMB_GetOSShortName {
 
 ################################################################
 
+# Return OS version in a readable format
+Function SWMB_GetOSVersionColor {
+	$OSVersion = SWMB_GetOSVersion
+	$Build = $OSVersion.Build
+	$MajorMinorBuild = "$($OSVersion.Major).$($OSVersion.Minor).$Build"
+	$UBR = $OSVersion.Revision
+
+	# Last OS revision
+	# See ./get-ubr
+	$UBR = @(
+		# BeginAutoEdit - UBR - 06bae5be6252e76625b0c1e6034463d6
+		@{Os = '11'; DisplayVersion = '26H1'; MajorMinor = '10.0'; Build = 28000; UBR = 1643; Level = 0} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; DisplayVersion = '26H1'; MajorMinor = '10.0'; Build = 28000; UBR = 1575; Level = 1} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; DisplayVersion = '26H1'; MajorMinor = '10.0'; Build = 28000; UBR = 1; Level = 2} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 7922; Level = 0} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 7840; Level = 1} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 7705; Level = 2} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 7628; Level = 3} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; DisplayVersion = '24H2'; MajorMinor = '10.0'; Build = 26100; UBR = 7922; Level = 0} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; DisplayVersion = '24H2'; MajorMinor = '10.0'; Build = 26100; UBR = 7840; Level = 1} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; DisplayVersion = '24H2'; MajorMinor = '10.0'; Build = 26100; UBR = 7705; Level = 2} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; DisplayVersion = '23H2'; MajorMinor = '10.0'; Build = 22631; UBR = 6649; Level = 0} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; DisplayVersion = '23H2'; MajorMinor = '10.0'; Build = 22631; UBR = 6495; Level = 1} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '11'; DisplayVersion = '22H2'; MajorMinor = '10.0'; Build = 22621; UBR = 6060; Level = 3} # https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+		@{Os = '10'; DisplayVersion = '22H2'; MajorMinor = '10.0'; Build = 19045; UBR = 6937; Level = 3} # https://learn.microsoft.com/en-us/windows/release-health/release-information
+		@{Os = '10'; DisplayVersion = '21H2'; MajorMinor = '10.0'; Build = 19044; UBR = 6937; Level = 3} # https://learn.microsoft.com/en-us/windows/release-health/release-information
+		# EndAutoEdit
+	)
+
+	$Color = @("Green", "Blue", "Orange", "Red")
+
+	ForEach ($Item in $UBR) {
+		If ([version]"$MajorMinorBuild.0" -eq [version]"$($Item.MajorMinor).$($Item.Build).0") {
+			If ($OSVersion -ge [version]"$($Item.MajorMinor).$($Item.Build).$($Item.UBR)") {
+				$Level = $Item.Level
+				If ($Level -ge $Color.Count) {
+					$Level = $Color.Count - 1
+				}
+				Return $Color[$Level]
+			}
+		}
+	}
+
+	Return $Color[$Color.Count - 1]
+}
+
+################################################################
+
 # Transform string to a version object
 Function SWMB_ToVersion {
 	Param (
