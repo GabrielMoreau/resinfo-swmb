@@ -45,6 +45,72 @@ Function TweakEnableShutdownTracker {
 
 ################################################################
 
+# The "Act as part of the operating system" (Trusted Computing Base Privilege) user right must not be assigned to any groups or accounts.
+# W11 STIG V-253481 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253481
+#
+# SeTcbPrivilege = $($Global:SWMB_Custom.ActAsPartOfOS)
+
+# Disable
+Function TweakDisableTCBPrivilege { # RESINFO
+	Write-Output "Disabling Trusted Computing Base Privilege (Act as part of the operating system)..."
+
+	$TmpFile = New-TemporaryFile
+	secedit /export /cfg $TmpFile /quiet | Out-Null
+	$SecurityConf = SWMB_LoadIniFile -Path $TmpFile
+	Remove-Item -Path $TmpFile
+
+	$IniData = [ordered]@{
+		'Privilege Rights' = $SecurityConf['Privilege Rights']
+		}
+	$IniData['Privilege Rights']['SeTcbPrivilege'] = ''
+
+	$TmpFile = New-TemporaryFile
+	SWMB_SaveIniFile -Path $TmpFile -IniData $IniData -SeceditFormat
+	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $TmpFile /areas USER_RIGHTS | Out-Null
+	Remove-Item -Path $TmpFile
+}
+
+# Enable
+Function TweakEnableTCBPrivilege { # RESINFO
+	Write-Output "Enabling Trusted Computing Base Privilege (Act as part of the operating system)..."
+
+	$TmpFile = New-TemporaryFile
+	secedit /export /cfg $TmpFile /quiet | Out-Null
+	$SecurityConf = SWMB_LoadIniFile -Path $TmpFile
+	Remove-Item -Path $TmpFile
+
+	$IniData = [ordered]@{
+		'Privilege Rights' = $SecurityConf['Privilege Rights']
+		}
+	$IniData['Privilege Rights']['SeTcbPrivilege'] = $($Global:SWMB_Custom.TCBPrivilege)
+
+	$TmpFile = New-TemporaryFile
+	SWMB_SaveIniFile -Path $TmpFile -IniData $IniData -SeceditFormat
+	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $TmpFile /areas USER_RIGHTS | Out-Null
+	Remove-Item -Path $TmpFile
+}
+
+# View
+Function TweakViewTCBPrivilege { # RESINFO
+	Write-Output "Viewing Trusted Computing Base Privilege (Act as part of the operating system) (empty or not exist: Disable (Default, Recommended))..."
+
+	$TmpFile = New-TemporaryFile
+	secedit /export /cfg $TmpFile /quiet | Out-Null
+	$SecurityConf = SWMB_LoadIniFile -Path $TmpFile
+	Remove-Item -Path $TmpFile
+
+	$Rules = @{
+		SeTcbPrivilege = @{
+			OkValues = @('', $Null)
+			Description = "Disable Trusted Computing Base Privilege (Act as part of the operating system)"
+			Remediation = "DisableTCBPrivilege (W11 STIG V-253481)"
+		}
+	}
+	SWMB_GetIniSettings -IniData $SecurityConf -Section 'Privilege Rights' -Rules $Rules | SWMB_WriteSettings
+}
+
+################################################################
+
 # The "Create a token object" user right must not be assigned to any groups or accounts
 # W11 STIG V-253486 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253486
 #
@@ -70,7 +136,7 @@ Function TweakDisableCreateTokenObject { # RESINFO
 	Remove-Item -Path $TmpFile
 }
 
-# Disable
+# Enable
 Function TweakEnableCreateTokenObject { # RESINFO
 	Write-Output "Enabling Create Token Object..."
 
@@ -92,7 +158,7 @@ Function TweakEnableCreateTokenObject { # RESINFO
 
 # View
 Function TweakViewCreateTokenObject { # RESINFO
-	Write-Output "Viewing Create Token Object (0 or not exist: Disable (Default, Recommanded), 1: Enable)..."
+	Write-Output "Viewing Create Token Object (empty or not exist: Disable (Default, Recommended))..."
 
 	$TmpFile = New-TemporaryFile
 	secedit /export /cfg $TmpFile /quiet | Out-Null

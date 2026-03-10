@@ -26,6 +26,10 @@ $Global:SWMB_Custom = @{
 	# Use by tweak: EnableCreateTokenObject
 	CreateTokenObject = ''
 
+	# TCBPrivilege (Trusted Computing Base Privilege - empty by default, for example *S-1-5-32-544 for the Administrators group)
+	# Use by tweak: EnableTCBPrivilege
+	TCBPrivilege = ''
+
 	# SessionLockTimeout
 	# Use by tweak: EnableSessionLockTimeout, DisableSessionLockTimeout
 	InactivityTimeoutSecs  = 900 # max 900 seconds
