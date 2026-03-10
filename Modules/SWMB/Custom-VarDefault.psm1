@@ -23,11 +23,11 @@ $Global:SWMB_Custom = @{
 	LocalAdminNameOriginal  = "administrateur"
 
 	# TCBPrivilege (Trusted Computing Base Privilege - empty by default, for example *S-1-5-32-544 for the Administrators group)
-	# Use by tweak: EnableTCBPrivilege
+	# Use by tweak: SetTCBPrivilege
 	TCBPrivilege = ''
 
 	# CreateTokenObject (empty by default, for example *S-1-5-32-544 for the Administrators group)
-	# Use by tweak: EnableCreateTokenObject
+	# Use by tweak: SetCreateTokenObject
 	CreateTokenObject = ''
 
 	# DebugPrograms (Debug Programs user right only to the Administrators group)

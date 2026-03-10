@@ -50,9 +50,9 @@ Function TweakEnableShutdownTracker {
 #
 # SeTcbPrivilege = $($Global:SWMB_Custom.ActAsPartOfOS)
 
-# Disable
-Function TweakDisableTCBPrivilege { # RESINFO
-	Write-Output "Disabling Trusted Computing Base Privilege (Act as part of the operating system)..."
+# Unet
+Function TweakUnsetTCBPrivilege { # RESINFO
+	Write-Output "Unsetting Trusted Computing Base Privilege (Act as part of the operating system)..."
 
 	$TmpFile = New-TemporaryFile
 	secedit /export /cfg $TmpFile /quiet | Out-Null
@@ -70,9 +70,9 @@ Function TweakDisableTCBPrivilege { # RESINFO
 	Remove-Item -Path $TmpFile
 }
 
-# Enable
-Function TweakEnableTCBPrivilege { # RESINFO
-	Write-Output "Enabling Trusted Computing Base Privilege (Act as part of the operating system)..."
+# Set
+Function TweakSetTCBPrivilege { # RESINFO
+	Write-Output "Setting Trusted Computing Base Privilege (Act as part of the operating system)..."
 
 	$TmpFile = New-TemporaryFile
 	secedit /export /cfg $TmpFile /quiet | Out-Null
@@ -102,8 +102,8 @@ Function TweakViewTCBPrivilege { # RESINFO
 	$Rules = @{
 		SeTcbPrivilege = @{
 			OkValues = @('', $Null)
-			Description = "Disable Trusted Computing Base Privilege (Act as part of the operating system)"
-			Remediation = "DisableTCBPrivilege (W11 STIG V-253481)"
+			Description = "Trusted Computing Base Privilege (Act as part of the operating system)"
+			Remediation = "UnsetTCBPrivilege (W11 STIG V-253481)"
 		}
 	}
 	SWMB_GetIniSettings -IniData $SecurityConf -Section 'Privilege Rights' -Rules $Rules | SWMB_WriteSettings
@@ -116,9 +116,9 @@ Function TweakViewTCBPrivilege { # RESINFO
 #
 # SeCreateTokenPrivilege = $($Global:SWMB_Custom.CreateTokenObject)
 
-# Disable
-Function TweakDisableCreateTokenObject { # RESINFO
-	Write-Output "Disabling Create Token Object..."
+# Unset
+Function TweakUnsetCreateTokenObject { # RESINFO
+	Write-Output "Unsetting Create Token Object..."
 
 	$TmpFile = New-TemporaryFile
 	secedit /export /cfg $TmpFile /quiet | Out-Null
@@ -136,9 +136,9 @@ Function TweakDisableCreateTokenObject { # RESINFO
 	Remove-Item -Path $TmpFile
 }
 
-# Enable
-Function TweakEnableCreateTokenObject { # RESINFO
-	Write-Output "Enabling Create Token Object..."
+# Set
+Function TweakSetCreateTokenObject { # RESINFO
+	Write-Output "Setting Create Token Object..."
 
 	$TmpFile = New-TemporaryFile
 	secedit /export /cfg $TmpFile /quiet | Out-Null
@@ -168,8 +168,8 @@ Function TweakViewCreateTokenObject { # RESINFO
 	$Rules = @{
 		SeCreateTokenPrivilege = @{
 			OkValues = @('', $Null)
-			Description = "Disable Create Token Object"
-			Remediation = "DisableCreateTokenObject (W11 STIG V-253486)"
+			Description = "Create Token Object"
+			Remediation = "UnsetCreateTokenObject (W11 STIG V-253486)"
 		}
 	}
 	SWMB_GetIniSettings -IniData $SecurityConf -Section 'Privilege Rights' -Rules $Rules | SWMB_WriteSettings
