@@ -18,6 +18,13 @@ grep -v '[[:space:]]*#' ../../Modules/SWMB/Custom-VarDefault.psm1 | sed -e 's/^[
 cat <<'END'
 
 ################################################################
+
+If (Test-Path "${Env:ProgramData}\SWMB\Modules\Custom-VarOverload.psm1") {
+	# LocalAdminRegex use by ViewUserInAdminGroup
+	Import-Module -Name "${Env:ProgramData}\SWMB\Modules\Custom-VarOverload.psm1" -ErrorAction SilentlyContinue
+}
+
+################################################################
 END
 
 for func in SWMB_LoadIniFile \
