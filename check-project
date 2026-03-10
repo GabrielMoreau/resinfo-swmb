@@ -168,6 +168,7 @@ while read rule
 do
    for status in 'Add' 'Remove'
    do
+      grep -q "^${status}${rule}" check-ignore.txt && continue
       nb_rule=$(grep -E "^Function[[:space:]]Tweak${status}${rule}[[:space:]]{" ${all_module} | wc -l)
       if [ ${nb_rule} -eq 0 ]
       then
