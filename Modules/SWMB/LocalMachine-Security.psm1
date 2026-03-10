@@ -902,6 +902,72 @@ Function TweakViewCredentialGuard {
 }
 
 ################################################################
+
+# Only accounts responsible for the administration of a system must have Administrator rights on the system
+# W11 STIG V-253269 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253269
+
+Function TweakRemoveUserInAdminGroup {
+	Write-Output "Removing user from Admin group (if not verify LocalAdminRegex regex)..."
+
+	$ComputerSID = ((Get-LocalUser | Select-Object -First 1).SID).AccountDomainSID.ToString()
+	$UserAdminSID = "$ComputerSID-500"
+	$GroupAdminSID = "S-1-5-32-544"
+
+	$Count = 0
+	$FalseAccount = @()
+	Get-LocalGroupMember -SID $GroupAdminSID -ErrorAction SilentlyContinue | Select SID | ForEach-Object {
+		$UserSID = $_.SID
+		$UserAccount = Get-LocalUser -SID $UserSID
+		If ($UserAccount.Enabled -ne $True) {
+			Return # ForEach-Object
+		}
+		$UserName = $UserAccount.Name
+		If ($UserName -match $($Global:SWMB_Custom.LocalAdminRegex) -Or $UserSID -eq $UserAdminSID) {
+			$Count++
+			Return # ForEach-Object
+			}
+		$FalseAccount += $UserSID
+		Write-Output " Admin: $UserName / $UserSID"
+	}
+	If ($Count -gt 0) {
+		ForEach ($UserSID in $FalseAccount) {
+			Write-Output " Remove from Admin group: $UserSID"
+			Remove-LocalGroupMember -SID $GroupAdminSID -Member $UserSID -ErrorAction SilentlyContinue
+		}
+	}
+}
+
+Function TweakViewUserInAdminGroup {
+	Write-Output "Viewing user from Admin group (ok if verify LocalAdminRegex regex)..."
+
+	$ComputerSID = ((Get-LocalUser | Select-Object -First 1).SID).AccountDomainSID.ToString()
+	$UserAdminSID = "$ComputerSID-500"
+	$GroupAdminSID = "S-1-5-32-544"
+
+	$Hash = @{}
+	$Rules = [ordered]@{}
+
+	$GroupMembers = (Get-LocalGroupMember -SID $GroupAdminSID -ErrorAction SilentlyContinue | Select SID).SID
+	ForEach ($UserSID in $GroupMembers){
+		$UserAccount = Get-LocalUser -SID $UserSID
+		If ($UserAccount.Enabled -ne $True) {
+			Continue
+		}
+		$UserName = $UserAccount.Name
+		$Hash[$UserName] = 'OutFromRegex'
+		$Rules[$UserName] = @{
+			OkValues    = @('AdminRegex')
+			Description = "Administrator account"
+			Remediation = "RemoveUserInAdminGroup (W11 STIG V-253269)"
+		}
+		If ($UserName -match $($Global:SWMB_Custom.LocalAdminRegex) -Or $UserSID -eq $UserAdminSID) {
+			$Hash[$UserName] = 'AdminRegex'
+			}
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+}
+
+################################################################
 ###### Crypt Bitlocker
 ################################################################
 

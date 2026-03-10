@@ -21,6 +21,8 @@ $Global:SWMB_Custom = @{
 	# Use by tweak: SetAdminAccountLogin, UnsetAdminAccountLogin
 	LocalAdminNameEffective = "sas-swmb"
 	LocalAdminNameOriginal  = "administrateur"
+	# Use by tweak: RemoveUserInAdminGroup, ViewUserInAdminGroup
+	LocalAdminRegex         = "^administrat"
 
 	# TCBPrivilege (Trusted Computing Base Privilege - empty by default, for example *S-1-5-32-544 for the Administrators group)
 	# Use by tweak: SetTCBPrivilege

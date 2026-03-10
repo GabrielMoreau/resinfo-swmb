@@ -6,6 +6,7 @@ Update UBR and take Windows 11 26H1 into account.
 
 New presets/rules:
 
+* 2026/03/10 - `RemoveUserInAdminGroup`/`ViewUserInAdminGroup` -> Limit Users in Admin Group (Use `$Global:SWMB_Custom` key `LocalAdminRegex`)
 * 2026/03/10 - `EnableCredentialGuard`/`DisableCredentialGuard`/`ViewCredentialGuard` -> Enable Credential Guard service
 * 2026/03/10 - `DisablePrivilegesElevation`/`EnablePrivilegesElevation`/`ViewPrivilegesElevation` -> Disable Elevation of privileges during installation
 * 2026/03/10 - `UnsetDebugPrograms`/`SetDebugPrograms`/`ViewDebugPrograms` -> Unset Debug Programs user right only to the Administrators group (Set use `$Global:SWMB_Custom` key `DebugPrograms`)
