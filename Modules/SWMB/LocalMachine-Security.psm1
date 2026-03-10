@@ -968,6 +968,27 @@ Function TweakViewUserInAdminGroup {
 }
 
 ################################################################
+
+# Windows 11 systems must be maintained at a supported servicing level
+# W11 STIG V-253263 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253263
+
+Function TweakViewWindowsServicingLevel {
+	Write-Output "Viewing Windows Servicing Level..."
+	$OSColor = SWMB_GetOSVersionColor
+	$Hash = @{
+		'ServicingLevel' = $OSColor
+	}
+	$Rules = [ordered]@{
+		'ServicingLevel' = @{
+			OkValues    = @('Green', 'Blue', 'Orange')
+			Description = "Windows maintained at a supported servicing level"
+			Remediation = "Upgrade your Windows (W11 STIG V-253263)"
+		}
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+}
+
+################################################################
 ###### Crypt Bitlocker
 ################################################################
 
