@@ -857,7 +857,7 @@ Function SWMB_WriteSettings {
 			'FAIL' = '❌'
 			'INFO' = 'ℹ️'
 		}
-		$OutPut = " {0,-32} {1,-10} {2} {3}" -F $InputObject.Name, $DisplayValue, $Icon[$InputObject.Status], $InputObject.Status
+		$OutPut = " {0,-32} {1,-13} {2} {3}" -F $InputObject.Name, $DisplayValue, $Icon[$InputObject.Status], $InputObject.Status
 		If ($InputObject.Status -ne 'PASS' -and $InputObject.Remediation -ne $Null) {
 			$OutPut += " → Suggested fix: $($InputObject.Remediation)"
 			}
