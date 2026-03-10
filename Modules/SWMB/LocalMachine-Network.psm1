@@ -407,6 +407,39 @@ Function TweakViewAnonymousNameTranslation { # RESINFO
 
 ################################################################
 
+# Anonymous enumeration of SAM accounts must not be allowed
+# W11 STIG V-253453 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253453
+
+# Disable
+Function TweakDisableAnonymousSAMEnumeration { # RESINFO
+	Write-Output "Disabling Anonymous SAM Enumeration..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
+	Set-ItemProperty -Path $RegPath -Name "RestrictAnonymousSAM" -Type DWord -Value 1
+}
+
+# Enable
+Function TweakEnableAnonymousSAMEnumeration { # RESINFO
+	Write-Output "Enabling Anonymous SAM Enumeration..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
+	Remove-ItemProperty -Path $RegPath -Name "RestrictAnonymousSAM" -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewAnonymousSAMEnumeration { # RESINFO
+	Write-Output "Viewing Anonymous SAM Enumeration (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
+	$RegFields = @{
+		RestrictAnonymousSAM = @{
+			OkValues = @(1)
+			Description = "Disable Anonymous SAM Enumeration"
+			Remediation = "DisableAnonymousSAMEnumeration (W11 STIG V-253453)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
+################################################################
+
 # Anonymous enumeration of shares must be restricted
 # W11 STIG V-253454 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253454
 

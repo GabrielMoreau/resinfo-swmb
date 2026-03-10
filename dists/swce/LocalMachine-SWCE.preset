@@ -20,6 +20,7 @@ ViewSEHOP
 ViewLanManAuthLevelHigh
 ViewConnectionSharing
 ViewAnonymousNameTranslation
+ViewAAnonymousSAMEnumeration
 ViewAnonymousShareEnumeration
 ViewAnonymousShareAccess
 ViewRemoteAssistance
