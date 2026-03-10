@@ -22,6 +22,10 @@ $Global:SWMB_Custom = @{
 	LocalAdminNameEffective = "sas-swmb"
 	LocalAdminNameOriginal  = "administrateur"
 
+	# CreateTokenObject (empty by default, for example *S-1-5-32-544 for the Administrators group)
+	# Use by tweak: EnableCreateTokenObject
+	CreateTokenObject = ''
+
 	# SessionLockTimeout
 	# Use by tweak: EnableSessionLockTimeout, DisableSessionLockTimeout
 	InactivityTimeoutSecs  = 900 # max 900 seconds

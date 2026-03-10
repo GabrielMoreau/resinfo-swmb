@@ -45,9 +45,75 @@ Function TweakEnableShutdownTracker {
 
 ################################################################
 
+# The "Create a token object" user right must not be assigned to any groups or accounts
+# W11 STIG V-253486 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253486
+#
+# SeCreateTokenPrivilege = $($Global:SWMB_Custom.CreateTokenObject)
+
+# Disable
+Function TweakDisableCreateTokenObject { # RESINFO
+	Write-Output "Disabling Create Token Object..."
+
+	$TmpFile = New-TemporaryFile
+	secedit /export /cfg $TmpFile /quiet | Out-Null
+	$SecurityConf = SWMB_LoadIniFile -Path $TmpFile
+	Remove-Item -Path $TmpFile
+
+	$IniData = [ordered]@{
+		'Privilege Rights' = $SecurityConf['Privilege Rights']
+		}
+	$IniData['Privilege Rights']['SeCreateTokenPrivilege'] = ''
+
+	$TmpFile = New-TemporaryFile
+	SWMB_SaveIniFile -Path $TmpFile -IniData $IniData -SeceditFormat
+	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $TmpFile /areas USER_RIGHTS | Out-Null
+	Remove-Item -Path $TmpFile
+}
+
+# Disable
+Function TweakEnableCreateTokenObject { # RESINFO
+	Write-Output "Enabling Create Token Object..."
+
+	$TmpFile = New-TemporaryFile
+	secedit /export /cfg $TmpFile /quiet | Out-Null
+	$SecurityConf = SWMB_LoadIniFile -Path $TmpFile
+	Remove-Item -Path $TmpFile
+
+	$IniData = [ordered]@{
+		'Privilege Rights' = $SecurityConf['Privilege Rights']
+		}
+	$IniData['Privilege Rights']['SeCreateTokenPrivilege'] = $($Global:SWMB_Custom.CreateTokenObject)
+
+	$TmpFile = New-TemporaryFile
+	SWMB_SaveIniFile -Path $TmpFile -IniData $IniData -SeceditFormat
+	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $TmpFile /areas USER_RIGHTS | Out-Null
+	Remove-Item -Path $TmpFile
+}
+
+# View
+Function TweakViewCreateTokenObject { # RESINFO
+	Write-Output "Viewing Create Token Object (0 or not exist: Disable (Default, Recommanded), 1: Enable)..."
+
+	$TmpFile = New-TemporaryFile
+	secedit /export /cfg $TmpFile /quiet | Out-Null
+	$SecurityConf = SWMB_LoadIniFile -Path $TmpFile
+	Remove-Item -Path $TmpFile
+
+	$Rules = @{
+		SeCreateTokenPrivilege = @{
+			OkValues = @('', $Null)
+			Description = "Disable Create Token Object"
+			Remediation = "DisableCreateTokenObject (W11 STIG V-253486)"
+		}
+	}
+	SWMB_GetIniSettings -IniData $SecurityConf -Section 'Privilege Rights' -Rules $Rules | SWMB_WriteSettings
+}
+
+################################################################
+
 # Password Policy
 # MaximumPasswordAge = Number of week (52 = 1 year)
-
+#
 # PasswordHistorySize = $($Global:SWMB_Custom.PasswordHistorySize) (>23: Recommanded) - W11 STIG V-253300 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253300
 # MinimumPasswordAge = $($Global:SWMB_Custom.MinimumPasswordAge) - W11 STIG V-253301 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253301
 # MaximumPasswordAge = $($Global:SWMB_Custom.MaximumPasswordAge) - W11 STIG V-253302 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253302

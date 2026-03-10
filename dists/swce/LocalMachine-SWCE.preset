@@ -46,6 +46,7 @@ ViewAdobeEnhancedSecurity
 ViewAdminNetApps
 
 ### Server Specific Tweaks ###
+ViewCreateTokenObject
 ViewPasswordPolicy
 ViewPasswordComplexity
 ViewPasswordClearText
