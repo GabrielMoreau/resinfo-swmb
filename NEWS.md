@@ -4,6 +4,16 @@
 
 Update UBR and take Windows 11 26H1 into account.
 
+All 28 high-level alerts from the Microsoft Windows 11 Security Implementation Technical Guide have been implemented in SWMB and SWCE.
+In total, 47 STIG alerts are reported by SWCE.
+SWCE loads the parameters of the `Custom-VarOverload.psm1` module (`ProgramData\SWMB\Modules`) into memory, if it exists, in order to take into account the regular expression concerning administrator accounts.
+
+The SWLN template now supports groups.
+Simply replace `-Host-hostname` with `-Group-name` and create a `Group-name.txt` file containing the list of computers belonging to the group.
+Please note that only `-Host-hostname` files are stored on workstations.
+Files are created on the workstation that creates the archive to be deployed.
+If a machine belongs to several groups and has its own `-Host` file, the files are concatenated in alphabetical order, ending with the `-Host` file.
+
 New presets/rules:
 
 * 2026/03/10 - `ViewWindowsServicingLevel` -> Windows systems must be maintained
