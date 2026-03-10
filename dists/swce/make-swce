@@ -32,6 +32,8 @@ for func in SWMB_LoadIniFile \
   SWMB_GetHashSettings \
   SWMB_GetIniSettings \
   SWMB_WriteSettings \
+  SWMB_GetOSVersion \
+  SWMB_GetOSVersionColor \
   SWMB_GetNTAdminsAccount \
   SWMB_QueryAppBlockStatus
 do

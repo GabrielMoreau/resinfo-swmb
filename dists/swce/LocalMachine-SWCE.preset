@@ -17,6 +17,7 @@ ViewSessionLockTimeout
 ViewSEHOP
 ViewCredentialGuard
 ViewUserInAdminGroup
+ViewWindowsServicingLevel
 
 ### Network Tweaks ###
 ViewLanManAuthLevelHigh
