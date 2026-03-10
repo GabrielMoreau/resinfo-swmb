@@ -413,27 +413,60 @@ Function TweakViewAnonymousShareAccess { # RESINFO
 
 # Disable
 Function TweakDisableAnonymousNameTranslation { # RESINFO
-	Write-Output "Disabling Anonymous SID/Name translation ..."
+	Write-Output "Disabling Anonymous SID/Name translation..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
 	Remove-ItemProperty -Path $RegPath -Name "TurnOffAnonymousBlock" -ErrorAction SilentlyContinue
 }
 
 # Enable
 Function TweakEnableAnonymousNameTranslation { # RESINFO
-	Write-Output "Enabling Anonymous SID/Name translation ..."
+	Write-Output "Enabling Anonymous SID/Name translation..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
 	Set-ItemProperty -Path $RegPath -Name "TurnOffAnonymousBlock" -Type DWord -Value 1
 }
 
 # View
 Function TweakViewAnonymousNameTranslation { # RESINFO
-	Write-Output "Viewing Anonymous SID/Name translation  (0 or not exist: Disable (Default, Recommanded), 1: Enable)..."
+	Write-Output "Viewing Anonymous SID/Name translation (0 or not exist: Disable (Default, Recommanded), 1: Enable)..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
 	$RegFields = @{
 		TurnOffAnonymousBlock = @{
 			OkValues = @(0, $Null)   # 0 or not exist
-			Description = "Disable anonymous SID/Name translation "
+			Description = "Disable anonymous SID/Name translation"
 			Remediation = "DisableAnonymousNameTranslation (W11 STIG V-253452)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
+################################################################
+
+# Anonymous enumeration of shares must be restricted
+# W11 STIG V-253454 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253454
+
+# Disable
+Function TweakDisableAnonymousShareEnumeration { # RESINFO
+	Write-Output "Disabling Anonymous Share Enumeration..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
+	Set-ItemProperty -Path $RegPath -Name "RestrictAnonymous" -Type DWord -Value 1
+}
+
+# Enable
+Function TweakEnableAnonymousShareEnumeration { # RESINFO
+	Write-Output "Enabling Anonymous Share Enumeration..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
+	Remove-ItemProperty -Path $RegPath -Name "RestrictAnonymous" -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewAnonymousShareEnumeration { # RESINFO
+	Write-Output "Viewing Anonymous Share Enumeration (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
+	$RegFields = @{
+		RestrictAnonymous = @{
+			OkValues = @(1)
+			Description = "Disable Anonymous Share Enumeration"
+			Remediation = "DisableAnonymousShareEnumeration (W11 STIG V-253454)"
 		}
 	}
 	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings

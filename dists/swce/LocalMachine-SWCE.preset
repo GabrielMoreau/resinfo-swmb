@@ -21,6 +21,7 @@ ViewLanManAuthLevelHigh
 ViewConnectionSharing
 ViewAnonymousShareAccess
 ViewAnonymousNameTranslation
+ViewAnonymousShareEnumeration
 ViewRemoteAssistance
 ViewRemoteDesktop
 ViewWinRMBasicAuth
