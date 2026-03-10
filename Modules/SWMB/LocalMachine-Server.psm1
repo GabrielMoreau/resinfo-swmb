@@ -177,6 +177,72 @@ Function TweakViewCreateTokenObject { # RESINFO
 
 ################################################################
 
+# The "Debug programs" user right must only be assigned to the Administrators group
+# W11 STIG V-253490 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253490
+#
+# SeDebugPrivilege = $($Global:SWMB_Custom.DebugPrograms)
+
+# Unset
+Function TweakUnsetDebugPrograms { # RESINFO
+	Write-Output "Unsetting Debug Programs user right (keeping only Administrators)..."
+
+	$TmpFile = New-TemporaryFile
+	secedit /export /cfg $TmpFile /quiet | Out-Null
+	$SecurityConf = SWMB_LoadIniFile -Path $TmpFile
+	Remove-Item -Path $TmpFile
+
+	$IniData = [ordered]@{
+		'Privilege Rights' = $SecurityConf['Privilege Rights']
+	}
+	$IniData['Privilege Rights']['SeDebugPrivilege'] = '*S-1-5-32-544'  # Administrators SID
+
+	$TmpFile = New-TemporaryFile
+	SWMB_SaveIniFile -Path $TmpFile -IniData $IniData -SeceditFormat
+	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $TmpFile /areas USER_RIGHTS | Out-Null
+	Remove-Item -Path $TmpFile
+}
+
+# Set
+Function TweakSetDebugPrograms { # RESINFO
+	Write-Output "Setting Debug Programs user right with custom setting..."
+
+	$TmpFile = New-TemporaryFile
+	secedit /export /cfg $TmpFile /quiet | Out-Null
+	$SecurityConf = SWMB_LoadIniFile -Path $TmpFile
+	Remove-Item -Path $TmpFile
+
+	$IniData = [ordered]@{
+		'Privilege Rights' = $SecurityConf['Privilege Rights']
+	}
+	$IniData['Privilege Rights']['SeDebugPrivilege'] = $($Global:SWMB_Custom.DebugPrograms)
+
+	$TmpFile = New-TemporaryFile
+	SWMB_SaveIniFile -Path $TmpFile -IniData $IniData -SeceditFormat
+	secedit /configure /db "${Env:SystemRoot}\security\database\local.sdb" /cfg $TmpFile /areas USER_RIGHTS | Out-Null
+	Remove-Item -Path $TmpFile
+}
+
+# View
+Function TweakViewDebugPrograms { # RESINFO
+	Write-Output "Viewing Debug Programs user right (must be only Administrators - *S-1-5-32-544)..."
+
+	$TmpFile = New-TemporaryFile
+	secedit /export /cfg $TmpFile /quiet | Out-Null
+	$SecurityConf = SWMB_LoadIniFile -Path $TmpFile
+	Remove-Item -Path $TmpFile
+
+	$Rules = @{
+		SeDebugPrivilege = @{
+			OkValues = @('*S-1-5-32-544')   # Administrators SID only
+			Description = "Debug Programs privilege"
+			Remediation = "UnsetDebugPrograms (W11 STIG V-253490)"
+		}
+	}
+	SWMB_GetIniSettings -IniData $SecurityConf -Section 'Privilege Rights' -Rules $Rules | SWMB_WriteSettings
+}
+
+################################################################
+
 # Password Policy
 # MaximumPasswordAge = Number of week (52 = 1 year)
 #

@@ -6,6 +6,7 @@ Update UBR and take Windows 11 26H1 into account.
 
 New presets/rules:
 
+* 2026/03/10 - `UnsetDebugPrograms`/`SetDebugPrograms`/`ViewDebugPrograms` -> Unset Debug Programs user right only to the Administrators group (Set use `$Global:SWMB_Custom` key `DebugPrograms`)
 * 2026/03/10 - `DisableTCBPrivilege`/`EnableTCBPrivilege`/`ViewTCBPrivilege` -> Disable Trusted Computing Base Privilege (Enable use `$Global:SWMB_Custom` key `TCBPrivilege`)
 * 2026/03/10 - `DisableCreateTokenObject`/`EnableCreateTokenObject`/`ViewCreateTokenObject` -> Disable Create a Token Object all accounts (Enable use `$Global:SWMB_Custom` key `CreateTokenObject` empty by default)
 * 2026/03/10 - `DisableAAnonymousSAMEnumeration`/`EnableAAnonymousSAMEnumeration`/`ViewAAnonymousSAMEnumeration` -> Disable Anonymous enumeration of SAM accounts

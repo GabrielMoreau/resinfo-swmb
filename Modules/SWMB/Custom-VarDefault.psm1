@@ -22,13 +22,17 @@ $Global:SWMB_Custom = @{
 	LocalAdminNameEffective = "sas-swmb"
 	LocalAdminNameOriginal  = "administrateur"
 
+	# TCBPrivilege (Trusted Computing Base Privilege - empty by default, for example *S-1-5-32-544 for the Administrators group)
+	# Use by tweak: EnableTCBPrivilege
+	TCBPrivilege = ''
+
 	# CreateTokenObject (empty by default, for example *S-1-5-32-544 for the Administrators group)
 	# Use by tweak: EnableCreateTokenObject
 	CreateTokenObject = ''
 
-	# TCBPrivilege (Trusted Computing Base Privilege - empty by default, for example *S-1-5-32-544 for the Administrators group)
-	# Use by tweak: EnableTCBPrivilege
-	TCBPrivilege = ''
+	# DebugPrograms (Debug Programs user right only to the Administrators group)
+	# Use by tweak: SetDebugPrograms
+	DebugPrograms = '*S-1-5-32-544'  # Administrators SID
 
 	# SessionLockTimeout
 	# Use by tweak: EnableSessionLockTimeout, DisableSessionLockTimeout
