@@ -44,7 +44,7 @@ Function SWMB_ImportModuleParameter() {
 			}
 			If (Test-Path -LiteralPath $VarAutodelHost) {
 				Import-Module -Name $VarAutodelHost -ErrorAction Stop
-				Remove-Item $VarAutodelSite -ErrorAction Stop
+				Remove-Item $VarAutodelHost -ErrorAction Stop
 			}
 			Return $True
 		}
