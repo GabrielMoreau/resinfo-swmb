@@ -6,6 +6,7 @@ Update UBR and take Windows 11 26H1 into account.
 
 New presets/rules:
 
+* 2026/03/10 - `EnableCredentialGuard`/`DisableCredentialGuard`/`ViewCredentialGuard` -> Enable Credential Guard service
 * 2026/03/10 - `DisablePrivilegesElevation`/`EnablePrivilegesElevation`/`ViewPrivilegesElevation` -> Disable Elevation of privileges during installation
 * 2026/03/10 - `UnsetDebugPrograms`/`SetDebugPrograms`/`ViewDebugPrograms` -> Unset Debug Programs user right only to the Administrators group (Set use `$Global:SWMB_Custom` key `DebugPrograms`)
 * 2026/03/10 - `UnsetTCBPrivilege`/`SetTCBPrivilege`/`ViewTCBPrivilege` -> Unset Trusted Computing Base Privilege (Set use `$Global:SWMB_Custom` key `TCBPrivilege`)

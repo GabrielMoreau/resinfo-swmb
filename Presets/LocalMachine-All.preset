@@ -122,6 +122,7 @@ DisableInsecureGuestLogons                      # EnableInsecureGuestLogons     
 # DisableAutoLogon                              # EnableAutoLogon                               # ViewAutoLogon
 # DisableRemovableStorageExe                    # EnableRemovableStorageExe                     # ViewRemovableStorageExe       ## Disable program execution on removable media (USB) https://techdirectarchive.com/2019/11/05/how-to-restrict-access-to-usb-drives/
 EnableSEHOP                                     # DisableSEHOP                                  # ViewSEHOP                     ## Enable Structured Exception Handling Overwrite Protection (SEHOP) - W11 STIG V-253284 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253284
+# EnableCredentialGuard                         # DisableCredentialGuard                        # ViewCredentialGuard           ## Enable Credential Guard service - W11 STIG V-253370 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253370
 
 ### Network Tweaks ###
 SetCurrentNetworkPrivate                        # SetCurrentNetworkPublic

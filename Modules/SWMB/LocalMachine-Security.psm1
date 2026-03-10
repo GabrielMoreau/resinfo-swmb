@@ -831,7 +831,7 @@ Function TweakEnableSEHOP { # RESINFO
 Function TweakDisableSEHOP { # RESINFO
 	Write-Output "Disabling Structured Exception Handling Overwrite Protection (SEHOP)..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\kernel'
-	If (Test-Path  $RegPath) {
+	If (Test-Path $RegPath) {
 		Remove-ItemProperty -Path $RegPath -Name 'DisableExceptionChainValidation' -ErrorAction SilentlyContinue
 	}
 }
@@ -848,6 +848,57 @@ Function TweakViewSEHOP { # RESINFO
 		}
 	}
 	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
+################################################################
+
+# Credential Guard must be running on Windows 11 domain-joined systems
+# W11 STIG V-253370 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253370
+
+# Enable
+Function TweakEnableCredentialGuard {
+	Write-Output "Enabling Credential Guard (STIG V-253370)..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\kernel'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
+	}
+	Set-ItemProperty -Path $RegPath -Name 'LsaCfgFlags' -Value 1 -Force
+}
+
+# Disable
+Function TweakDisableCredentialGuard {
+	Write-Output "Disabling Credential Guard (STIG V-253370)..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\kernel'
+	If (Test-Path $RegPath) {
+		Remove-ItemProperty -Path $RegPath -Name 'LsaCfgFlags' -ErrorAction SilentlyContinue
+	}
+}
+
+# View
+Function TweakViewCredentialGuard {
+	Write-Output "Viewing Credential Guard status (STIG V-253370)..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\kernel'
+	$RegFields = @{
+		LsaCfgFlags = @{
+			OkValues = @(1)
+			Description = "Credential Guard uses virtualization-based security (BBS) to protect information"
+			Remediation = "EnableCredentialGuard (W11 STIG V-253370)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+
+	$DeviceGuard = Get-CimInstance -ClassName Win32_DeviceGuard -Namespace root\Microsoft\Windows\DeviceGuard
+	$Hash = @{
+		'SecurityServicesRunning' = $DeviceGuard.SecurityServicesRunning
+	}
+	$Rules = [ordered]@{
+		SecurityServicesRunning = @{
+			OkValues = @(1)
+			Description = "Credential Guard uses virtualization-based security (BBS) to protect information"
+			Remediation = "EnableCredentialGuard (W11 STIG V-253370)"
+		}
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################

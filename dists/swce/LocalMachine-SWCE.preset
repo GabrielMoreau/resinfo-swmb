@@ -15,6 +15,7 @@ ViewSMBServerSigning
 ViewSMB1Protocol
 ViewSessionLockTimeout
 ViewSEHOP
+ViewCredentialGuard
 
 ### Network Tweaks ###
 ViewLanManAuthLevelHigh
