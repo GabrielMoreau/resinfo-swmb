@@ -48,6 +48,7 @@ ViewAdminNetApps
 ### Server Specific Tweaks ###
 ViewTCBPrivilege
 ViewCreateTokenObject
+ViewDebugPrograms
 ViewPasswordPolicy
 ViewPasswordComplexity
 ViewPasswordClearText
