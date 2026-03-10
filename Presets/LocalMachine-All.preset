@@ -295,6 +295,7 @@ UnsetDebugPrograms                              # SetDebugPrograms              
 EnablePasswordComplexity                        # DisablePasswordComplexity                     # ViewPasswordComplexity        ## Enable Password complexity filter - W11 STIG V-253304 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253304
 DisablePasswordClearText                        # EnablePasswordClearText                       # ViewPasswordClearText         ## Disable Reversible password encryption - W11 STIG V-253305 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253305
 DisablePasswordLMHash                           # EnablePasswordLMHash                          # ViewPasswordLMHash            ## Disable Password LM Hash Storage - W11 STIG V-253305 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253461
+# DisablePrivilegesElevation                    # EnablePrivilegesElevation                     # ViewPrivilegesElevation       ## Disable Elevation of privileges during installation - W11 STIG V-253411 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253411
 # DisableCtrlAltDelLogin                        # EnableCtrlAltDelLogin
 # DisableIEEnhancedSecurity                     # EnableIEEnhancedSecurity
 # EnableAudio                                   # DisableAudio

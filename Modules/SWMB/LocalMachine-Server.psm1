@@ -463,6 +463,40 @@ Function TweakViewPasswordLMHash { # RESINFO
 
 ################################################################
 
+# The Windows Installer feature "Always install with elevated privileges" must be disabled
+# Disable Elevation of privileges during installation
+# W11 STIG V-253411 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253411
+
+# Disable
+Function TweakDisablePrivilegesElevation { # RESINFO
+	Write-Output "Disabling Elevation of privileges during installation..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Installer'
+	Set-ItemProperty -Path $RegPath -Name 'AlwaysInstallElevated' -Type DWord -Value 0
+}
+
+# Enable
+Function TweakEnablePrivilegesElevation { # RESINFO
+	Write-Output "Enabling Elevation of privileges during installation..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Installer'
+	Remove-ItemProperty -Path $RegPath -Name 'AlwaysInstallElevated' -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewPrivilegesElevation { # RESINFO
+	Write-Output "Viewing Elevation of privileges during installation (not exist: Enable (Default), 0: Disable (Recommanded))..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Installer'
+	$RegFields = @{
+		AlwaysInstallElevated = @{
+			OkValues = @(0)
+			Description = "Elevation of privileges during installation"
+			Remediation = "DisablePrivilegesElevation (W11 STIG V-253411)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
+################################################################
+
 # Disable Ctrl+Alt+Del requirement before login
 Function TweakDisableCtrlAltDelLogin {
 	Write-Output "Disabling Ctrl+Alt+Del requirement before login..."

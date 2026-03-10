@@ -53,6 +53,7 @@ ViewPasswordPolicy
 ViewPasswordComplexity
 ViewPasswordClearText
 ViewPasswordLMHash
+ViewPrivilegesElevation
 
 ### Bitlocker Tweaks ###
 ViewVolumeBadlyFormatted
