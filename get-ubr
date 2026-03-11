@@ -59,19 +59,19 @@ get_osbuild () {
 	OSBUILD+=("$(get_ubr 11 25H2 26200 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 4 0)")
 
 	# Windows 11 / version 24H2
-	OSBUILD+=("$(get_ubr 11 24H2 26100 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 3 0)")
+	OSBUILD+=("$(get_ubr 11 24H2 26100 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 3 1)")
 
 	# Windows 11 / version 23H2
-	OSBUILD+=("$(get_ubr 11 23H2 22631 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 2 0)")
+	OSBUILD+=("$(get_ubr 11 23H2 22631 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 3 1)")
 
 	# Windows 11 / version 22H2
 	OSBUILD+=("$(get_ubr 11 22H2 22621 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 1 3)")
 
 	# Windows 10 / version 22H2
-	OSBUILD+=("$(get_ubr 10 22H2 19045 'https://learn.microsoft.com/en-us/windows/release-health/release-information' 1 3)")
+	OSBUILD+=("$(get_ubr 10 22H2 19045 'https://learn.microsoft.com/en-us/windows/release-health/release-information' 3 0)")
 
 	# Windows 10 / version 21H2
-	OSBUILD+=("$(get_ubr 10 21H2 19044 'https://learn.microsoft.com/en-us/windows/release-health/release-information' 1 3)")
+	OSBUILD+=("$(get_ubr 10 21H2 19044 'https://learn.microsoft.com/en-us/windows/release-health/release-information' 3 0)")
 }
 
 ################################################################
