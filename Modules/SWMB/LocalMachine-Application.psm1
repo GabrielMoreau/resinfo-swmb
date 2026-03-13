@@ -1585,12 +1585,12 @@ Function TweakViewAdobeEnhancedSecurity { # RESINFO
 		bEnhancedSecurityStandalone = @{
 			OkValues = @(1)
 			Description = "Remote Assistance"
-			Remediation = "EnableAdobeEnhancedSecurity (W11 STIG V-213168)"
+			Remediation = "EnableAdobeEnhancedSecurity (App STIG V-213168)"
 		}
 		bEnhancedSecurityInBrowser = @{
 			OkValues = @(1)
 			Description = "Remote Assistance"
-			Remediation = "EnableAdobeEnhancedSecurity (W11 STIG V-213169)"
+			Remediation = "EnableAdobeEnhancedSecurity (App STIG V-213169)"
 		}
 	}
 	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
@@ -1673,7 +1673,7 @@ Function TweakViewFirefoxTLS { # RESINFO
 		SSLVersionMin = @{
 			OkValues = @('tls1.2', 'tls1.3')
 			Description = "Firefox TLS minimum version in registry (or policies.json)"
-			Remediation = "Configure SSLVersionMin for Firefox in registry (or policies.json) (W11 STIG V-251546)"
+			Remediation = "Configure SSLVersionMin for Firefox in registry (or policies.json) (App STIG V-251546)"
 		}
 	}
 	If (Test-Path $RegPath) {
