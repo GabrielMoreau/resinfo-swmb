@@ -47,6 +47,7 @@ ViewTelnetClient
 ViewTFTPClient
 ViewAdobeEnhancedSecurity
 ViewAdminNetApps
+ViewFirefoxTLS
 
 ### Server Specific Tweaks ###
 ViewTCBPrivilege
