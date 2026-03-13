@@ -1643,6 +1643,60 @@ Function TweakViewAdminNetApps { # RESINFO
 }
 
 ################################################################
+
+# Firefox TLS Minimum Version
+# Firefox must be configured to allow only TLS 1.2 or above
+# App STIG V-251546 https://www.stigviewer.com/stigs/mozilla_firefox/2025-02-11/finding/V-251546
+
+Function TweakViewFirefoxTLS { # RESINFO
+	Write-Host "Viewing Firefox TLS Minimum Version (not exist: Default, >= TLS1.2: Recommanded)..."
+
+	# Possible Firefox installation paths
+	$FirefoxPaths = @(
+		"${Env:ProgramFiles}\Mozilla Firefox",
+		"${Env:ProgramFiles(x86)}\Mozilla Firefox"
+	)
+
+	$FirefoxInstalled = $False
+	ForEach ($Path in $FirefoxPaths) {
+		If (Test-Path $Path) {
+			$FirefoxInstalled = $True
+			$InstallPath = $Path
+			Break
+		}
+	}
+	If ($InstallPath -eq $Null) { Return }
+
+	# Registry
+	$RegPath = "HKLM:\SOFTWARE\Policies\Mozilla\Firefox"
+	$Rules = [ordered]@{
+		SSLVersionMin = @{
+			OkValues = @('tls1.2', 'tls1.3')
+			Description = "Firefox TLS minimum version in registry (or policies.json)"
+			Remediation = "Configure SSLVersionMin for Firefox in registry (or policies.json) (W11 STIG V-251546)"
+		}
+	}
+	If (Test-Path $RegPath) {
+		$RegValue = (Get-ItemProperty -Path$RegPath -Name SSLVersionMin -ErrorAction SilentlyContinue).SSLVersionMin
+		If ($RegValue) {
+			SWMB_GetRegistrySettings -Path $RegPath -Rules $Rules | SWMB_WriteSettings
+			Return
+		}
+	}
+
+	# JSON
+	$Hash = @{}
+	$PolicyFile = Join-Path $InstallPath "distribution\policies.json"
+	If (Test-Path $PolicyFile) {
+		$Json = Get-Content $PolicyFile -Raw -ErrorAction SilentlyContinue | ConvertFrom-Json -ErrorAction SilentlyContinue
+		If ($Json -and $Json.policies -and $Json.policies.SSLVersionMin) {
+			$Hash['SSLVersionMin'] = $Json.policies.SSLVersionMin
+		}
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+}
+
+################################################################
 ###### Export Functions
 ################################################################
 

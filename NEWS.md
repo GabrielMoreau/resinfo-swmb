@@ -16,6 +16,7 @@ If a machine belongs to several groups and has its own `-Host` file, the files a
 
 New presets/rules:
 
+* 2026/03/13 - `ViewFirefoxTLS` -> Firefox TLS Minimum Version
 * 2026/03/10 - `ViewWindowsServicingLevel` -> Windows systems must be maintained
 * 2026/03/10 - `RemoveUserInAdminGroup`/`ViewUserInAdminGroup` -> Limit Users in Admin Group (Use `$Global:SWMB_Custom` key `LocalAdminRegex`)
 * 2026/03/10 - `EnableCredentialGuard`/`DisableCredentialGuard`/`ViewCredentialGuard` -> Enable Credential Guard service
