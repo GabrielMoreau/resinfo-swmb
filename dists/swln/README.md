@@ -16,6 +16,7 @@ However, the final package is intended for deployment on Windows wo
 
 In order to have a fully functional SWMB, we must place these files in the `C:\ProgramData\SWMB` tree.
 In practice, other files can be used to fine-tune the configuration, as we will see later.
+
 ```
 CurrentUser-Logon.preset        -> Presets/
 LocalMachine-Boot.preset        -> Presets/
@@ -44,11 +45,13 @@ At the end of the process, a ZIP archive is created with a version number.
 This version number combines the SWLN version number with the SWMB version number.
 
 To build the archive, you'll need the following packages on your Linux system (for Debian):
+
 ```bash
 apt install coreutils findutils grep sed curl gawk dos2unix zip unzip make readpe
 ```
 
 In a terminal, just type `make`, and if everything goes well, the archive will build automatically!
+
 ```bash
 make
 ```
@@ -56,6 +59,7 @@ make
 To ensure compatibility with your existing infrastructure, do not attempt to modify the `Makefile` at first
 However, you can extend it using the `extend-variables.mk` and `extend-rules.mk` files.
 The first file allows you to set site-specific parameters, and the second allows you to add your own rules to the Makefile.
+
 ```
 extend-variables.mk
 extend-rules.mk
@@ -76,3 +80,42 @@ Thus, on a workstation, there are two software registry keys: one for SWMB and t
 
 Since SWLN and SWMB are installed as Windows programs, they have a registry key that allows for automatic uninstallation.
 To remove them from a workstation, simply go to Add or Remove Programs.
+
+## Advanced configuration: Host files
+
+Sometimes, a tweak or a specific setting needs to be applied to a machine.
+Simply create files with the machine's `hostname` in lowercase.
+
+During installation, these files will be placed in the correct location and will be read after the general files.
+Specific tweaks are therefore always taken into account.
+
+```
+CurrentUser-Logon-Host-hostname.preset
+LocalMachine-Boot-Host-hostname.preset
+LocalMachine-PostInstall-Host-hostname.preset
+Custom-VarOverload-Host-hostname.psm1
+```
+
+If a counter-tweak needs to be applied to this machine, the correct method is to disable the general tweak and then add its counter-tweak to the end of the preset file.
+For example, in the general preset, we have the `EnableAudio` tweak.
+On a specific machine, we can therefore have the preset file `LocalMachine-Boot-Host-hostname.preset` with the following two lines.
+The first cancels the general tweak if it exists in the list, and the second adds it.
+
+```
+!EnableAudio
+DisableAudio
+```
+
+It is even possible to push a tweak implementation that will only be used on a single machine.
+This can be useful for testing or on very specific computers. 
+
+```
+Local-Addon-Host-hostname.psm1
+```
+
+The `Custom-VarAutodel-Host-hostname.psm1` settings file, which is deleted after the first load, is also supported.
+Its use is even rarer.
+
+## References
+
+See the [REFERENCES](../../REFERENCES.md) file.
