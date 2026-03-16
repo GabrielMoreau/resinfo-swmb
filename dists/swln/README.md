@@ -1,4 +1,4 @@
-# Template to extend SWMB on your Local Network
+# SWLN - Template to extend SWMB on your Local Network
 
 ## Context
 
@@ -140,7 +140,7 @@ The SWLN Makefile generates `*-Host-hostname.*` files for all the machines in th
 If a computer is in multiple groups, they are sorted alphabetically, with the first ones processed first!
 If the machine also has a specific `Host` file, it is added last.
 
-The groups also manage the two files `Local-Addon-Group-acquisition.psm1` and `Custom-VarAutodel-Group-acquisition.psm1`.
+The SWLN groups also manage the two files `Local-Addon-Group-acquisition.psm1` and `Custom-VarAutodel-Group-acquisition.psm1`.
 However, it is not necessarily a good idea to overcomplicate your deployment.
 The purpose of SWMB is to enhance security, and a complex architecture becomes difficult to audit.
 
