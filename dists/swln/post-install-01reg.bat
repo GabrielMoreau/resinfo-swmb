@@ -1,6 +1,16 @@
 ECHO.
 ECHO Begin post-install-01reg.bat
 
+ECHO Clean same file in the ProgramData folder
+SET "PRESETDIR=%ProgramData%\SWMB\Presets"
+SET "MODULEDIR=%ProgramData%\SWMB\Modules"
+FOR %%F IN ("%PRESETDIR%\*" "%MODULEDIR%\*") DO (
+  IF EXIST "%%F.old" (
+    FC "%%F" "%%F.old" >NUL
+    IF %ERRORLEVEL% EQU 0 DEL /F /Q "%%F.old"
+  )
+)
+
 ECHO Change Add and Remove values in the register
  > tmp_install.reg ECHO Windows Registry Editor Version 5.00
 >> tmp_install.reg ECHO.
