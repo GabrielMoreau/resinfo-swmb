@@ -116,6 +116,34 @@ Local-Addon-Host-hostname.psm1
 The `Custom-VarAutodel-Host-hostname.psm1` settings file, which is deleted after the first load, is also supported.
 Its use is even rarer.
 
+## Advanced configuration: Group files
+
+Sometimes there is a group of machines with the exact same specific situation...
+It’s not very practical to duplicate the same settings N times.
+SWLN automates this for you.
+
+For example, let's create a machine group named `acquisition`.
+We then have the following files:
+
+```
+Group-acquisition.txt
+CurrentUser-Logon-Group-acquisition.preset
+LocalMachine-Boot-Group-acquisition.preset
+LocalMachine-PostInstall-Group-acquisition.preset
+Custom-VarOverload-Group-acquisition.psm1
+```
+
+The file `Group-acquisition.txt` lists all the machines in the group, with each machine name written in lowercase on a separate line.
+Lines beginning with `#` are ignored.
+
+The SWLN Makefile generates `*-Host-hostname.*` files for all the machines in the group.
+If a computer is in multiple groups, they are sorted alphabetically, with the first ones processed first!
+If the machine also has a specific `Host` file, it is added last.
+
+The groups also manage the two files `Local-Addon-Group-acquisition.psm1` and `Custom-VarAutodel-Group-acquisition.psm1`.
+However, it is not necessarily a good idea to overcomplicate your deployment.
+The purpose of SWMB is to enhance security, and a complex architecture becomes difficult to audit.
+
 ## References
 
 See the [REFERENCES](../../REFERENCES.md) file.
