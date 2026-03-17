@@ -47,7 +47,9 @@ This version number combines the SWLN version number with the SWMB version numbe
 To build the archive, you'll need the following packages on your Linux system (for Debian):
 
 ```bash
-apt install coreutils findutils grep sed curl gawk dos2unix zip unzip make readpe
+apt install coreutils findutils grep sed gawk curl \
+  make dos2unix readpe zip unzip \
+  diffutils meld git
 ```
 
 In a terminal, just type `make`, and if everything goes well, the archive will build automatically!
@@ -93,6 +95,39 @@ To remove them from a workstation, simply go to Add or Remove Programs.
 
 Please note that only files managed by SWLN will be deleted from the `Presets` and `Modules` folders in the `C:\ProgramData\SWMB` directory.
 If you have other files in these folders, they will not be modified or deleted.
+
+## Keep in sync with SWLN and SWMB
+
+It’s a good idea to keep your version of SWLN in a Git repository or similar to maintain a history of your fleet management.
+However, in the meantime, it’s likely and normal for SWMB and SWLN to evolve and change.
+You should therefore regularly check whether you need to resynchronize.
+
+The `check-with-swln` script does exactly that.
+It loops through all SWLN files and compares them with yours.
+To make this easier, the comparison is visual and uses the `meld` tool on Linux (see the [Build](#build) section).
+You can compare changes to scripts, Makefiles, presets, and more, and update your versions if needed.
+
+To do this, however, you must have a local copy of the SWMB files (the comparison currently does not work with online files).
+You must therefore clone the SWMB repository once and then update it before running the comparison script.
+
+```bash
+# Clone SWMB
+git clone https://gitlab.in2p3.fr/resinfo-gt/swmb/resinfo-swmb.git
+
+# Update your SWMB repository
+cd ~/path-to-your-swmb-installation
+git pull
+```
+
+In a terminal, within your SWLN installation directory, simply run the script:
+
+```bash
+./check-with-swln ~/path-to-your-swmb-installation
+```
+
+If you have developed interesting features that are clearly not specific to your site, consider submitting them to the SWMB community so they can be integrated into the core of the engine.
+This is how the project moves forward.
+It’s tested in one place, then the code is reviewed and tagged RESINFO.
 
 ## Advanced configuration: Host files
 
