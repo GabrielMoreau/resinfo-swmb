@@ -76,10 +76,23 @@ This is because we currently do not have the means to digitally sign these files
 At the end of the installation process, a registry key is added for SWLN.
 Thus, on a workstation, there are two software registry keys: one for SWMB and the other for your local SWLN instance.
 
+## Update
+
+When you update your site's rules or upgrade the version of SWMB integrated into SWLN, you redeploy your package to the workstations.
+The installer removes the old versions of the configuration files before installing the new ones.
+
+Thus, if a specific file existed in a previous version — for example, `Local-Addon.psm1` — and you no longer have that module (or preset file) in your new image, that file is effectively removed from the workstation and nothing replaces it.
+
+SWLN modifies only the files it manages and that are listed in this documentation.
+If you have other files in the `Presets` and `Modules` folders within the `C:\ProgramData\SWMB` directory tree, they will neither be modified nor deleted.
+
 ## Uninstallation
 
 Since SWLN and SWMB are installed as Windows programs, they have a registry key that allows for automatic uninstallation.
 To remove them from a workstation, simply go to Add or Remove Programs.
+
+Please note that only files managed by SWLN will be deleted from the `Presets` and `Modules` folders in the `C:\ProgramData\SWMB` directory.
+If you have other files in these folders, they will not be modified or deleted.
 
 ## Advanced configuration: Host files
 
