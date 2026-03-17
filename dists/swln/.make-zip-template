@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# make-zip-template
+#
+# 2026/03/17 Gabriel Moreau <Gabriel.Moreau@univ-grenoble-alpes.fr>
+
+
+VERSION=$(cd ../..; make version)
+ZIP="SWLN-${VERSION}.zip"
+
+zip --quiet "${ZIP}" check-with-swln install.bat installer.ps1 Makefile post-install-01reg.bat pre-install-01copy.bat uninstall.bat extend-rules.mk extend-variables.mk
+
+mkdir -p tmp
+cp ../../Presets/LocalMachine-All.preset tmp/LocalMachine-Boot.preset
+cp ../../Presets/LocalMachine-All.preset tmp/LocalMachine-PostInstall.preset
+cp ../../Presets/CurrentUser-All.preset  tmp/CurrentUser-Logon.preset
+
+(cd tmp; zip --quiet "../${ZIP}" LocalMachine-Boot.preset LocalMachine-PostInstall.preset CurrentUser-Logon.preset)
