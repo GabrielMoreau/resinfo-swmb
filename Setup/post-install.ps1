@@ -2,7 +2,7 @@
 # Win 10 / Server 2016 / Server 2019 SWMB Script - Main execution loop
 # Project CNRS RESINFO SWMB
 # Copyright (C) 2017-2020, Disassembler <disassembler@dasm.cz>
-# Copyright (C) 2020-2025, CNRS, France
+# Copyright (C) 2020-2026, CNRS, France
 # License: MIT License (Same as project Win10-Initial-Setup-Script)
 # Homepage: https://gitlab.in2p3.fr/resinfo-gt/swmb/resinfo-swmb
 # Authors:

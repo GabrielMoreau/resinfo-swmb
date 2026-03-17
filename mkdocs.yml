@@ -3,7 +3,7 @@ site_url: https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/docs
 docs_dir: __HERE__
 site_dir: /tmp/swmb/site
 site_author: RESINFO GT SWMB
-copyright: Copyright (C) 2020-2025, CNRS, France (document generated on __DATE__)
+copyright: Copyright (C) 2020-2026, CNRS, France (document generated on __DATE__)
 
 nav:
     - Home: README.md
