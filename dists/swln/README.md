@@ -12,6 +12,13 @@ The creation of this archive is automated.
 Currently, SWLN is designed for use on **Linux**, as programming and automating tasks to build a package is simpler on this operating system.
 However, the final package is intended for deployment on Windows wo
 
+## Download
+
+The latest version of the SWLN template is available on the [download page](https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/).
+However, the website still has the latest versions.
+
+The most recent version is available under the name [SWLN-Latest](https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/SWLN-Latest.zip).
+
 ## Minimal configuration
 
 In order to have a fully functional SWMB, we must place these files in the `C:\ProgramData\SWMB` tree.
@@ -110,7 +117,7 @@ You can compare changes to scripts, Makefiles, presets, and more, and update you
 To do this, however, you must have a local copy of the SWMB files (the comparison currently does not work with online files).
 There are two options:
 
-* Either let the script download the latest files from the SWMB download site to perform the comparison, and create a “SWMB-Fake” folder in the temporary folder.
+* Either let the script download the latest files from the SWMB download site to perform the comparison, and create a `SWMB-Fake` folder in the temporary `tmp` folder.
   In a terminal, within your SWLN installation directory, simply run the script `./check-with-swln`.
 
 * Or you must clone the SWMB Git repository, then update it (pull) before running the comparison script.
