@@ -108,9 +108,14 @@ To make this easier, the comparison is visual and uses the `meld` tool on Linux 
 You can compare changes to scripts, Makefiles, presets, and more, and update your versions if needed.
 
 To do this, however, you must have a local copy of the SWMB files (the comparison currently does not work with online files).
-You must therefore clone the SWMB Git repository once and then update it (pull) before running the comparison script.
-Please note that by default, your SWLN template does not use your local copy of SWMB when building the ZIP package.
-This local instance of SWMB is used solely for comparison purposes.
+There are two options:
+
+* Either let the script download the latest files from the SWMB download site to perform the comparison, and create a “SWMB-Fake” folder in the temporary folder.
+  In a terminal, within your SWLN installation directory, simply run the script `./check-with-swln`.
+
+* Or you must clone the SWMB Git repository, then update it (pull) before running the comparison script.
+  Please note that, by default, your SWLN template does not use your local copy of SWMB when creating the ZIP file.
+  This local instance of SWMB is used solely for comparison purposes.
 
 ```bash
 # First time - Clone SWMB
