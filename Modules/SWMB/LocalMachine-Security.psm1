@@ -1111,11 +1111,11 @@ Function TweakEnableBitlocker { # RESINFO
 		# Other drives encryption
 		$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $Null } |
 			ForEach-Object {
-				$Disk = Get-Partition -DriveLetter $_.DriveLetter | Get-Disk
+				$Disk = Get-Partition -DriveLetter $_.DriveLetter -ErrorAction SilentlyContinue | Get-Disk
 				If ($Disk.BusType -notmatch "USB|UASP|SD|MMC") { $_ }
 			}
 		ForEach ($Volume in $ListVolume) {
-			If ($_.DriveLetter -eq $SystemDriveLetter) { Continue }
+			If ($Volume.DriveLetter -eq $SystemDriveLetter) { Continue }
 
 			$Letter = $Volume.DriveLetter
 			$LetterColon = $Letter + ":"
@@ -1279,7 +1279,7 @@ Function TweakEnableBitlocker { # RESINFO
 			}
 			_EnforceCryptGPO
 			_EncryptSytemDrive -NetworkKeyBackupFolder $NetworkBackup
-			_EncryptNonSytemDrives -SystemDriveLetter $SystemDriveLetter -NetworkKeyBackupFolder $NetworkBackup
+			_EncryptNonSytemDrives -NetworkKeyBackupFolder $NetworkBackup -SystemDriveLetter $SystemDriveLetter
 
 			$QueryReboot = Read-Host -Prompt "The computer must be restarted to finish the system disk encryption. Reboot now? [Y/n]"
 			If ($QueryReboot.ToLower() -ne "n") {
@@ -1351,7 +1351,7 @@ Function TweakViewBitlocker { # RESINFO
 	Write-Output "Viewing Bitlocker on all fixed drives (XtsAes256 Recommanded)..."
 	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $Null }
 #		ForEach-Object {
-#			$Disk = Get-Partition -DriveLetter $_.DriveLetter | Get-Disk
+#			$Disk = Get-Partition -DriveLetter $_.DriveLetter -ErrorAction SilentlyContinue | Get-Disk
 #			If ($Disk.BusType -notmatch "USB|UASP|SD|MMC") { $_ }
 #		}
 	$Hash = @{}
@@ -1359,7 +1359,7 @@ Function TweakViewBitlocker { # RESINFO
 	ForEach ($Volume in $ListVolume) {
 		$Letter = $Volume.DriveLetter
 		$LetterColon = $Letter + ":"
-		$DiskBusType = (Get-Partition -DriveLetter $Volume.DriveLetter | Get-Disk).BusType
+		$DiskBusType = (Get-Partition -DriveLetter $Volume.DriveLetter -ErrorAction SilentlyContinue | Get-Disk).BusType
 		$Hash[$LetterColon] = 'OFF'
 		$Action = 'Encrypt'
 		If ((Get-BitLockerVolume $Letter).ProtectionStatus -eq "On") {
@@ -1513,14 +1513,14 @@ Function TweakViewVolumeBadlyFormatted {
 	Write-Output "Viewing Local Volumes that are Badly Formatted (non-NTFS)..."
 	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $Null }
 #		ForEach-Object {
-#			$Disk = Get-Partition -DriveLetter $_.DriveLetter | Get-Disk
+#			$Disk = Get-Partition -DriveLetter $_.DriveLetter -ErrorAction SilentlyContinue | Get-Disk
 #			If ($Disk.BusType -notmatch "USB|UASP|SD|MMC") { $_ }
 #		}
 	$Hash = @{}
 	$DriveRules = @{}
 	ForEach ($Volume in $ListVolume) {
 		$LetterColon = "$($Volume.DriveLetter):"
-		$DiskBusType = (Get-Partition -DriveLetter $Volume.DriveLetter | Get-Disk).BusType
+		$DiskBusType = (Get-Partition -DriveLetter $Volume.DriveLetter -ErrorAction SilentlyContinue | Get-Disk).BusType
 
 		# ---- DriveIni ----
 		$Hash[$LetterColon] = $Volume.FileSystem
