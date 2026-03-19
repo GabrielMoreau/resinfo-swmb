@@ -8,11 +8,17 @@
 VERSION=$(cd ../..; make version)
 ZIP="SWLN-${VERSION}.zip"
 
-zip --quiet "${ZIP}" check-with-swln install.bat installer.ps1 Makefile post-install-01reg.bat pre-install-01copy.bat uninstall.bat extend-rules.mk extend-variables.mk
+zip --quiet "${ZIP}" check-quality check-with-swln \
+  install.bat installer.ps1 uninstall.bat \
+  post-install-01reg.bat pre-install-01copy.bat \
+  Makefile extend-rules.mk extend-variables.mk
 
 mkdir -p tmp
 cp ../../Presets/LocalMachine-All.preset tmp/LocalMachine-Boot.preset
 cp ../../Presets/LocalMachine-All.preset tmp/LocalMachine-PostInstall.preset
 cp ../../Presets/CurrentUser-All.preset  tmp/CurrentUser-Logon.preset
 
-(cd tmp; zip --quiet "../${ZIP}" LocalMachine-Boot.preset LocalMachine-PostInstall.preset CurrentUser-Logon.preset)
+(cd tmp; zip --quiet "../${ZIP}" LocalMachine-Boot.preset \
+  LocalMachine-PostInstall.preset CurrentUser-Logon.preset)
+
+(cd ../..; zip --quiet "dists/swln/${ZIP}" analyze-ps)

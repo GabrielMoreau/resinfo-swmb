@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# check-quality
+#
+# 2025/12/05 Gabriel Moreau <Gabriel.Moreau@univ-grenoble-alpes.fr>
+
+function pipe_if_not_empty {
+  local title=$1
+  shift
+
+  head=$(dd bs=1 count=1 2>/dev/null; echo a)
+  head=${head%a}
+
+  if [ "x${head}" != x"" ]
+  then
+    { echo "$title"; printf %s "${head}"; cat; } | "$@"
+  fi
+}
+
+
+echo "Check PowerShell syntax"
+timeout -k 2s 13 ./analyze-ps analyze-ps . | grep -v '^✅ OK:' | sed 's/^/ /;'
+
+echo "Check import PowerShell module"
+for psm in ./*.psm1
+do \
+  [ "${psm}" = "./Custom-VarOverload.psm1" ] && continue
+  timeout -k 2s 13 pwsh -Command "Import-Module ${psm}" | pipe_if_not_empty "======= ${psm}" cat | sed 's/^/ /;'
+done
