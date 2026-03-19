@@ -1230,7 +1230,7 @@ Function TweakEnableBitlocker { # RESINFO
 		Set-ItemProperty -Path $RegPath -Name "OSRequireActiveDirectoryBackup" -Value 0
 
 		# Update GPO
-		gpupdate
+		gpupdate /force
 		# Invoke-GPUpdate -Force # don't work on all powershell versions
 	}
 
