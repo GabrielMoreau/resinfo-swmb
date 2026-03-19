@@ -64,7 +64,7 @@ apt install coreutils findutils grep sed gawk curl \
 In a terminal, just type `make`, and if everything goes well, the archive will build automatically!
 
 ```bash
-make
+make all
 ```
 
 To ensure compatibility with your existing infrastructure, do not attempt to modify the `Makefile` at first
@@ -74,6 +74,34 @@ The first file allows you to set site-specific parameters, and the second allows
 ```
 extend-variables.mk
 extend-rules.mk
+```
+
+### Check your package before deploying it
+
+This section is optional.
+
+It’s best to verify that your code is valid before deploying it to your network of computers.
+Even if you have a few test machines, performing a syntax check beforehand is helpful.
+Currently, the most reliable way to do this is to load the code into Microsoft’s PowerShell interpreter.
+You must therefore first install the `powershell` package on your Linux machine.
+On Debian, one method is to add the Debian repository provided by Microsoft.
+
+```bash
+source /etc/os-release 
+curl "https://packages.microsoft.com/config/debian/$VERSION_ID/packages-microsoft-prod.deb" --output packages-microsoft-prod.deb
+dpkg -i packages-microsoft-prod.deb
+apt update
+apt install -y powershell
+```
+
+You now have the `pwsh` command available on your Linux system.
+
+The `check-quality` script can detect simple errors, such as syntax errors.
+Just because the tests pass doesn't mean the code is correct.
+It's always necessary to verify the behavior of the computers afterward.
+
+```bash
+./check-quality 
 ```
 
 ### Deploy your SWLN package
@@ -144,29 +172,6 @@ In a terminal, within your SWLN installation directory, simply run the script:
 If you have developed interesting features that are clearly not specific to your site, consider submitting them to the SWMB community so they can be integrated into the core of the engine.
 This is how the project moves forward.
 It’s tested in one place, then the code is reviewed and tagged RESINFO.
-
-### Check your package before deploying it
-
-It’s best to verify that your code is valid before deploying it to your network of computers.
-Even if you have a few test machines, performing a syntax check beforehand is helpful.
-Currently, the most reliable way to do this is to load the code into Microsoft’s PowerShell interpreter.
-You must therefore first install the `powershell` package on your Linux machine.
-On Debian, one method is to add the Debian repository provided by Microsoft.
-
-```bash
-source /etc/os-release 
-curl "https://packages.microsoft.com/config/debian/$VERSION_ID/packages-microsoft-prod.deb" --output packages-microsoft-prod.deb
-dpkg -i packages-microsoft-prod.deb
-apt update
-apt install -y powershell
-```
-
-You now have the `pwsh` command available on your Linux system.
-
-The `check-quality` script can detect simple errors, such as syntax errors.
-```bash
-./check-quality 
-```
 
 ## Advanced configurations
 
