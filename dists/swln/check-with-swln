@@ -37,7 +37,7 @@ function mydiff () {
   fi
 }
 
-for f in check-with-swln install.bat installer.ps1 Makefile post-install-01reg.bat pre-install-01copy.bat uninstall.bat extend-rules.mk extend-variables.mk
+for f in analyze-ps check-quality check-with-swln install.bat installer.ps1 Makefile post-install-01reg.bat pre-install-01copy.bat uninstall.bat extend-rules.mk extend-variables.mk
 do
   cmp -s ${f} ${SWMB_HOME}/dists/swln/${f} || mydiff ${SWMB_HOME}/dists/swln/${f} ${f}
 done
