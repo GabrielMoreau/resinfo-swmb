@@ -12,14 +12,16 @@ The creation of this archive is automated.
 Currently, SWLN is designed for use on **Linux**, as programming and automating tasks to build a package is simpler on this operating system.
 However, the final package is intended for deployment on Windows wo
 
-## Download
+## Download the SWLN template
 
 The latest version of the SWLN template is available on the [download page](https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/).
 However, the website still has the latest versions.
 
 The most recent version is available under the name [SWLN-Latest](https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/SWLN-Latest.zip).
 
-## Minimal configuration
+## Usage
+
+### Minimal configuration
 
 In order to have a fully functional SWMB, we must place these files in the `C:\ProgramData\SWMB` tree.
 In practice, other files can be used to fine-tune the configuration, as we will see later.
@@ -41,7 +43,7 @@ The implementation of your rules (LocalMachine and CurrentUser) are written in t
 and you can define some parameters in the `Custom-VarOverload.psm1` module,
 for example the IP of your time server if you use this tweak.
 
-## Build
+### Build your own local SWLN package
 
 With this SWLN template you can easily create your packages under GNU/Linux or MacOS.
 The core in the build process is a `Makefile` which uses the `curl` program to fetch the right version of SWMB.
@@ -74,7 +76,7 @@ extend-variables.mk
 extend-rules.mk
 ```
 
-## Installation
+### Deploy your SWLN package
 
 Inside the archive is a DOS file named `install.bat`.
 This file runs the PowerShell installer `installer.ps1`.
@@ -85,7 +87,7 @@ This is because we currently do not have the means to digitally sign these files
 At the end of the installation process, a registry key is added for SWLN.
 Thus, on a workstation, there are two software registry keys: one for SWMB and the other for your local SWLN instance.
 
-## Update
+### Redeploy (Update) your SWLN package
 
 When you update your site's rules or upgrade the version of SWMB integrated into SWLN, you redeploy your package to the workstations.
 The installer removes the old versions of the configuration files before installing the new ones.
@@ -95,7 +97,7 @@ Thus, if a specific file existed in a previous version — for example, `Local-A
 SWLN modifies only the files it manages and that are listed in this documentation.
 If you have other files in the `Presets` and `Modules` folders within the `C:\ProgramData\SWMB` directory tree, they will neither be modified nor deleted.
 
-## Uninstallation
+### Uninstall your SWLN package
 
 Since SWLN and SWMB are installed as Windows programs, they have a registry key that allows for automatic uninstallation.
 To remove them from a workstation, simply go to Add or Remove Programs.
@@ -103,7 +105,7 @@ To remove them from a workstation, simply go to Add or Remove Programs.
 Please note that only files managed by SWLN will be deleted from the `Presets` and `Modules` folders in the `C:\ProgramData\SWMB` directory.
 If you have other files in these folders, they will not be modified or deleted.
 
-## Keep in sync with SWLN and SWMB
+### Keep in sync with the SWLN reference package integrated into SWMB
 
 It’s a good idea to keep your version of SWLN in a Git repository or similar to maintain a history of your fleet management.
 However, in the meantime, it’s likely and normal for SWMB and SWLN to evolve and change.
@@ -143,7 +145,9 @@ If you have developed interesting features that are clearly not specific to your
 This is how the project moves forward.
 It’s tested in one place, then the code is reviewed and tagged RESINFO.
 
-## Advanced configuration: Host files
+## Advanced configurations
+
+### Host files
 
 Sometimes, a tweak or a specific setting needs to be applied to a machine.
 Simply create files with the machine's `hostname` in lowercase.
@@ -178,7 +182,7 @@ Local-Addon-Host-hostname.psm1
 The `Custom-VarAutodel-Host-hostname.psm1` settings file, which is deleted after the first load, is also supported.
 Its use is even rarer.
 
-## Advanced configuration: Group files
+### Group files
 
 Sometimes there is a group of machines with the exact same specific situation...
 It’s not very practical to duplicate the same settings N times.
