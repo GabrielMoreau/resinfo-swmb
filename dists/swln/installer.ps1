@@ -62,7 +62,7 @@ ForEach ($FileItem in @(
 	If (Test-Path -LiteralPath "${Env:ProgramFiles}\$SWLN_Name\$FileName") {
 		If ((Test-Path -LiteralPath "$FileItem") -and ($FileName -notlike "*-VarAutodel-*")) {
 			# No backup for Autodel files
-			Rename-Item -LiteralPath "$FileItem" -NewName ("$FileItem" + ".old") -Force -ErrorAction Ignore
+			Rename-Item -LiteralPath "$FileItem" -NewName ("$FileItem" + ".bak") -Force -ErrorAction Ignore
 		}
 		Write-Output "Copy ${Env:ProgramFiles}\$SWLN_Name\$FileName in $FileItem"
 		Copy-Item -LiteralPath "${Env:ProgramFiles}\$SWLN_Name\$FileName" -Destination "$FileItem" -Force

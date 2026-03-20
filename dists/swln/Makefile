@@ -87,7 +87,7 @@ version:
 
 clean:
 	@rm -rf tmp $(SOFT)_$(SWLN_VERSION)-$(REVISION)_x64.zip resources
-	@find . -name '*.bak' -delete
+	@find . -name '*.bak' -o -name '*.old' -delete
 
 tmp/install.bat: install.bat Makefile extend-variables.mk tmp/SWMB-Setup-$(SWMB_VERSION).exe
 	@mkdir -p tmp

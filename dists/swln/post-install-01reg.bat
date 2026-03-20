@@ -5,9 +5,9 @@ ECHO Clean same file in the ProgramData folder
 SET "PRESETDIR=%ProgramData%\SWMB\Presets"
 SET "MODULEDIR=%ProgramData%\SWMB\Modules"
 FOR %%F IN ("%PRESETDIR%\*" "%MODULEDIR%\*") DO (
-  IF EXIST "%%F.old" (
-    FC "%%F" "%%F.old" >NUL
-    IF %ERRORLEVEL% EQU 0 DEL /F /Q "%%F.old"
+  IF EXIST "%%F.bak" (
+    FC "%%F" "%%F.bak" >NUL
+    IF %ERRORLEVEL% EQU 0 DEL /F /Q "%%F.bak"
   )
 )
 
