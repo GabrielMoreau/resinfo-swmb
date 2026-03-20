@@ -4,9 +4,15 @@
 
 Update UBR and take Windows 11 26H1 into account.
 
-All 28 high-level alerts from the Microsoft Windows 11 Security Implementation Technical Guide have been implemented in SWMB and SWCE.
-In total, 47 STIG alerts are reported by SWCE.
-SWCE loads the parameters of the `Custom-VarOverload.psm1` module (`ProgramData\SWMB\Modules`) into memory, if it exists, in order to take into account the regular expression concerning administrator accounts.
+Regarding the SWCE project:
+
+* All 28 high-level alerts from the Microsoft Windows 11 Security Implementation Technical Guide have been implemented in SWMB and SWCE.
+  In total, 48 STIG alerts are reported by SWCE.
+  45 alerts are related to the STIG document for Windows 11, and the rest concern software STIGs for Adobe Acrobat and Mozilla Firefox.
+* SWCE loads the parameters of the `Custom-VarOverload.psm1` module (`ProgramData\SWMB\Modules`) into memory, if it exists, in order to take into account the regular expression concerning administrator accounts.
+* SWCE can now upload test results to a central GitLab server via the API and a temporary token.
+  Be sure to use a server under your control or that of a trusted entity, and do not upload to gitlab.com!
+  If you deploy SWCE across a fleet of machines, this will provide you with an overview of whether or not Group Policy Objects (GPOs) or tweaks have been applied to your computers.
 
 Regarding the SWLN template:
 
