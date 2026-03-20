@@ -42,6 +42,9 @@ Thus, on some sites, only a few rules are defined during the post-installation s
 The implementation of your rules (LocalMachine and CurrentUser) are written in the `Local-Addon.psm1` module
 and you can define some parameters in the `Custom-VarOverload.psm1` module,
 for example the IP of your time server if you use this tweak.
+Reminder: There is also the option to use a `Custom-VarAutodel.psm1` file, which will be deleted upon first read.
+This allows you to read more sensitive data that can be used only once!
+This is a more advanced use of SWMB.
 
 ### Build your own local SWLN package
 
@@ -119,8 +122,12 @@ Thus, on a workstation, there are two software registry keys: one for SWMB and t
 
 When you update your site's rules or upgrade the version of SWMB integrated into SWLN, you redeploy your package to the workstations.
 The installer removes the old versions of the configuration files before installing the new ones.
+In practice, it keeps these old files with the `.bak` extension until the next installation.
+However, there is no `.bak` backup copy for `*VarAutodel*` configuration files.
+These are always deleted for security reasons.
 
 Thus, if a specific file existed in a previous version — for example, `Local-Addon.psm1` — and you no longer have that module (or preset file) in your new image, that file is effectively removed from the workstation and nothing replaces it.
+In practice, the file is moved to `Local-Addon.psm1.bak` until the next installation.
 
 SWLN modifies only the files it manages and that are listed in this documentation.
 If you have other files in the `Presets` and `Modules` folders within the `C:\ProgramData\SWMB` directory tree, they will neither be modified nor deleted.
