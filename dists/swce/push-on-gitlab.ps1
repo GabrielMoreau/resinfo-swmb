@@ -82,4 +82,7 @@ If ($GITLAB_Server -ne '') {
 			Throw $_
 		}
 	}
+} Else {
+	# Write on STDOUT
+	Write-Output $Output
 }
