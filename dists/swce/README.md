@@ -59,7 +59,7 @@ GITLAB_Branch    = upload
 GITLAB_Token     = F6EKJHKJJHKSBKBJHdhdgk.04.0z0b1ofxb
 ```
 
-If the Git server is not defined, the compliance tests are written to the local file `C:\Temp\LocalMachine-SWCE-PS1.log`.
+If the Git server is not defined, the compliance tests are written to the local `C:\Temp` folder in the file `LocalMachine-SWCE-PS1.log`.
 
 ## List of GPOs tested for compliance
 
