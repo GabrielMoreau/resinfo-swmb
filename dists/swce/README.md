@@ -19,6 +19,8 @@ These are only read-only functions on the system.
 
 ## Usage
 
+### Simple execution
+
 Unzip the SWCE archive, for example into a temporary folder (this is not best practice, however).
 Open a PowerShell console in administrator mode.
 Then, if necessary, unlock the script to allow it to run.
@@ -31,6 +33,33 @@ powershell.exe "Unblock-File -Path .\LocalMachine-SWCE.ps1"
 ```
 
 And that's it!
+
+### SWMB Graphical User Interface
+
+In the SWMB graphical interface, there is a `Check Compliance Enforcement` section.
+In this section, a `Check LM` button launches a console with the SWCE compliance tests.
+
+### Deploy across a computer inventory
+
+The ZIP archive to be deployed contains an `install.bat` file that must be run on the workstations.
+All you need to do is deploy this archive and run the script using your deployment tool.
+This is particularly easy with the OCS Inventory software.
+
+You can add a `push-config.ini` file to this archive.
+This will upload the compliance tests to a GitLab server with the filename `LocalMachine-SWCE-%HOSTNAME%.txt`.
+As a result, you will find one file per computer in your Git repository.
+
+The `push-config.ini` configuration file must specify the server, as well as the project ID, branch, and a token.
+
+```ini
+[Default]
+GITLAB_Server    = gitlab.example.fr
+GITLAB_ProjectId = 1294
+GITLAB_Branch    = upload
+GITLAB_Token     = F6EKJHKJJHKSBKBJHdhdgk.04.0z0b1ofxb
+```
+
+If the Git server is not defined, the compliance tests are written to the file `C:\Temp\LocalMachine-SWCE-PS1.log`.
 
 ## List of GPOs tested for compliance
 
