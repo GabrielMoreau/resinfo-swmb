@@ -9,9 +9,12 @@ ZIPFILES:=README.md push-on-gitlab.ps1 push-config.sample.ini $(wildcard push-co
 LOGDIR:=C:\\Temp
 
 
-.PHONY: all clean ocs check-exe version
+.PHONY: all help clean ocs check-exe version
 
-all: tmp/LocalMachine-SWCE.ps1 $(SOFT)-$(VERSION)-$(REVISION).zip
+all: tmp/LocalMachine-SWCE.ps1 $(SOFT)-$(VERSION)-$(REVISION).zip ## Create .zip archive package
+
+help: ## Show this help
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 tmp/version-$(VERSION).txt: Makefile
 	@mkdir -p tmp
@@ -22,10 +25,10 @@ tmp/LocalMachine-SWCE.ps1: make-swce extract-swce LocalMachine-SWCE.preset Makef
 	@./make-swce > $@
 	@unix2dos $@ 2> /dev/null
 
-clean:
+clean: ## Clean zip archive and temporary files
 	@rm -rf tmp *.zip
 
-version:
+version: ## Print software version
 	@echo "VERSION: $(VERSION)"
 
 tmp/install.bat: install.bat Makefile
