@@ -88,7 +88,7 @@ version: ## Print software version
 	@echo "Files    $(FILES)"
 	@echo "TFiles   $(TFILES)"
 
-clean:
+clean: ## Clean zip archive, temporary and old files
 	@rm -rf tmp $(SOFT)_$(SWLN_VERSION)-$(REVISION)_x64.zip resources
 	@find . -name '*.bak' -o -name '*.old' -delete
 
