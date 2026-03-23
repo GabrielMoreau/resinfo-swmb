@@ -3,23 +3,20 @@ VERSION:=$(shell grep '!define VERSION' ../../tmp/package.nsi | cut -f 2 -d '"')
 REVISION:=1
 
 
-.PHONY: all help update clean ocs
+.PHONY: help all update clean ocs
 
-all: $(SOFT)-OCS-$(VERSION)-$(REVISION).zip ocs
-
-
-help:
-	@echo "all      create a zip archive"
-	@echo "ocs      help for upload the Zip archive in OCS server"
-	@echo "clean    clean folder"
-	@echo "update   make a git pull (update local repository)"
+help: ## Show this help
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n"} /^[a-zA-Z_-]+:.*?##/ { printf " \033[36mmake %-17s\033[0m #%s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 
-update:
+all: $(SOFT)-OCS-$(VERSION)-$(REVISION).zip ocs ## Create a zip archive
+
+
+update: ## Make a git pull (update local repository)
 	(cd ../..; git pull)
 
 
-clean:
+clean: ## Clean zip archive and temporary files
 	rm -f $(SOFT)-OCS-$(VERSION)-$(REVISION).zip
 	rm -rf tmp
 
@@ -38,7 +35,7 @@ clean:
 	chmod ugo+rw $@
 
 
-ocs:
+ocs: ## Help for upload the Zip archive in OCS server
 	@echo ""
 	@echo "Name:     $(SOFT)-$(VERSION)-$(REVISION)"
 	@echo "priority: 2"
