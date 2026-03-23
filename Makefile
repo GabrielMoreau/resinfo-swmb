@@ -7,12 +7,12 @@ DATE:=$(shell date '+%Y-%m-%d')
 # Host IP for WSL2 under Windows
 IP_SERVE:=$(shell (echo 127.0.0.1 ; uname -a | grep -q 'microsoft' && hostname -I | cut -f 1 -d ' ') | tail -1)
 
-.PHONY: all help pkg version check clean doc serve-start serve-stop
-
-all: $(SOFT)-Setup-$(VERSION).exe ## Create .exe installer
+.PHONY: help all pkg version check clean doc serve-start serve-stop
 
 help: ## Show this help
-	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n"} /^[a-zA-Z_-]+:.*?##/ { printf " \033[36mmake %-17s\033[0m #%s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+
+all: $(SOFT)-Setup-$(VERSION).exe ## Create .exe installer
 
 pkg: $(SOFT)-Setup-$(VERSION).exe
 

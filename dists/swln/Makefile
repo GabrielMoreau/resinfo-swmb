@@ -72,12 +72,12 @@ TFILES+=SWMB-Setup-$(SWMB_VERSION).exe
 
 TMPFILES:=$(addprefix tmp/,$(TFILES))
 
-.PHONY: all help clean ocs check-exe version
-
-all: check-exe $(SOFT)_$(SWLN_VERSION)-$(REVISION)_x64.zip ## Create .zip archive package
+.PHONY: help all clean ocs check-exe version
 
 help: ## Show this help
-	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n"} /^[a-zA-Z_-]+:.*?##/ { printf " \033[36mmake %-17s\033[0m #%s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+
+all: check-exe $(SOFT)_$(SWLN_VERSION)-$(REVISION)_x64.zip ## Create .zip archive package
 
 version: ## Print software version
 	@echo "Soft     $(SOFT)"
