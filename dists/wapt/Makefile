@@ -32,7 +32,7 @@ clean:
 	@cp -f ./icon.png ./tmp/resinfo-swmb/WAPT/
 	@rm -f $@
 	@(cd ../..; \
-		make; \
+		make all; \
 		cp SWMB-Setup-$(VERSION).exe ./dists/wapt/tmp/resinfo-swmb/ \
 		)
 	@(cd tmp; \

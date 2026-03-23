@@ -29,7 +29,7 @@ clean:
 	sed -e 's/__VERSION__/$(VERSION)/; s/__REVISION__/$(REVISION)/;' install.bat > tmp/install.bat
 	rm -f $@
 	(cd ../..; \
-		make; \
+		make all; \
 		cp SWMB-Setup-$(VERSION).exe ./dists/ocs-inventory/tmp/ \
 		)
 	(cd tmp; \

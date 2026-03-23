@@ -18,7 +18,7 @@ This command is strictly equivalent to a `git pull` at the root of your SWMB clo
 
 Once the versions are set, do
 ```bash
-make
+make all
 ```
 then upload the provided zip into your OCS Inventory server following the answers that the `Makefile` tells you.
 Unfortunately, OCS does not yet have a REST API that allows simple uploading of the package from the command line.
