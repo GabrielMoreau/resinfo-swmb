@@ -1,10 +1,10 @@
 
 REM
-REM   SWCE
+REM   LocalMachine-SWCE
 REM
 
 REM Name
-SET softname=SWCE
+SET softname=LocalMachine-SWCE
 
 SET logdir=__LOGDIR__
 IF "%logdir:~0,2%"=="__" IF "%logdir:~-2%"=="__" (
