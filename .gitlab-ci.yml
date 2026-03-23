@@ -36,13 +36,13 @@ pages:
     - make pkg
     - mv SWMB-Setup-*.exe public/
     - make version > public/version.txt
-    - (cd dists/ocs-inventory/; make)
+    - (cd dists/ocs-inventory/; make all)
     - mv dists/ocs-inventory/SWMB-OCS-*.zip public/
-    - (cd dists/swce/; make)
+    - (cd dists/swce/; make all)
     - mv dists/swce/SWCE-*.zip public/
     - (cd dists/swln/; ./.make-zip-template)
     - mv dists/swln/SWLN-*.zip public/
-    - (cd dists/wapt/; make)
+    - (cd dists/wapt/; make all)
     - mv dists/wapt/SWMB-WAPT-*.zip public/
     - (cd dists/uninstall-kaspersky/; make zip)
     - mv dists/uninstall-kaspersky/Kasperky-Uninstall-*.zip public/
