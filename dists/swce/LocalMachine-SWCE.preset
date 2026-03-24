@@ -28,6 +28,8 @@ ViewAnonymousShareEnumeration
 ViewAnonymousShareAccess
 ViewRemoteAssistance
 ViewRemoteDesktop
+ViewRDCSavePassword
+ViewRDCShareLocalDrive
 ViewWinRMBasicAuth
 
 ### Service Tweaks ###
