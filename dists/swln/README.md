@@ -90,7 +90,7 @@ You must therefore first install the `powershell` package on your Linux machine.
 On Debian, one method is to add the Debian repository provided by Microsoft.
 
 ```bash
-source /etc/os-release 
+source /etc/os-release
 curl "https://packages.microsoft.com/config/debian/$VERSION_ID/packages-microsoft-prod.deb" --output packages-microsoft-prod.deb
 dpkg -i packages-microsoft-prod.deb
 apt update
@@ -104,7 +104,7 @@ Just because the tests pass doesn't mean the code is correct.
 It's always necessary to verify the behavior of the computers afterward.
 
 ```bash
-./check-quality 
+./check-quality
 ```
 
 ### Deploy your SWLN package
@@ -208,7 +208,7 @@ DisableAudio
 ```
 
 It is even possible to push a tweak implementation that will only be used on a single machine.
-This can be useful for testing or on very specific computers. 
+This can be useful for testing or on very specific computers.
 
 ```
 Local-Addon-Host-hostname.psm1
