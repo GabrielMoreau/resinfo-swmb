@@ -15,7 +15,7 @@ However, the final package is intended for deployment on Windows wo
 ## Download the SWLN template
 
 The latest version of the SWLN template is available on the [download page](https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/).
-However, the website still has the latest versions.
+However, the website still displays previous versions.
 
 The most recent version is available under the name [SWLN-Latest](https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/SWLN-Latest.zip).
 

@@ -12,10 +12,12 @@ It is a PowerShell script (`LocalMachine-SWCE.ps1`).
 The lines of code are extracted from SWMB modules.
 These are only read-only functions on the system.
 
-## Download
+## Download the SWCE archive
 
-* [SWCE](https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/SWCE-Latest.zip) - latest version.
+The latest version of the SWCE archive is available on the [download page](https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/).
+However, the website still displays previous versions.
 
+The most recent version is available under the name [SWCE-Latest](https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/SWCE-Latest.zip).
 
 ## Usage
 
