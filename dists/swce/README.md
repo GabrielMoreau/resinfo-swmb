@@ -1,4 +1,6 @@
-# Secure Windows Compliance Enforcement
+# SWCE - Secure Windows Compliance Enforcement
+
+## Context
 
 SWCE stands for Secure Windows Compliance Enforcement.
 It is a tool from the SWMB galaxy.
