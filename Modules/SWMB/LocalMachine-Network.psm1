@@ -668,12 +668,78 @@ Function TweakUnsetRemoteDesktopPort { # RESINFO
 
 ################################################################
 
+# Remote Desktop Client could not save Passwords
+# W11 STIG V-253402 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253402
+
+# Disable
+Function TweakDisableRDCSavePassword {
+	Write-Output "Disabling the Remote Desktop client prevents passwords from being saved..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services'
+	Set-ItemProperty -Path $RegPath -Name "DisablePasswordSaving" -Type DWord -Value 1
+}
+
+# Enable
+Function TweakEnableRDCSavePassword {
+	Write-Output "Enabling the Remote Desktop client allows passwords to be saved..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services'
+	Remove-ItemProperty -Path $RegPath -Name "DisablePasswordSaving" -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewRDCSavePassword { # RESINFO
+	Write-Output "Viewing whether the Remote Desktop client allows password saving (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services'
+	$RegFields = @{
+		DisablePasswordSaving = @{
+			OkValues = @(1)
+			Description = "Remote Desktop Client could save Passwords"
+			Remediation = "DisableRDCSavePassword (W11 STIG V-253402)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
+################################################################
+
+# Remote Desktop Client could not share local drive
+# Local drives must be prevented from sharing with Remote Desktop Session Hosts
+# W11 STIG V-253403 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253403
+
+# Disable
+Function TweakDisableRDCShareLocalDrive {
+	Write-Output "Disabling Remote Desktop Share Local Drive..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services'
+	Set-ItemProperty -Path $RegPath -Name "fDisableCdm" -Type DWord -Value 1
+}
+
+# Enable
+Function TweakEnableRDCShareLocalDrive {
+	Write-Output "Enabling Remote Desktop Share Local Drive..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services'
+	Remove-ItemProperty -Path $RegPath -Name "fDisableCdm" -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewRDCShareLocalDrive { # RESINFO
+	Write-Output "Viewing Remote Desktop Share Local Drive (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services'
+	$RegFields = @{
+		fDisableCdm = @{
+			OkValues = @(1)
+			Description = "Remote Desktop Share Local Drive"
+			Remediation = "DisableRDCShareLocalDrive (W11 STIG V-253403)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
+################################################################
+
 # Disable Windows Remote Management Basic Authentication
 # The Windows Remote Management (WinRM) client must not use Basic authentication
 # W11 STIG V-253416 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253416
 # The Windows Remote Management (WinRM) service must not use Basic authentication
 # W11 STIG V-253418 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253418
-
 
 # Disable
 Function TweakDisableWinRMBasicAuth { # RESINFO
