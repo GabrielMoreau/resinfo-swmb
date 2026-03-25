@@ -245,6 +245,18 @@ The SWLN groups also manage the two files `Local-Addon-Group-acquisition.psm1` a
 However, it is not necessarily a good idea to overcomplicate your deployment.
 The purpose of SWMB is to enhance security, and a complex architecture becomes difficult to audit.
 
+### Your own SWMB installer
+
+SWLN is compatible with your own version of the SWMB installer.
+Simply place the setup file `SWMB-Setup-XX.XX.XX.XX.exe` in the root directory of your SWLN folder.
+You must specify your version `XX.XX.XX.XX` in the `extend-variables.mk` file.
+
+```
+SWMB_VERSION:=XX.XX.XX.XX
+```
+
+Then, when building the SWLN package, it will not download the setup but will use your setup instead.
+
 ## References
 
 See the [REFERENCES](../../REFERENCES.md) file.
