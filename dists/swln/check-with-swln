@@ -4,6 +4,9 @@
 #
 # 2024/09/24 Gabriel Moreau <Gabriel.Moreau@univ-grenoble-alpes.fr>
 
+# Kill with Ctrl+C
+trap "kill $$; exit 1" INT TERM
+
 SWMB_HOME=${HOME}/resinfo/swmb
 [ -d "$1" ] && SWMB_HOME=$1
 
@@ -31,7 +34,8 @@ done
 function mydiff () {
   if which meld > /dev/null
   then
-    meld $1 $2
+    meld $1 $2 &
+    wait
   else
     diff --side-by-side $1 $2
   fi
