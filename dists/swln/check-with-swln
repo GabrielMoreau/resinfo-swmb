@@ -5,7 +5,7 @@
 # 2024/09/24 Gabriel Moreau <Gabriel.Moreau@univ-grenoble-alpes.fr>
 
 # Kill with Ctrl+C
-trap "kill $$; exit 1" INT TERM
+trap "kill -- -$$; exit 1" INT TERM
 
 SWMB_HOME=${HOME}/resinfo/swmb
 [ -d "$1" ] && SWMB_HOME=$1
@@ -14,8 +14,8 @@ if [ ! -d "${SWMB_HOME}" ]
 then
   rm -rf tmp/SWMB-Fake
   mkdir -p tmp/SWMB-Fake/dists/swln tmp/SWMB-Fake/Presets
-  (cd tmp; curl -# --remote-name --insecure "https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/SWLN-Latest.zip")
-  (cd tmp/SWMB-Fake/dists/swln; \
+  (cd tmp || exit; curl -# --remote-name --insecure "https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/SWLN-Latest.zip")
+  (cd tmp/SWMB-Fake/dists/swln || exit; \
     unzip ../../../SWLN-Latest.zip; \
     cp LocalMachine-Boot.preset ../../Presets/LocalMachine-All.preset; \
     cp CurrentUser-Logon.preset ../../Presets/CurrentUser-All.preset; \
@@ -27,7 +27,7 @@ fi
 
 while [ ! -d "${SWMB_HOME}" ]
 do
-  read -p "Enter path to the SWMB project: " SWMB_HOME
+  read -r -p "Enter path to the SWMB project: " SWMB_HOME
   if [[ "${SWMB_HOME}" =~ ^~/ ]]
   then
     SWMB_HOME="${SWMB_HOME/#~/${HOME}}"
@@ -37,18 +37,18 @@ done
 function mydiff () {
   if which meld > /dev/null
   then
-    meld $1 $2 &
+    meld "$1" "$2" &
     wait
   else
-    diff --side-by-side $1 $2
+    diff --side-by-side "$1" "$2"
   fi
 }
 
 for f in analyze-ps check-quality check-with-swln install.bat installer.ps1 Makefile post-install-01reg.bat pre-install-01copy.bat uninstall.bat extend-rules.mk extend-variables.mk
 do
-  cmp -s ${f} ${SWMB_HOME}/dists/swln/${f} || mydiff ${SWMB_HOME}/dists/swln/${f} ${f}
+  cmp -s "${f}" "${SWMB_HOME}/dists/swln/${f}" || mydiff "${SWMB_HOME}/dists/swln/${f}" "${f}"
 done
 
-cmp -s LocalMachine-Boot.preset        ${SWMB_HOME}/Presets/LocalMachine-All.preset || mydiff ${SWMB_HOME}/Presets/LocalMachine-All.preset LocalMachine-Boot.preset
-cmp -s LocalMachine-PostInstall.preset ${SWMB_HOME}/Presets/LocalMachine-All.preset || mydiff ${SWMB_HOME}/Presets/LocalMachine-All.preset LocalMachine-PostInstall.preset
-cmp -s CurrentUser-Logon.preset        ${SWMB_HOME}/Presets/CurrentUser-All.preset  || mydiff ${SWMB_HOME}/Presets/CurrentUser-All.preset  CurrentUser-Logon.preset
+cmp -s LocalMachine-Boot.preset        "${SWMB_HOME}/Presets/LocalMachine-All.preset" || mydiff "${SWMB_HOME}/Presets/LocalMachine-All.preset" "LocalMachine-Boot.preset"
+cmp -s LocalMachine-PostInstall.preset "${SWMB_HOME}/Presets/LocalMachine-All.preset" || mydiff "${SWMB_HOME}/Presets/LocalMachine-All.preset" "LocalMachine-PostInstall.preset"
+cmp -s CurrentUser-Logon.preset        "${SWMB_HOME}/Presets/CurrentUser-All.preset"  || mydiff "${SWMB_HOME}/Presets/CurrentUser-All.preset"  "CurrentUser-Logon.preset"
