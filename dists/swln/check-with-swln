@@ -18,7 +18,10 @@ then
   (cd tmp/SWMB-Fake/dists/swln; \
     unzip ../../../SWLN-Latest.zip; \
     cp LocalMachine-Boot.preset ../../Presets/LocalMachine-All.preset; \
-    cp CurrentUser-Logon.preset ../../Presets/CurrentUser-All.preset)
+    cp CurrentUser-Logon.preset ../../Presets/CurrentUser-All.preset; \
+    cp CurrentUser-Logon.preset ../../Presets/CurrentUser-All.preset; \
+    cp analyze-ps               ../../analyze-ps; \
+    )
   SWMB_HOME=tmp/SWMB-Fake
 fi
 
