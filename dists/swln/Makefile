@@ -122,10 +122,10 @@ tmp/LocalMachine-Boot-Group-%.preset: LocalMachine-Boot-Group-%.preset Group-%.h
 	touch $@
 
 tmp/LocalMachine-Boot-Host-%.preset: $(wildcard LocalMachine-Boot-Host-%.preset) $(LM_BOOT_GROUP_PRESET) tmp/reset.flag
-	@base=$$(basename "$@" | sed -E 's/-Host-.*//') ; \
-	if [ -f "$${base}-Host-$*.preset" ] ; then \
+	@hostfile=$$(basename "$@") ; \
+	if [ -f "$${hostfile}" ] ; then \
 		mkdir -p tmp ; \
-		(echo ''; echo '# $${base}-Host-$*.preset'; cat "$${base}-Host-$*.preset") >> $@ ; \
+		(echo ''; echo '# $${hostfile}'; cat "$${hostfile}") >> $@ ; \
 		unix2dos $@ ; \
 	fi
 
@@ -135,10 +135,10 @@ tmp/LocalMachine-PostInstall-Group-%.preset: LocalMachine-PostInstall-Group-%.pr
 	touch $@
 
 tmp/LocalMachine-PostInstall-Host-%.preset: $(wildcard LocalMachine-PostInstall-Host-%.preset) $(LM_POSTINSTALL_GROUP_PRESET) tmp/reset.flag
-	@base=$$(basename "$@" | sed -E 's/-Host-.*//') ; \
-	if [ -f "$${base}-Host-$*.preset" ] ; then \
+	@hostfile=$$(basename "$@") ; \
+	if [ -f "$${hostfile}" ] ; then \
 		mkdir -p tmp ; \
-		(echo ''; echo '# $${base}-Host-$*.preset'; cat "$${base}-Host-$*.preset") >> $@ ; \
+		(echo ''; echo '# $${hostfile}'; cat "$${hostfile}") >> $@ ; \
 		unix2dos $@ ; \
 	fi
 
@@ -148,10 +148,10 @@ tmp/CurrentUser-Logon-Group-%.preset: CurrentUser-Logon-Group-%.preset Group-%.h
 	touch $@
 
 tmp/CurrentUser-Logon-Host-%.preset: $(wildcard CurrentUser-Logon-Host-%.preset) $(CU_LOGON_GROUP_PRESET) tmp/reset.flag
-	@base=$$(basename "$@" | sed -E 's/-Host-.*//') ; \
-	if [ -f "$${base}-Host-$*.preset" ] ; then \
+	@hostfile=$$(basename "$@") ; \
+	if [ -f "$${hostfile}" ] ; then \
 		mkdir -p tmp ; \
-		(echo ''; echo '# $${base}-Host-$*.preset'; cat "$${base}-Host-$*.preset") >> $@ ; \
+		(echo ''; echo '# $${hostfile}'; cat "$${hostfile}") >> $@ ; \
 		unix2dos $@ ; \
 	fi
 
@@ -161,10 +161,10 @@ tmp/Custom-VarOverload-Group-%.psm1: Custom-VarOverload-Group-%.psm1 Group-%.hos
 	touch $@
 
 tmp/Custom-VarOverload-Host-%.psm1: $(wildcard Custom-VarOverload-Host-%.psm1) $(CUSTOM_VAROVERLOAD_GROUP_PSM1) tmp/reset.flag
-	@base=$$(basename "$@" | sed -E 's/-Host-.*//') ; \
-	if [ -f "$${base}-Host-$*.preset" ] ; then \
+	@hostfile=$$(basename "$@") ; \
+	if [ -f "$${hostfile}" ] ; then \
 		mkdir -p tmp ; \
-		(echo ''; echo '# $${base}-Host-$*.preset'; cat "$${base}-Host-$*.preset") >> $@ ; \
+		(echo ''; echo '# $${hostfile}'; cat "$${hostfile}") >> $@ ; \
 		unix2dos $@ ; \
 	fi
 
@@ -174,10 +174,10 @@ tmp/Custom-VarAutodel-Group-%.psm1: Custom-VarAutodel-Group-%.psm1 Group-%.hosts
 	touch $@
 
 tmp/Custom-VarAutodel-Host-%.psm1: $(wildcard Custom-VarAutodel-Host-%.psm1) $(CUSTOM_VARAUTODEL_GROUP_PSM1) tmp/reset.flag
-	@base=$$(basename "$@" | sed -E 's/-Host-.*//') ; \
-	if [ -f "$${base}-Host-$*.preset" ] ; then \
+	@hostfile=$$(basename "$@") ; \
+	if [ -f "$${hostfile}" ] ; then \
 		mkdir -p tmp ; \
-		(echo ''; echo '# $${base}-Host-$*.preset'; cat "$${base}-Host-$*.preset") >> $@ ; \
+		(echo ''; echo '# $${hostfile}'; cat "$${hostfile}") >> $@ ; \
 		unix2dos $@ ; \
 	fi
 
@@ -187,10 +187,10 @@ tmp/Local-Addon-Group-%.psm1: Local-Addon-Group-%.psm1 Group-%.hosts tmp/reset.f
 	touch $@
 
 tmp/Local-Addon-Host-%.psm1: $(wildcard Local-Addon-Host-%.psm1) $(LOCAL_ADDON_GROUP_PSM1) tmp/reset.flag
-	@base=$$(basename "$@" | sed -E 's/-Host-.*//') ; \
-	if [ -f "$${base}-Host-$*.preset" ] ; then \
+	@hostfile=$$(basename "$@") ; \
+	if [ -f "$${hostfile}" ] ; then \
 		mkdir -p tmp ; \
-		(echo ''; echo '# $${base}-Host-$*.preset'; cat "$${base}-Host-$*.preset") >> $@ ; \
+		(echo ''; echo '# $${hostfile}'; cat "$${hostfile}") >> $@ ; \
 		unix2dos $@ ; \
 	fi
 
