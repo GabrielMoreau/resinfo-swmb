@@ -67,6 +67,7 @@ PUBLISHER:=CNRS France, RESINFO, Local Network Area
 
 sinclude extend-variables.mk
 
+FILESTOINSTALL:=$(FILES) $(addprefix tmp/,$(filter-out installer.ps1, $(TFILES)))
 ALLINSTALLFILES:=$(shell echo '$(addsuffix ", $(addprefix ", $(FILES) $(TFILES)))' | sed 's/[[:space:]]/, /g;')
 TFILES+=SWMB-Setup-$(SWMB_VERSION).exe
 
@@ -87,6 +88,7 @@ version: ## Print software version
 	@echo "SWMB     $(SWMB_VERSION)"
 	@echo "Files    $(FILES)"
 	@echo "TFiles   $(TFILES)"
+	@echo "AllFiles $(FILESTOINSTALL)"
 
 clean: ## Clean zip archive, temporary and old files
 	@rm -rf tmp $(SOFT)_$(SWLN_VERSION)-$(REVISION)_x64.zip resources
@@ -96,7 +98,7 @@ tmp/install.bat: install.bat Makefile extend-variables.mk tmp/SWMB-Setup-$(SWMB_
 	@mkdir -p tmp
 	@sed -e 's/__SWLN_NAME__/$(SWLN_NAME)/; s#__PUBLISHER__#$(PUBLISHER)#; s/__SWLN_VERSION__/$(SWLN_VERSION)/; s/__REVISION__/$(REVISION)/; s/__SWMB_VERSION__/$(SWMB_VERSION)/; s#__LOG_DIR__#$(LOG_DIR)#;' $< > $@
 
-tmp/installer.ps1: installer.ps1 Makefile extend-variables.mk tmp/SWMB-Setup-$(SWMB_VERSION).exe
+tmp/installer.ps1: installer.ps1 Makefile extend-variables.mk tmp/SWMB-Setup-$(SWMB_VERSION).exe $(FILESTOINSTALL)
 	@mkdir -p tmp
 	@sed -e 's/__SWLN_NAME__/$(SWLN_NAME)/; s#__PUBLISHER__#$(PUBLISHER)#; s/__SWLN_VERSION__/$(SWLN_VERSION)/; s/__REVISION__/$(REVISION)/; s/__SWMB_VERSION__/$(SWMB_VERSION)/; s#__LOG_DIR__#$(LOG_DIR)#; s#__ALLINSTALLFILES__#$(ALLINSTALLFILES)#;' $< > $@
 
