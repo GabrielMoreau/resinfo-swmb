@@ -570,9 +570,62 @@ Function TweakViewAutoloadDriver { # RESINFO
 
 ################################################################
 
+# User must be prompted for a password on resume (battery or plugged in)
+# W11 STIG V-253380 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253380
+# W11 STIG V-253381 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253381
+
+# Enable
+Function TweakEnablePasswordOnResume { # RESINFO
+	Write-Output "Enabling (prompt) password on resume (plugged in and battery)..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51'
+	$RegFields = @("DCSettingIndex", "ACSettingIndex")
+
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
+	}
+	ForEach ($Field in $RegFields) {
+		Set-ItemProperty -Path $RegPath -Name $Field -Type DWord -Value 1
+	}
+}
+
+# Disable
+Function TweakDisablePasswordOnResume { # RESINFO
+	Write-Output "Disabling (prompt) password on resume (plugged in and battery)..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51'
+	$RegFields = @("DCSettingIndex", "ACSettingIndex")
+
+	If (Test-Path $RegPath) {
+		ForEach ($Field in $RegFields) {
+			Remove-ItemProperty -Path $RegPath -Name $Field -ErrorAction SilentlyContinue
+		}
+	}
+}
+
+# View
+Function TweakViewPasswordOnResume { # RESINFO
+	Write-Output "Viewing (prompt) password on resume (0 or not exist: Disable (Default), 1: Enable (Recommanded))..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51'
+	$RegFields = @{
+		ACSettingIndex = @{
+			OkValues = @(1)
+			Description = "Prompt for a password on resume on plugged in"
+			Remediation = "EnablePasswordOnResume (W11 STIG V-253381)"
+		}
+		DCSettingIndex = @{
+			OkValues = @(1)
+			Description = "Prompt for a password on resume on battery"
+			Remediation = "EnablePasswordOnResume (W11 STIG V-253380)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
+################################################################
+
 # Turn off hybrid sleep
 # https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.PowerManagement::DCStandbyWithHiberfileEnable_2
 # https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.PowerManagement::ACStandbyWithHiberfileEnable_2
+
 # Disable
 Function TweakDisableHybridSleep { # RESINFO
 	Write-Output "Disabling (Turn Off) hybrid sleep (plugged in and battery)..."
