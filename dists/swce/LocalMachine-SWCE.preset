@@ -21,6 +21,7 @@ ViewWindowsServicingLevel
 
 ### Network Tweaks ###
 ViewLanManAuthLevelHigh
+ViewPrintOverHTTP
 ViewConnectionSharing
 ViewAnonymousNameTranslation
 ViewAnonymousSAMEnumeration
