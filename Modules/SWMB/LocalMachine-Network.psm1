@@ -222,6 +222,42 @@ Function TweakViewLanManAuthLevelHigh { # RESINFO
 
 ################################################################
 
+# Printing over HTTP must be prevented
+# W11 STIG V-253376 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253376
+
+# Disable
+Function TweakDisablePrintOverHTTP { # RESINFO
+	Write-Output "Disabling Print over HTTP..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
+	}
+	Set-ItemProperty -Path $RegPath -Name 'DisableHTTPPrinting' -Type DWord -Value 1
+}
+
+# Enable
+Function TweakEnablePrintOverHTTP { # RESINFO
+	Write-Output "Enabling Print over HTTP..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers'
+	Remove-ItemProperty -Path $RegPath -Name 'DisableHTTPPrinting' -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewPrintOverHTTP { # RESINFO
+	Write-Output "Viewing Print over HTTP (not exist: Enable (Default), 1: Disable (Recommanded))..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers'
+	$RegFields = @{
+		DisableHTTPPrinting = @{
+			OkValues = @(1)
+			Description = "Printing over HTTP"
+			Remediation = "DisablePrintOverHTTP (W11 STIG V-253376)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
+################################################################
+
 # Disable Link-Local Multicast Name Resolution (LLMNR) protocol
 Function TweakDisableLLMNR {
 	Write-Output "Disabling Link-Local Multicast Name Resolution (LLMNR)..."

@@ -25,6 +25,7 @@ Regarding the SWLN template:
 
 New presets/rules:
 
+* 2026/04/08 - `DisablePrintOverHTTP`/`EnablePrintOverHTTP`/`ViewPrintOverHTTP` -> Printing over HTTP
 * 2026/03/24 - `DisableRDCShareLocalDrive`/`EnableRDCShareLocalDrive`/`ViewRDCShareLocalDrive` -> Remote Desktop Client could not share Local Drive
 * 2026/03/24 - `DisableRDCSavePassword`/`EnableRDCSavePassword`/`ViewRDCSavePassword` -> Remote Desktop Client could not save Passwords
 * 2026/03/13 - `ViewFirefoxTLS` -> Firefox TLS Minimum Version
