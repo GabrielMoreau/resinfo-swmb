@@ -158,7 +158,7 @@ There are two options:
 
 Either let the script download the latest files from the SWMB download site to perform the comparison, and create a `SWMB-Fake` folder in the temporary `tmp` folder.
 In a terminal, within your SWLN installation directory, simply run the script:
-  
+
 ```bash
 ./check-with-swln
 ```
