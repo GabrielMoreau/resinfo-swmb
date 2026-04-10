@@ -446,42 +446,63 @@ Function TweakViewInsecureGuestLogons { # RESINFO
 # Enable SMBClientSigning
 Function TweakEnableSMBClientSigning { # RESINFO
 	Write-Output "Enabling (require) SMB client to use signing messages..."
-	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters'
-	If (!(Test-Path $RegPath)) {
-		New-Item -Path $RegPath -Force | Out-Null
-	}
-	Set-ItemProperty -Path $RegPath -Name "EnableSecuritySignature" -Value 1
-	Set-ItemProperty -Path $RegPath -Name "RequireSecuritySignature" -Value 1
+	#$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters'
+	#If (!(Test-Path $RegPath)) {
+	#	New-Item -Path $RegPath -Force | Out-Null
+	#}
+	#Set-ItemProperty -Path $RegPath -Name "EnableSecuritySignature" -Value 1
+	#Set-ItemProperty -Path $RegPath -Name "RequireSecuritySignature" -Value 1
+	Set-SmbClientConfiguration -EnableSecuritySignature $True -Force
+	Set-SmbClientConfiguration -RequireSecuritySignature $True -Force
 }
 
 # Disable (default)
 Function TweakDisableSMBClientSigning { # RESINFO
 	Write-Output "Disabling (so allow) SMB client to use only signing messages..."
-	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters'
-	If (Test-Path $RegPath) {
-		ForEach ($Field in 'EnableSecuritySignature', 'RequireSecuritySignature') {
-			Remove-ItemProperty -Path $RegPath -Name "$Field" -ErrorAction SilentlyContinue
-		}
-	}
+	#$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters'
+	#If (Test-Path $RegPath) {
+	#	ForEach ($Field in 'EnableSecuritySignature', 'RequireSecuritySignature') {
+	#		Remove-ItemProperty -Path $RegPath -Name "$Field" -ErrorAction SilentlyContinue
+	#	}
+	#}
+	Set-SmbClientConfiguration -EnableSecuritySignature $False -Force
+	Set-SmbClientConfiguration -RequireSecuritySignature $False -Force
 }
 
 # View
 Function TweakViewSMBClientSigning { # RESINFO
 	Write-Output "Viewing (require) SMB client to use signing messages (0 or not exist: Disable, 1: Enable)..."
-	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters'
-	$RegFields = @{
+	#$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters'
+	#$RegFields = @{
+	#	EnableSecuritySignature = @{
+	#		OkValues = @(1)
+	#		Description = "Enable Security Signature"
+	#		Remediation = "EnableSMBClientSigning and reboot"
+	#	}
+	#	RequireSecuritySignature = @{
+	#		OkValues = @(1)
+	#		Description = "Require Security Signature"
+	#		Remediation = "EnableSMBClientSigning and reboot"
+	#	}
+	#}
+	#SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	$Hash = @{}
+	$Rules = [ordered]@{
 		EnableSecuritySignature = @{
-			OkValues = @(1)
+			OkValues = @($True)
 			Description = "Enable Security Signature"
 			Remediation = "EnableSMBClientSigning and reboot"
 		}
 		RequireSecuritySignature = @{
-			OkValues = @(1)
+			OkValues = @($True)
 			Description = "Require Security Signature"
 			Remediation = "EnableSMBClientSigning and reboot"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	ForEach ($Feature in $Rules.keys) {
+		$Hash[$Feature] = (Get-SmbClientConfiguration).$Feature
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################
