@@ -23,6 +23,12 @@ Regarding the SWLN template:
   Files are created on the workstation that creates the archive to be deployed.
   If a machine belongs to several groups and has its own `-Host` file, the files are concatenated in alphabetical order, ending with the `-Host` file.
 
+The `wisemoui.ps1` graphical interface has been updated.
+Here's a quick summary:
+
+* Add a `System Information` button (`I`) near the `Property` button.
+* Add a `Dell Command | Update` button (`D`) near the `Update` button.
+
 New presets/rules:
 
 * 2026/04/08 - `EnablePasswordOnResume`/`DisablePasswordOnResume`/`ViewPasswordOnResume` -> Prompt for a password on resume (battery or plugged in)
