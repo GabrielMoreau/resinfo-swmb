@@ -579,7 +579,7 @@ $Form.Controls.Add($BtnHost)
 
 # Windows Update
 $BtnWindowsUpdate = New-Object System.Windows.Forms.Button
-$BtnWindowsUpdate.Location = New-Object System.Drawing.Point(210,350)
+$BtnWindowsUpdate.Location = New-Object System.Drawing.Point(195,350)
 $BtnWindowsUpdate.Width = 55
 $BtnWindowsUpdate.Height = 20
 $BtnWindowsUpdate.Text = "Update"
@@ -589,6 +589,20 @@ $BtnWindowsUpdate.Add_Click({
 	Start-Process -FilePath "${Env:SystemRoot}\System32\control.exe" -ArgumentList "update"
 })
 $ToolTip.SetToolTip($BtnWindowsUpdate, "Windows Update")
+
+# Dell Command | Update
+If (Test-Path -LiteralPath "${Env:ProgramFiles(x86)}\DELL\CommandUpdate\DellCommandUpdate.exe") {
+	$BtnDellCommandUpdate = New-Object System.Windows.Forms.Button
+	$BtnDellCommandUpdate.Location = New-Object System.Drawing.Point(250,350)
+	$BtnDellCommandUpdate.Width = 15
+	$BtnDellCommandUpdate.Height = 20
+	$BtnDellCommandUpdate.Text = "D"
+	$Form.controls.Add($BtnDellCommandUpdate)
+	$BtnDellCommandUpdate.Add_Click({
+		Start-Process -FilePath "${Env:ProgramFiles(x86)}\DELL\CommandUpdate\DellCommandUpdate.exe"
+	})
+	$ToolTip.SetToolTip($BtnDellCommandUpdate, "Dell Command | Update")
+}
 
 # OS Version
 $OSVersion = SWMB_GetOSVersionReadable
