@@ -545,7 +545,7 @@ If ($RunningVersion -ne $PublishedVersion) {
 
 # System Property
 $BtnSystemProperty = New-Object System.Windows.Forms.Button
-$BtnSystemProperty.Location = New-Object System.Drawing.Point(210,310)
+$BtnSystemProperty.Location = New-Object System.Drawing.Point(195,310)
 $BtnSystemProperty.Width = 55
 $BtnSystemProperty.Height = 20
 $BtnSystemProperty.Text = "Property"
@@ -554,6 +554,18 @@ $BtnSystemProperty.Add_Click({
 	Start-Process -FilePath "${Env:SystemRoot}\System32\control.exe" -ArgumentList "sysdm.cpl"
 })
 $ToolTip.SetToolTip($BtnSystemProperty, "System Property")
+
+# System Information
+$BtnSystemInformation = New-Object System.Windows.Forms.Button
+$BtnSystemInformation.Location = New-Object System.Drawing.Point(250,310)
+$BtnSystemInformation.Width = 15
+$BtnSystemInformation.Height = 20
+$BtnSystemInformation.Text = "I"
+$Form.controls.Add($BtnSystemInformation)
+$BtnSystemInformation.Add_Click({
+	Start-Process -FilePath "${Env:SystemRoot}\System32\msinfo32.exe"
+})
+$ToolTip.SetToolTip($BtnSystemInformation, "System Information")
 
 # Hostname
 $HostId = (SWMB_GetHostId)
