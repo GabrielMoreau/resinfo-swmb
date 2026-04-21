@@ -31,6 +31,7 @@ Here's a quick summary:
 
 New presets/rules:
 
+* 2026/04/21 - `InstallUEFICA23`/`ViewUEFICA23` -> SecureBoot UEFI CA 2023 Update
 * 2026/04/08 - `EnablePasswordOnResume`/`DisablePasswordOnResume`/`ViewPasswordOnResume` -> Prompt for a password on resume (battery or plugged in)
 * 2026/04/08 - `DisablePrintOverHTTP`/`EnablePrintOverHTTP`/`ViewPrintOverHTTP` -> Printing over HTTP
 * 2026/03/24 - `DisableRDCShareLocalDrive`/`EnableRDCShareLocalDrive`/`ViewRDCShareLocalDrive` -> Remote Desktop Client could not share Local Drive
