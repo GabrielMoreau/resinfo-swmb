@@ -1508,6 +1508,65 @@ Function TweakViewBitlockerTPM { # RESINFO
 
 ################################################################
 
+# SecureBoot UEFI CA 2023 Update
+# https://support.microsoft.com/en-us/topic/registry-key-updates-for-secure-boot-windows-devices-with-it-managed-updates-a7be69c9-4634-42e1-9ca1-df06f43f360d
+# https://www.dell.com/community/en/conversations/optiplex-desktops/legacy-dell-pc-successful-windows-uefi-ca-2023-update/69d28a8eafab7825ebb77bf9
+# https://lecrabeinfo.net/tutoriels/secure-boot-comment-verifier-si-les-certificats-2023-sont-bien-installes-sur-votre-pc/
+
+Function TweakInstallUEFICA23 { # RESINFO
+	Write-Output "Installing UEFI CA 2023..."
+	$SecureBootAvailable = Test-Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\State"
+	If (-not $SecureBootAvailable) {
+		Write-Output ' Secure Boot not supported or disabled'
+	} ElseIf (-not([System.Text.Encoding]::ASCII.GetString((Get-SecureBootUEFI db).bytes) -match 'Windows UEFI CA 2023')) {
+		If ([System.Text.Encoding]::ASCII.GetString((Get-SecureBootUEFI db).bytes) -match 'Microsoft Windows Production PCA 2011') {
+			Write-Output " Fix AvailableUpdates register key"
+			Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot" -Name "AvailableUpdates" -Value 0x5944
+			Start-ScheduledTask -TaskName "\Microsoft\Windows\PI\Secure-Boot-Update"
+		} Else {
+			Write-Output " SecureBoot must be enabled before installing the CA"
+		}
+	}
+}
+
+Function TweakViewUEFICA23 { # RESINFO
+	Write-Output "Viewing UEFI CA 2023..."
+	$SecureBootAvailable = Test-Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\State"
+	$Message = 'fix AvailableUpdates to 0x594'
+	If ($SecureBootAvailable) {
+		$Status = (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\Servicing' -Name 'UEFICA2023Status' -ErrorAction SilentlyContinue).UEFICA2023Status
+		If ($Status -eq"InProgress") {
+			$Message = 'CA Update is actively in progress'
+		}
+	} Else {
+		$Message = 'Secure Boot not supported or disabled'
+	}
+
+	$Hash = @{}
+	$Rules = [ordered]@{
+		'db' = @{
+			OkValues = @('True')
+			Description = "UEFI CA 2023"
+			Remediation = "InstallUEFICA23 ($Message)"
+		}
+		'dbdefault' = @{
+			OkValues = @('True')
+			Description = "UEFI CA 2023"
+			Remediation = "InstallUEFICA23 ($Message)"
+		}
+	}
+	ForEach ($Feature in $Rules.keys) {
+		If (-not $SecureBootAvailable) {
+			$Hash[$Feature] = 'NotAvailable'
+			Continue
+		}
+		$Hash[$Feature] = ([System.Text.Encoding]::ASCII.GetString((Get-SecureBootUEFI $Feature).bytes) -match 'Windows UEFI CA 2023')
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+}
+
+################################################################
+
 # The Windows 11 system must use an antivirus program
 # W11 STIG V-253264 https://system32.eventsentry.com/stig/viewer/V-253264
 

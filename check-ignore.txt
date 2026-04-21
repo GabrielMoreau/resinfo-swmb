@@ -1,4 +1,5 @@
 AddUserInAdminGroup
+UninstallUEFICA23
 InstallKasperskyEndpoint
 InstallKasperskyConsole
 InstallAvast
