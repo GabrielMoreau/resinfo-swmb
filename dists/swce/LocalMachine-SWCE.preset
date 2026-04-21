@@ -67,6 +67,7 @@ ViewPrivilegesElevation
 ViewVolumeBadlyFormatted
 ViewBitlocker
 ViewBitlockerTPM
+ViewUEFICA23
 ViewAntivirusServices
 
 ### TemporaryBypass Tweaks ###
