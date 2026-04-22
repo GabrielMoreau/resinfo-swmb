@@ -1310,6 +1310,11 @@ Function TweakEnableBitlocker { # RESINFO
 
 	Function _EncryptAllDrives() {
 		# Preliminary Test on SecureBoot and TPM
+		$SecureBootAvailable = Test-Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\State"
+		If (-not $SecureBootAvailable) {
+			Write-Error "Error SecureBoot: Verify if your BIOS support SecureBoot"
+			Return
+		}
 		Try {
 			If (!(Confirm-SecureBootUEFI)) {
 				Write-Error "SecureBoot is OFF!"
@@ -1514,10 +1519,10 @@ Function TweakViewBitlockerTPM { # RESINFO
 # https://lecrabeinfo.net/tutoriels/secure-boot-comment-verifier-si-les-certificats-2023-sont-bien-installes-sur-votre-pc/
 
 Function TweakInstallUEFICA23 { # RESINFO
-	Write-Output "Installing UEFI CA 2023..."
+	Write-Output "Installing SecureBoot UEFI CA 2023..."
 	$SecureBootAvailable = Test-Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\State"
 	If (-not $SecureBootAvailable) {
-		Write-Output ' Secure Boot not supported or disabled'
+		Write-Output ' SecureBoot not supported or disabled'
 	} ElseIf (-not([System.Text.Encoding]::ASCII.GetString((Get-SecureBootUEFI db).bytes) -match 'Windows UEFI CA 2023')) {
 		If ([System.Text.Encoding]::ASCII.GetString((Get-SecureBootUEFI db).bytes) -match 'Microsoft Windows Production PCA 2011') {
 			Write-Output " Fix AvailableUpdates register key"
@@ -1530,7 +1535,7 @@ Function TweakInstallUEFICA23 { # RESINFO
 }
 
 Function TweakViewUEFICA23 { # RESINFO
-	Write-Output "Viewing UEFI CA 2023..."
+	Write-Output "Viewing SecureBoot UEFI CA 2023..."
 	$SecureBootAvailable = Test-Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\State"
 	$Message = 'fix AvailableUpdates to 0x594'
 	If ($SecureBootAvailable) {
@@ -1539,7 +1544,7 @@ Function TweakViewUEFICA23 { # RESINFO
 			$Message = 'CA Update is actively in progress'
 		}
 	} Else {
-		$Message = 'Secure Boot not supported or disabled'
+		$Message = 'SecureBoot not supported or disabled'
 	}
 
 	$Hash = @{}
