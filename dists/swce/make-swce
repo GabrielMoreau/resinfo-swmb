@@ -24,6 +24,12 @@ If (Test-Path "${Env:ProgramData}\SWMB\Modules\Custom-VarOverload.psm1") {
 	Import-Module -Name "${Env:ProgramData}\SWMB\Modules\Custom-VarOverload.psm1" -ErrorAction SilentlyContinue
 }
 
+$HostExt="Host-$(${Env:ComputerName}.ToLower())"
+If (Test-Path "${Env:ProgramData}\SWMB\Modules\Custom-VarOverload-$HostExt.psm1") {
+	# LocalAdminRegex use by ViewUserInAdminGroup
+	Import-Module -Name "${Env:ProgramData}\SWMB\Modules\Custom-VarOverload-$HostExt.psm1" -ErrorAction SilentlyContinue
+}
+
 ################################################################
 END
 
