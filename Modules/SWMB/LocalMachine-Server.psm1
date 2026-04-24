@@ -258,6 +258,10 @@ Function TweakViewDebugPrograms { # RESINFO
 # Enable password complexity and maximum age requirements
 Function TweakEnablePasswordPolicy { # RESINFO
 	Write-Output "Enabling Password Policy (PasswordHistorySize, MinimumPasswordAge, MaximumPasswordAge, MinimumPasswordLength)..."
+	# We are changing the value of MaximumPasswordAge because, since it was originally set to -1,
+	# there is a conflict between Legacy (SAM) and Security Policy.
+	# The value will then be correctly adjusted using secedit
+	net accounts /maxpwage:365 *> $Null
 	$IniData = [ordered]@{
 		'System Access' = [ordered]@{
 			"PasswordHistorySize"   = $($Global:SWMB_Custom.PasswordHistorySize)
@@ -275,6 +279,7 @@ Function TweakEnablePasswordPolicy { # RESINFO
 # Disable
 Function TweakDisablePasswordPolicy { # RESINFO
 	Write-Output "Disabling (Reset to défault) (PasswordHistorySize, MinimumPasswordAge, MaximumPasswordAge, MinimumPasswordLength)..."
+	net accounts /maxpwage:unlimited *> $Null
 	$IniData = [ordered]@{
 		'System Access' = [ordered]@{
 			"PasswordHistorySize"   = 0
