@@ -719,9 +719,9 @@ Function TweakUninstallPowerShellV2 { # RESINFO
 	Write-Output "Uninstalling PowerShell 2.0 Environment..."
 	If ((Get-CimInstance -Class "Win32_OperatingSystem").ProductType -eq 1) {
 		$Feature = 'MicrosoftWindowsPowerShellV2Root'
-		If ((Get-WindowsOptionalFeature -Online -FeatureName $Feature).State -contains 'Enable') {
+		If ((Get-WindowsOptionalFeature -Online -FeatureName $Feature).State -contains 'Enabled') {
 			Write-Output " Disable Feature $Feature"
-			Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root -NoRestart -WarningAction SilentlyContinue | Out-Null
+			Disable-WindowsOptionalFeature -Online -FeatureName $Feature -NoRestart -WarningAction SilentlyContinue | Out-Null
 		}
 	} Else {
 		Uninstall-WindowsFeature -Name "PowerShell-V2" -WarningAction SilentlyContinue | Out-Null
@@ -732,9 +732,10 @@ Function TweakUninstallPowerShellV2 { # RESINFO
 Function TweakInstallPowerShellV2 { # RESINFO
 	Write-Output "Installing PowerShell 2.0 Environment..."
 	If ((Get-CimInstance -Class "Win32_OperatingSystem").ProductType -eq 1) {
-		If ((Get-WindowsOptionalFeature -Online -FeatureName $Feature).State -contains 'Disable') {
+		$Feature = 'MicrosoftWindowsPowerShellV2Root'
+		If ((Get-WindowsOptionalFeature -Online -FeatureName $Feature).State -contains 'Disabled') {
 			Write-Output " Enable Feature $Feature"
-			Enable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root -NoRestart -WarningAction SilentlyContinue | Out-Null
+			Enable-WindowsOptionalFeature -Online -FeatureName $Feature -NoRestart -WarningAction SilentlyContinue | Out-Null
 		}
 	} Else {
 		Install-WindowsFeature -Name "PowerShell-V2" -WarningAction SilentlyContinue | Out-Null
