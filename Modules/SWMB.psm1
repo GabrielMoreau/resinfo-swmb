@@ -690,7 +690,14 @@ Function SWMB_SaveIniFile {
 
 	If ($SeceditFormat -and -not $IniData.Contains('Unicode')) {
 		$Output.Add("[Unicode]")
-		$Output.Add("Unicode = yes")
+		$Output.Add("Unicode=yes")
+		$Output.Add("")
+	}
+
+	If ($SeceditFormat -and -not $IniData.Contains('Version')) {
+		$Output.Add("[Version]")
+		$Output.Add('signature="$CHICAGO$"')
+		$Output.Add("Revision=1")
 		$Output.Add("")
 	}
 
@@ -702,17 +709,10 @@ Function SWMB_SaveIniFile {
 
 		ForEach ($Key in $IniData[$Section].Keys) {
 			$Value = $IniData[$Section][$Key]
-			$Output.Add("$Key = $Value")
+			$Output.Add("$Key=$Value")
 		}
 
 		# Blank line between sections
-		$Output.Add("")
-	}
-
-	If ($SeceditFormat -and -not $IniData.Contains('Version')) {
-		$Output.Add("[Version]")
-		$Output.Add('signature = "$CHICAGO$"')
-		$Output.Add("Revision = 1")
 		$Output.Add("")
 	}
 
