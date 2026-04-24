@@ -722,85 +722,6 @@ Function SWMB_SaveIniFile {
 
 ################################################################
 
-Function SWMB_GetRegistrySettings {
-	Param (
-		[Parameter(Mandatory)] [string]$Path,
-		[Parameter(Mandatory)] [System.Collections.IDictionary]$Rules
-	)
-
-	$Props = Get-ItemProperty -Path $Path -ErrorAction SilentlyContinue
-
-	ForEach ($Name in $Rules.Keys) {
-		$Rule     = $Rules[$Name]
-		$HasValue = $Props -and ($Props.PSObject.Properties.Name -contains $Name)
-		$HasOkDef = $Rule -and $Rule.ContainsKey('OkValues')
-
-		If (-not $HasValue) {
-			If ($HasOkDef -and ($Rule.OkValues -contains $Null)) {
-				$Status = 'PASS'
-			} ElseIf ($HasOkDef) {
-				$Status = 'FAIL'
-			} Else {
-				$Status = 'INFO'
-			}
-
-			[PSCustomObject]@{
-				Path   = $Path
-				Name   = $Name
-				Value  = $Null
-				Exists = $False
-				Status = $Status
-				Remediation = If ($Rule.ContainsKey('Remediation')) { $Rule.Remediation } Else { $Null }
-			}
-			Continue
-		}
-
-		$Value = $Props.$Name
-		If (-not $HasOkDef) {
-			$Status = 'INFO'
-		} Else {
-			$Status = 'FAIL' # By default
-			# Check OkValues
-			ForEach ($OkValue in $Rule.OkValues) {
-				# If OkValue is a test (cf '>8')
-				If ($OkValue -match '^>(\d+)$') {  # OkValue is a test >
-					$Threshold = [int]$Matches[1]
-					If ($Value -gt $Threshold) {
-						$Status = 'PASS'
-						Break
-					}
-				} ElseIf ($OkValue -match '^<(\d+)$') {  # OkValue is a test <
-					$Threshold = [int]$Matches[1]
-					If ($Value -lt $Threshold) {
-						$Status = 'PASS'
-						Break
-					}
-				} ElseIf ($OkValue -match '^(\d+)\.\.(\d+)$') { # Range 1..12
-					$Min = [int]$Matches[1]
-					$Max = [int]$Matches[2]
-					If ($Value -ge $Min -and $Value -le $Max) {
-						$Status = 'PASS'
-						Break
-					}
-				} ElseIf ($Value -eq $OkValue) {  # OkValue is a value
-					$Status = 'PASS'
-					Break
-				}
-			}
-		}
-
-		[PSCustomObject]@{
-			Path   = $Path
-			Name   = $Name
-			Value  = $Value
-			Exists = $True
-			Status = $Status
-			Remediation = If ($Rule.ContainsKey('Remediation')) { $Rule.Remediation } Else { $Null }
-		}
-	}
-}
-
-################################################################
 Function SWMB_GetHashSettings {
 	Param (
 		[Parameter(Mandatory)] [System.Collections.IDictionary]$Hash,
@@ -808,7 +729,7 @@ Function SWMB_GetHashSettings {
 	)
 
 	ForEach ($Name in $Rules.Keys) {
-		$Rule	 = $Rules[$Name]
+		$Rule     = $Rules[$Name]
 		$HasValue = $Hash.Contains($Name)  # Check Key exist
 		$HasOkDef = $Rule -and $Rule.ContainsKey('OkValues')
 
@@ -823,11 +744,10 @@ Function SWMB_GetHashSettings {
 			}
 
 			[PSCustomObject]@{
-				Section = $Section
-				Name    = $Name
-				Value   = $Null
-				Exists  = $False
-				Status  = $Status
+				Name   = $Name
+				Value  = $Null
+				Exists = $False
+				Status = $Status
 				Remediation = If ($Rule.ContainsKey('Remediation')) { $Rule.Remediation } Else { $Null }
 			}
 			Continue
@@ -839,19 +759,26 @@ Function SWMB_GetHashSettings {
 		} Else {
 			$Status = 'FAIL'
 			ForEach ($OkValue in $Rule.OkValues) {
-				If ($OkValue -match '^>(\d+)$') {
+				If ($OkValue -match '^>(\d+)$') { # OkValue is a test >
 					$Threshold = [int]$Matches[1]
 					If ($Value -gt $Threshold) {
 						$Status = 'PASS'
 						Break
 					}
-				} ElseIf ($OkValue -match '^<(\d+)$') {
+				} ElseIf ($OkValue -match '^<(\d+)$') { # OkValue is a test <
 					$Threshold = [int]$Matches[1]
 					If ($Value -lt $Threshold) {
 						$Status = 'PASS'
 						Break
 					}
-				} ElseIf ($Value -eq $OkValue) {
+				} ElseIf ($OkValue -match '^(\d+)\.\.(\d+)$') { # Range 1..12
+					$Min = [int]$Matches[1]
+					$Max = [int]$Matches[2]
+					If ($Value -ge $Min -and $Value -le $Max) {
+						$Status = 'PASS'
+						Break
+					}
+				} ElseIf ($Value -eq $OkValue) { # OkValue is a value
 					$Status = 'PASS'
 					Break
 				}
@@ -859,14 +786,34 @@ Function SWMB_GetHashSettings {
 		}
 
 		[PSCustomObject]@{
-			Section = $Section
-			Name    = $Name
-			Value   = $Value
-			Exists  = $True
-			Status  = $Status
+			Name   = $Name
+			Value  = $Value
+			Exists = $True
+			Status = $Status
 			Remediation = If ($Rule.ContainsKey('Remediation')) { $Rule.Remediation } Else { $Null }
 		}
 	}
+}
+
+################################################################
+
+Function SWMB_GetRegistrySettings {
+	Param (
+		[Parameter(Mandatory)] [string]$Path,
+		[Parameter(Mandatory)] [System.Collections.IDictionary]$Rules
+	)
+
+	$Props = Get-ItemProperty -Path $Path -ErrorAction SilentlyContinue
+
+	$Hash = @{}
+	If ($Props) {
+		ForEach ($Name in $Rules.Keys) {
+			If ($Null -ne $Props.PSObject.Properties[$Name]) {
+				$Hash[$Name] = $Props.$Name
+			}
+		}
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules
 }
 
 ################################################################
