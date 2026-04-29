@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/bash
 #
-# build-host
+# make-group2host
 #
 # 2026/04/29 Gabriel Moreau <Gabriel.Moreau@univ-grenoble-alpes.fr>
 

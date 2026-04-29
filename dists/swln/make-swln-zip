@@ -11,7 +11,7 @@ ZIP="SWLN-${VERSION}.zip"
 zip --quiet "${ZIP}" check-quality check-with-swln \
   install.bat installer.ps1 uninstall.bat \
   post-install-01reg.bat pre-install-01copy.bat \
-  Makefile extend-rules.mk extend-variables.mk build-host
+  Makefile extend-rules.mk extend-variables.mk make-group2host
 
 mkdir -p tmp
 cp ../../Presets/LocalMachine-All.preset tmp/LocalMachine-Boot.preset

@@ -75,10 +75,10 @@ help: ## Show this help
 
 all: check-exe $(BUILD_FLAG) $(SOFT)_$(SWLN_VERSION)-$(REVISION)_x64.zip ## Create .zip archive package
 
-$(BUILD_FLAG): $(RESET_FLAG) build-host Makefile
+$(BUILD_FLAG): $(RESET_FLAG) make-group2host Makefile
 	@mkdir -p tmp
 	@rm -f tmp/*.preset tmp/*.psm1
-	@./build-host
+	@./make-group2host
 	@touch $@
 
 version: ## Print software version
