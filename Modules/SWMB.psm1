@@ -761,20 +761,23 @@ Function SWMB_GetHashSettings {
 			ForEach ($OkValue in $Rule.OkValues) {
 				If ($OkValue -match '^>(\d+)$') { # OkValue is a test >
 					$Threshold = [int]$Matches[1]
-					If ($Value -gt $Threshold) {
+					$ValueI = [int]$Value
+					If ($ValueI -gt $Threshold) {
 						$Status = 'PASS'
 						Break
 					}
 				} ElseIf ($OkValue -match '^<(\d+)$') { # OkValue is a test <
 					$Threshold = [int]$Matches[1]
-					If ($Value -lt $Threshold) {
+					$ValueI = [int]$Value
+					If ($ValueI -lt $Threshold) {
 						$Status = 'PASS'
 						Break
 					}
 				} ElseIf ($OkValue -match '^(\d+)\.\.(\d+)$') { # Range 1..12
 					$Min = [int]$Matches[1]
 					$Max = [int]$Matches[2]
-					If ($Value -ge $Min -and $Value -le $Max) {
+					$ValueI = [int]$Value
+					If (($ValueI -ge $Min) -and ($ValueI -le $Max)) {
 						$Status = 'PASS'
 						Break
 					}
