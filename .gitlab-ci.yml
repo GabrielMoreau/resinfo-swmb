@@ -40,7 +40,7 @@ pages:
     - mv dists/ocs-inventory/SWMB-OCS-*.zip public/
     - (cd dists/swce/; make all)
     - mv dists/swce/SWCE-*.zip public/
-    - (cd dists/swln/; ./.make-zip-template)
+    - (cd dists/swln/; ./make-swln-zip)
     - mv dists/swln/SWLN-*.zip public/
     - (cd dists/wapt/; make all)
     - mv dists/wapt/SWMB-WAPT-*.zip public/
