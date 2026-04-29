@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+#
+# build-host
+#
+# 2026/04/29 Gabriel Moreau <Gabriel.Moreau@univ-grenoble-alpes.fr>
+
+set -euo pipefail
+
+TMP="tmp"
+mkdir -p "$TMP"
+
+# ------------------------------------------------------------
+# TYPE → TYPE_EXTENSION
+# ------------------------------------------------------------
+
+declare -A TYPE_EXT=(
+  ['LocalMachine-Boot']='preset'
+  ['LocalMachine-PostInstall']='preset'
+  ['CurrentUser-Logon']='preset'
+
+  ['Custom-VarOverload']="psm1"
+  ['Custom-VarAutodel']="psm1"
+  ['Local-Addon']="psm1"
+)
+
+# ------------------------------------------------------------
+# GET TYPE HOST LIST
+# ------------------------------------------------------------
+
+get_type_hostlist() {
+  local type="$1"
+  local ext="$2"
+
+  {
+    # from groups
+    for f in "${type}"-Group-*."${ext}"
+    do
+      [ -f "$f" ] || continue
+
+      g="${f#"${type}"-Group-}"
+      g="${g%."${ext}"}"
+
+      sed 's/[[:space:]]*#.*//;' "Group-$g.hosts" 2>/dev/null
+    done
+
+    # local hosts
+    for f in "${type}"-Host-*."${ext}"
+    do
+      [ -f "$f" ] || continue
+      h="${f#"${type}"-Host-}"
+      h="${h%."${ext}"}"
+      echo "$h"
+    done
+  } | sort -u
+}
+
+# ------------------------------------------------------------
+# BUILD ONE HOST
+# ------------------------------------------------------------
+
+process_host() {
+  local type="$1"
+  local host="$2"
+  local ext="$3"
+
+  local out="$TMP/${type}-Host-${host}.${ext}"
+
+  echo "BUILD ${type} / ${host}"
+
+  # group contribution in first
+  for f in "${type}"-Group-*."${ext}"
+  do
+    [ -f "$f" ] || continue
+
+    g="${f#"${type}"-Group-}"
+    g="${g%."${ext}"}"
+
+    if sed 's/[[:space:]]*#.*//;' "Group-$g.hosts" 2>/dev/null | grep -qx "${host}"
+    then
+      { echo ''; echo "# $f"; cat "$f"; } >> "${out}"
+    fi
+  done
+
+  # local host append
+  lf="${type}-Host-${host}.${ext}"
+  if [ -f "$lf" ]
+  then
+    { echo ''; echo "# $lf"; cat "$lf"; } >> "${out}"
+  fi
+
+  unix2dos "${out}" 2>/dev/null || true
+}
+
+# ------------------------------------------------------------
+# PROCESS TYPE
+# ------------------------------------------------------------
+
+process_type() {
+  local type="$1"
+  local ext="$2"
+
+  echo "== TYPE: $type ($ext) =="
+
+  get_type_hostlist "${type}" "${ext}" | while read -r host
+  do
+    [ -z "${host}" ] && continue
+    process_host "${type}" "${host}" "${ext}"
+  done
+}
+
+# ------------------------------------------------------------
+# MAIN
+# ------------------------------------------------------------
+
+for type in "${!TYPE_EXT[@]}"
+do
+  process_type "${type}" "${TYPE_EXT[${type}]}"
+done
