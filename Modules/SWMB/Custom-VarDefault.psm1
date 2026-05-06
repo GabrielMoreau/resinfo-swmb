@@ -141,8 +141,10 @@ $Global:SWMB_Custom = @{
 		"${Env:ProgramFiles}\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe"
 		"${Env:ProgramFiles}\BraveSoftware\Brave-Browser\Application\brave.exe"
 		"${Env:ProgramFiles}\Google\Chrome\Application\chrome.exe"
+		"${Env:ProgramFiles}\Microsoft VS Code\Code.exe"
 		"${Env:ProgramFiles}\Mozilla Firefox\firefox.exe"
 		"${Env:ProgramFiles}\Mozilla Thunderbird\thunderbird.exe"
+		"${Env:ProgramFiles}\TigerVNC\vncviewer.exe"
 		#"${Env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe"
 	)
 }
