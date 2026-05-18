@@ -145,6 +145,7 @@ $Global:SWMB_Custom = @{
 		"${Env:ProgramFiles}\Mozilla Firefox\firefox.exe"
 		"${Env:ProgramFiles}\Mozilla Thunderbird\thunderbird.exe"
 		"${Env:ProgramFiles}\TigerVNC\vncviewer.exe"
+		"${Env:ProgramFiles}\Zoom\bin\Zoom.exe"
 		#"${Env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe"
 	)
 }
