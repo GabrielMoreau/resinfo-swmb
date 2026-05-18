@@ -14,6 +14,29 @@ Regarding the SWCE project:
 * SWCE can now upload test results to a central GitLab server via the API and a temporary token.
   Be sure to use a server under your control or that of a trusted entity, and do not upload to gitlab.com!
   If you deploy SWCE across a fleet of machines, this will provide you with an overview of whether or not Group Policy Objects (GPOs) or tweaks have been applied to your computers.
+* Applications checked against the `$Global:SWMB_Custom.AdminNetAppsToBlock` key (`ViewAdminNetApps` tweak):
+	* `${Env:ProgramFiles}\Adobe\Acrobat DC\Acrobat\Acrobat.exe`
+	* `${Env:ProgramFiles}\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe`
+	* `${Env:ProgramFiles}\Audacity\Audacity.exe`
+	* `${Env:ProgramFiles}\BraveSoftware\Brave-Browser\Application\brave.exe`
+	* `${Env:ProgramFiles}\GIMP 3\bin\gimp-3.exe`
+	* `${Env:ProgramFiles}\Google\Chrome\Application\chrome.exe`
+	* `${Env:ProgramFiles}\Microsoft VS Code\Code.exe`
+	* `${Env:ProgramFiles}\Mozilla Firefox\firefox.exe`
+	* `${Env:ProgramFiles}\Mozilla Firefox\private_browsing.exe`
+	* `${Env:ProgramFiles}\Mozilla Thunderbird\thunderbird.exe`
+	* `${Env:ProgramFiles}\obs-studio\bin\64bit\obs64.exe`
+	* `${Env:ProgramFiles}\OpenShot Video Editor\openshot-qt.exe`
+	* `${Env:ProgramFiles}\Proton AG\Proton Mail Bridge\proton-bridge.exe`
+	* `${Env:ProgramFiles}\Pulsar\Pulsar.exe`
+	* `${Env:ProgramFiles}\RStudio\rstudio.exe`
+	* `${Env:ProgramFiles}\Telegram Desktop\Telegram.exe`
+	* `${Env:ProgramFiles}\TigerVNC\vncviewer.exe`
+	* `${Env:ProgramFiles}\Xmind\Xmind.exe`
+	* `${Env:ProgramFiles}\Xournal++\bin\xournalpp.exe`
+	* `${Env:ProgramFiles}\Zoom\bin\Zoom.exe`
+	* `${Env:ProgramFiles}\Zotero\zotero.exe`
+
 
 Regarding the SWLN template:
 
