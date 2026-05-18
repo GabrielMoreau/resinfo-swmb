@@ -511,45 +511,44 @@ Function TweakViewSMBClientSigning { # RESINFO
 # Windows SMB server must be configured to always perform SMB packet signing
 # Require SMB server to sign message - W11 STIG V-253451 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253451
 
-# Enable SMBServerSigning
+# Enable
 Function TweakEnableSMBServerSigning { # RESINFO
 	Write-Output "Enabling (require) SMB server to use signing messages..."
-	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
-	If (!(Test-Path $RegPath)) {
-		New-Item -Path $RegPath -Force | Out-Null
-	}
-	Set-ItemProperty -Path $RegPath -Name "EnableSecuritySignature" -Value 1
-	Set-ItemProperty -Path $RegPath -Name "RequireSecuritySignature" -Value 1
+	Set-SmbServerConfiguration `
+		-EnableSecuritySignature $True `
+		-RequireSecuritySignature $True `
+		-Force
 }
-
-# Disable (default)
+    
+# Disable
 Function TweakDisableSMBServerSigning { # RESINFO
 	Write-Output "Disabling (so allow) SMB server to use signing messages..."
-	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
-	If (Test-Path  $RegPath) {
-		ForEach ($Field in 'EnableSecuritySignature', 'RequireSecuritySignature') {
-			Remove-ItemProperty -Path $RegPath -Name "$Field" -ErrorAction SilentlyContinue
-		}
-	}
+	Set-SmbServerConfiguration `
+		-EnableSecuritySignature $False `
+		-RequireSecuritySignature $False `
+		-Force
 }
 
 # View
 Function TweakViewSMBServerSigning { # RESINFO
 	Write-Output "Viewing (require) SMB server to use signing messages (0 or not exist: Disable, 1: Enable (Recommanded))..."
-	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
-	$RegFields = @{
+	$Hash = @{}
+	$Rules = [ordered]@{
 		EnableSecuritySignature = @{
-			OkValues = @(1)
+			OkValues = @($True)
 			Description = "Enable Security Signature"
 			Remediation = "EnableSMBServerSigning and reboot"
 		}
 		RequireSecuritySignature = @{
-			OkValues = @(1)
+			OkValues = @($True)
 			Description = "Require Security Signature"
 			Remediation = "EnableSMBServerSigning and reboot"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	ForEach ($Feature in $Rules.keys) {
+		$Hash[$Feature] = (Get-SmbServerConfiguration).$Feature
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################
