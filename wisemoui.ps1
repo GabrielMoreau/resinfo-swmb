@@ -627,6 +627,21 @@ $Form.Controls.Add($BtnVersionFrame)
 ################################################################
 
 # Compliance Enforcement - Local Machine
+$BtnSWCELMLog = New-Object System.Windows.Forms.Button
+$BtnSWCELMLog.Location = New-Object System.Drawing.Point(380,205)
+$BtnSWCELMLog.Width = 15
+$BtnSWCELMLog.Height = 20
+$BtnSWCELMLog.Text = "L"
+$BtnSWCELMLog.Visible = $False
+$Form.controls.Add($BtnSWCELMLog)
+$BtnSWCELMLog.Add_Click({
+	Start-Process -FilePath $Editor -ArgumentList "`"$SWCELog`""
+})
+$ToolTip.SetToolTip($BtnSWCELMLog, "Show Last LocalMachine SWCE Task Run")
+If (Test-Path -LiteralPath "$SWCELog") {
+	$BtnSWCELMLog.Visible = $true
+}
+
 $BtnSWCELM = New-Object System.Windows.Forms.Button
 $BtnSWCELM.Location = New-Object System.Drawing.Point(300,205)
 $BtnSWCELM.Width = 80
@@ -649,21 +664,11 @@ Write-Host '`nPress any key to close...' -NoNewline
 			'-Command', $Command
 		) `
 		-WindowStyle Maximized
+	If (Test-Path -LiteralPath "$SWCELog") {
+		$BtnSWCELMLog.Visible = $true
+	}
 })
 $ToolTip.SetToolTip($BtnSWCELM, "SWCE - LocalMachine")
-
-If (Test-Path -LiteralPath "$SWCELog") {
-	$BtnSWCELMLog = New-Object System.Windows.Forms.Button
-	$BtnSWCELMLog.Location = New-Object System.Drawing.Point(380,205)
-	$BtnSWCELMLog.Width = 15
-	$BtnSWCELMLog.Height = 20
-	$BtnSWCELMLog.Text = "L"
-	$Form.controls.Add($BtnSWCELMLog)
-	$BtnSWCELMLog.Add_Click({
-		Start-Process -FilePath $Editor -ArgumentList "`"$SWCELog`""
-	})
-	$ToolTip.SetToolTip($BtnSWCELMLog, "Show Last LocalMachine SWCE Task Run")
-}
 
 # Compliance Enforcement Frame
 $BtnSWCEFrame = New-Object System.Windows.Forms.GroupBox
