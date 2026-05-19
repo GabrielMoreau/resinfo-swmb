@@ -25,6 +25,7 @@ $DataFolder     = (Join-Path -Path ${Env:ProgramData} -ChildPath "SWMB")
 $BootLog        = (Join-Path -Path $DataFolder -ChildPath (Join-Path -Path "Logs" -ChildPath "LocalMachine-LastBoot.log"))
 $PostInstallLog = (Join-Path -Path $DataFolder -ChildPath (Join-Path -Path "Logs" -ChildPath "LocalMachine-PostInstall.log"))
 $LogonLog       = (Join-Path -Path $DataFolder -ChildPath (Join-Path -Path "Logs" -ChildPath "CurrentUser-LastLogon.log"))
+$SWCELog        = (Join-Path -Path $DataFolder -ChildPath (Join-Path -Path "Logs" -ChildPath "LocalMachine-SWCE.log"))
 
 Import-Module -Name "$PSScriptRoot\Modules\SWMB.psd1" -ErrorAction Stop
 Import-Module -Name "$PSScriptRoot\Modules\WiSeMoUI.psm1" -ErrorAction Stop
@@ -633,9 +634,36 @@ $BtnSWCELM.Height = 30
 $BtnSWCELM.Text = "Check LM"
 $Form.controls.Add($BtnSWCELM)
 $BtnSWCELM.Add_Click({
-	Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -NoExit -File `"$PSScriptRoot\Tasks\LocalMachine-SWCE.ps1`"" -WindowStyle Maximized
+	$Script = "$PSScriptRoot\Tasks\LocalMachine-SWCE.ps1"
+	$Command = @"
+Start-Transcript -Path '$SWCELog'
+& '$Script'
+Stop-Transcript
+Write-Host '`nPress any key to close...' -NoNewline
+`$Null = `$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+"@
+	Start-Process powershell.exe `
+		-ArgumentList @(
+			'-NoProfile',
+			'-ExecutionPolicy', 'Bypass',
+			'-Command', $Command
+		) `
+		-WindowStyle Maximized
 })
 $ToolTip.SetToolTip($BtnSWCELM, "SWCE - LocalMachine")
+
+If (Test-Path -LiteralPath "$SWCELog") {
+	$BtnSWCELMLog = New-Object System.Windows.Forms.Button
+	$BtnSWCELMLog.Location = New-Object System.Drawing.Point(380,205)
+	$BtnSWCELMLog.Width = 15
+	$BtnSWCELMLog.Height = 20
+	$BtnSWCELMLog.Text = "L"
+	$Form.controls.Add($BtnSWCELMLog)
+	$BtnSWCELMLog.Add_Click({
+		Start-Process -FilePath $Editor -ArgumentList "`"$SWCELog`""
+	})
+	$ToolTip.SetToolTip($BtnSWCELMLog, "Show Last LocalMachine SWCE Task Run")
+}
 
 # Compliance Enforcement Frame
 $BtnSWCEFrame = New-Object System.Windows.Forms.GroupBox
