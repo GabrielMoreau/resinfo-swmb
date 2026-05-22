@@ -1539,13 +1539,13 @@ Function TweakViewUEFICA23 { # RESINFO
 	$SecureBootAvailable = Test-Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\State"
 	$Message = 'fix AvailableUpdates to 0x5944'
 	If ($SecureBootAvailable) {
-		$Status = (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\Servicing' -Name 'UEFICA2023Status' -ErrorAction SilentlyContinue).UEFICA2023Status
-		$Error  = (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\Servicing' -Name 'UEFICA2023Error'  -ErrorAction SilentlyContinue).UEFICA2023Error
-		If ($Status -eq "InProgress") {
-			If ($Error -eq 0) {
+		$CAStatus = (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\Servicing' -Name 'UEFICA2023Status' -ErrorAction SilentlyContinue).UEFICA2023Status
+		$CAError  = (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\Servicing' -Name 'UEFICA2023Error'  -ErrorAction SilentlyContinue).UEFICA2023Error
+		If ($CAStatus -eq "InProgress") {
+			If ($CAError -eq 0) {
 				$Message = 'CA Update is actively in progress'
 			} Else {
-				$Message = "CA Update is in error, code: $Error"
+				$Message = "CA Update is in error, code: $CAError"
 			}
 		}
 	} Else {
