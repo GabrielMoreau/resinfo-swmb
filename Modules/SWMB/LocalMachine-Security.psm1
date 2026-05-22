@@ -1545,7 +1545,7 @@ Function TweakViewUEFICA23 { # RESINFO
 			If ($CAError -eq 0) {
 				$Message = 'CA Update is actively in progress'
 			} Else {
-				$Message = "CA Update is in error, code: $CAError"
+				$Message = "CA Update is in error: $CAError"
 			}
 		}
 	} Else {
