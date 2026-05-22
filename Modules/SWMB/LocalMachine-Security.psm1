@@ -1516,6 +1516,7 @@ Function TweakViewBitlockerTPM { # RESINFO
 # https://support.microsoft.com/en-us/topic/registry-key-updates-for-secure-boot-windows-devices-with-it-managed-updates-a7be69c9-4634-42e1-9ca1-df06f43f360d
 # https://www.dell.com/community/en/conversations/optiplex-desktops/legacy-dell-pc-successful-windows-uefi-ca-2023-update/69d28a8eafab7825ebb77bf9
 # https://lecrabeinfo.net/tutoriels/secure-boot-comment-verifier-si-les-certificats-2023-sont-bien-installes-sur-votre-pc/
+# https://www.it-connect.fr/windows-anticiper-la-mise-a-jour-des-certificats-secure-boot-en-2026/
 
 Function TweakInstallUEFICA23 { # RESINFO
 	Write-Output "Installing SecureBoot UEFI CA 2023..."
@@ -1536,11 +1537,16 @@ Function TweakInstallUEFICA23 { # RESINFO
 Function TweakViewUEFICA23 { # RESINFO
 	Write-Output "Viewing SecureBoot UEFI CA 2023..."
 	$SecureBootAvailable = Test-Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\State"
-	$Message = 'fix AvailableUpdates to 0x594'
+	$Message = 'fix AvailableUpdates to 0x5944'
 	If ($SecureBootAvailable) {
 		$Status = (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\Servicing' -Name 'UEFICA2023Status' -ErrorAction SilentlyContinue).UEFICA2023Status
-		If ($Status -eq"InProgress") {
-			$Message = 'CA Update is actively in progress'
+		$Error  = (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\Servicing' -Name 'UEFICA2023Error'  -ErrorAction SilentlyContinue).UEFICA2023Error
+		If ($Status -eq "InProgress") {
+			If ($Error -eq 0) {
+				$Message = 'CA Update is actively in progress'
+			} Else {
+				$Message = "CA Update is in error, code: $Error"
+			}
 		}
 	} Else {
 		$Message = 'SecureBoot not supported or disabled'
