@@ -104,7 +104,7 @@ Use `EnablePasswordPolicy` and `DisablePasswordPolicy` tweaks (rewrite from scra
 
 New presets/rules:
 
-* 2026/03/04 - `DisableAdminNetApps`/`EnableAdminNetApps`/`ViewAdminNetApps` -> Disabling Net Applications for Admins (`$Global:SWMB_Custom` key `AdminNetAppsToBlock`)
+* 2026/03/04 - `DisableAdminNetApps`/`EnableAdminNetApps`/`ViewAdminNetApps` -> Disabling Net Applications for Admins by removing the executable ACL (`$Global:SWMB_Custom` key `AdminNetAppsToBlock`)
 * 2026/03/03 - `EnableLanManAuthLevelHigh`/`DisableLanManAuthLevelHigh`/`ViewLanManAuthLevelHigh` -> Enable LanMan Authentication Level to NTLMv2 only
 * 2026/03/03 - `DisablePasswordLMHash`/`EnablePasswordLMHash`/`ViewPasswordLMHash` -> Disable Password LM Hash Storage
 * 2026/03/01 - `ViewNetworkOnLockScreen` -> View network options from Logon and Lock Screen

@@ -580,7 +580,7 @@ Function SWMB_SetAppBlock {
 	$ACL = Get-Acl $Path
 	$DenyRule = New-Object System.Security.AccessControl.FileSystemAccessRule (
 		$Account,
-		[System.Security.AccessControl.FileSystemRights]::ReadAndExecute,
+		[System.Security.AccessControl.FileSystemRights]::ExecuteFile,
 		[System.Security.AccessControl.InheritanceFlags]::None,
 		[System.Security.AccessControl.PropagationFlags]::None,
 		[System.Security.AccessControl.AccessControlType]::Deny
