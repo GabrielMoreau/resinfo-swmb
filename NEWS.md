@@ -40,7 +40,6 @@ Regarding the SWCE project:
 	* `${Env:ProgramFiles}\Zoom\bin\Zoom.exe`
 	* `${Env:ProgramFiles}\Zotero\zotero.exe`
 
-
 Regarding the SWLN template:
 
 * The documentation has been significantly updated (in fact, we were starting almost from scratch).
@@ -78,6 +77,7 @@ New presets/rules:
 * 2026/03/10 - `DisableAnonymousShareEnumeration`/`EnableAnonymousShareEnumeration`/`ViewAnonymousShareEnumeration` -> Disable Anonymous enumeration of shares
 * 2026/03/10 - `DisableAnonymousNameTranslation`/`EnableAnonymousNameTranslation`/`ViewAnonymousNameTranslation` -> Disable Anonymous SID/Name translation
 * 2026/03/04 - `DisableWinRMBasicAuth`/`EnableWinRMBasicAuth`/`ViewWinRMBasicAuth` -> Disable Windows Remote Management (WinRM) Basic Authentication (Client and Service)
+
 
 ## Version 3.20 (2026/03/04)
 
@@ -134,6 +134,7 @@ New presets/rules:
 * 2026/01/16 - `ViewAutorun` -> View AutoRun status (NoDriveTypeAutoRun)
 * 2026/01/15 - `DisableAutorun_CU`/`EnableAutorun_CU`/`ViewAutorun_CU` -> Disable AutoRun Key for all drive type (same exist by default for HKLM)
 * 2026/01/15 - `ViewAutoplay_CU` -> Add view Autoplay tweak
+
 
 ## Version 3.19 (2026/01/09)
 
