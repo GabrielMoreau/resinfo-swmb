@@ -23,6 +23,8 @@ $Global:SWMB_Custom = @{
 	LocalAdminNameOriginal  = "administrateur"
 	# Use by tweak: RemoveUserInAdminGroup, ViewUserInAdminGroup
 	LocalAdminRegex         = "^administrat"
+	# Use by tweak: ViewUserInRDPGroup
+	LocalRDUsersRegex       = "^administrat"
 
 	# TCBPrivilege (Trusted Computing Base Privilege - empty by default, for example *S-1-5-32-544 for the Administrators group)
 	# Use by tweak: SetTCBPrivilege

@@ -1042,6 +1042,46 @@ Function TweakViewUserInAdminGroup {
 
 ################################################################
 
+# Only accounts (users or groups) that match the regular expression $Global:SWMB_Custom.LocalRDUsersRegex are valid (as well as the local administrators group)
+
+Function TweakViewUserInRDGroup {
+	Write-Output "Viewing user from Remote Desktop group (ok if verify LocalRDUsersRegex regex)..."
+
+	$ComputerSID = ((Get-LocalUser | Select-Object -First 1).SID).AccountDomainSID.ToString()
+	$UserAdminSID = "$ComputerSID-500"
+	$GroupAdminSID = "S-1-5-32-544"
+	$GroupRDPSID = "S-1-5-32-555"
+
+	$Hash = @{}
+	$Rules = [ordered]@{}
+
+	$GroupMembers = (Get-LocalGroupMember -SID $GroupRDPSID -ErrorAction SilentlyContinue | Select SID).SID
+	ForEach ($UserSID in $GroupMembers){
+		Try {
+			$UserAccount = Get-LocalUser -SID $UserSID -ErrorAction Stop
+			If ($UserAccount.Enabled -ne $True) {
+				Continue
+			}
+			$UserName = $UserAccount.Name
+		} Catch {
+			$UserName = $UserSID.Translate([System.Security.Principal.NTAccount]).Value
+		}
+
+		$Hash[$UserName] = 'OutFromRegex'
+		$Rules[$UserName] = @{
+			OkValues    = @('AdminRegex')
+			Description = "Administrator account"
+			Remediation = "RemoveUserInAdminGroup (W11 STIG V-253269)"
+		}
+		If (($UserName -match $($Global:SWMB_Custom.LocalRDUsersRegex) -Or $UserSID -match $($Global:SWMB_Custom.LocalRDUsersRegex)) -Or $UserSID -eq $GroupAdminSID) {
+			$Hash[$UserName] = 'AdminRegex'
+			}
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+}
+
+################################################################
+
 # Windows 11 systems must be maintained at a supported servicing level
 # W11 STIG V-253263 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253263
 
