@@ -116,6 +116,12 @@ msg1 "Number of total tweaks functions" \
 
 echo ''
 
+echo "Check version between git tag and package.nsi"
+if [ "$(git tag | tail -1)" != "$(grep '^!define VERSION' package.nsi | cut -f 2 -d '"' | cut -f 1,2 -d '.')" ]
+then
+   echo " VERSION differ from the last git tag and the file package.nsi!"
+fi
+
 echo "Check function that are not in case Enable|Disable|Show|Hide|Install|Uninstall|Add|Remove|Set|Unset|Pin|Unpin"
 grep -hEi '^Function[[:space:]]' ${all_module} \
    | grep -Eiv '^Function (SWMB_|Tweak(Enable|Disable|Show|Hide|Install|Uninstall|Add|Remove|Set|Unset|Pin|Unpin|Sys|View))' \
