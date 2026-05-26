@@ -97,6 +97,8 @@ While ($Index -lt $Args.Length) {
 		$Script:SWMB_CheckTweak = 'Check'
 	} ElseIf ($Args[$Index].ToLower() -eq "-print") {
 		$Script:SWMB_CheckTweak = 'Print'
+	} ElseIf ($Args[$Index].ToLower() -eq "-console") {
+		$Script:SWMB_CheckTweak = 'Console'
 	} Else {
 		$Global:SWMB_PSCommandArgs += $Args[$Index]
 		# Load tweak names from command line
@@ -120,6 +122,9 @@ Switch ($Script:SWMB_CheckTweak) {
 	'Print' {
 		# Call the desired tweak functions
 		SWMB_PrintTweaks
+		}
+	'Console' {
+		# Nothing to do - just import modules
 		}
 }
 

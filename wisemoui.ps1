@@ -670,6 +670,17 @@ Write-Host '`nPress any key to close...' -NoNewline
 })
 $ToolTip.SetToolTip($BtnSWCELM, "SWCE - LocalMachine")
 
+$BtnDebugCLI = New-Object System.Windows.Forms.Button
+$BtnDebugCLI.Location = New-Object System.Drawing.Point(450,205)
+$BtnDebugCLI.Width = 80
+$BtnDebugCLI.Height = 30
+$BtnDebugCLI.Text = "CLI"
+$Form.controls.Add($BtnDebugCLI)
+$BtnDebugCLI.Add_Click({
+	Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -NoExit -File `"$PSScriptRoot\Tasks\LocalMachine-Boot.ps1`" -Mode Print"
+})
+$ToolTip.SetToolTip($BtnDebugCLI, "Debug CLI")
+
 # Compliance Enforcement Frame
 $BtnSWCEFrame = New-Object System.Windows.Forms.GroupBox
 $BtnSWCEFrame.Location = New-Object System.Drawing.Size(285,185)

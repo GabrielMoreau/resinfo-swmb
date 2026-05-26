@@ -52,6 +52,8 @@ If ($Mode -eq 'Batch') {
 	$Args += '-print'
 } ElseIf ($Mode -eq 'Check') {
 	$Args += '-check'
+} ElseIf ($Mode -eq 'Console') {
+	$Args += '-console'
 }
 
 # Site and Host Modules
