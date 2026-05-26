@@ -1,6 +1,9 @@
 # NEWS
 
-## Version 3.21 (in progress)
+## Version 3.22 (in progress)
+
+
+## Version 3.21 (2026/05/26)
 
 Update UBR and take Windows 11 26H1 into account.
 
