@@ -52,9 +52,12 @@ Here's a quick summary:
 
 * Add a `System Information` button (`I`) near the `Property` button.
 * Add a `Dell Command | Update` button (`D`) near the `Update` button.
+* The `Local Machine SWCE` button now transcript, last log can be access by the log button (`L`).
+* A new `CLI` button opens a PowerShell window in which the SWMB modules and parameters are enabled (import).
 
 New presets/rules:
 
+* 2026/05/26 - `ViewUserInRDGroup` -> Match accounts valid for Remote Desktop (Use `$Global:SWMB_Custom.LocalRDUsersRegex`)
 * 2026/04/21 - `InstallUEFICA23`/`ViewUEFICA23` -> SecureBoot UEFI CA 2023 Update
 * 2026/04/08 - `EnablePasswordOnResume`/`DisablePasswordOnResume`/`ViewPasswordOnResume` -> Prompt for a password on resume (battery or plugged in)
 * 2026/04/08 - `DisablePrintOverHTTP`/`EnablePrintOverHTTP`/`ViewPrintOverHTTP` -> Printing over HTTP
