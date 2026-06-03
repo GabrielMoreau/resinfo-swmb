@@ -519,7 +519,7 @@ Function TweakEnableSMBServerSigning { # RESINFO
 		-RequireSecuritySignature $True `
 		-Force
 }
-    
+
 # Disable
 Function TweakDisableSMBServerSigning { # RESINFO
 	Write-Output "Disabling (so allow) SMB server to use signing messages..."
@@ -1042,10 +1042,11 @@ Function TweakViewUserInAdminGroup {
 
 ################################################################
 
-# Only accounts (users or groups) that match the regular expression $Global:SWMB_Custom.LocalRDUsersRegex are valid (as well as the local administrators group)
+# Only accounts (users or groups) that match the regular expression $Global:SWMB_Custom.LocalRDUsersRegex are valid
+# As well as the local administrators group, see SeRemoteInteractiveLogonRight (Privilege Rights)
 
 Function TweakViewUserInRDGroup {
-	Write-Output "Viewing user from Remote Desktop group (ok if verify LocalRDUsersRegex regex)..."
+	Write-Output "Viewing users in the Remote Desktop group (OK if the LocalRDUsersRegex regex is valid)..."
 
 	$ComputerSID = ((Get-LocalUser | Select-Object -First 1).SID).AccountDomainSID.ToString()
 	$UserAdminSID = "$ComputerSID-500"
@@ -1069,12 +1070,12 @@ Function TweakViewUserInRDGroup {
 
 		$Hash[$UserName] = 'OutFromRegex'
 		$Rules[$UserName] = @{
-			OkValues    = @('AdminRegex')
+			OkValues    = @('RDUsersRegex')
 			Description = "Administrator account"
 			Remediation = "RemoveUserInAdminGroup (W11 STIG V-253269)"
 		}
 		If (($UserName -match $($Global:SWMB_Custom.LocalRDUsersRegex) -Or $UserSID -match $($Global:SWMB_Custom.LocalRDUsersRegex)) -Or $UserSID -eq $GroupAdminSID) {
-			$Hash[$UserName] = 'AdminRegex'
+			$Hash[$UserName] = 'RDUsersRegex'
 			}
 	}
 	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
