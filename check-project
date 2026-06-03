@@ -119,7 +119,7 @@ echo ''
 echo "Check version between git tag and package.nsi"
 if [ "$(git tag | tail -1)" != "$(grep '^!define VERSION' package.nsi | cut -f 2 -d '"' | cut -f 1,2 -d '.')" ]
 then
-   echo " VERSION differ from the last git tag and the file package.nsi!"
+   echo " The VERSION of the project differs between the latest Git tag and the package.nsi file!"
 fi
 
 echo "Check function that are not in case Enable|Disable|Show|Hide|Install|Uninstall|Add|Remove|Set|Unset|Pin|Unpin"
