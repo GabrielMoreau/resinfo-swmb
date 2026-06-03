@@ -27,6 +27,7 @@
 
 ## Other interesting tools
 
+* Collection of [awesome security hardening](https://github.com/decalage2/awesome-security-hardening) guides, best practices, checklists, benchmarks, tools and other resources (documentations)
 * [WinScript](https://github.com/flick9000/winscript/) (script in PowerShell)
 * [Win11Debloat](https://github.com/Raphire/Win11Debloat) (script in PowerShell)
 * [Debloat Windows 10](https://github.com/W4RH4WK/Debloat-Windows-10) (script in PowerShell)
