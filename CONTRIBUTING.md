@@ -345,6 +345,8 @@ If you'd like to contribute, the tools and/or values provided below may help.
 
 ### Windows builds overview
 
+* See Microsoft Windows End of Life - [EOL](https://eosl.date/eol/product/windows/).
+
 * See [Windows 11 version history](https://en.wikipedia.org/wiki/Windows_11_version_history)
 
   See also release information (last UBR) - https://learn.microsoft.com/fr-fr/windows/release-health/windows11-release-information
