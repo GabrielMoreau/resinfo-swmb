@@ -24,6 +24,8 @@
 	* [Adobe Acrobat Reader DC Continuous Track](https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track)
 	* [Mozilla Firefox](https://www.stigviewer.com/stigs/mozilla_firefox)
 	* [Microsoft Edge](https://www.stigviewer.com/stigs/microsoft_edge)
+* [EOSL](https://eosl.date/) (english)
+  is a simple and free online tool for checking End-of-Service-Life dates for your IT infrastructure components, particularly useful for planning hardware and software upgrades.
 
 ## Other interesting tools
 
