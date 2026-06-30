@@ -22,7 +22,7 @@ $Global:SWMB_Custom = @{
 	LocalAdminNameEffective = "sas-swmb"
 	LocalAdminNameOriginal  = "administrateur"
 	# Use by tweak: RemoveUserInAdminGroup, ViewUserInAdminGroup
-	LocalAdminRegex         = "^administrat"
+	LocalAdminRegex         = '\b(administrat.*)$'
 	# Use by tweak: ViewUserInRDPGroup
 	LocalRDUsersRegex       = "^administrat"
 
