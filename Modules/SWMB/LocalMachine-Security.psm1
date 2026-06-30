@@ -1045,6 +1045,105 @@ Function TweakViewUserInAdminGroup {
 # Only accounts (users or groups) that match the regular expression $Global:SWMB_Custom.LocalRDUsersRegex are valid
 # As well as the local administrators group, see SeRemoteInteractiveLogonRight (Privilege Rights)
 
+Function TweakSetUserInRDGroup {
+	Write-Output "Setting user for Remote Desktop group (ok if verify LocalRDUsersRegex regex)..."
+
+	If ([string]::IsNullOrWhiteSpace($Global:SWMB_Custom.LocalRDUsersRegex)) {
+		Return
+	}
+
+	$ComputerSID = ((Get-LocalUser | Select-Object -First 1).SID).AccountDomainSID.ToString()
+	$UserAdminSID = "$ComputerSID-500"
+	$GroupAdminSID = "S-1-5-32-544"
+	$GroupRDPSID = "S-1-5-32-555"
+
+	$AllSID = @()
+	# All users with profile
+	$AllSID += Get-CimInstance Win32_UserProfile | Where-Object { $_.Special -ne $True } | Select-Object -ExpandProperty SID
+	# All groups
+	$AllSID += Get-CimInstance Win32_Group | Select-Object -ExpandProperty SID
+	$AllSID = $AllSID | Sort-Object -Unique
+
+	ForEach ($UserSID in $AllSID) {
+		If ($UserSID -eq $GroupAdminSID) {
+			# See SeRemoteInteractiveLogonRight (Privilege Rights)
+			Continue
+		}
+		Try {
+			$UserAccount = Get-LocalUser -SID $UserSID -ErrorAction Stop
+			If ($UserAccount.Enabled -ne $True) {
+				Continue
+			}
+			$UserName = $UserAccount.Name
+			$Type = 'user'
+		} Catch {
+			$SIDObject = New-Object System.Security.Principal.SecurityIdentifier($UserSID)
+			$UserName = $SIDObject.Translate([System.Security.Principal.NTAccount]).Value
+			$Type = 'group'
+		}
+
+		If ($UserName -match $($Global:SWMB_Custom.LocalRDUsersRegex) -Or $UserSID -match $($Global:SWMB_Custom.LocalRDUsersRegex)) {
+			$Found = Get-LocalGroupMember -SID $GroupRDPSID -ErrorAction SilentlyContinue | Where-Object  { $_.SID.Value -eq $UserSID }
+			If ($Found) {
+				Continue
+			} Else {
+				Try {
+					Add-LocalGroupMember -SID $GroupRDPSID -Member $UserSID -ErrorAction Stop
+					Write-Host " Group add: $UserSID ($Type $UserName)"
+				} Catch {
+					Write-Host " Error: group add $UserSID ($Type $UserName) not possible"
+				}
+			}
+		}
+	}
+
+	# Remove users/groups not matching regex
+	$CurrentMembers = Get-LocalGroupMember -SID $GroupRDPSID -ErrorAction SilentlyContinue
+	ForEach ($Member in $CurrentMembers) {
+		$MemberSID  = $Member.SID.Value
+		$MemberName = $Member.Name
+
+		# Keep Administrators implicit RDP right
+		If ($MemberSID -eq $GroupAdminSID) {
+			Continue
+		}
+
+		$Allowed = (
+			$MemberName -match $Global:SWMB_Custom.LocalRDUsersRegex
+		) -Or (
+			$MemberSID -match $Global:SWMB_Custom.LocalRDUsersRegex
+		)
+		If (-not $Allowed) {
+			Write-Host " Group remove : $MemberName"
+			Remove-LocalGroupMember `
+				-SID $GroupRDPSID `
+				-Member $MemberSID `
+				-ErrorAction SilentlyContinue
+		}
+	}
+}
+
+Function TweakUnsetUserInRDGroup {
+	Write-Output "Unsetting user for Remote Desktop group..."
+	$GroupRDPSID   = "S-1-5-32-555"
+
+	$CurrentMembers = Get-LocalGroupMember -SID $GroupRDPSID -ErrorAction SilentlyContinue
+	ForEach ($Member in $CurrentMembers) {
+		$MemberSID  = $Member.SID.Value
+		$MemberName = $Member.Name
+
+		Try {
+			Remove-LocalGroupMember `
+				-SID $GroupRDPSID `
+				-Member $MemberSID `
+				-ErrorAction Stop
+			Write-Host " Remove: $MemberName"
+		} Catch {
+			Write-Host " Remove: $MemberName"
+		}
+	}
+}
+
 Function TweakViewUserInRDGroup {
 	Write-Output "Viewing users in the Remote Desktop group (OK if the LocalRDUsersRegex regex is valid)..."
 
