@@ -2,6 +2,17 @@
 
 ## Version 3.22 (in progress)
 
+Update UBR.
+Checks Git tags when the version number is changed
+Add two websites links in the [REFERENCES](REFERENCES.md) file:
+
+* End-of-Service-Life
+* Collection of awesome security hardening websites links
+
+New presets/rules:
+
+* 2026/06/30 - `SetUserInRDGroup`/`SetUserInRDGroup` -> Set accounts valid for Remote Desktop (Use `$Global:SWMB_Custom.LocalRDUsersRegex`)
+
 
 ## Version 3.21 (2026/05/26)
 
