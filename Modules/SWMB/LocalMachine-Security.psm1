@@ -1287,13 +1287,13 @@ Function TweakEnableBitlocker { # RESINFO
 		Write-Output "Copy system drive key on $SystemDrive"
 		$PathKey = $SystemDrive + "\" + ${Env:ComputerName} + "-bitlockerRecoveryKey-" + $DateNow + "-" + $SystemDriveLetter + ".txt"
 		If (Test-Path -Path $PathKey -PathType leaf) {
-			$oldKey = $SystemDrive + "\" + ${Env:ComputerName} + "-bitlockerRecoveryKey-" + $DateNow + "-" + $SystemDriveLetter + ".txt.old"
+			$OldKey = $SystemDrive + "\" + ${Env:ComputerName} + "-bitlockerRecoveryKey-" + $DateNow + "-" + $SystemDriveLetter + ".txt.old"
 			Write-Output "Warning: $PathKey already exist => rename with .old extension"
-			If (Test-Path -Path $oldKey -PathType leaf) {
-				Write-Output "Warning: delete before old key $oldKey"
-				Remove-Item -Path $oldKey -Force
+			If (Test-Path -Path $OldKey -PathType leaf) {
+				Write-Output "Warning: delete before old key $OldKey"
+				Remove-Item -Path $OldKey -Force
 			}
-			Rename-Item -Path $PathKey -NewName $oldKey
+			Rename-Item -Path $PathKey -NewName $OldKey
 		}
 		(Get-BitLockerVolume -MountPoint $SystemDriveLetter).KeyProtector > $PathKey
 		# acl on key see https://stackoverflow.com/a/43317244

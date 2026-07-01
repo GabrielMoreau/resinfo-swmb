@@ -225,7 +225,7 @@ $BtnTaskBootCheck.Add_Click({
 #	$Message = @(& $PSScriptRoot\Tasks\LocalMachine-Boot.ps1 -Mode Check)
 #	$TempWindow = New-Object System.Windows.Forms.Form -Property @{TopMost = $True}
 #	$TextBox                      = New-Object System.Windows.Forms.TextBox
-#	$TextBox.Multiline            = $true
+#	$TextBox.Multiline            = $True
 #	$TextBox.Text                 = $Message -join "`r`n"
 #	$TextBox.Font                 = New-Object System.Drawing.Font("Consolas",9,[System.Drawing.FontStyle]::Regular)
 #	$TextBox.Size                 = New-Object System.Drawing.Size(400,400)
@@ -639,7 +639,7 @@ $BtnSWCELMLog.Add_Click({
 })
 $ToolTip.SetToolTip($BtnSWCELMLog, "Show Last LocalMachine SWCE Task Run")
 If (Test-Path -LiteralPath "$SWCELog") {
-	$BtnSWCELMLog.Visible = $true
+	$BtnSWCELMLog.Visible = $True
 }
 
 $BtnSWCELM = New-Object System.Windows.Forms.Button
@@ -665,7 +665,7 @@ Write-Host '`nPress any key to close...' -NoNewline
 		) `
 		-WindowStyle Maximized
 	If (Test-Path -LiteralPath "$SWCELog") {
-		$BtnSWCELMLog.Visible = $true
+		$BtnSWCELMLog.Visible = $True
 	}
 })
 $ToolTip.SetToolTip($BtnSWCELM, "SWCE - LocalMachine")

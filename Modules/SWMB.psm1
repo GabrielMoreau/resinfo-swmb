@@ -414,7 +414,7 @@ Function SWMB_GetOSVersionColor {
 # Transform string to a version object
 Function SWMB_ToVersion {
 	Param (
-		[Parameter(Mandatory = $true)] [string]$Version
+		[Parameter(Mandatory = $True)] [string]$Version
 	)
 
 	$Version = $Version -Replace '[^\d\.].*$', ''

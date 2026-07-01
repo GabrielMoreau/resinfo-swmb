@@ -221,7 +221,7 @@ Function SWMB_GUI_Task {
 		$SubForm.Text = "SWMB: Check $Name tweaks"
 
 		$SFTextBox            = New-Object system.Windows.Forms.TextBox
-		$SFTextBox.Multiline  = $true
+		$SFTextBox.Multiline  = $True
 		$SFTextBox.Text       = $Message -join "`r`n"
 		$SFTextBox.Font       = New-Object System.Drawing.Font("Consolas",9,[System.Drawing.FontStyle]::Regular)
 		$SFTextBox.Size       = New-Object System.Drawing.Size(500,300)
