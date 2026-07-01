@@ -2,12 +2,12 @@
 #Requires -RunAsAdministrator
 
 
-$gitUrl = "https://gitlab.in2p3.fr/resinfo-gt/swmb/resinfo-swmb/-/archive/master/resinfo-swmb-master.zip"
-$swmbBitlockerDirectory = "C:\SWMB"
+$GitUrl = "https://gitlab.in2p3.fr/resinfo-gt/swmb/resinfo-swmb/-/archive/master/resinfo-swmb-master.zip"
+$SwmbBitlockerDirectory = "C:\SWMB"
 
 Write-Host @"
 This script aims to configure Bitlocker on your computer (cf. README)
-This script creates a $swmbBitlockerDirectory\resinfo-swmb-master subdirectory if not exsists
+This script creates a $SwmbBitlockerDirectory\resinfo-swmb-master subdirectory if not exsists
 or delete it and recreate if exists
 This script download the main script from gitlab.in2p3.fr
 To work correctly, this script needs:
@@ -18,30 +18,30 @@ To work correctly, this script needs:
 
 "@ -ForegroundColor Green
 
-$confirmation = Read-Host "Do you want to proceed? [y/N]"
-If ($confirmation -ne "y") {
+$Confirmation = Read-Host "Do you want to proceed? [y/N]"
+If ($Confirmation -ne "y") {
     Write-Host @"
 ------------------
 Stop processing!
 ------------------
 "@ -ForegroundColor Red
     Start-Sleep -Seconds 3
-    exit
+    Exit
 }
 
-$outZipFile = Join-Path  -Path (Get-Location) -ChildPath swmb-bitlocker.zip
+$OutZipFile = Join-Path  -Path (Get-Location) -ChildPath swmb-bitlocker.zip
 
 Write-Host @"
 ------------------
-Processing directory $swmbBitlockerDirectory...
+Processing directory $SwmbBitlockerDirectory...
 ------------------
 "@ -ForegroundColor Green
 
-If (!(Test-Path $swmbBitlockerDirectory)) {
-    New-Item -Path $swmbBitlockerDirectory -ItemType Directory
+If (!(Test-Path $SwmbBitlockerDirectory)) {
+    New-Item -Path $SwmbBitlockerDirectory -ItemType Directory
 }
-If (Test-Path "$swmbBitlockerDirectory\resinfo-swmb-master") {
-    Remove-Item "$swmbBitlockerDirectory\resinfo-swmb-master" -Force -Recurse
+If (Test-Path "$SwmbBitlockerDirectory\resinfo-swmb-master") {
+    Remove-Item "$SwmbBitlockerDirectory\resinfo-swmb-master" -Force -Recurse
 }
 
 Write-Host @"
@@ -49,7 +49,7 @@ Write-Host @"
 Downloading file...
 ------------------
 "@ -ForegroundColor Green
-Invoke-WebRequest $gitUrl -OutFile $outZipFile -ErrorAction Stop
+Invoke-WebRequest $GitUrl -OutFile $OutZipFile -ErrorAction Stop
 
 
 Write-Host @"
@@ -57,15 +57,15 @@ Write-Host @"
 Decompressing file...
 ------------------
 "@ -ForegroundColor Green
-Expand-Archive -Path $outZipFile -DestinationPath $swmbBitlockerDirectory
-If (!(Test-Path "$swmbBitlockerDirectory\resinfo-swmb-master")) {
+Expand-Archive -Path $OutZipFile -DestinationPath $SwmbBitlockerDirectory
+If (!(Test-Path "$SwmbBitlockerDirectory\resinfo-swmb-master")) {
     Write-Host @"
 ------------------
 Error decompressing. Stop script!
 ------------------
 "@ -ForegroundColor Red
     Start-Sleep -Seconds 3
-    exit
+    Exit
 }
 
 Write-Host @"
@@ -73,7 +73,7 @@ Write-Host @"
 Unblocking files...
 ------------------
 "@ -ForegroundColor Green
-dir -Path "$swmbBitlockerDirectory\resinfo-swmb-master" -Recurse  | Unblock-File
+dir -Path "$SwmbBitlockerDirectory\resinfo-swmb-master" -Recurse  | Unblock-File
 
 Write-Host @"
 ------------------
@@ -81,7 +81,7 @@ Launching...
 ------------------
 "@ -ForegroundColor Green
 
-cd "$swmbBitlockerDirectory\resinfo-swmb-master"
+cd "$SwmbBitlockerDirectory\resinfo-swmb-master"
 & .\swmb.ps1 `
    SysRequireAdmin `
    EnableBitlocker
