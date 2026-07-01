@@ -1264,10 +1264,6 @@ Function TweakEnableBitlocker { # RESINFO
 			[AllowNull()][AllowEmptyString()] [string]$NetworkKeyBackupFolder
 		)
 
-		#$Title = 'Activation Bitlocker'
-		#$Query = 'Do you want to use PIN?'
-		#$Choices = '&Yes', '&No'
-		#$Decision = $Host.UI.PromptForChoice($title, $query, $choices, 1)
 		$QueryUsePin = Read-Host -Prompt "Activation Bitlocker - Do you want to use PIN code? [Y/n]"
 		If ($QueryUsePin.ToLower() -ne "n") {
 			$QueryCodePin = Read-Host -AsSecureString -Prompt "Code PIN (6 digits)"
