@@ -1268,11 +1268,11 @@ Function TweakEnableBitlocker { # RESINFO
 		#$Query = 'Do you want to use PIN?'
 		#$Choices = '&Yes', '&No'
 		#$Decision = $Host.UI.PromptForChoice($title, $query, $choices, 1)
-		$UseCodePin = Read-Host -Prompt "Activation Bitlocker - Do you want to use PIN code? [Y/n]"
-		If ($UseCodePin.ToLower() -ne "n") {
-			$Secure = Read-Host -AsSecureString -Prompt "Code PIN (6 digits)"
+		$QueryUsePin = Read-Host -Prompt "Activation Bitlocker - Do you want to use PIN code? [Y/n]"
+		If ($QueryUsePin.ToLower() -ne "n") {
+			$QueryCodePin = Read-Host -AsSecureString -Prompt "Code PIN (6 digits)"
 			Write-Output "Enabling Bitlocker on system drive $SystemDrive with PIN code"
-			Enable-BitLocker -MountPoint "$SystemDrive" -TpmAndPinProtector -Pin $Secure -EncryptionMethod "XtsAes256" 3> $Null
+			Enable-BitLocker -MountPoint "$SystemDrive" -TpmAndPinProtector -Pin $QueryCodePin -EncryptionMethod "XtsAes256" 3> $Null
 			Write-EventLog -LogName Application -Source "SWMB" -EntryType Information -EventID 2 `
 				-Message "SWMB: Enable Bitlocker on system drive $SystemDrive with PIN code"
 		} Else {
