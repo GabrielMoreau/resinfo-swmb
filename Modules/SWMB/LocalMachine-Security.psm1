@@ -1261,8 +1261,11 @@ Function TweakEnableBitlocker { # RESINFO
 
 	Function _EncryptSytemDrive() {
 		Param (
+			[Parameter(Mandatory = $True)] [string]$SystemDrive,
 			[AllowNull()][AllowEmptyString()] [string]$NetworkKeyBackupFolder
 		)
+
+		$SystemDriveLetter = $SystemDrive.Substring(0, 1)
 
 		$QueryUsePin = Read-Host -Prompt "Activation Bitlocker - Do you want to use PIN code? [Y/n]"
 		If ($QueryUsePin.ToLower() -ne "n") {
@@ -1292,12 +1295,12 @@ Function TweakEnableBitlocker { # RESINFO
 			Rename-Item -Path $PathKey -NewName $OldKey
 		}
 		(Get-BitLockerVolume -MountPoint $SystemDriveLetter).KeyProtector > $PathKey
-		# acl on key see https://stackoverflow.com/a/43317244
+		# ACL on key see https://stackoverflow.com/a/43317244
 		icacls.exe $PathKey /Reset
 		icacls.exe $PathKey /Grant:r "$((Get-Acl -Path $PathKey).Owner):(R)"
 		icacls.exe $PathKey /InheritanceLevel:r
 
-		# copy key if $NetworkKeyBackup
+		# Copy key if $NetworkKeyBackup
 		If (!([string]::IsNullOrEmpty($NetworkKeyBackupFolder))) {
 			Try {
 				Copy-Item $PathKey -Destination $NetworkKeyBackupFolder -ErrorAction Continue
@@ -1313,9 +1316,11 @@ Function TweakEnableBitlocker { # RESINFO
 	# ie we don't take into account the usb keys
 	Function _EncryptNonSytemDrives() {
 		Param (
-			[Parameter(Mandatory = $True)] [string]$SystemDriveLetter,
+			[Parameter(Mandatory = $True)] [string]$SystemDrive,
 			[AllowNull()][AllowEmptyString()] [string]$NetworkKeyBackupFolder
 		)
+
+		$SystemDriveLetter = $SystemDrive.Substring(0, 1)
 
 		# Other drives encryption
 		$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $Null } |
@@ -1353,7 +1358,7 @@ Function TweakEnableBitlocker { # RESINFO
 			icacls.exe $BackupFile /InheritanceLevel:r
 			Write-Output "Bitlocker activation on drive $Letter ended with success"
 
-			# copy key if $NetworkKeyBackup
+			# Copy key if $NetworkKeyBackup
 			If (!([string]::IsNullOrEmpty($NetworkKeyBackupFolder))) {
 				Try {
 					Copy-Item $BackupFile -Destination $NetworkKeyBackupFolder -ErrorAction Continue
@@ -1376,8 +1381,6 @@ Function TweakEnableBitlocker { # RESINFO
 				$TaskAction   = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-command &{Unlock-BitLocker -MountPoint $Letter -RecoveryPassword $Password ; Enable-BitLockerAutoUnlock -MountPoint $Letter ; Write-EventLog -LogName Application -Source 'SWMB' -EntryType Information -EventID 5 -Message 'SWMB: Bitlocker finish ScheduledTask $TaskName' ; Unregister-ScheduledTask $TaskName -confirm:`$False}"
 				Register-ScheduledTask -Force -TaskName $TaskName -Trigger $TaskTrigger -User $TaskUser -Action $TaskAction -RunLevel Highest
 				Write-EventLog -LogName Application -Source "SWMB" -EntryType Information -EventID 4 -Message "SWMB: Bitlocker add ScheduledTask $TaskName"
-				#$cmd     = "&{Unlock-BitLocker -MountPoint $Letter -RecoveryPassword $Password ; Enable-BitLockerAutoUnlock -MountPoint $Letter}"
-				#Set-ItemProperty "HKLM:\Software\Microsoft\Windows\CurrentVersion\RunOnce" -Name "Enable-BitLockerAutoUnlock-$Letter" -Value "powershell.exe -noexit -command '$cmd'"
 			}
 		}
 	}
@@ -1455,8 +1458,7 @@ Function TweakEnableBitlocker { # RESINFO
 				Write-Error "SecureBoot is OFF!"
 				Return
 			}
-		}
-		Catch {
+		} Catch {
 			Write-Error "Error SecureBoot: Verify if your BIOS support SecureBoot"
 			Write-Warning "exit"
 			Return
@@ -1468,9 +1470,8 @@ Function TweakEnableBitlocker { # RESINFO
 			Return
 		}
 
-		$DateNow           = (Get-Date).ToString("yyyyMMddhhmm")
-		$SystemDrive       = ${Env:SystemDrive}
-		$SystemDriveLetter = $SystemDrive.Substring(0, 1)
+		$DateNow     = (Get-Date).ToString("yyyyMMddhhmm")
+		$SystemDrive = ${Env:SystemDrive}
 
 		$DrivePStatus = (Get-BitLockerVolume $SystemDrive).ProtectionStatus
 		$DriveVStatus = (Get-BitLockerVolume $SystemDrive).VolumeStatus
@@ -1492,8 +1493,8 @@ Function TweakEnableBitlocker { # RESINFO
 				Return
 			}
 			_EnforceCryptGPO
-			_EncryptSytemDrive -NetworkKeyBackupFolder $NetworkBackup
-			_EncryptNonSytemDrives -NetworkKeyBackupFolder $NetworkBackup -SystemDriveLetter $SystemDriveLetter
+			_EncryptSytemDrive -NetworkKeyBackupFolder $NetworkBackup -SystemDrive $SystemDrive
+			_EncryptNonSytemDrives -NetworkKeyBackupFolder $NetworkBackup -SystemDrive $SystemDrive
 
 			$QueryReboot = Read-Host -Prompt "The computer must be restarted to finish the system disk encryption. Reboot now? [Y/n]"
 			If ($QueryReboot.ToLower() -ne "n") {
@@ -1512,7 +1513,7 @@ Function TweakEnableBitlocker { # RESINFO
 
 					# Use network to save key ?
 					$NetworkBackup = _GetNetworkKeyBackupFolder -WantToSave $False
-					_EncryptNonSytemDrives -NetworkKeyBackupFolder $NetworkBackup -SystemDriveLetter $SystemDriveLetter
+					_EncryptNonSytemDrives -NetworkKeyBackupFolder $NetworkBackup -SystemDrive $SystemDrive
 					Return
 				} Else {
 					Write-Output "Bitlocker is suspend, resume with :"
