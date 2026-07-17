@@ -304,6 +304,54 @@ Function TweakViewMSOfficeFeedback_CU { # RESINFO
 }
 
 ################################################################
+
+# Prevent users from receiving suggestions for third-party or additional applications
+# https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253425
+
+# Disable
+Function TweakDisableThirdPartySuggestions_CU { # RESINFO
+	Write-Output "Disabling Third Party Suggestions..."
+	$RegPath = 'HKCU:\SOFTWARE\Policies\Microsoft\Windows\CloudContent'
+	$RegFields = @("DisableThirdPartySuggestions")
+
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
+	}
+	ForEach ($Field in $RegFields) {
+		Set-ItemProperty -Path $RegPath -Name $Field -Type DWord -Value 1
+	}
+
+}
+
+# Enable
+Function TweakEnableThirdPartySuggestions_CU { # RESINFO
+	Write-Output "Enabling Third Party Suggestions..."
+	$RegPath = 'HKCU:\SOFTWARE\Policies\Microsoft\Windows\CloudContent'
+	$RegFields = @("DisableThirdPartySuggestions")
+
+	If (Test-Path $RegPath) {
+		ForEach ($Field in $RegFields) {
+			Remove-ItemProperty -Path $RegPath -Name $Field -ErrorAction SilentlyContinue
+		}
+	}
+}
+
+# View
+Function TweakViewThirdPartySuggestions_CU { # RESINFO
+	Write-Output "Viewing Third Party Suggestions (0 or not exist: Enable, 1: Disable (Recommended))..."
+	$RegPath = 'HKCU:\SOFTWARE\Policies\Microsoft\Windows\CloudContent'
+	$RegFields = @{
+		DisableThirdPartySuggestions = @{
+			OkValues = @(1)
+			Description = "Third Party Suggestions"
+			Remediation = "DisableThirdPartySuggestions_CU (App STIG V-253425)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+}
+
+
+################################################################
 ###### Export Functions
 ################################################################
 
