@@ -306,7 +306,7 @@ Function TweakViewMSOfficeFeedback_CU { # RESINFO
 ################################################################
 
 # Prevent users from receiving suggestions for third-party or additional applications
-# https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253425
+# W11 STIG V-253425 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253425
 
 # Disable
 Function TweakDisableThirdPartySuggestions_CU { # RESINFO

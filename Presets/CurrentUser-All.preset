@@ -23,7 +23,7 @@ DisableFeedback_CU                              # EnableFeedback_CU
 DisableTypingRecognition_CU                     # EnableTypingRecognition_CU                # ViewTypingRecognition_CU              ## Don't send inking and typing data to Microsoft to improve the language recognition
 DisableMSOfficeConnectedExperiences_CU          # EnableMSOfficeConnectedExperiences_CU     # ViewMSOfficeConnectedExperiences_CU   ## Disable connected experiences in Microsoft Office
 DisableMSOfficeFeedback_CU                      # EnableMSOfficeFeedback_CU                 # ViewMSOfficeFeedback_CU               ## Disable Feedback in MS Office
-
+DisableThirdPartySuggestions_CU                 # EnableThirdPartySuggestions_CU            # ViewThirdPartySuggestions_CU          ## Disabling Third Party Suggestions - W11 STIG V-253425 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253425
 ### UWP Privacy Tweaks ###
 DisableUWPBackgroundApps_CU                     # EnableUWPBackgroundApps_CU
 
