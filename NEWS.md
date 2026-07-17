@@ -11,7 +11,8 @@ Add two websites links in the [REFERENCES](REFERENCES.md) file:
 
 New presets/rules:
 
-* 2026/06/30 - `SetUserInRDGroup`/`SetUserInRDGroup` -> Set accounts valid for Remote Desktop (Use `$Global:SWMB_Custom.LocalRDUsersRegex`)
+* 2026/07/17 - `DisableThirdPartySuggestions_CU`/`EnableThirdPartySuggestions_CU`/`ViewThirdPartySuggestions_CU` -> Disabling Third Party Suggestions
+* 2026/06/30 - `SetUserInRDGroup`/`UnsetUserInRDGroup` -> Set accounts valid for Remote Desktop (Use `$Global:SWMB_Custom.LocalRDUsersRegex`)
 
 
 ## Version 3.21 (2026/05/26)
