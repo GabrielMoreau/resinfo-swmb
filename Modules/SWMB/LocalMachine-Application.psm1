@@ -1680,7 +1680,7 @@ Function TweakViewFirefoxTLS { # RESINFO
 		}
 	}
 	If (Test-Path $RegPath) {
-		$RegValue = (Get-ItemProperty -Path$RegPath -Name SSLVersionMin -ErrorAction SilentlyContinue).SSLVersionMin
+		$RegValue = (Get-ItemProperty -Path $RegPath -Name SSLVersionMin -ErrorAction SilentlyContinue).SSLVersionMin
 		If ($RegValue) {
 			SWMB_GetRegistrySettings -Path $RegPath -Rules $Rules | SWMB_WriteSettings
 			Return
