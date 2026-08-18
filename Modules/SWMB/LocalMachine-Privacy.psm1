@@ -741,6 +741,44 @@ Function TweakViewPcaSvc { # RESINFO
 
 ################################################################
 
+# Aegis-Privacy-Shield
+# Disable Connected Devices Platform Service
+
+# Disable
+Function TweakDisableCDPSvc {
+	Write-Output "Disabling and Stopping Connected Devices Platform Service..."
+	$Service = 'CDPSvc'
+	Stop-Service $Service -WarningAction SilentlyContinue
+	Set-Service $Service -StartupType Disabled
+}
+
+# Enable
+Function TweakEnableCDPSvc {
+	Write-Output "Enabling and starting Connected Devices Platform Service ..."
+	$Service = 'CDPSvc'
+	Set-Service $Service -StartupType Automatic
+	Start-Service $Service -WarningAction SilentlyContinue
+}
+
+# View
+Function TweakViewCDPSvc { # RESINFO
+	Write-Output "Viewing Connected Devices Platform Service (2: Enable, 4: Disable)..."
+	$Hash = @{}
+	$Rules = [ordered]@{
+		'CDPSvc' = @{
+			OkValues = @(4)
+			Description = "Connected Devices Platform Service"
+			Remediation = "DisableCDPSvc (Aegis-Privacy-Shield)"
+		}
+	}
+	ForEach ($Feature in $Rules.keys) {
+		$Hash[$Feature] = (Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$Feature" -Name "Start").Start
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+}
+
+################################################################
+
 # Stop and disable Device Management Wireless Application Protocol (WAP) Push Service
 # Note: This service is needed for Microsoft Intune interoperability
 

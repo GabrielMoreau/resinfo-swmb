@@ -13,8 +13,9 @@ Add the link to [Aegis Privacy Shield & Terminator](https://github.com/yarrowmar
 
 New presets/rules:
 
-* 2026/08/18 - `DisablePcaSvc`/`EnablePcaSvc`/`ViewPcaSvc` -> Disabling Windows Program Compatibility Assistant Service
-* 2026/07/17 - `DisableThirdPartySuggestions_CU`/`EnableThirdPartySuggestions_CU`/`ViewThirdPartySuggestions_CU` -> Disabling Third Party Suggestions
+* 2026/08/18 - `DisableCDPSvc`/`EnableCDPSvc`/`ViewCDPSvc` -> Disable Connected Devices Platform Service
+* 2026/08/18 - `DisablePcaSvc`/`EnablePcaSvc`/`ViewPcaSvc` -> Disable Windows Program Compatibility Assistant Service
+* 2026/07/17 - `DisableThirdPartySuggestions_CU`/`EnableThirdPartySuggestions_CU`/`ViewThirdPartySuggestions_CU` -> Disable Third Party Suggestions
 * 2026/06/30 - `SetUserInRDGroup`/`UnsetUserInRDGroup` -> Set accounts valid for Remote Desktop (Use `$Global:SWMB_Custom.LocalRDUsersRegex`)
 
 
