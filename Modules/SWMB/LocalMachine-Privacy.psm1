@@ -883,7 +883,7 @@ Function TweakEnableRecentFiles {
 
 # Disable
 Function TweakDisableAutologgerDiagTrack { # RESINFO
-	Write-Output "Disabling Autologger-DiagTrack-Listener..."
+	Write-Output "Disabling ETW Autologger-DiagTrack-Listener during System Startup..."
 	If (Test-Path "HKLM:\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener") {
 		Remove-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener" -Force -ErrorAction SilentlyContinue | Out-Null
 	}
@@ -891,7 +891,7 @@ Function TweakDisableAutologgerDiagTrack { # RESINFO
 
 # Enable
 Function TweakEnableAutologgerDiagTrack { # RESINFO
-	Write-Output "Enabling Autologger-DiagTrack-Listener..."
+	Write-Output "Enabling ETW Autologger-DiagTrack-Listener during System Startup..."
 	If (!(Test-Path "HKLM:\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener")) {
 		New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener" -Force | Out-Null
 	}
@@ -900,12 +900,12 @@ Function TweakEnableAutologgerDiagTrack { # RESINFO
 
 # View
 Function TweakViewAutologgerDiagTrack { # RESINFO
-	Write-Output "Viewing Autologger-DiagTrack-Listener (0 or not exist: Disable, 2: Enable)..."
+	Write-Output "Viewing ETW Autologger-DiagTrack-Listener during System Startup (0 or not exist: Disable, 2: Enable)..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener'
 	$RegFields = @{
 		'Start' = @{
 			OkValues = @(0, $Null)   # 0 or not exist
-			Description = "Autologger DiagTrack Listener"
+			Description = "ETW Autologger DiagTrack Listener during System Startup (Event Tracing for Windows)"
 			Remediation = "DisableAutologgerDiagTrack (BSI document)"
 		}
 	}
