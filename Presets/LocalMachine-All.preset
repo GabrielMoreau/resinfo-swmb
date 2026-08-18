@@ -37,7 +37,7 @@ DisableAdvertisingID                            # EnableAdvertisingID
 # DisableMicrophone                             # EnableMicrophone
 DisableErrorReporting                           # EnableErrorReporting
 # SetP2PUpdateLocal                             # SetP2PUpdateInternet                          # SetP2PUpdateDisable
-DisableDiagTrack                                # EnableDiagTrack                               # ViewDiagTrack
+DisableDiagTrack                                # EnableDiagTrack                               # ViewDiagTrack                 ## Connected User Experiences and Telemetry - Diagtrack
 DisableWAPPush                                  # EnableWAPPush
 # EnableClearRecentFiles                        # DisableClearRecentFiles
 # DisableRecentFiles                            # EnableRecentFiles
