@@ -42,6 +42,7 @@
 	* [Hardening Microsoft 365 tenant with CIS and Microsoft recommendations](https://github.com/Harden365/Harden365)
 	* [Hardening Active Directory](https://github.com/LoicVeirman/SecureAD)
 * [FlyOOBE](https://github.com/builtbybel/FlyOOBE) (code in C#) - installing Windows 11 on unsupported hardware and more
+* [Aegis Privacy Shield & Terminator](https://github.com/yarrowmartin3-prog/Aegis-Privacy-Shield) (script in PowerShell) (french)
 
 ## 2025
 
