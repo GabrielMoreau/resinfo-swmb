@@ -11,6 +11,7 @@ Add two websites links in the [REFERENCES](REFERENCES.md) file:
 
 New presets/rules:
 
+* 2026/08/18 - `DisablePcaSvc`/`EnablePcaSvc`/`ViewPcaSvc` -> Disabling Windows Program Compatibility Assistant Service
 * 2026/07/17 - `DisableThirdPartySuggestions_CU`/`EnableThirdPartySuggestions_CU`/`ViewThirdPartySuggestions_CU` -> Disabling Third Party Suggestions
 * 2026/06/30 - `SetUserInRDGroup`/`UnsetUserInRDGroup` -> Set accounts valid for Remote Desktop (Use `$Global:SWMB_Custom.LocalRDUsersRegex`)
 

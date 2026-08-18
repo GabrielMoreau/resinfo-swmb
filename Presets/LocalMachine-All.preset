@@ -37,7 +37,8 @@ DisableAdvertisingID                            # EnableAdvertisingID
 # DisableMicrophone                             # EnableMicrophone
 DisableErrorReporting                           # EnableErrorReporting
 # SetP2PUpdateLocal                             # SetP2PUpdateInternet                          # SetP2PUpdateDisable
-DisableDiagTrack                                # EnableDiagTrack                               # ViewDiagTrack                 ## Connected User Experiences and Telemetry - Diagtrack - ANSSI Annexe A2
+DisableDiagTrack                                # EnableDiagTrack                               # ViewDiagTrack                 ## Connected User Experiences and Telemetry (Diagnostics Tracking Service) - ANSSI Annexe A2
+# DisablePcaSvc                                 # EnablePcaSvc                                  # ViewPcaSvc                    ## Disable Windows Program Compatibility Assistant Service - Aegis-Privacy-Shield
 DisableWAPPush                                  # EnableWAPPush
 # EnableClearRecentFiles                        # DisableClearRecentFiles
 # DisableRecentFiles                            # EnableRecentFiles

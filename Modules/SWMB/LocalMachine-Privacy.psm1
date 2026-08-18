@@ -703,6 +703,44 @@ Function TweakViewDiagTrack { # RESINFO
 
 ################################################################
 
+# Aegis-Privacy-Shield
+# Disable Windows Program Compatibility Assistant Service
+
+# Disable
+Function TweakDisablePcaSvc {
+	Write-Output "Disabling and Stopping Program Compatibility Assistant Service..."
+	$Service = 'PcaSvc'
+	Stop-Service $Service -WarningAction SilentlyContinue
+	Set-Service $Service -StartupType Disabled
+}
+
+# Enable
+Function TweakEnablePcaSvc {
+	Write-Output "Enabling and starting Program Compatibility Assistant Service ..."
+	$Service = 'PcaSvc'
+	Set-Service $Service -StartupType Automatic
+	Start-Service $Service -WarningAction SilentlyContinue
+}
+
+# View
+Function TweakViewPcaSvc { # RESINFO
+	Write-Output "Viewing Program Compatibility Assistant Service (2: Enable, 4: Disable)..."
+	$Hash = @{}
+	$Rules = [ordered]@{
+		'PcaSvc' = @{
+			OkValues = @(4)
+			Description = "Windows Program Compatibility Assistant Service"
+			Remediation = "DisablePcaSvc (Aegis-Privacy-Shield)"
+		}
+	}
+	ForEach ($Feature in $Rules.keys) {
+		$Hash[$Feature] = (Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$Feature" -Name "Start").Start
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+}
+
+################################################################
+
 # Stop and disable Device Management Wireless Application Protocol (WAP) Push Service
 # Note: This service is needed for Microsoft Intune interoperability
 
