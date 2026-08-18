@@ -705,6 +705,7 @@ Function TweakViewDiagTrack { # RESINFO
 
 # Aegis-Privacy-Shield
 # Disable Windows Program Compatibility Assistant Service
+# Detects and helps resolve compatibility issues with older applications.
 
 # Disable
 Function TweakDisablePcaSvc {
@@ -743,6 +744,7 @@ Function TweakViewPcaSvc { # RESINFO
 
 # Aegis-Privacy-Shield
 # Disable Connected Devices Platform Service
+# Manages communication and integration between Windows and connected devices.
 
 # Disable
 Function TweakDisableCDPSvc {
@@ -769,6 +771,45 @@ Function TweakViewCDPSvc { # RESINFO
 			OkValues = @(4)
 			Description = "Connected Devices Platform Service"
 			Remediation = "DisableCDPSvc (Aegis-Privacy-Shield)"
+		}
+	}
+	ForEach ($Feature in $Rules.keys) {
+		$Hash[$Feature] = (Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$Feature" -Name "Start").Start
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+}
+
+################################################################
+
+# Aegis-Privacy-Shield
+# Windows Error Reporting Control Panel Support
+# Provides support for viewing and managing Windows problem reports.
+
+# Disable
+Function TweakDisableWERCPlSupport {
+	Write-Output "Disabling and Stopping Problem Reports Control Panel Support Service..."
+	$Service = 'wercplsupport'
+	Stop-Service $Service -WarningAction SilentlyContinue
+	Set-Service $Service -StartupType Disabled
+}
+
+# Enable
+Function TweakEnableWERCPlSupport {
+	Write-Output "Enabling and starting Problem Reports Control Panel Support Service ..."
+	$Service = 'wercplsupport'
+	Set-Service $Service -StartupType Automatic
+	Start-Service $Service -WarningAction SilentlyContinue
+}
+
+# View
+Function TweakViewWERCPlSupport { # RESINFO
+	Write-Output "Viewing Problem Reports Control Panel Support Service (2: Enable, 4: Disable)..."
+	$Hash = @{}
+	$Rules = [ordered]@{
+		'wercplsupport' = @{
+			OkValues = @(4)
+			Description = "Windows Error Reporting Control Panel Support"
+			Remediation = "DisableWERCPlSupport (Aegis-Privacy-Shield)"
 		}
 	}
 	ForEach ($Feature in $Rules.keys) {
