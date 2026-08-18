@@ -900,7 +900,15 @@ Function TweakEnableAutologgerDiagTrack { # RESINFO
 # View
 Function TweakViewAutologgerDiagTrack { # RESINFO
 	Write-Output "Viewing Autologger-DiagTrack-Listener (0 or not exist: Disable, 2: Enable)..."
-	Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener" -Name "Start"
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener'
+	$RegFields = @{
+		'Start' = @{
+			OkValues = @(0, $Null)   # 0 or not exist
+			Description = "Autologger DiagTrack Listener"
+			Remediation = "DisableAutologgerDiagTrack (BSI document)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################
