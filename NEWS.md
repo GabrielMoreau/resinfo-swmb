@@ -9,6 +9,8 @@ Add two websites links in the [REFERENCES](REFERENCES.md) file:
 * End-of-Service-Life
 * Collection of awesome security hardening websites links
 
+Add the link to [Aegis Privacy Shield & Terminator](https://github.com/yarrowmartin3-prog/Aegis-Privacy-Shield) to the [REFERENCES](REFERENCES.md) file.
+
 New presets/rules:
 
 * 2026/08/18 - `DisablePcaSvc`/`EnablePcaSvc`/`ViewPcaSvc` -> Disabling Windows Program Compatibility Assistant Service
