@@ -3,6 +3,11 @@
 SysRequireAdmin
 
 ### Privacy Tweaks ###
+ViewDiagTrack
+ViewPcaSvc
+ViewCDPSvc
+ViewWERCPlSupport
+ViewAutologgerDiagTrack
 
 ### UWP Privacy Tweaks ###
 
