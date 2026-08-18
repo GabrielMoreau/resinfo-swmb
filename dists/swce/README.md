@@ -72,6 +72,11 @@ Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE
 | Rule Name       | Description |
 |-----------------|-------------|
 | `SysRequireAdmin`                | Application must be run under an administrator account |
+| `ViewDiagTrack`                  | Connected User Experiences and Telemetry (Diagnostics Tracking Service) - ANSSI Annexe A2 |
+| `ViewPcaSvc`                     | Disable Windows Program Compatibility Assistant Service - Aegis-Privacy-Shield |
+| `ViewCDPSvc`                     | Disable Connected Devices Platform Service - Aegis-Privacy-Shield |
+| `ViewWERCPlSupport`              | Windows Error Reporting Control Panel Support - Aegis-Privacy-Shield |
+| `ViewAutologgerDiagTrack`        | Disable Autologger DiagTrack Listener during System Startup (Event Tracing for Windows) - BSI |
 | `ViewDEP`                        | Data Execution Prevention (DEP) must be configured for at least OptOut - [W11 STIG V-253283](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253283) |
 | `ViewASLR`                       | Randomize memory allocations (Bottom-Up ASLR), must be on - Old W10 STIG V-220874 |
 | `ViewInsecureGuestLogons`        | Disable SMB client to use insecure guest logons to an SMB server - [W11 STIG V-253360](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253360) |

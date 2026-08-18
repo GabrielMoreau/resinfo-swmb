@@ -56,7 +56,7 @@ DisablePrivacyExperience                        # EnablePrivacyExperience
 DisableStepsRecorder                          	# EnableStepsRecorder
 DisableSendAdditionalData                     	# EnableSendAdditionalData
 DisableSharedInformationSearch                	# EnableSharedInformationSearch
-DisableAutologgerDiagTrack                      # EnableAutologgerDiagTrack                     # ViewAutologgerDiagTrack
+DisableAutologgerDiagTrack                      # EnableAutologgerDiagTrack                     # ViewAutologgerDiagTrack       ## Disable Autologger DiagTrack Listener during System Startup (Event Tracing for Windows) - BSI
 DisableHighlightsSearch                         # EnableHighlightsSearch                        # ViewHighlightsSearch
 DisableCloudSearch                              # EnableCloudSearch                             # ViewCloudSearch
 EnableSearchOnTaskbar                           # DisableSearchOnTaskbar                        # ViewSearchOnTaskbar

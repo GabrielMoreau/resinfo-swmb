@@ -879,6 +879,7 @@ Function TweakEnableRecentFiles {
 # From BSI document
 # The “Autologger-DiagTrack-Listener” session must be disabled by setting its registry key to zero.
 # By default, this key does not seem to exist, so we delete it using Disable, as before.
+# ETW AutoLogger - Automatically starts an Event Tracing for Windows (ETW) logging session during system startup, which may be used for diagnostics, telemetry, or performance monitoring.
 
 # Disable
 Function TweakDisableAutologgerDiagTrack { # RESINFO
