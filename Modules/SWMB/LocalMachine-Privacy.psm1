@@ -665,43 +665,55 @@ Function TweakSetP2PUpdateDisable {
 
 ################################################################
 
-# Begin KeyDiagTrack
 # ANSSI Annexe A2
-# Service Expérience des utilisateurs connectés et télémetrie / Connected User Experiences and Telemetry - Diagtrack
-# Stop and disable (or Enable and start) Connected User Experiences and Telemetry (previously named Diagnostics Tracking Service)
-# End
+# Connected User Experiences and Telemetry (Diagnostics Tracking Service)
 
-# Stop and disable Connected User Experiences and Telemetry (previously named Diagnostics Tracking Service)
+# Disable
 Function TweakDisableDiagTrack {
 	Write-Output "Disabling and Stopping Connected User Experiences and Telemetry Service..."
-	Stop-Service "DiagTrack" -WarningAction SilentlyContinue
-	Set-Service "DiagTrack" -StartupType Disabled
+	$Service = 'DiagTrack'
+	Stop-Service $Service -WarningAction SilentlyContinue
+	Set-Service $Service -StartupType Disabled
 }
 
-# Enable and start Connected User Experiences and Telemetry (previously named Diagnostics Tracking Service)
+# Enable
 Function TweakEnableDiagTrack {
 	Write-Output "Enabling and starting Connected User Experiences and Telemetry Service ..."
-	Set-Service "DiagTrack" -StartupType Automatic
-	Start-Service "DiagTrack" -WarningAction SilentlyContinue
+	$Service = 'DiagTrack'
+	Set-Service $Service -StartupType Automatic
+	Start-Service $Service -WarningAction SilentlyContinue
 }
 
 # View
-Function TweakViewDiagTrack {
+Function TweakViewDiagTrack { # RESINFO
 	Write-Output "Viewing Connected User Experiences and Telemetry (2: Enable, 4: Disable)..."
-	Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\DiagTrack" -Name "Start" | Select-Object -Property Start*  | Format-List
+	$Hash = @{}
+	$Rules = [ordered]@{
+		'DiagTrack' = @{
+			OkValues = @(4)
+			Description = "Connected User Experiences and Telemetry (Diagnostics Tracking Service)"
+			Remediation = "DisableDiagTrack (ANSSI Annexe A2)"
+		}
+	}
+	ForEach ($Feature in $Rules.keys) {
+		$Hash[$Feature] = (Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$Feature" -Name "Start").Start
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################
 
 # Stop and disable Device Management Wireless Application Protocol (WAP) Push Service
 # Note: This service is needed for Microsoft Intune interoperability
+
+# Disable
 Function TweakDisableWAPPush {
 	Write-Output "Disabling and Stopping Device Management WAP Push Service..."
 	Stop-Service "dmwappushservice" -WarningAction SilentlyContinue
 	Set-Service "dmwappushservice" -StartupType Disabled
 }
 
-# Enable and start Device Management Wireless Application Protocol (WAP) Push Service
+# Enable
 Function TweakEnableWAPPush {
 	Write-Output "Enabling and Starting Device Management WAP Push Service..."
 	Set-Service "dmwappushservice" -StartupType Automatic
