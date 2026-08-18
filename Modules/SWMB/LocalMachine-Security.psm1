@@ -948,7 +948,7 @@ Function TweakDisableCredentialGuard {
 }
 
 # View
-Function TweakViewCredentialGuard {
+Function TweakViewCredentialGuard { # RESINFO
 	Write-Output "Viewing Credential Guard status (STIG V-253370)..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\kernel'
 	$RegFields = @{
@@ -979,7 +979,7 @@ Function TweakViewCredentialGuard {
 # Only accounts responsible for the administration of a system must have Administrator rights on the system
 # W11 STIG V-253269 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253269
 
-Function TweakRemoveUserInAdminGroup {
+Function TweakRemoveUserInAdminGroup { # RESINFO
 	Write-Output "Removing user from Admin group (if not verify LocalAdminRegex regex)..."
 
 	$ComputerSID = ((Get-LocalUser | Select-Object -First 1).SID).AccountDomainSID.ToString()
@@ -1010,7 +1010,7 @@ Function TweakRemoveUserInAdminGroup {
 	}
 }
 
-Function TweakViewUserInAdminGroup {
+Function TweakViewUserInAdminGroup { # RESINFO
 	Write-Output "Viewing user from Admin group (ok if verify LocalAdminRegex regex)..."
 
 	$ComputerSID = ((Get-LocalUser | Select-Object -First 1).SID).AccountDomainSID.ToString()
@@ -1045,7 +1045,7 @@ Function TweakViewUserInAdminGroup {
 # Only accounts (users or groups) that match the regular expression $Global:SWMB_Custom.LocalRDUsersRegex are valid
 # As well as the local administrators group, see SeRemoteInteractiveLogonRight (Privilege Rights)
 
-Function TweakSetUserInRDGroup {
+Function TweakSetUserInRDGroup { # RESINFO
 	Write-Output "Setting user for Remote Desktop group (ok if verify LocalRDUsersRegex regex)..."
 
 	If ([string]::IsNullOrWhiteSpace($Global:SWMB_Custom.LocalRDUsersRegex)) {
@@ -1123,7 +1123,7 @@ Function TweakSetUserInRDGroup {
 	}
 }
 
-Function TweakUnsetUserInRDGroup {
+Function TweakUnsetUserInRDGroup { # RESINFO
 	Write-Output "Unsetting user for Remote Desktop group..."
 	$GroupRDPSID   = "S-1-5-32-555"
 
@@ -1144,7 +1144,7 @@ Function TweakUnsetUserInRDGroup {
 	}
 }
 
-Function TweakViewUserInRDGroup {
+Function TweakViewUserInRDGroup { # RESINFO
 	Write-Output "Viewing users in the Remote Desktop group (OK if the LocalRDUsersRegex regex is valid)..."
 
 	$ComputerSID = ((Get-LocalUser | Select-Object -First 1).SID).AccountDomainSID.ToString()
@@ -1185,7 +1185,7 @@ Function TweakViewUserInRDGroup {
 # Windows 11 systems must be maintained at a supported servicing level
 # W11 STIG V-253263 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253263
 
-Function TweakViewWindowsServicingLevel {
+Function TweakViewWindowsServicingLevel { # RESINFO
 	Write-Output "Viewing Windows Servicing Level..."
 	$OSColor = SWMB_GetOSVersionColor
 	$Hash = @{
@@ -1789,7 +1789,7 @@ Function TweakViewAntivirusServices { # RESINFO
 # W11 STIG V-253265 https://system32.eventsentry.com/stig/viewer/V-253265
 
 # View
-Function TweakViewVolumeBadlyFormatted {
+Function TweakViewVolumeBadlyFormatted { # RESINFO
 	Write-Output "Viewing Local Volumes that are Badly Formatted (non-NTFS)..."
 	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $Null }
 #		ForEach-Object {

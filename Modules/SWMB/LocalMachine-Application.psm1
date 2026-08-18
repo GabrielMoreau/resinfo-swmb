@@ -74,7 +74,7 @@ Function TweakInstallOneDrive {
 }
 
 # View
-Function TweakViewOneDrive {
+Function TweakViewOneDrive { # RESINFO
 	Write-Output "Viewing OneDrive product..."
 	Get-ChildItem -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall', 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall' |
 		Get-ItemProperty |
@@ -1393,7 +1393,7 @@ Function TweakDisableOffice2013AutoUpdate { # RESINFO
 }
 
 # View
-Function TweakViewOffice2013AutoUpdate {
+Function TweakViewOffice2013AutoUpdate { # RESINFO
 	Write-Output "Viewing MS Office2013 AutoUpdate (0 or not exist: No auto update, 1: auto update)..."
 	Get-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Office\15.0\Common\OfficeUpdate" -Name "EnableAutomaticUpdates" -ErrorAction SilentlyContinue
 }
@@ -1452,7 +1452,7 @@ Function TweakDisableOffice2016AutoUpdate { # RESINFO
 }
 
 # View
-Function TweakViewOffice2016AutoUpdate {
+Function TweakViewOffice2016AutoUpdate { # RESINFO
 	Write-Output "Viewing MS Office2016 AutoUpdate (0 or not exist: No auto update, 1: auto update)..."
 	Get-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Office\16.0\Common\OfficeUpdate" -Name "EnableAutomaticUpdates" -ErrorAction SilentlyContinue
 }

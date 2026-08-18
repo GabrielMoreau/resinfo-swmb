@@ -373,7 +373,7 @@ Function TweakEnableActivityHistory {
 }
 
 # View
-Function TweakViewActivityHistory {
+Function TweakViewActivityHistory { # RESINFO
 	Write-Output "Viewing Activity History (0: Disable, Error: Enable)..."
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "EnableActivityFeed"    | Select-Object -Property Enable*  | Format-List
 	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "PublishUserActivities" | Select-Object -Property Publish* | Format-List

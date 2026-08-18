@@ -41,7 +41,7 @@ Function TweakHideKnownExtensions_CU {
 }
 
 # View
-Function TweakViewKnownExtensions_CU {
+Function TweakViewKnownExtensions_CU { # RESINFO
 	Write-Output "Viewing known file extensions for CU (0: Show, 1: Hide)..."
 	Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt"
 }
