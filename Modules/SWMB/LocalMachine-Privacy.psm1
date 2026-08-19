@@ -152,14 +152,13 @@ Function TweakViewCortana { # RESINFO
 	$Hash = @{}
 	$Rules = [ordered]@{
 		'Microsoft.549981C3F5F10' = @{
-			OkValues = @('NotInstall')
+			OkValues = @($Null)
 			Description = "Cortana Microsoft's voice assistant and productivity assistant"
 			Remediation = "DisableCortana"
 		}
 	}
 	$ProvisionedPackages = Get-AppxProvisionedPackage -Online
 	ForEach ($Feature in $Rules.keys) {
-		$Hash[$Feature] = 'NotInstall'
 		If ($ProvisionedPackages | Where-Object DisplayName -eq $Feature) {
 			$Hash[$Feature] = 'Appx'
 		}
