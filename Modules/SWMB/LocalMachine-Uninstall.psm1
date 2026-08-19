@@ -296,7 +296,7 @@ Function TweakUninstallTotalCommander { # RESINFO
 
 # View
 Function TweakViewTotalCommander { # RESINFO
-	Write-Output "Viewing software TotalCommander ..."
+	Write-Output "Viewing software TotalCommander..."
 	@(Get-ChildItem -Recurse 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall';
 	  Get-ChildItem -Recurse "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall") |
 		ForEach {

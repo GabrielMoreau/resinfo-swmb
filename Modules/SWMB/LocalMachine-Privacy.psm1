@@ -678,7 +678,7 @@ Function TweakDisableDiagTrack {
 
 # Enable
 Function TweakEnableDiagTrack {
-	Write-Output "Enabling and starting Connected User Experiences and Telemetry Service ..."
+	Write-Output "Enabling and starting Connected User Experiences and Telemetry Service..."
 	$Service = 'DiagTrack'
 	Set-Service $Service -StartupType Automatic
 	Start-Service $Service -WarningAction SilentlyContinue
@@ -718,7 +718,7 @@ Function TweakDisablePCASvc {
 
 # Enable
 Function TweakEnablePCASvc {
-	Write-Output "Enabling and starting Program Compatibility Assistant Service ..."
+	Write-Output "Enabling and starting Program Compatibility Assistant Service..."
 	$Service = 'PcaSvc'
 	Set-Service $Service -StartupType Automatic
 	Start-Service $Service -WarningAction SilentlyContinue
@@ -809,7 +809,7 @@ Function TweakDisableWERCPlSupport {
 
 # Enable
 Function TweakEnableWERCPlSupport {
-	Write-Output "Enabling and starting Problem Reports Control Panel Support Service ..."
+	Write-Output "Enabling and starting Problem Reports Control Panel Support Service..."
 	$Service = 'wercplsupport'
 	Set-Service $Service -StartupType Automatic
 	Start-Service $Service -WarningAction SilentlyContinue
@@ -1011,7 +1011,7 @@ Function TweakDisableDisplayWebResults { # RESINFO
 
 # Enable
 Function TweakEnableDisplayWebResults { # RESINFO
-	Write-Output "Enabling Web results will be displayed ..."
+	Write-Output "Enabling Web results will be displayed..."
 	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search")) {
 		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Force | Out-Null
 	}
