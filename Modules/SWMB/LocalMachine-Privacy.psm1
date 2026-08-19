@@ -709,7 +709,7 @@ Function TweakViewDiagTrack { # RESINFO
 # https://github.com/yarrowmartin3-prog/Aegis-Privacy-Shield/
 
 # Disable
-Function TweakDisablePcaSvc {
+Function TweakDisablePCASvc {
 	Write-Output "Disabling and Stopping Program Compatibility Assistant Service..."
 	$Service = 'PcaSvc'
 	Stop-Service $Service -WarningAction SilentlyContinue
@@ -717,7 +717,7 @@ Function TweakDisablePcaSvc {
 }
 
 # Enable
-Function TweakEnablePcaSvc {
+Function TweakEnablePCASvc {
 	Write-Output "Enabling and starting Program Compatibility Assistant Service ..."
 	$Service = 'PcaSvc'
 	Set-Service $Service -StartupType Automatic
@@ -725,14 +725,14 @@ Function TweakEnablePcaSvc {
 }
 
 # View
-Function TweakViewPcaSvc { # RESINFO
+Function TweakViewPCASvc { # RESINFO
 	Write-Output "Viewing Program Compatibility Assistant Service (2: Enable, 4: Disable)..."
 	$Hash = @{}
 	$Rules = [ordered]@{
 		'PcaSvc' = @{
 			OkValues = @(4)
 			Description = "Windows Program Compatibility Assistant Service"
-			Remediation = "DisablePcaSvc (Aegis-Privacy-Shield)"
+			Remediation = "DisablePCASvc (Aegis-Privacy-Shield)"
 		}
 	}
 	ForEach ($Feature in $Rules.keys) {

@@ -38,7 +38,7 @@ DisableAdvertisingID                            # EnableAdvertisingID
 DisableErrorReporting                           # EnableErrorReporting
 # SetP2PUpdateLocal                             # SetP2PUpdateInternet                          # SetP2PUpdateDisable
 DisableDiagTrack                                # EnableDiagTrack                               # ViewDiagTrack                 ## Connected User Experiences and Telemetry (Diagnostics Tracking Service) - ANSSI Annexe A2
-# DisablePcaSvc                                 # EnablePcaSvc                                  # ViewPcaSvc                    ## Disable Windows Program Compatibility Assistant Service - Aegis-Privacy-Shield
+# DisablePCASvc                                 # EnablePCASvc                                  # ViewPCASvc                    ## Disable Windows Program Compatibility Assistant Service - Aegis-Privacy-Shield
 # DisableCDPSvc                                 # EnableCDPSvc                                  # ViewCDPSvc                    ## Disable Connected Devices Platform (Computer + User) Service - Aegis-Privacy-Shield
 # DisableWERCPlSupport                          # EnableWERCPlSupport                           # ViewWERCPlSupport             ## Windows Error Reporting Control Panel Support - Aegis-Privacy-Shield
 DisableWAPPush                                  # EnableWAPPush
