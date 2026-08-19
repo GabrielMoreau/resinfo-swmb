@@ -90,6 +90,8 @@ Function TweakEnableTelemetry {
 
 ################################################################
 
+# Cortana is a Microsoft's digital assistant providing voice commands, search, reminders, and personalized assistance.
+
 # Disable Cortana
 Function TweakDisableCortana {
 	Write-Output "Disabling Cortana. See DisableCortana_CU..."
@@ -112,6 +114,57 @@ Function TweakEnableCortana {
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "AllowCortana" -ErrorAction SilentlyContinue
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" -Name "AllowInputPersonalization" -ErrorAction SilentlyContinue
 	Get-AppxPackage -AllUsers -Name "Microsoft.549981C3F5F10" | ForEach-Object {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}
+}
+
+# View
+Function TweakViewCortana { # RESINFO
+	Write-Output "Viewing Cortana (0: Disable, 1 or not exist: Enable)..."
+	$RegPath = 'HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Experience\AllowCortana'
+	$RegFields = @{
+		'Value' = @{
+			OkValues = @(0)
+			Description = "General AllowCortana register key"
+			Remediation = "DisableCortana"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search'
+	$RegFields = @{
+		'AllowCortana' = @{
+			OkValues = @(0)
+			Description = "Windows Search AllowCortana register key"
+			Remediation = "DisableCortana"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization'
+	$RegFields = @{
+		'AllowInputPersonalization' = @{
+			OkValues = @(0)
+			Description = "InputPersonalization register key"
+			Remediation = "DisableCortana"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+
+	$Hash = @{}
+	$Rules = [ordered]@{
+		'Microsoft.549981C3F5F10' = @{
+			OkValues = @('NotInstall')
+			Description = "Cortana Microsoft's voice assistant and productivity assistant"
+			Remediation = "DisableCortana"
+		}
+	}
+	$ProvisionedPackages = Get-AppxProvisionedPackage -Online
+	ForEach ($Feature in $Rules.keys) {
+		$Hash[$Feature] = 'NotInstall'
+		If ($ProvisionedPackages | Where-Object DisplayName -eq $Feature) {
+			$Hash[$Feature] = 'Appx'
+		}
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################

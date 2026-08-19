@@ -18,7 +18,7 @@ SysRequireAdmin                                                                 
 
 ### Privacy Tweaks ###
 DisableTelemetry                                # EnableTelemetry
-DisableCortana                                  # EnableCortana
+DisableCortana                                  # EnableCortana                                 # ViewCortana                   ## Cortana is a Digital assistant providing voice commands, search, reminders, and personalized assistance
 DisableCortanaAboveLock                         # EnableCortanaAboveLock
 DisableDisplayWebResults                        # EnableDisplayWebResults
 DisableRecall                                   # EnableRecall                                  # ViewRecall                    ## Recall is a feature that allows you to quickly access your documents, applications, and personal information through indexing

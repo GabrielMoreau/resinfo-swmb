@@ -12,11 +12,13 @@ Add tree websites links in the [REFERENCES](REFERENCES.md) file:
 
 Regarding the SWCE project:
 
-* Add `ViewRecall`, `ViewDiagTrack`, `ViewPcaSvc`, `ViewCDPSvc`, `ViewWERCPlSupport`, `ViewWAPPush`, `ViewAutologgerDiagTrack` checks.
+* Add `ViewCortana`, `ViewRecall`, `ViewDiagTrack`, `ViewPcaSvc`,
+  `ViewCDPSvc`, `ViewWERCPlSupport`, `ViewWAPPush`, `ViewAutologgerDiagTrack` checks.
 
 
 New presets/rules:
 
+* 2026/08/19 - `ViewCortana` -> Digital assistant providing voice commands, search, reminders, and personalized assistance
 * 2026/08/19 - `ViewWAPPush` -> Device Management Wireless Application Protocol (WAP) Push Message Routing Service
 * 2026/08/18 - `DisableWERCPlSupport`/`EnableWERCPlSupport`/`ViewWERCPlSupport` -> Disable Windows Error Reporting Control Panel Support
 * 2026/08/18 - `DisableCDPSvc`/`EnableCDPSvc`/`ViewCDPSvc` -> Disable Connected Devices Platform (Computer + User) Service
