@@ -3,6 +3,7 @@
 SysRequireAdmin
 
 ### Privacy Tweaks ###
+ViewRecall
 ViewDiagTrack
 ViewPcaSvc
 ViewCDPSvc

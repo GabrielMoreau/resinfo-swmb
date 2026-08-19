@@ -141,20 +141,15 @@ Function TweakEnableRecall { # RESINFO
 # View
 Function TweakViewRecall { # RESINFO
 	Write-Output "Viewing Recall (0: Disable, 1 or not exist: Enable)..."
-	If (!(Test-Path -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Recall')) {
-		Write-Output ' Recall is enabled'
-		Return
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Recall'
+	$RegFields = @{
+		'AllowRecall' = @{
+			OkValues = @(0)
+			Description = "Quickly access your documents, applications, and personal information through indexing"
+			Remediation = "DisableRecall"
 		}
-
-	Try {
-		Get-ItemPropertyValue -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Recall' -Name 'AllowRecall' | Out-Null
-	} Catch {
-		Write-Output ' Recall not exists: enable'
-		Return
 	}
-	ForEach ($Field in 'AllowRecall') {
-		Write-Output " ${Field}: $((Get-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Recall').${Field})"
-	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################
