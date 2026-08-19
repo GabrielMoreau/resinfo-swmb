@@ -3,11 +3,17 @@ default:
   artifacts:
     expire_in: 1 week
 
-image: debian:latest
+image: amd64/debian:stable-slim
+
+cache:
+  key: cache-folder
+  paths:
+    - cache/
 
 before_script:
+  - mkdir -p cache/deb
   - apt-get update -yqq
-  - apt-get install -yqq perl make binutils findutils gzip tar wget nsis zip git git-lfs dos2unix mkdocs python3-venv
+  - apt-get -o dir::cache::archives='cache/deb' install -yqq perl make binutils findutils gzip tar wget nsis zip git git-lfs dos2unix mkdocs python3-venv
 
 pages:
   stage: build
@@ -66,6 +72,5 @@ pages:
   artifacts:
     paths:
       - public
-    expire_in: 1 month
-  only:
-    - master
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
