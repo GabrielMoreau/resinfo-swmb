@@ -744,7 +744,7 @@ Function SWMB_GetHashSettings {
 			}
 
 			[PSCustomObject]@{
-				Name   = $Name
+				Name   = If ($Rule.ContainsKey('DisplayName')) { $Rule.DisplayName } Else { $Name }
 				Value  = $Null
 				Exists = $False
 				Status = $Status
@@ -789,7 +789,7 @@ Function SWMB_GetHashSettings {
 		}
 
 		[PSCustomObject]@{
-			Name   = $Name
+			Name   = If ($Rule.ContainsKey('DisplayName')) { $Rule.DisplayName } Else { $Name }
 			Value  = $Value
 			Exists = $True
 			Status = $Status
