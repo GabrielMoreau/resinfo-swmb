@@ -123,7 +123,8 @@ Function TweakViewCortana { # RESINFO
 	$RegFields = @{
 		'Value' = @{
 			OkValues = @(0)
-			Description = "General AllowCortana register key"
+			DisplayName = 'ExperienceAllowCortana'
+			Description = "Experience AllowCortana register key"
 			Remediation = "DisableCortana"
 		}
 	}
@@ -133,6 +134,7 @@ Function TweakViewCortana { # RESINFO
 	$RegFields = @{
 		'AllowCortana' = @{
 			OkValues = @(0)
+			DisplayName = 'WindowsSearchCortana'
 			Description = "Windows Search AllowCortana register key"
 			Remediation = "DisableCortana"
 		}
@@ -153,7 +155,7 @@ Function TweakViewCortana { # RESINFO
 	$Rules = [ordered]@{
 		'Microsoft.549981C3F5F10' = @{
 			OkValues = @($Null)
-			Description = "Cortana Microsoft's voice assistant and productivity assistant"
+			Description = "Cortana Voice and productivity assistants"
 			Remediation = "DisableCortana"
 		}
 	}
