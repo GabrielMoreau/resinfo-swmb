@@ -706,6 +706,7 @@ Function TweakViewDiagTrack { # RESINFO
 # Aegis-Privacy-Shield
 # Disable Windows Program Compatibility Assistant Service
 # Detects and helps resolve compatibility issues with older applications.
+# https://github.com/yarrowmartin3-prog/Aegis-Privacy-Shield/
 
 # Disable
 Function TweakDisablePcaSvc {
@@ -743,33 +744,45 @@ Function TweakViewPcaSvc { # RESINFO
 ################################################################
 
 # Aegis-Privacy-Shield
-# Disable Connected Devices Platform Service
+# Disable Connected Devices Platform (Computer + User) Service
 # Manages communication and integration between Windows and connected devices.
+# https://github.com/Korben00/no-gdid
+# https://github.com/yarrowmartin3-prog/Aegis-Privacy-Shield/
 
 # Disable
 Function TweakDisableCDPSvc {
-	Write-Output "Disabling and Stopping Connected Devices Platform Service..."
+	Write-Output "Disabling and Stopping Connected Devices Platform (Computer + User) Service..."
 	$Service = 'CDPSvc'
 	Stop-Service $Service -WarningAction SilentlyContinue
 	Set-Service $Service -StartupType Disabled
+
+	Get-Service -Name 'CDPUserSvc_*' | Where-Object { $_.Status -eq 'Running' } | Stop-Service -Force -WarningAction SilentlyContinue
+	Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\CDPUserSvc' -Name Start -Type DWord -Value 4 -ErrorAction SilentlyContinue
 }
 
 # Enable
 Function TweakEnableCDPSvc {
-	Write-Output "Enabling and starting Connected Devices Platform Service ..."
+	Write-Output "Enabling and starting Connected Devices Platform (Computer + User) Service..."
 	$Service = 'CDPSvc'
 	Set-Service $Service -StartupType Automatic
 	Start-Service $Service -WarningAction SilentlyContinue
+
+	Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\CDPUserSvc' -Name Start -Type DWord -Value 2 -ErrorAction SilentlyContinue
 }
 
 # View
 Function TweakViewCDPSvc { # RESINFO
-	Write-Output "Viewing Connected Devices Platform Service (2: Enable, 4: Disable)..."
+	Write-Output "Viewing Connected Devices Platform (Computer + User) Service (2: Enable, 4: Disable)..."
 	$Hash = @{}
 	$Rules = [ordered]@{
 		'CDPSvc' = @{
 			OkValues = @(4)
-			Description = "Connected Devices Platform Service"
+			Description = "Connected Devices Platform (Computer) Service"
+			Remediation = "DisableCDPSvc (Aegis-Privacy-Shield)"
+		}
+		'CDPUserSvc' = @{
+			OkValues = @(4)
+			Description = "Connected Devices Platform (User) Service"
 			Remediation = "DisableCDPSvc (Aegis-Privacy-Shield)"
 		}
 	}
@@ -784,6 +797,7 @@ Function TweakViewCDPSvc { # RESINFO
 # Aegis-Privacy-Shield
 # Windows Error Reporting Control Panel Support
 # Provides support for viewing and managing Windows problem reports.
+# https://github.com/yarrowmartin3-prog/Aegis-Privacy-Shield/
 
 # Disable
 Function TweakDisableWERCPlSupport {
@@ -1089,6 +1103,7 @@ Function TweakEnableWindowsErrorReporting { # RESINFO
 	Write-Output "Enabling (Turn On) Windows error reporting..."
 	Remove-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\PCHealth\ErrorReporting" -Name "DoReport" -ErrorAction SilentlyContinue
 }
+
 ################################################################
 
 # User Experience
