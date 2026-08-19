@@ -41,7 +41,7 @@ DisableDiagTrack                                # EnableDiagTrack               
 # DisablePCASvc                                 # EnablePCASvc                                  # ViewPCASvc                    ## Disable Windows Program Compatibility Assistant Service - Aegis-Privacy-Shield
 # DisableCDPSvc                                 # EnableCDPSvc                                  # ViewCDPSvc                    ## Disable Connected Devices Platform (Computer + User) Service - Aegis-Privacy-Shield
 # DisableWERCPlSupport                          # EnableWERCPlSupport                           # ViewWERCPlSupport             ## Windows Error Reporting Control Panel Support - Aegis-Privacy-Shield
-DisableWAPPush                                  # EnableWAPPush
+DisableWAPPush                                  # EnableWAPPush                                 # ViewWAPPush                   ## Device Management Wireless Application Protocol (WAP) Push Message Routing Service - Aegis-Privacy-Shield
 # EnableClearRecentFiles                        # DisableClearRecentFiles
 # DisableRecentFiles                            # EnableRecentFiles
 # DisableDidYouKnow                             # EnableDidYouKnow

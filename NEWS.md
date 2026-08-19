@@ -13,6 +13,7 @@ Add the link to [Aegis Privacy Shield & Terminator](https://github.com/yarrowmar
 
 New presets/rules:
 
+* 2026/08/19 - `ViewWAPPush` -> Device Management Wireless Application Protocol (WAP) Push Message Routing Service
 * 2026/08/18 - `DisableWERCPlSupport`/`EnableWERCPlSupport`/`ViewWERCPlSupport` -> Disable Windows Error Reporting Control Panel Support
 * 2026/08/18 - `DisableCDPSvc`/`EnableCDPSvc`/`ViewCDPSvc` -> Disable Connected Devices Platform (Computer + User) Service
 * 2026/08/18 - `DisablePCASvc`/`EnablePCASvc`/`ViewPCASvc` -> Disable Windows Program Compatibility Assistant Service

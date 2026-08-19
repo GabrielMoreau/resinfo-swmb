@@ -709,7 +709,7 @@ Function TweakViewDiagTrack { # RESINFO
 # https://github.com/yarrowmartin3-prog/Aegis-Privacy-Shield/
 
 # Disable
-Function TweakDisablePCASvc {
+Function TweakDisablePCASvc { # RESINFO
 	Write-Output "Disabling and Stopping Program Compatibility Assistant Service..."
 	$Service = 'PcaSvc'
 	Stop-Service $Service -WarningAction SilentlyContinue
@@ -717,7 +717,7 @@ Function TweakDisablePCASvc {
 }
 
 # Enable
-Function TweakEnablePCASvc {
+Function TweakEnablePCASvc { # RESINFO
 	Write-Output "Enabling and starting Program Compatibility Assistant Service..."
 	$Service = 'PcaSvc'
 	Set-Service $Service -StartupType Automatic
@@ -750,7 +750,7 @@ Function TweakViewPCASvc { # RESINFO
 # https://github.com/yarrowmartin3-prog/Aegis-Privacy-Shield/
 
 # Disable
-Function TweakDisableCDPSvc {
+Function TweakDisableCDPSvc { # RESINFO
 	Write-Output "Disabling and Stopping Connected Devices Platform (Computer + User) Service..."
 	$Service = 'CDPSvc'
 	Stop-Service $Service -WarningAction SilentlyContinue
@@ -761,7 +761,7 @@ Function TweakDisableCDPSvc {
 }
 
 # Enable
-Function TweakEnableCDPSvc {
+Function TweakEnableCDPSvc { # RESINFO
 	Write-Output "Enabling and starting Connected Devices Platform (Computer + User) Service..."
 	$Service = 'CDPSvc'
 	Set-Service $Service -StartupType Automatic
@@ -800,7 +800,7 @@ Function TweakViewCDPSvc { # RESINFO
 # https://github.com/yarrowmartin3-prog/Aegis-Privacy-Shield/
 
 # Disable
-Function TweakDisableWERCPlSupport {
+Function TweakDisableWERCPlSupport { # RESINFO
 	Write-Output "Disabling and Stopping Problem Reports Control Panel Support Service..."
 	$Service = 'wercplsupport'
 	Stop-Service $Service -WarningAction SilentlyContinue
@@ -808,7 +808,7 @@ Function TweakDisableWERCPlSupport {
 }
 
 # Enable
-Function TweakEnableWERCPlSupport {
+Function TweakEnableWERCPlSupport { # RESINFO
 	Write-Output "Enabling and starting Problem Reports Control Panel Support Service..."
 	$Service = 'wercplsupport'
 	Set-Service $Service -StartupType Automatic
@@ -834,22 +834,43 @@ Function TweakViewWERCPlSupport { # RESINFO
 
 ################################################################
 
-# Stop and disable Device Management Wireless Application Protocol (WAP) Push Service
+# Aegis-Privacy-Shield
+# Stop and disable Device Management Wireless Application Protocol (WAP) Push Message Routing Service
 # Note: This service is needed for Microsoft Intune interoperability
+# https://github.com/yarrowmartin3-prog/Aegis-Privacy-Shield/
 
 # Disable
 Function TweakDisableWAPPush {
-	Write-Output "Disabling and Stopping Device Management WAP Push Service..."
-	Stop-Service "dmwappushservice" -WarningAction SilentlyContinue
-	Set-Service "dmwappushservice" -StartupType Disabled
+	Write-Output "Disabling and Stopping Device Management Wireless Application Protocol (WAP) Push Message Routing Service..."
+	$Service = 'dmwappushservice'
+	Stop-Service $Service -WarningAction SilentlyContinue
+	Set-Service $Service -StartupType Disabled
 }
 
 # Enable
 Function TweakEnableWAPPush {
-	Write-Output "Enabling and Starting Device Management WAP Push Service..."
-	Set-Service "dmwappushservice" -StartupType Automatic
-	Start-Service "dmwappushservice" -WarningAction SilentlyContinue
-	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\dmwappushservice" -Name "DelayedAutoStart" -Type DWord -Value 1
+	Write-Output "Enabling and Starting Device Management Wireless Application Protocol (WAP) Push Message Routing Service..."
+	$Service = 'dmwappushservice'
+	Set-Service $Service -StartupType Automatic
+	Start-Service $Service -WarningAction SilentlyContinue
+	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$Service" -Name "DelayedAutoStart" -Type DWord -Value 1
+}
+
+# View
+Function TweakViewWAPPush { # RESINFO
+	Write-Output "Viewing Device Management Wireless Application Protocol (WAP) Push Message Routing Service (1: Enable, 4: Disable)..."
+	$Hash = @{}
+	$Rules = [ordered]@{
+		'dmwappushservice' = @{
+			OkValues = @(4)
+			Description = "Device Management Wireless Application Protocol (WAP) Push Message Routing Service"
+			Remediation = "DisableWAPPush (Aegis-Privacy-Shield)"
+		}
+	}
+	ForEach ($Feature in $Rules.keys) {
+		$Hash[$Feature] = (Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$Feature" -Name "Start").Start
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
 }
 
 ################################################################
