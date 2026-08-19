@@ -4,12 +4,16 @@
 
 Update UBR.
 Checks Git tags when the version number is changed
-Add two websites links in the [REFERENCES](REFERENCES.md) file:
+Add tree websites links in the [REFERENCES](REFERENCES.md) file:
 
 * End-of-Service-Life
 * Collection of awesome security hardening websites links
+* [Aegis Privacy Shield & Terminator](https://github.com/yarrowmartin3-prog/Aegis-Privacy-Shield)
 
-Add the link to [Aegis Privacy Shield & Terminator](https://github.com/yarrowmartin3-prog/Aegis-Privacy-Shield) to the [REFERENCES](REFERENCES.md) file.
+Regarding the SWCE project:
+
+* Add `ViewRecall`, `ViewDiagTrack`, `ViewPcaSvc`, `ViewCDPSvc`, `ViewWERCPlSupport`, `ViewWAPPush`, `ViewAutologgerDiagTrack` checks.
+
 
 New presets/rules:
 
