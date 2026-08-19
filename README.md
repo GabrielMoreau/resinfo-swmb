@@ -417,7 +417,7 @@ The middle column is a global summary (All).
 
  | Status | Number of tweaks                       |         LM ||  All |         CU ||
  | :---   | :---                                   | ---: | ---: | ---: | ---: | ---: |
- | Info   | Number of RESINFO tweaks               |        253 ||  271 |         18 ||
+ | Info   | Number of RESINFO tweaks               |        259 ||  277 |         18 ||
  | Info   | Number of Enable and Disable tweaks    |  205 |  205 |  488 |   39 |   39 |
  | Warn   | Number of Install and Uninstall tweaks |   22 |   48 |   74 |    1 |    3 |
  | Warn   | Number of Show and Hide tweaks         |   29 |   29 |  115 |   30 |   27 |
@@ -426,9 +426,9 @@ The middle column is a global summary (All).
  | Warn   | Number of Pin and Unpin tweaks         |    0 |    0 |    2 |    0 |    2 |
  | Info   | Number of total tweaks GPO             |      |      |  749 |      |      |
  | Info   | Number of Sys tweaks (system)          |      |      |    9 |      |      |
- | Info   | Number of View tweaks (debug)          |      |      |  132 |      |      |
+ | Info   | Number of View tweaks (debug)          |      |      |  134 |      |      |
  | Info   | Number of Obsolete tweaks              |      |      |    5 |      |      |
- | Info   | Number of total tweaks functions       |      |      |  893 |      |      |
+ | Info   | Number of total tweaks functions       |      |      |  895 |      |      |
 
 ### Import your lib
 

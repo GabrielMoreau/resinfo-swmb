@@ -6,7 +6,7 @@ SysRequireAdmin
 ViewCortana
 ViewRecall
 ViewDiagTrack
-ViewPcaSvc
+ViewPCASvc
 ViewCDPSvc
 ViewWERCPlSupport
 ViewWAPPush

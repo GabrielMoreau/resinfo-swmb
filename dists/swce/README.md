@@ -72,10 +72,13 @@ Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE
 | Rule Name       | Description |
 |-----------------|-------------|
 | `SysRequireAdmin`                | Application must be run under an administrator account |
+| `ViewCortana`                    | Cortana is a Digital assistant providing voice commands, search, reminders, and personalized assistance |
+| `ViewRecall`                     | Recall is a feature that allows you to quickly access your documents, applications, and personal information through indexing |
 | `ViewDiagTrack`                  | Connected User Experiences and Telemetry (Diagnostics Tracking Service) - ANSSI Annexe A2 |
-| `ViewPcaSvc`                     | Disable Windows Program Compatibility Assistant Service - Aegis-Privacy-Shield |
-| `ViewCDPSvc`                     | Disable Connected Devices Platform Service - Aegis-Privacy-Shield |
+| `ViewPCASvc`                     | Disable Windows Program Compatibility Assistant Service - Aegis-Privacy-Shield |
+| `ViewCDPSvc`                     | Disable Connected Devices Platform (Computer + User) Service - Aegis-Privacy-Shield |
 | `ViewWERCPlSupport`              | Windows Error Reporting Control Panel Support - Aegis-Privacy-Shield |
+| `ViewWAPPush`                    | Device Management Wireless Application Protocol (WAP) Push Message Routing Service - Aegis-Privacy-Shield |
 | `ViewAutologgerDiagTrack`        | Disable ETW Autologger DiagTrack Listener during System Startup (Event Tracing for Windows) - BSI |
 | `ViewDEP`                        | Data Execution Prevention (DEP) must be configured for at least OptOut - [W11 STIG V-253283](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253283) |
 | `ViewASLR`                       | Randomize memory allocations (Bottom-Up ASLR), must be on - Old W10 STIG V-220874 |
