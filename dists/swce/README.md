@@ -81,6 +81,7 @@ Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE
 | `ViewWERCPlSupport`              | Windows Error Reporting Control Panel Support - Aegis-Privacy-Shield |
 | `ViewWAPPush`                    | Device Management Wireless Application Protocol (WAP) Push Message Routing Service - Aegis-Privacy-Shield |
 | `ViewAutologgerDiagTrack`        | Disable ETW Autologger DiagTrack Listener during System Startup (Event Tracing for Windows) - BSI |
+| `ViewUWPAccessLocation`          | Disable device's location access for Windows UWP apps |
 | `ViewDEP`                        | Data Execution Prevention (DEP) must be configured for at least OptOut - [W11 STIG V-253283](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253283) |
 | `ViewASLR`                       | Randomize memory allocations (Bottom-Up ASLR), must be on - Old W10 STIG V-220874 |
 | `ViewInsecureGuestLogons`        | Disable SMB client to use insecure guest logons to an SMB server - [W11 STIG V-253360](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253360) |
@@ -113,6 +114,7 @@ Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE
 | `ViewPowerShellV2`               | PowerShell 2.0 feature must be disabled - [W11 STIG V-253285](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253285) |
 | `ViewTelnetClient`               | Uninstall Telnet Client - [W11 STIG V-253278](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253278) |
 | `ViewTFTPClient`                 | Uninstall TFTP Client - [W11 STIG V-253279](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253279) |
+| `ViewWindowsHello`               | Windows Hello Authentification |
 | `ViewAdobeEnhancedSecurity`      | Adobe Enhanced Security in a Standalone Application or In Browser - [App STIG V-213168](https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213168) - [App STIG V-213169](https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track/2021-06-22/finding/V-213169) |
 | `ViewAdminNetApps`               | Disabling Net Applications for Admins - [W11 STIG V-253294](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253294) |
 | `ViewFirefoxTLS`                 | Firefox TLS Minimum Version - [App STIG V-251546](https://www.stigviewer.com/stigs/mozilla_firefox/2025-02-11/finding/V-251546) |
