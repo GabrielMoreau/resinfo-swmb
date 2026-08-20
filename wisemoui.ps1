@@ -701,95 +701,11 @@ $BtnSWCEFrame.Text = "Check Compliance Enforcement"
 $Form.Controls.Add($BtnSWCEFrame)
 
 ################################################################
-# Software Frame
-################################################################
-
-$FOriginX = 285
-$FOriginY = 240
-
-# Software
-$BtnSoftware = New-Object System.Windows.Forms.Button
-$BtnSoftware.Location = [System.Drawing.Point]::new($FOriginX + 15, $FOriginY + 15)
-$BtnSoftware.Width = 80
-$BtnSoftware.Height = 50
-$BtnSoftware.Text = "View All Software"
-$Form.controls.Add($BtnSoftware)
-$BtnSoftware.Add_Click({
-	Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSScriptRoot\Tasks\View-All-Software.ps1`"" -WindowStyle Hidden
-})
-
-$BtnAddDelProgram = New-Object System.Windows.Forms.Button
-$BtnAddDelProgram.Location = [System.Drawing.Point]::new($FOriginX + 94, $FOriginY + 15)
-$BtnAddDelProgram.Width = 15
-$BtnAddDelProgram.Height = 20
-$BtnAddDelProgram.Text = "R"
-$Form.controls.Add($BtnAddDelProgram)
-$BtnAddDelProgram.Add_Click({
-	# control.exe /name Microsoft.ProgramsAndFeatures
-	Start-Process -FilePath "${Env:SystemRoot}\System32\control.exe" -ArgumentList "appwiz.cpl"
-})
-$ToolTip.SetToolTip($BtnAddDelProgram, "Install / Remove programs")
-
-$ProgramCounter = 0
-If (Test-Path -LiteralPath "${Env:ProgramFiles(x86)}\BleachBit\bleachbit.exe") {
-	$BtnBleachBit = New-Object System.Windows.Forms.Button
-	$BtnBleachBit.Location = [System.Drawing.Point]::new($FOriginX + 94, $FOriginY + 35)
-	$BtnBleachBit.Width = 15
-	$BtnBleachBit.Height = 20
-	$BtnBleachBit.Text = "B"
-	$Form.controls.Add($BtnBleachBit)
-	$BtnBleachBit.Add_Click({
-		Start-Process -FilePath "${Env:ProgramFiles(x86)}\BleachBit\bleachbit.exe"
-	})
-	$ToolTip.SetToolTip($BtnBleachBit, "BleachBit Program")
-	$ProgramCounter++
-}
-If (Test-Path -LiteralPath "${Env:ProgramFiles}\WinDirStat\WinDirStat.exe") {
-	$BtnWinDirStat = New-Object System.Windows.Forms.Button
-	$BtnWinDirStat.Location = [System.Drawing.Point]::new(($FOriginX + 94 + $ProgramCounter * 16), $FOriginY + 35)
-	$BtnWinDirStat.Width = 15
-	$BtnWinDirStat.Height = 20
-	$BtnWinDirStat.Text = "S"
-	$Form.controls.Add($BtnWinDirStat)
-	$BtnWinDirStat.Add_Click({
-		Start-Process -FilePath "${Env:ProgramFiles}\WinDirStat\WinDirStat.exe"
-	})
-	$ToolTip.SetToolTip($BtnWinDirStat, "WinDirStat Program")
-	$ProgramCounter++
-}
-If (Test-Path -LiteralPath "${Env:ProgramFiles}\CCleaner\CCleaner64.exe") {
-	$BtnSoftCCleaner = New-Object System.Windows.Forms.Button
-	$BtnSoftCCleaner.Location = [System.Drawing.Point]::new(($FOriginX + 94 + $ProgramCounter * 16), $FOriginY + 35)
-	$BtnSoftCCleaner.Width = 15
-	$BtnSoftCCleaner.Height = 20
-	$BtnSoftCCleaner.Text = "C"
-	$Form.controls.Add($BtnSoftCCleaner)
-	$BtnSoftCCleaner.Add_Click({
-		Start-Process -FilePath "${Env:ProgramFiles}\CCleaner\CCleaner64.exe"
-	})
-	$ToolTip.SetToolTip($BtnSoftCCleaner, "CCleaner Program")
-	$ProgramCounter++
-}
-
-# Exit
-$BtnExit = New-Object System.Windows.Forms.Button
-$BtnExit.Location = [System.Drawing.Point]::new($FOriginX + 165, $FOriginY + 15)
-$BtnExit.Width = 80
-$BtnExit.Height = 50
-$BtnExit.Text = "Exit"
-$BtnExit.Add_Click({
-	$Form.Close()
-})
-# https://learn.microsoft.com/fr-fr/dotnet/api/system.windows.media.colors
-$BtnExit.BackColor = 'PaleVioletRed'
-$Form.controls.Add($BtnExit)
-
-################################################################
 # Console Frame
 ################################################################
 
 $FOriginX = 285
-$FOriginY = 315
+$FOriginY = 250
 
 # Secpol Console
 $BtnConsoleSecpol = New-Object System.Windows.Forms.Button
@@ -874,6 +790,90 @@ $BtnConsoleFrame.Width = 255
 $BtnConsoleFrame.Height = 60
 $BtnConsoleFrame.Text = "Consoles"
 $Form.Controls.Add($BtnConsoleFrame)
+
+################################################################
+# Software Frame
+################################################################
+
+$FOriginX = 285
+$FOriginY = 310
+
+# Software
+$BtnSoftware = New-Object System.Windows.Forms.Button
+$BtnSoftware.Location = [System.Drawing.Point]::new($FOriginX + 15, $FOriginY + 15)
+$BtnSoftware.Width = 80
+$BtnSoftware.Height = 50
+$BtnSoftware.Text = "View All Software"
+$Form.controls.Add($BtnSoftware)
+$BtnSoftware.Add_Click({
+	Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSScriptRoot\Tasks\View-All-Software.ps1`"" -WindowStyle Hidden
+})
+
+$BtnAddDelProgram = New-Object System.Windows.Forms.Button
+$BtnAddDelProgram.Location = [System.Drawing.Point]::new($FOriginX + 94, $FOriginY + 15)
+$BtnAddDelProgram.Width = 15
+$BtnAddDelProgram.Height = 20
+$BtnAddDelProgram.Text = "R"
+$Form.controls.Add($BtnAddDelProgram)
+$BtnAddDelProgram.Add_Click({
+	# control.exe /name Microsoft.ProgramsAndFeatures
+	Start-Process -FilePath "${Env:SystemRoot}\System32\control.exe" -ArgumentList "appwiz.cpl"
+})
+$ToolTip.SetToolTip($BtnAddDelProgram, "Install / Remove programs")
+
+$ProgramCounter = 0
+If (Test-Path -LiteralPath "${Env:ProgramFiles(x86)}\BleachBit\bleachbit.exe") {
+	$BtnBleachBit = New-Object System.Windows.Forms.Button
+	$BtnBleachBit.Location = [System.Drawing.Point]::new($FOriginX + 94, $FOriginY + 35)
+	$BtnBleachBit.Width = 15
+	$BtnBleachBit.Height = 20
+	$BtnBleachBit.Text = "B"
+	$Form.controls.Add($BtnBleachBit)
+	$BtnBleachBit.Add_Click({
+		Start-Process -FilePath "${Env:ProgramFiles(x86)}\BleachBit\bleachbit.exe"
+	})
+	$ToolTip.SetToolTip($BtnBleachBit, "BleachBit Program")
+	$ProgramCounter++
+}
+If (Test-Path -LiteralPath "${Env:ProgramFiles}\WinDirStat\WinDirStat.exe") {
+	$BtnWinDirStat = New-Object System.Windows.Forms.Button
+	$BtnWinDirStat.Location = [System.Drawing.Point]::new(($FOriginX + 94 + $ProgramCounter * 16), $FOriginY + 35)
+	$BtnWinDirStat.Width = 15
+	$BtnWinDirStat.Height = 20
+	$BtnWinDirStat.Text = "S"
+	$Form.controls.Add($BtnWinDirStat)
+	$BtnWinDirStat.Add_Click({
+		Start-Process -FilePath "${Env:ProgramFiles}\WinDirStat\WinDirStat.exe"
+	})
+	$ToolTip.SetToolTip($BtnWinDirStat, "WinDirStat Program")
+	$ProgramCounter++
+}
+If (Test-Path -LiteralPath "${Env:ProgramFiles}\CCleaner\CCleaner64.exe") {
+	$BtnSoftCCleaner = New-Object System.Windows.Forms.Button
+	$BtnSoftCCleaner.Location = [System.Drawing.Point]::new(($FOriginX + 94 + $ProgramCounter * 16), $FOriginY + 35)
+	$BtnSoftCCleaner.Width = 15
+	$BtnSoftCCleaner.Height = 20
+	$BtnSoftCCleaner.Text = "C"
+	$Form.controls.Add($BtnSoftCCleaner)
+	$BtnSoftCCleaner.Add_Click({
+		Start-Process -FilePath "${Env:ProgramFiles}\CCleaner\CCleaner64.exe"
+	})
+	$ToolTip.SetToolTip($BtnSoftCCleaner, "CCleaner Program")
+	$ProgramCounter++
+}
+
+# Exit
+$BtnExit = New-Object System.Windows.Forms.Button
+$BtnExit.Location = [System.Drawing.Point]::new($FOriginX + 165, $FOriginY + 15)
+$BtnExit.Width = 80
+$BtnExit.Height = 50
+$BtnExit.Text = "Exit"
+$BtnExit.Add_Click({
+	$Form.Close()
+})
+# https://learn.microsoft.com/fr-fr/dotnet/api/system.windows.media.colors
+$BtnExit.BackColor = 'PaleVioletRed'
+$Form.controls.Add($BtnExit)
 
 ################################################################
 ################################################################
