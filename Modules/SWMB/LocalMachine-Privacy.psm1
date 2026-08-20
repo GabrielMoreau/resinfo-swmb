@@ -196,13 +196,6 @@ Function TweakViewTelemetry { # RESINFO
 		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 
 	$Hash = @{}
-	$Rules = [ordered]@{
-		'Microsoft.549981C3F5F10' = @{
-			OkValues = @($Null)
-			Description = "Cortana Voice and productivity assistants"
-			Remediation = "DisableTelemetry"
-		}
-	}
 	$AllTasks = Get-ScheduledTask
 	$TelemetryTasks = @(
 		'Microsoft Compatibility Appraiser',
