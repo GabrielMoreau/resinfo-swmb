@@ -820,13 +820,17 @@ Function SWMB_GetRegistrySettings {
 			Continue
 		}
 
+		$RegKey = If ($Rules[$Name].Key) { $Rules[$Name].Key } Else { $Name }
+		If (-not $Rules[$Name].Description) {
+			$Rules[$Name].Description = "Register $RegPath // $RegKey"
+		}
+
 		If (-not $PropsCache.ContainsKey($RegPath)) {
 			$PropsCache[$RegPath] = Get-ItemProperty -Path $RegPath -ErrorAction SilentlyContinue
 		}
-		$Props = $PropsCache[$RegPath]
 
+		$Props = $PropsCache[$RegPath]
 		If ($Props) {
-			$RegKey = If ($Rules[$Name].Key) { $Rules[$Name].Key } Else { $Name }
 			If ($Null -ne $Props.PSObject.Properties[$RegKey]) {
 				$Hash[$Name] = $Props.$RegKey
 			}
