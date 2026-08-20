@@ -173,7 +173,6 @@ Function TweakViewTelemetry { # RESINFO
 	}
 	SWMB_GetRegistrySettings -Rules $RegFields | SWMB_WriteSettings
 
-	$Hash = @{}
 	$AllTasks = Get-ScheduledTask
 	$TelemetryTasks = @(
 		'Microsoft Compatibility Appraiser',
@@ -186,6 +185,8 @@ Function TweakViewTelemetry { # RESINFO
 		'OfficeTelemetryAgentFallBack2016',
 		'OfficeTelemetryAgentLogOn2016'
 		)
+	$Hash = @{}
+	$Rules = [ordered]@{}
 	ForEach ($TaskName in $TelemetryTasks) {
 		$DisplayName = $TaskName `
 			-Replace 'Microsoft-Windows-DiskDiagnosticDataCollector', 'DiskDiagnosticDataCollector' `
