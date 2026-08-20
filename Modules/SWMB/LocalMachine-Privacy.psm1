@@ -93,107 +93,85 @@ Function TweakEnableTelemetry {
 # View
 Function TweakViewTelemetry { # RESINFO
 	Write-Output "Viewing Telemetry..."
-	$RegPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection'
-		$RegFields = @{
-			'AllowTelemetry' = @{
-				OkValues = @(0)
-				DisplayName = 'MS-AllowTelemetry'
-				Description = "Register $RegPath -- AllowTelemetry"
-				Remediation = "DisableTelemetry"
-			}
+	$RegFields = [ordered]@{
+		'AllowTelemetry1' = @{
+			Path = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection'
+			Key = 'AllowTelemetry'
+			OkValues = @(0)
+			DisplayName = 'MS-AllowTelemetry'
+			Description = "Register $RegPath -- AllowTelemetry"
+			Remediation = "DisableTelemetry"
 		}
-		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
-	$RegPath = 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection'
-		$RegFields = @{
-			'AllowTelemetry' = @{
-				OkValues = @(0)
-				DisplayName = 'MSWow64-AllowTelemetry'
-				Description = "Register $RegPath -- AllowTelemetry"
-				Remediation = "DisableTelemetry"
-			}
+		'AllowTelemetry2' = @{
+			Path = 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection'
+			Key = 'AllowTelemetry'
+			OkValues = @(0)
+			DisplayName = 'MSWow64-AllowTelemetry'
+			Description = "Register $RegPath -- AllowTelemetry"
+			Remediation = "DisableTelemetry"
 		}
-		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
-	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection'
-		$RegFields = @{
-			'AllowTelemetry' = @{
-				OkValues = @(0)
-				DisplayName = 'Policies-AllowTelemetry'
-				Description = "Register $RegPath -- AllowTelemetry"
-				Remediation = "DisableTelemetry"
-			}
+		'AllowTelemetry3' = @{
+			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection'
+			Key = 'AllowTelemetry'
+			OkValues = @(0)
+			DisplayName = 'Policies-AllowTelemetry'
+			Description = "Register $RegPath -- AllowTelemetry"
+			Remediation = "DisableTelemetry"
 		}
-		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
-	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds'
-		$RegFields = @{
-			'AllowBuildPreview' = @{
-				OkValues = @(0)
-				Description = "Register $RegPath -- AllowBuildPreview"
-				Remediation = "DisableTelemetry"
-			}
+		'AllowBuildPreview' = @{
+			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds'
+			OkValues = @(0)
+			Description = "Register $RegPath -- AllowBuildPreview"
+			Remediation = "DisableTelemetry"
 		}
-		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
-	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\CurrentVersion\Software Protection Platform'
-		$RegFields = @{
-			'NoGenTicket' = @{
-				OkValues = @(1)
-				Description = "Register $RegPath -- NoGenTicket"
-				Remediation = "DisableTelemetry"
-			}
+		'NoGenTicket' = @{
+			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\CurrentVersion\Software Protection Platform'
+			OkValues = @(1)
+			Description = "Register $RegPath -- NoGenTicket"
+			Remediation = "DisableTelemetry"
 		}
-		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
-	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\SQMClient\Windows'
-		$RegFields = @{
-			'CEIPEnable' = @{
-				OkValues = @(0)
-				DisplayName = 'SQMClient-CEIPEnable'
-				Description = "Register $RegPath -- CEIPEnable"
-				Remediation = "DisableTelemetry"
-			}
+		'CEIPEnable1' = @{
+			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\SQMClient\Windows'
+			Key = 'CEIPEnable'
+			OkValues = @(0)
+			DisplayName = 'SQMClient-CEIPEnable'
+			Description = "Register $RegPath -- CEIPEnable"
+			Remediation = "DisableTelemetry"
 		}
-		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
-
-	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat'
-		$RegFields = @{
-			'AITEnable' = @{
-				OkValues = @(0)
-				Description = "Register $RegPath -- AITEnable"
-				Remediation = "DisableTelemetry"
-			}
-			'DisableInventory' = @{
-				OkValues = @(1)
-				Description = "Register $RegPath -- DisableInventory"
-				Remediation = "DisableTelemetry"
-			}
+		'AITEnable' = @{
+			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat'
+			OkValues = @(0)
+			Description = "Register $RegPath -- AITEnable"
+			Remediation = "DisableTelemetry"
 		}
-		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
-	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\AppV\CEIP'
-		$RegFields = @{
-			'CEIPEnable' = @{
-				OkValues = @(0)
-				DisplayName = 'AppV-CEIPEnable'
-				Description = "Register $RegPath -- CEIPEnable"
-				Remediation = "DisableTelemetry"
-			}
+		'DisableInventory' = @{
+			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat'
+			OkValues = @(1)
+			Description = "Register $RegPath -- DisableInventory"
+			Remediation = "DisableTelemetry"
 		}
-		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
-	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\TabletPC'
-		$RegFields = @{
-			'PreventHandwritingDataSharing' = @{
-				OkValues = @(1)
-				Description = "Register $RegPath -- PreventHandwritingDataSharing"
-				Remediation = "DisableTelemetry"
-			}
+		'CEIPEnable2' = @{
+			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\AppV\CEIP'
+			Key = 'CEIPEnable'
+			OkValues = @(0)
+			DisplayName = 'AppV-CEIPEnable'
+			Description = "Register $RegPath -- CEIPEnable"
+			Remediation = "DisableTelemetry"
 		}
-		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
-	$RegPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\TextInput'
-		$RegFields = @{
-			'AllowLinguisticDataCollection' = @{
-				OkValues = @(0)
-				Description = "Register $RegPath -- AllowLinguisticDataCollection"
-				Remediation = "DisableTelemetry"
-			}
+		'PreventHandwritingDataSharing' = @{
+			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\TabletPC'
+			OkValues = @(1)
+			Description = "Register $RegPath -- PreventHandwritingDataSharing"
+			Remediation = "DisableTelemetry"
 		}
-		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+		'AllowLinguisticDataCollection' = @{
+			Path = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\TextInput'
+			OkValues = @(0)
+			Description = "Register $RegPath -- AllowLinguisticDataCollection"
+			Remediation = "DisableTelemetry"
+		}
+	}
+	SWMB_GetRegistrySettings -Rules $RegFields | SWMB_WriteSettings
 
 	$Hash = @{}
 	$AllTasks = Get-ScheduledTask
