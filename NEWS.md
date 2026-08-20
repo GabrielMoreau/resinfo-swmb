@@ -10,11 +10,17 @@ Add tree websites links in the [REFERENCES](REFERENCES.md) file:
 * Collection of awesome security hardening websites links
 * [Aegis Privacy Shield & Terminator](https://github.com/yarrowmartin3-prog/Aegis-Privacy-Shield)
 
+The `wisemoui.ps1` graphical interface has been updated.
+Here's a quick summary:
+
+* Rearrange the various frames relative to one another.
+* The position of each frame has been configured in the source code.
+  Each button is now positioned relative to its frame.
+
 Regarding the SWCE project:
 
 * Add `ViewCortana`, `ViewRecall`, `ViewDiagTrack`, `ViewPcaSvc`,
   `ViewCDPSvc`, `ViewWERCPlSupport`, `ViewWAPPush`, `ViewAutologgerDiagTrack` checks.
-
 
 New presets/rules:
 
