@@ -1254,22 +1254,39 @@ Function TweakEnableUWPAccessLocation { # RESINFO
 # https://answers.microsoft.com/en-us/windows/forum/windows_10-hello/how-to-disable-windows-hello/05ab5492-19c7-4d44-b762-d93b44a9cf65
 # https://www.minitool.com/news/disable-windows-hello.html
 # Computer Configuration -> Administrative Templates -> System -> Logon : Turn on PIN sign-in and select Disabled.
+
 # Disable
 Function TweakDisableWindowsHello { # RESINFO
 	Write-Output "Disabling (Block) Windows Hello Authentification..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Settings\AllowSignInOptions")) {
-		New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Settings\AllowSignInOptions" -Force | Out-Null
+	$RegPath = 'HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Settings\AllowSignInOptions'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Settings\AllowSignInOptions" -Name "value" -Type DWord -Value 0
+	Set-ItemProperty -Path $RegPath -Name "value" -Type DWord -Value 0
 }
 
 # Enable
 Function TweakEnableWindowsHello { # RESINFO
 	Write-Output "Enabling Windows Hello Authentification..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Settings\AllowSignInOptions")) {
-		New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Settings\AllowSignInOptions" -Force | Out-Null
+	$RegPath = 'HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Settings\AllowSignInOptions'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Settings\AllowSignInOptions" -Name "value" -Type DWord -Value 1
+	Set-ItemProperty -Path $RegPath -Name "value" -Type DWord -Value 1
+}
+
+# View
+Function TweakViewWindowsHello { # RESINFO
+	Write-Output "Viewing Windows Hello Authentification (0: Disable (Recommanded), 1: Enable)..."
+	$RegPath = 'HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Settings\AllowSignInOptions'
+	$RegFields = @{
+		'value' = @{
+			OkValues = @(0)
+			Description = "Windows Hello Authentification"
+			Remediation = "DisableWindowsHello"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################
