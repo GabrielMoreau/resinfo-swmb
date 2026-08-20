@@ -19,11 +19,13 @@ Here's a quick summary:
 
 Regarding the SWCE project:
 
-* Add `ViewCortana`, `ViewRecall`, `ViewDiagTrack`, `ViewPcaSvc`,
-  `ViewCDPSvc`, `ViewWERCPlSupport`, `ViewWAPPush`, `ViewAutologgerDiagTrack` checks.
+* Add `ViewTelemetry`, `ViewCortana`, `ViewRecall`, `ViewDiagTrack`,
+  `ViewPcaSvc`, `ViewCDPSvc`, `ViewWERCPlSupport`, `ViewWAPPush`,
+  `ViewAutologgerDiagTrack` checks.
 
 New presets/rules:
 
+* 2026/08/20 - `ViewTelemetry` -> Disable many Telemetry breaks Windows Insider Program and Microsoft Intune enrollment/deployment
 * 2026/08/19 - `ViewCortana` -> Digital assistant providing voice commands, search, reminders, and personalized assistance
 * 2026/08/19 - `ViewWAPPush` -> Device Management Wireless Application Protocol (WAP) Push Message Routing Service
 * 2026/08/18 - `DisableWERCPlSupport`/`EnableWERCPlSupport`/`ViewWERCPlSupport` -> Disable Windows Error Reporting Control Panel Support

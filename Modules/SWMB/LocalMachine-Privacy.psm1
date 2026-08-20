@@ -11,11 +11,13 @@
 
 ################################################################
 
-# Disable Telemetry
+# Telemetry
 # Note: This tweak also disables the possibility to join Windows Insider Program and breaks Microsoft Intune enrollment/deployment, as these feaures require Telemetry data.
 # Windows Update control panel may show message "Your device is at risk because it's out of date and missing important security and quality updates. Let's get you back on track so Windows can run more securely. Select this button to get going".
 # In such case, enable telemetry, run Windows update and then disable telemetry again.
 # See also https://github.com/Disassembler0/Win10-Initial-Setup-Script/issues/57 and https://github.com/Disassembler0/Win10-Initial-Setup-Script/issues/92
+
+# Disable
 Function TweakDisableTelemetry {
 	Write-Output "Disabling Telemetry..."
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" -Name "AllowTelemetry" -Type DWord -Value 0
@@ -62,7 +64,7 @@ Function TweakDisableTelemetry {
 	If (Get-ScheduledTask | Where-Object {$_.Taskname -eq "OfficeTelemetryAgentLogOn2016"}) {Disable-ScheduledTask -TaskName "Microsoft\Office\OfficeTelemetryAgentLogOn2016" -ErrorAction SilentlyContinue | Out-Null}
 }
 
-# Enable Telemetry
+# Enable
 Function TweakEnableTelemetry {
 	Write-Output "Enabling Telemetry..."
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" -Name "AllowTelemetry" -Type DWord -Value 3
@@ -88,11 +90,157 @@ Function TweakEnableTelemetry {
 	If (Get-ScheduledTask | Where-Object {$_.Taskname -eq "OfficeTelemetryAgentLogOn2016"}) {Enable-ScheduledTask -TaskName "Microsoft\Office\OfficeTelemetryAgentLogOn2016" -ErrorAction SilentlyContinue | Out-Null}
 }
 
+# View
+Function TweakViewTelemetry { # RESINFO
+	Write-Output "Viewing Telemetry..."
+	$RegPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection'
+		$RegFields = @{
+			'AllowTelemetry' = @{
+				OkValues = @(0)
+				DisplayName = 'MS-AllowTelemetry'
+				Description = "Register $RegPath -- AllowTelemetry"
+				Remediation = "DisableTelemetry"
+			}
+		}
+		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	$RegPath = 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection'
+		$RegFields = @{
+			'AllowTelemetry' = @{
+				OkValues = @(0)
+				DisplayName = 'MSWow64-AllowTelemetry'
+				Description = "Register $RegPath -- AllowTelemetry"
+				Remediation = "DisableTelemetry"
+			}
+		}
+		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection'
+		$RegFields = @{
+			'AllowTelemetry' = @{
+				OkValues = @(0)
+				DisplayName = 'Policies-AllowTelemetry'
+				Description = "Register $RegPath -- AllowTelemetry"
+				Remediation = "DisableTelemetry"
+			}
+		}
+		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds'
+		$RegFields = @{
+			'AllowBuildPreview' = @{
+				OkValues = @(0)
+				Description = "Register $RegPath -- AllowBuildPreview"
+				Remediation = "DisableTelemetry"
+			}
+		}
+		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\CurrentVersion\Software Protection Platform'
+		$RegFields = @{
+			'NoGenTicket' = @{
+				OkValues = @(1)
+				Description = "Register $RegPath -- NoGenTicket"
+				Remediation = "DisableTelemetry"
+			}
+		}
+		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\SQMClient\Windows'
+		$RegFields = @{
+			'CEIPEnable' = @{
+				OkValues = @(0)
+				DisplayName = 'SQMClient-CEIPEnable'
+				Description = "Register $RegPath -- CEIPEnable"
+				Remediation = "DisableTelemetry"
+			}
+		}
+		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat'
+		$RegFields = @{
+			'AITEnable' = @{
+				OkValues = @(0)
+				Description = "Register $RegPath -- AITEnable"
+				Remediation = "DisableTelemetry"
+			}
+			'DisableInventory' = @{
+				OkValues = @(1)
+				Description = "Register $RegPath -- DisableInventory"
+				Remediation = "DisableTelemetry"
+			}
+		}
+		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\AppV\CEIP'
+		$RegFields = @{
+			'CEIPEnable' = @{
+				OkValues = @(0)
+				DisplayName = 'AppV-CEIPEnable'
+				Description = "Register $RegPath -- CEIPEnable"
+				Remediation = "DisableTelemetry"
+			}
+		}
+		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\TabletPC'
+		$RegFields = @{
+			'PreventHandwritingDataSharing' = @{
+				OkValues = @(1)
+				Description = "Register $RegPath -- PreventHandwritingDataSharing"
+				Remediation = "DisableTelemetry"
+			}
+		}
+		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	$RegPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\TextInput'
+		$RegFields = @{
+			'AllowLinguisticDataCollection' = @{
+				OkValues = @(0)
+				Description = "Register $RegPath -- AllowLinguisticDataCollection"
+				Remediation = "DisableTelemetry"
+			}
+		}
+		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+
+	$Hash = @{}
+	$Rules = [ordered]@{
+		'Microsoft.549981C3F5F10' = @{
+			OkValues = @($Null)
+			Description = "Cortana Voice and productivity assistants"
+			Remediation = "DisableTelemetry"
+		}
+	}
+	$AllTasks = Get-ScheduledTask
+	$TelemetryTasks = @(
+		'Microsoft Compatibility Appraiser',
+		'ProgramDataUpdater',
+		'Proxy',
+		'Consolidator',
+		'UsbCeip',
+		'Microsoft-Windows-DiskDiagnosticDataCollector',
+		'Office ClickToRun Service Monitor',
+		'OfficeTelemetryAgentFallBack2016',
+		'OfficeTelemetryAgentLogOn2016'
+		)
+	ForEach ($TaskName in $TelemetryTasks) {
+		$DisplayName = $TaskName `
+			-Replace 'Microsoft-Windows-DiskDiagnosticDataCollector', 'DiskDiagnosticDataCollector' `
+			-Replace 'TelemetryAgent', 'TelemAgent' `
+			-Replace ' ', ''
+		$Rules[$TaskName]  = @{
+			OkValues = @('Disabled', $Null)
+			DisplayName = $DisplayName
+			Description = "ScheduledTask $TaskName"
+			Remediation = "DisableTelemetry"
+		}
+
+		$Task = $AllTasks | Where-Object { $_.TaskName -eq $TaskName }
+		If (-not $Task) {
+			Continue
+		}
+		$Hash[$TaskName] = $($Task.State)
+	}
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+}
+
 ################################################################
 
 # Cortana is a Microsoft's digital assistant providing voice commands, search, reminders, and personalized assistance.
 
-# Disable Cortana
+# Disable
 Function TweakDisableCortana {
 	Write-Output "Disabling Cortana. See DisableCortana_CU..."
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Experience\AllowCortana" -Name "Value" -Type DWord -Value 0
@@ -107,7 +255,7 @@ Function TweakDisableCortana {
 	Get-AppxPackage -AllUsers -Name "Microsoft.549981C3F5F10" | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue
 }
 
-# Enable Cortana
+# Enable
 Function TweakEnableCortana {
 	Write-Output "Enabling Cortana. See EnableCortana_CU..."
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Experience\AllowCortana" -Name "Value" -Type DWord -Value 1
@@ -118,7 +266,7 @@ Function TweakEnableCortana {
 
 # View
 Function TweakViewCortana { # RESINFO
-	Write-Output "Viewing Cortana (0: Disable, 1 or not exist: Enable)..."
+	Write-Output "Viewing Cortana (0: Disable (Recommanded), 1 or not exist: Enable)..."
 	$RegPath = 'HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Experience\AllowCortana'
 	$RegFields = @{
 		'Value' = @{
@@ -177,7 +325,7 @@ Function TweakViewCortana { # RESINFO
 # https://www.malekal.com/desactiver-recall-windows-11/
 # https://www.justgeek.fr/windows-11-desactiver-recall-141674/
 
-# Disable Recall
+# Disable
 Function TweakDisableRecall { # RESINFO
 	Write-Output "Disabling Recall..."
 	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Recall")) {
@@ -186,7 +334,7 @@ Function TweakDisableRecall { # RESINFO
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Recall" -Name "AllowRecall" -Type DWord -Value 0
 }
 
-# Enable Recall
+# Enable
 Function TweakEnableRecall { # RESINFO
 	Write-Output "Enabling Recall..."
 	Remove-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Recall" -Force -ErrorAction SilentlyContinue | Out-Null
@@ -208,7 +356,9 @@ Function TweakViewRecall { # RESINFO
 
 ################################################################
 
-# Disable Wi-Fi Sense
+# Wi-Fi Sense
+
+# Disable
 Function TweakDisableWiFiSense {
 	Write-Output "Disabling Wi-Fi Sense..."
 	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting")) {
@@ -226,7 +376,7 @@ Function TweakDisableWiFiSense {
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config" -Name "WiFISenseAllowed" -Type DWord -Value 0
 }
 
-# Enable Wi-Fi Sense
+# Enable
 Function TweakEnableWiFiSense {
 	Write-Output "Enabling Wi-Fi Sense..."
 	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting")) {

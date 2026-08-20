@@ -17,7 +17,7 @@ SysRequireAdmin                                                                 
 # $PRESET "C:\Program Files\SWMB\Presets\LocalMachine-Boot-Recommanded.preset"
 
 ### Privacy Tweaks ###
-DisableTelemetry                                # EnableTelemetry
+DisableTelemetry                                # EnableTelemetry                               # ViewTelemetry                 ## Disable many Telemetry breaks Windows Insider Program and Microsoft Intune enrollment/deployment
 DisableCortana                                  # EnableCortana                                 # ViewCortana                   ## Cortana is a Digital assistant providing voice commands, search, reminders, and personalized assistance
 DisableCortanaAboveLock                         # EnableCortanaAboveLock
 DisableDisplayWebResults                        # EnableDisplayWebResults

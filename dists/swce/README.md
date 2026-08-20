@@ -72,6 +72,7 @@ Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE
 | Rule Name       | Description |
 |-----------------|-------------|
 | `SysRequireAdmin`                | Application must be run under an administrator account |
+| `ViewTelemetry`                  | Disable many Telemetry breaks Windows Insider Program and Microsoft Intune enrollment/deployment |
 | `ViewCortana`                    | Cortana is a Digital assistant providing voice commands, search, reminders, and personalized assistance |
 | `ViewRecall`                     | Recall is a feature that allows you to quickly access your documents, applications, and personal information through indexing |
 | `ViewDiagTrack`                  | Connected User Experiences and Telemetry (Diagnostics Tracking Service) - ANSSI Annexe A2 |
