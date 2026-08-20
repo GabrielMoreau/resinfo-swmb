@@ -22,10 +22,13 @@ Regarding the SWCE project:
 * Add `ViewTelemetry`, `ViewCortana`, `ViewRecall`, `ViewDiagTrack`,
   `ViewPcaSvc`, `ViewCDPSvc`, `ViewWERCPlSupport`, `ViewWAPPush`,
   `ViewAutologgerDiagTrack`,
-  `ViewWindowsHello`, `ViewUWPAccessLocation` checks.
+  `ViewWindowsHello`, `ViewUWPAccessLocation`,
+  `ViewWidgetsNewsAndInterests`, `ViewMostUsedApps`
+  checks.
 
 New presets/rules:
 
+* 2026/08/20 - `ViewScriptHost` -> Windows Script Host (execution of *.vbs scripts and alike)
 * 2026/08/20 - `ViewUWPAccessLocation` -> Disable device's location access for Windows UWP apps
 * 2026/08/20 - `ViewWindowsHello` -> Windows Hello Authentification
 * 2026/08/20 - `ViewTelemetry` -> Disable many Telemetry breaks Windows Insider Program and Microsoft Intune enrollment/deployment
