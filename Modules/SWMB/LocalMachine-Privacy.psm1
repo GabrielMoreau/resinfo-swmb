@@ -94,80 +94,69 @@ Function TweakEnableTelemetry {
 Function TweakViewTelemetry { # RESINFO
 	Write-Output "Viewing Telemetry..."
 	$RegFields = [ordered]@{
-		'AllowTelemetry1' = @{
+		'1.AllowTelemetry' = @{
 			Path = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection'
 			Key = 'AllowTelemetry'
 			OkValues = @(0)
 			DisplayName = 'MS-AllowTelemetry'
-			Description = "Register $RegPath -- AllowTelemetry"
 			Remediation = "DisableTelemetry"
 		}
-		'AllowTelemetry2' = @{
+		'2.AllowTelemetry' = @{
 			Path = 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection'
 			Key = 'AllowTelemetry'
 			OkValues = @(0)
 			DisplayName = 'MSWow64-AllowTelemetry'
-			Description = "Register $RegPath -- AllowTelemetry"
 			Remediation = "DisableTelemetry"
 		}
-		'AllowTelemetry3' = @{
+		'3.AllowTelemetry' = @{
 			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection'
 			Key = 'AllowTelemetry'
 			OkValues = @(0)
 			DisplayName = 'Policies-AllowTelemetry'
-			Description = "Register $RegPath -- AllowTelemetry"
 			Remediation = "DisableTelemetry"
 		}
 		'AllowBuildPreview' = @{
 			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds'
 			OkValues = @(0)
-			Description = "Register $RegPath -- AllowBuildPreview"
 			Remediation = "DisableTelemetry"
 		}
 		'NoGenTicket' = @{
 			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\CurrentVersion\Software Protection Platform'
 			OkValues = @(1)
-			Description = "Register $RegPath -- NoGenTicket"
 			Remediation = "DisableTelemetry"
 		}
-		'CEIPEnable1' = @{
+		'1.CEIPEnable' = @{
 			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\SQMClient\Windows'
 			Key = 'CEIPEnable'
 			OkValues = @(0)
 			DisplayName = 'SQMClient-CEIPEnable'
-			Description = "Register $RegPath -- CEIPEnable"
 			Remediation = "DisableTelemetry"
 		}
 		'AITEnable' = @{
 			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat'
 			OkValues = @(0)
-			Description = "Register $RegPath -- AITEnable"
 			Remediation = "DisableTelemetry"
 		}
 		'DisableInventory' = @{
 			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat'
 			OkValues = @(1)
-			Description = "Register $RegPath -- DisableInventory"
 			Remediation = "DisableTelemetry"
 		}
-		'CEIPEnable2' = @{
+		'2.CEIPEnable' = @{
 			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\AppV\CEIP'
 			Key = 'CEIPEnable'
 			OkValues = @(0)
 			DisplayName = 'AppV-CEIPEnable'
-			Description = "Register $RegPath -- CEIPEnable"
 			Remediation = "DisableTelemetry"
 		}
 		'PreventHandwritingDataSharing' = @{
 			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\TabletPC'
 			OkValues = @(1)
-			Description = "Register $RegPath -- PreventHandwritingDataSharing"
 			Remediation = "DisableTelemetry"
 		}
 		'AllowLinguisticDataCollection' = @{
 			Path = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\TextInput'
 			OkValues = @(0)
-			Description = "Register $RegPath -- AllowLinguisticDataCollection"
 			Remediation = "DisableTelemetry"
 		}
 	}
@@ -239,37 +228,26 @@ Function TweakEnableCortana {
 # View
 Function TweakViewCortana { # RESINFO
 	Write-Output "Viewing Cortana (0: Disable (Recommanded), 1 or not exist: Enable)..."
-	$RegPath = 'HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Experience\AllowCortana'
 	$RegFields = @{
 		'Value' = @{
+			Path = 'HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Experience\AllowCortana'
 			OkValues = @(0)
-			DisplayName = 'ExperienceAllowCortana'
-			Description = "Experience AllowCortana register key"
+			DisplayName = 'Experience-AllowCortana'
 			Remediation = "DisableCortana"
 		}
-	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
-
-	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search'
-	$RegFields = @{
 		'AllowCortana' = @{
+			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search'
 			OkValues = @(0)
-			DisplayName = 'WindowsSearchCortana'
-			Description = "Windows Search AllowCortana register key"
+			DisplayName = 'WindowsSearch-Cortana'
 			Remediation = "DisableCortana"
 		}
-	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
-
-	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization'
-	$RegFields = @{
 		'AllowInputPersonalization' = @{
+			Path = 'HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization'
 			OkValues = @(0)
-			Description = "InputPersonalization register key"
 			Remediation = "DisableCortana"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Rules $RegFields | SWMB_WriteSettings
 
 	$Hash = @{}
 	$Rules = [ordered]@{
