@@ -58,6 +58,13 @@ $Form = New-Object System.Windows.Forms.Form
 $Form.ClientSize = '550,390'
 $Form.Text = "SWMB: Secure Windows Mode Batch / $UptimeStr"
 
+################################################################
+# Logo Frame
+################################################################
+
+$FOriginX = 20
+$FOriginY = 10
+
 # Help
 $BtnHelp = New-Object System.Windows.Forms.Button
 $BtnHelp.Location = New-Object System.Drawing.Point($FOriginX + 15,15)
@@ -96,7 +103,7 @@ $FOriginY = 10
 # Bitlocker Status
 $BitlockerStatus, $BitlockerColor = SWMB_GetBitLockerStatus -Drive ${Env:SystemDrive}
 $BtnBitlockerStatus = New-Object System.Windows.Forms.Label
-$BtnBitlockerStatus.Location = New-Object System.Drawing.Size($FOriginX + 10,25)
+$BtnBitlockerStatus.Location = New-Object System.Drawing.Size($FOriginX + 10, $FOriginY + 15)
 $BtnBitlockerStatus.Width = 220
 $BtnBitlockerStatus.Height = 20
 $BtnBitlockerStatus.BackColor = "Transparent"
@@ -106,7 +113,7 @@ $Form.Controls.Add($BtnBitlockerStatus)
 
 # Bitlocker Crypt
 $BtnCrypt = New-Object System.Windows.Forms.Button
-$BtnCrypt.Location = New-Object System.Drawing.Point($FOriginX + 10,50)
+$BtnCrypt.Location = New-Object System.Drawing.Point($FOriginX + 10, $FOriginY + 40)
 $BtnCrypt.Width = 110
 $BtnCrypt.Height = 60
 $BtnCrypt.Text = "Crypt all Disks`nwith Bitlocker"
@@ -117,7 +124,7 @@ $BtnCrypt.Add_Click({
 
 # TPM Console
 $BtnConsoleTPM = New-Object System.Windows.Forms.Button
-$BtnConsoleTPM.Location = New-Object System.Drawing.Point($FOriginX + 120,50)
+$BtnConsoleTPM.Location = New-Object System.Drawing.Point($FOriginX + 120, $FOriginY + 40)
 $BtnConsoleTPM.Width = 15
 $BtnConsoleTPM.Height = 20
 $BtnConsoleTPM.Text = "T"
@@ -129,7 +136,7 @@ $ToolTip.SetToolTip($BtnConsoleTPM, "TPM Console")
 
 # Bitlocker Console
 $BtnConsoleBitlocker = New-Object System.Windows.Forms.Button
-$BtnConsoleBitlocker.Location = New-Object System.Drawing.Point($FOriginX + 120,70)
+$BtnConsoleBitlocker.Location = New-Object System.Drawing.Point($FOriginX + 120, $FOriginY + 60)
 $BtnConsoleBitlocker.Width = 15
 $BtnConsoleBitlocker.Height = 20
 $BtnConsoleBitlocker.Text = "B"
@@ -145,7 +152,7 @@ If ($BitlockerStatus -cmatch "Suspend") {
 	$BitlockerAction = "Resume"
 }
 $BtnBitlockerAction = New-Object System.Windows.Forms.Button
-$BtnBitlockerAction.Location = New-Object System.Drawing.Point(170,50)
+$BtnBitlockerAction.Location = New-Object System.Drawing.Point($FOriginX + 150, $FOriginY + 40)
 $BtnBitlockerAction.Width = 80
 $BtnBitlockerAction.Height = 60
 $BtnBitlockerAction.BackColor = "Transparent"
@@ -229,20 +236,6 @@ $BtnTaskBootCheck.Height = 20
 $BtnTaskBootCheck.Text = "C"
 $Form.controls.Add($BtnTaskBootCheck)
 $BtnTaskBootCheck.Add_Click({
-#	$BtnTaskBootStatus.Text = "Check..."
-#	$Message = @(& $PSScriptRoot\Tasks\LocalMachine-Boot.ps1 -Mode Check)
-#	$TempWindow = New-Object System.Windows.Forms.Form -Property @{TopMost = $True}
-#	$TextBox                      = New-Object System.Windows.Forms.TextBox
-#	$TextBox.Multiline            = $True
-#	$TextBox.Text                 = $Message -join "`r`n"
-#	$TextBox.Font                 = New-Object System.Drawing.Font("Consolas",9,[System.Drawing.FontStyle]::Regular)
-#	$TextBox.Size                 = New-Object System.Drawing.Size(400,400)
-#	$TextBox.Location             = New-Object System.Drawing.Point(20,70)
-#	$TextBox.Scrollbars          = "Vertical"
-#	$TextBox.BackColor            = "#1F1F1F"
-#	$TextBox.ForeColor            = 'Cyan'
-#	$TempWindow.Controls.Add($TextBox)
-#	$TempWindow.ShowDialog() # | Out-String
 	& $PSScriptRoot\Tasks\LocalMachine-Boot.ps1 -Mode Check `
 		| Out-GridView -Title "SWMB: Check Boot sequence tweaks on the ${Env:ComputerName} computer - $(Get-Date)"
 })
@@ -341,7 +334,7 @@ $BtnTaskPostInstallRun.Add_Click({
 })
 
 $BtnTaskPostInstallCheck = New-Object System.Windows.Forms.Button
-$BtnTaskPostInstallCheck.Location = New-Object System.Drawing.Point(154, $FOriginY + 60)
+$BtnTaskPostInstallCheck.Location = New-Object System.Drawing.Point($FOriginX + 134, $FOriginY + 60)
 $BtnTaskPostInstallCheck.Width = 15
 $BtnTaskPostInstallCheck.Height = 20
 $BtnTaskPostInstallCheck.Text = "C"
@@ -559,7 +552,7 @@ If ($RunningVersion -ne $PublishedVersion) {
 
 # System Property
 $BtnSystemProperty = New-Object System.Windows.Forms.Button
-$BtnSystemProperty.Location = New-Object System.Drawing.Point($FOriginX + 175,310)
+$BtnSystemProperty.Location = New-Object System.Drawing.Point($FOriginX + 175, $FOriginY + 70)
 $BtnSystemProperty.Width = 55
 $BtnSystemProperty.Height = 20
 $BtnSystemProperty.Text = "Property"
@@ -571,7 +564,7 @@ $ToolTip.SetToolTip($BtnSystemProperty, "System Property")
 
 # System Information
 $BtnSystemInformation = New-Object System.Windows.Forms.Button
-$BtnSystemInformation.Location = New-Object System.Drawing.Point($FOriginX + 230,310)
+$BtnSystemInformation.Location = New-Object System.Drawing.Point($FOriginX + 230, $FOriginY + 70)
 $BtnSystemInformation.Width = 15
 $BtnSystemInformation.Height = 20
 $BtnSystemInformation.Text = "I"
@@ -584,7 +577,7 @@ $ToolTip.SetToolTip($BtnSystemInformation, "System Information")
 # Hostname
 $HostId = (SWMB_GetHostId)
 $BtnHost = New-Object System.Windows.Forms.Label
-$BtnHost.Location = New-Object System.Drawing.Size($FOriginX + 10,310)
+$BtnHost.Location = New-Object System.Drawing.Size($FOriginX + 10, $FOriginY + 70)
 $BtnHost.Width = 230
 $BtnHost.Height = 40
 $BtnHost.BackColor = "Transparent"
@@ -593,7 +586,7 @@ $Form.Controls.Add($BtnHost)
 
 # Windows Update
 $BtnWindowsUpdate = New-Object System.Windows.Forms.Button
-$BtnWindowsUpdate.Location = New-Object System.Drawing.Point($FOriginX + 175,350)
+$BtnWindowsUpdate.Location = New-Object System.Drawing.Point($FOriginX + 175, $FOriginY + 110)
 $BtnWindowsUpdate.Width = 55
 $BtnWindowsUpdate.Height = 20
 $BtnWindowsUpdate.Text = "Update"
@@ -607,7 +600,7 @@ $ToolTip.SetToolTip($BtnWindowsUpdate, "Windows Update")
 # Dell Command | Update
 If (Test-Path -LiteralPath "${Env:ProgramFiles(x86)}\DELL\CommandUpdate\DellCommandUpdate.exe") {
 	$BtnDellCommandUpdate = New-Object System.Windows.Forms.Button
-	$BtnDellCommandUpdate.Location = New-Object System.Drawing.Point($FOriginX + 230,350)
+	$BtnDellCommandUpdate.Location = New-Object System.Drawing.Point($FOriginX + 230, $FOriginY + 110)
 	$BtnDellCommandUpdate.Width = 15
 	$BtnDellCommandUpdate.Height = 20
 	$BtnDellCommandUpdate.Text = "D"
@@ -622,7 +615,7 @@ If (Test-Path -LiteralPath "${Env:ProgramFiles(x86)}\DELL\CommandUpdate\DellComm
 $OSVersion = SWMB_GetOSVersionReadable
 $OSColor = SWMB_GetOSVersionColor
 $BtnOSVersion = New-Object System.Windows.Forms.Label
-$BtnOSVersion.Location = New-Object System.Drawing.Size($FOriginX + 10,352)
+$BtnOSVersion.Location = New-Object System.Drawing.Size($FOriginX + 10, $FOriginY + 112)
 $BtnOSVersion.Width = 230
 $BtnOSVersion.Height = 15
 $BtnOSVersion.ForeColor = "$OSColor"
@@ -646,7 +639,7 @@ $FOriginY = 185
 
 # Compliance Enforcement - Local Machine
 $BtnSWCELMLog = New-Object System.Windows.Forms.Button
-$BtnSWCELMLog.Location = New-Object System.Drawing.Point($FOriginX + 95,205)
+$BtnSWCELMLog.Location = New-Object System.Drawing.Point($FOriginX + 95, $FOriginY + 20)
 $BtnSWCELMLog.Width = 15
 $BtnSWCELMLog.Height = 20
 $BtnSWCELMLog.Text = "L"
@@ -661,7 +654,7 @@ If (Test-Path -LiteralPath "$SWCELog") {
 }
 
 $BtnSWCELM = New-Object System.Windows.Forms.Button
-$BtnSWCELM.Location = New-Object System.Drawing.Point($FOriginX + 15,205)
+$BtnSWCELM.Location = New-Object System.Drawing.Point($FOriginX + 15, $FOriginY + 20)
 $BtnSWCELM.Width = 80
 $BtnSWCELM.Height = 30
 $BtnSWCELM.Text = "Check LM"
@@ -689,7 +682,7 @@ Write-Host '`nPress any key to close...' -NoNewline
 $ToolTip.SetToolTip($BtnSWCELM, "SWCE - LocalMachine")
 
 $BtnDebugCLI = New-Object System.Windows.Forms.Button
-$BtnDebugCLI.Location = New-Object System.Drawing.Point(450,205)
+$BtnDebugCLI.Location = New-Object System.Drawing.Point($FOriginX + 165, $FOriginY + 20)
 $BtnDebugCLI.Width = 80
 $BtnDebugCLI.Height = 30
 $BtnDebugCLI.Text = "CLI"
