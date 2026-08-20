@@ -82,6 +82,7 @@ Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE
 | `ViewWAPPush`                    | Device Management Wireless Application Protocol (WAP) Push Message Routing Service - Aegis-Privacy-Shield |
 | `ViewAutologgerDiagTrack`        | Disable ETW Autologger DiagTrack Listener during System Startup (Event Tracing for Windows) - BSI |
 | `ViewUWPAccessLocation`          | Disable device's location access for Windows UWP apps |
+| `ViewScriptHost`                 | Windows Script Host (execution of *.vbs scripts and alike) |
 | `ViewDEP`                        | Data Execution Prevention (DEP) must be configured for at least OptOut - [W11 STIG V-253283](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253283) |
 | `ViewASLR`                       | Randomize memory allocations (Bottom-Up ASLR), must be on - Old W10 STIG V-220874 |
 | `ViewInsecureGuestLogons`        | Disable SMB client to use insecure guest logons to an SMB server - [W11 STIG V-253360](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253360) |
@@ -111,6 +112,9 @@ Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE
 | `ViewIISCore`                    | Disable Internet Information System (IIS) Core - [W11 STIG V-253275](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253275) |
 | `ViewNetworkOnLockScreen`        | Hide network options from Logon and Lock Screen - [W11 STIG V-253378](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253378) |
 | `ViewCameraFromLockScreen`       | Camera access from the lock screen must be disabled - [W11 STIG V-253350](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253350) |
+| `ViewWidgetsNewsAndInterests`    | Disable or Enable Widget news and interests |
+| `ViewMostUsedApps`               | Show or Hide Most Used Apps |
+| `ViewEdgeSendBrowsingHistory`    | Prevents personalization of ads, search and news by sending browsing history to Microsoft |
 | `ViewPowerShellV2`               | PowerShell 2.0 feature must be disabled - [W11 STIG V-253285](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253285) |
 | `ViewTelnetClient`               | Uninstall Telnet Client - [W11 STIG V-253278](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253278) |
 | `ViewTFTPClient`                 | Uninstall TFTP Client - [W11 STIG V-253279](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253279) |

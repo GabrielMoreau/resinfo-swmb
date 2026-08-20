@@ -336,7 +336,7 @@ Function TweakDisableVerboseStatus {
 
 ################################################################
 
-# Disable Widget news and interests
+# Disable or Enable Widget news and interests
 
 # Disable
 Function TweakDisableWidgetsNewsAndInterests { # RESINFO

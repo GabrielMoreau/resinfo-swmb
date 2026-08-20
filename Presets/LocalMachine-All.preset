@@ -211,8 +211,8 @@ DisableNewAppPrompt                             # EnableNewAppPrompt
 # DisableStartupSound                           # EnableStartupSound
 # DisableChangingSoundScheme                    # EnableChangingSoundScheme
 # EnableVerboseStatus                           # DisableVerboseStatus
-DisableWidgetsNewsAndInterests                  # EnableWidgetsNewsAndInterests                 # ViewWidgetsNewsAndInterests
-HideMostUsedApps                                # ShowMostUsedApps                              # ViewMostUsedApps
+DisableWidgetsNewsAndInterests                  # EnableWidgetsNewsAndInterests                 # ViewWidgetsNewsAndInterests   ## Disable or Enable Widget news and interests
+HideMostUsedApps                                # ShowMostUsedApps                              # ViewMostUsedApps              ## Show or Hide Most Used Apps
 HideRecommendedSection                          # ShowRecommendedSection
 
 ### Explorer UI Tweaks ###
