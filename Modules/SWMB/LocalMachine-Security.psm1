@@ -209,16 +209,34 @@ Function TweakDisableDefenderAppGuard {
 
 ################################################################
 
-# Disable Windows Script Host (execution of *.vbs scripts and alike)
+# Windows Script Host (execution of *.vbs scripts and alike)
+
+# Disable
 Function TweakDisableScriptHost {
 	Write-Output "Disabling Windows Script Host..."
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows Script Host\Settings" -Name "Enabled" -Type DWord -Value 0
+	$RegPath = 'HKLM:\SOFTWARE\Microsoft\Windows Script Host\Settings'
+	Set-ItemProperty -Path $RegPath -Name "Enabled" -Type DWord -Value 0
 }
 
-# Enable Windows Script Host
+# Enable
 Function TweakEnableScriptHost {
 	Write-Output "Enabling Windows Script Host..."
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows Script Host\Settings" -Name "Enabled" -ErrorAction SilentlyContinue
+	$RegPath = 'HKLM:\SOFTWARE\Microsoft\Windows Script Host\Settings'
+	Remove-ItemProperty -Path $RegPath -Name "Enabled" -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewScriptHost { # RESINFO
+	Write-Output "Viewing Windows Script Host (not exist: Enable, 0: Disable (Recommanded))..."
+	$RegPath = 'HKLM:\SOFTWARE\Microsoft\Windows Script Host\Settings'
+	$RegFields = @{
+		'Enabled' = @{
+			OkValues = @(2)
+			Description = "Location access for Windows UWP apps"
+			Remediation = "DisableScriptHost"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################

@@ -17,6 +17,7 @@ ViewAutologgerDiagTrack
 ViewUWPAccessLocation
 
 ### Security Tweaks ###
+ViewScriptHost
 ViewDEP
 ViewASLR
 ViewInsecureGuestLogons

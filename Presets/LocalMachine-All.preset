@@ -100,7 +100,7 @@ DisableAdminShares                              # EnableAdminShares
 # EnableCtrldFolderAccess                       # DisableCtrldFolderAccess
 # EnableCIMemoryIntegrity                       # DisableCIMemoryIntegrity
 # EnableDefenderAppGuard                        # DisableDefenderAppGuard
-DisableScriptHost                               # EnableScriptHost
+DisableScriptHost                               # EnableScriptHost                              # ViewScriptHost                ## Windows Script Host (execution of *.vbs scripts and alike)
 EnableDotNetStrongCrypto                        # DisableDotNetStrongCrypto
 # EnableMeltdownCompatFlag                      # DisableMeltdownCompatFlag
 EnableF8BootMenu                                # DisableF8BootMenu
