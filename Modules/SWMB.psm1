@@ -802,7 +802,7 @@ Function SWMB_GetHashSettings {
 
 Function SWMB_GetRegistrySettings {
 	Param (
-		[Parameter(Mandatory) = $False] [string]$Path,
+		[string]$Path,
 		[Parameter(Mandatory)] [System.Collections.IDictionary]$Rules
 	)
 
