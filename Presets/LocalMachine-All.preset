@@ -86,7 +86,7 @@ DisableUWPAccountInfo                           # EnableUWPAccountInfo
 DisableUWPDiagInfo                              # EnableUWPDiagInfo
 # DisableUWPFileSystem                          # EnableUWPFileSystem
 # DisableUWPSwapFile                            # EnableUWPSwapFile
-DisableUWPAccessLocation                        # EnableUWPAccessLocation
+DisableUWPAccessLocation                        # EnableUWPAccessLocation                       # ViewUWPAccessLocation         ## Disable device's location access for Windows UWP apps
 # DisableAppsAccessAccount                      # EnableAppsAccessAccount
 
 ### Security Tweaks ###
@@ -280,7 +280,7 @@ RemoveFaxPrinter                                # AddFaxPrinter
 # DisableStoreApps                              # EnableStoreApps
 # DisableUWPAccessLocation                      # EnableUWPAccessLocation
 # DisableWindowsFeeds                           # EnableWindowsFeeds
-# DisableWindowsHello                           # EnableWindowsHello
+# DisableWindowsHello                           # EnableWindowsHello                            # ViewWindowsHello              ## Windows Hello Authentification
 # DisableWindowsStoreAccess                     # EnableWindowsStoreAccess
 # EnablePrivateStoreOnly                        # DisablePrivateStoreOnly
 # EnableVisualStudioCache                       # DisableVisualStudioCache                      # ViewVisualStudioCache
