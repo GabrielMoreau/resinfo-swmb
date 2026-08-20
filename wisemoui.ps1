@@ -191,7 +191,7 @@ $FOriginY = 130
 
 # Boot Task
 $BtnTaskBootStatus = New-Object System.Windows.Forms.Label
-$BtnTaskBootStatus.Location = New-Object System.Drawing.Size($FOriginX + 20,212)
+$BtnTaskBootStatus.Location = New-Object System.Drawing.Size($FOriginX + 20, $FOriginY + 82)
 $BtnTaskBootStatus.Width = 50
 $BtnTaskBootStatus.Height = 15
 $BtnTaskBootStatus.BackColor = "Transparent"
@@ -199,7 +199,7 @@ $BtnTaskBootStatus.Text = ""
 $Form.Controls.Add($BtnTaskBootStatus)
 
 $BtnTaskBootLabel = New-Object System.Windows.Forms.Label
-$BtnTaskBootLabel.Location = New-Object System.Drawing.Point($FOriginX + 20,160)
+$BtnTaskBootLabel.Location = New-Object System.Drawing.Point($FOriginX + 20, $FOriginY + 30)
 $BtnTaskBootLabel.Width = 50
 $BtnTaskBootLabel.Height = 30
 $BtnTaskBootLabel.Text = "LM`nBoot"
@@ -207,7 +207,7 @@ $BtnTaskBootLabel.BackColor = 'Moccasin'
 $Form.controls.Add($BtnTaskBootLabel)
 
 $BtnTaskBootRun = New-Object System.Windows.Forms.Button
-$BtnTaskBootRun.Location = New-Object System.Drawing.Point($FOriginX + 10,190)
+$BtnTaskBootRun.Location = New-Object System.Drawing.Point($FOriginX + 10, $FOriginY + 60)
 $BtnTaskBootRun.Width = 44
 $BtnTaskBootRun.Height = 20
 $BtnTaskBootRun.Text = "Run"
@@ -223,7 +223,7 @@ $BtnTaskBootRun.Add_Click({
 })
 
 $BtnTaskBootCheck = New-Object System.Windows.Forms.Button
-$BtnTaskBootCheck.Location = New-Object System.Drawing.Point($FOriginX + 54,190)
+$BtnTaskBootCheck.Location = New-Object System.Drawing.Point($FOriginX + 54, $FOriginY + 60)
 $BtnTaskBootCheck.Width = 15
 $BtnTaskBootCheck.Height = 20
 $BtnTaskBootCheck.Text = "C"
@@ -248,7 +248,7 @@ $BtnTaskBootCheck.Add_Click({
 })
 
 $BtnTaskBootPrint = New-Object System.Windows.Forms.Button
-$BtnTaskBootPrint.Location = New-Object System.Drawing.Point($FOriginX + 69,150)
+$BtnTaskBootPrint.Location = New-Object System.Drawing.Point($FOriginX + 69, $FOriginY + 20)
 $BtnTaskBootPrint.Width = 15
 $BtnTaskBootPrint.Height = 20
 $BtnTaskBootPrint.Text = "P"
@@ -262,7 +262,7 @@ $BtnTaskBootPrint.Add_Click({
 		| Out-GridView -Title "SWMB: Tweaks that will apply to the next Boot sequence on the ${Env:ComputerName} computer - $(Get-Date)"
 })
 $BtnTaskBootLog = New-Object System.Windows.Forms.Button
-$BtnTaskBootLog.Location = New-Object System.Drawing.Point($FOriginX + 69,170)
+$BtnTaskBootLog.Location = New-Object System.Drawing.Point($FOriginX + 69, $FOriginY + 40)
 $BtnTaskBootLog.Width = 15
 $BtnTaskBootLog.Height = 20
 $BtnTaskBootLog.Text = "L"
@@ -271,7 +271,7 @@ $BtnTaskBootLog.Add_Click({
 	Start-Process -FilePath $Editor -ArgumentList "`"$BootLog`""
 })
 $BtnTaskBootEdit = New-Object System.Windows.Forms.Button
-$BtnTaskBootEdit.Location = New-Object System.Drawing.Point($FOriginX + 69,190)
+$BtnTaskBootEdit.Location = New-Object System.Drawing.Point($FOriginX + 69, $FOriginY + 60)
 $BtnTaskBootEdit.Width = 15
 $BtnTaskBootEdit.Height = 20
 $BtnTaskBootEdit.Text = "E"
@@ -281,7 +281,7 @@ $BtnTaskBootEdit.Add_Click({
 })
 If (Test-Path -LiteralPath "${Env:ProgramFiles}\WinMerge\WinMergeU.exe") {
 	$BtnTaskBootMerge = New-Object System.Windows.Forms.Button
-	$BtnTaskBootMerge.Location = New-Object System.Drawing.Point($FOriginX + 69,210)
+	$BtnTaskBootMerge.Location = New-Object System.Drawing.Point($FOriginX + 69, $FOriginY + 80)
 	$BtnTaskBootMerge.Width = 15
 	$BtnTaskBootMerge.Height = 20
 	$BtnTaskBootMerge.Text = "M"
@@ -293,7 +293,7 @@ If (Test-Path -LiteralPath "${Env:ProgramFiles}\WinMerge\WinMergeU.exe") {
 }
 
 $BtnTaskBootFrame = New-Object System.Windows.Forms.GroupBox
-$BtnTaskBootFrame.Location = New-Object System.Drawing.Size($FOriginX + 10,145)
+$BtnTaskBootFrame.Location = New-Object System.Drawing.Size($FOriginX + 10, $FOriginY + 15)
 $BtnTaskBootFrame.Width = 60
 $BtnTaskBootFrame.Height = 47
 $BtnTaskBootFrame.Text = ""
@@ -309,7 +309,7 @@ $ToolTip.SetToolTip($BtnTaskBootEdit,  "Edit LocalMachine Boot Task Preset File"
 
 # Post-Install Task
 $BtnTaskPostInstallStatus = New-Object System.Windows.Forms.Label
-$BtnTaskPostInstallStatus.Location = New-Object System.Drawing.Size($FOriginX + 100,212)
+$BtnTaskPostInstallStatus.Location = New-Object System.Drawing.Size($FOriginX + 100, $FOriginY + 82)
 $BtnTaskPostInstallStatus.Width = 50
 $BtnTaskPostInstallStatus.Height = 15
 $BtnTaskPostInstallStatus.BackColor = "Transparent"
@@ -317,7 +317,7 @@ $BtnTaskPostInstallStatus.Text = ""
 $Form.Controls.Add($BtnTaskPostInstallStatus)
 
 $BtnTaskPostInstallLabel = New-Object System.Windows.Forms.Label
-$BtnTaskPostInstallLabel.Location = New-Object System.Drawing.Point($FOriginX + 100,160)
+$BtnTaskPostInstallLabel.Location = New-Object System.Drawing.Point($FOriginX + 100, $FOriginY + 30)
 $BtnTaskPostInstallLabel.Width = 50
 $BtnTaskPostInstallLabel.Height = 30
 $BtnTaskPostInstallLabel.Text = "LM Post`nInstall"
@@ -325,7 +325,7 @@ $BtnTaskPostInstallLabel.BackColor = 'Moccasin'
 $Form.controls.Add($BtnTaskPostInstallLabel)
 
 $BtnTaskPostInstallRun = New-Object System.Windows.Forms.Button
-$BtnTaskPostInstallRun.Location = New-Object System.Drawing.Point($FOriginX + 90,190)
+$BtnTaskPostInstallRun.Location = New-Object System.Drawing.Point($FOriginX + 90, $FOriginY + 60)
 $BtnTaskPostInstallRun.Width = 44
 $BtnTaskPostInstallRun.Height = 20
 $BtnTaskPostInstallRun.Text = "Run"
@@ -341,7 +341,7 @@ $BtnTaskPostInstallRun.Add_Click({
 })
 
 $BtnTaskPostInstallCheck = New-Object System.Windows.Forms.Button
-$BtnTaskPostInstallCheck.Location = New-Object System.Drawing.Point(154,190)
+$BtnTaskPostInstallCheck.Location = New-Object System.Drawing.Point(154, $FOriginY + 60)
 $BtnTaskPostInstallCheck.Width = 15
 $BtnTaskPostInstallCheck.Height = 20
 $BtnTaskPostInstallCheck.Text = "C"
@@ -352,7 +352,7 @@ $BtnTaskPostInstallCheck.Add_Click({
 })
 
 $BtnTaskPostInstallPrint = New-Object System.Windows.Forms.Button
-$BtnTaskPostInstallPrint.Location = New-Object System.Drawing.Point($FOriginX + 149,150)
+$BtnTaskPostInstallPrint.Location = New-Object System.Drawing.Point($FOriginX + 149, $FOriginY + 20)
 $BtnTaskPostInstallPrint.Width = 15
 $BtnTaskPostInstallPrint.Height = 20
 $BtnTaskPostInstallPrint.Text = "P"
@@ -366,7 +366,7 @@ $BtnTaskPostInstallPrint.Add_Click({
 		| Out-GridView -Title "SWMB: Tweaks that will apply to the next Post-Install sequence on the ${Env:ComputerName} computer - $(Get-Date)"
 })
 $BtnTaskPostInstallLog = New-Object System.Windows.Forms.Button
-$BtnTaskPostInstallLog.Location = New-Object System.Drawing.Point($FOriginX + 149,170)
+$BtnTaskPostInstallLog.Location = New-Object System.Drawing.Point($FOriginX + 149, $FOriginY + 40)
 $BtnTaskPostInstallLog.Width = 15
 $BtnTaskPostInstallLog.Height = 20
 $BtnTaskPostInstallLog.Text = "L"
@@ -375,7 +375,7 @@ $BtnTaskPostInstallLog.Add_Click({
 	Start-Process -FilePath $Editor -ArgumentList "`"$PostInstallLog`""
 })
 $BtnTaskPostInstallEdit = New-Object System.Windows.Forms.Button
-$BtnTaskPostInstallEdit.Location = New-Object System.Drawing.Point($FOriginX + 149,190)
+$BtnTaskPostInstallEdit.Location = New-Object System.Drawing.Point($FOriginX + 149, $FOriginY + 60)
 $BtnTaskPostInstallEdit.Width = 15
 $BtnTaskPostInstallEdit.Height = 20
 $BtnTaskPostInstallEdit.Text = "E"
@@ -385,7 +385,7 @@ $BtnTaskPostInstallEdit.Add_Click({
 })
 If (Test-Path -LiteralPath "${Env:ProgramFiles}\WinMerge\WinMergeU.exe") {
 	$BtnTaskPostInstallMerge = New-Object System.Windows.Forms.Button
-	$BtnTaskPostInstallMerge.Location = New-Object System.Drawing.Point($FOriginX + 149,210)
+	$BtnTaskPostInstallMerge.Location = New-Object System.Drawing.Point($FOriginX + 149, $FOriginY + 80)
 	$BtnTaskPostInstallMerge.Width = 15
 	$BtnTaskPostInstallMerge.Height = 20
 	$BtnTaskPostInstallMerge.Text = "M"
@@ -397,7 +397,7 @@ If (Test-Path -LiteralPath "${Env:ProgramFiles}\WinMerge\WinMergeU.exe") {
 }
 
 $BtnTaskPostInstallFrame = New-Object System.Windows.Forms.GroupBox
-$BtnTaskPostInstallFrame.Location = New-Object System.Drawing.Size($FOriginX + 90,145)
+$BtnTaskPostInstallFrame.Location = New-Object System.Drawing.Size($FOriginX + 90, $FOriginY + 15)
 $BtnTaskPostInstallFrame.Width = 60
 $BtnTaskPostInstallFrame.Height = 47
 $BtnTaskPostInstallFrame.Text = ""
@@ -413,7 +413,7 @@ $ToolTip.SetToolTip($BtnTaskPostInstallEdit,  "Edit LocalMachine Post-Install Ta
 
 # Logon Task
 $BtnTaskLogonStatus = New-Object System.Windows.Forms.Label
-$BtnTaskLogonStatus.Location = New-Object System.Drawing.Size($FOriginX + 180,212)
+$BtnTaskLogonStatus.Location = New-Object System.Drawing.Size($FOriginX + 180, $FOriginY + 82)
 $BtnTaskLogonStatus.Width = 50
 $BtnTaskLogonStatus.Height = 15
 $BtnTaskLogonStatus.BackColor = "Transparent"
@@ -421,7 +421,7 @@ $BtnTaskLogonStatus.Text = ""
 $Form.Controls.Add($BtnTaskLogonStatus)
 
 $BtnTaskLogonLabel = New-Object System.Windows.Forms.Label
-$BtnTaskLogonLabel.Location = New-Object System.Drawing.Point($FOriginX + 180,160)
+$BtnTaskLogonLabel.Location = New-Object System.Drawing.Point($FOriginX + 180, $FOriginY + 30)
 $BtnTaskLogonLabel.Width = 50
 $BtnTaskLogonLabel.Height = 30
 $BtnTaskLogonLabel.Text = "CU`nLogon"
@@ -429,7 +429,7 @@ $BtnTaskLogonLabel.BackColor = 'Moccasin'
 $Form.controls.Add($BtnTaskLogonLabel)
 
 $BtnTaskLogonRun = New-Object System.Windows.Forms.Button
-$BtnTaskLogonRun.Location = New-Object System.Drawing.Point($FOriginX + 170,190)
+$BtnTaskLogonRun.Location = New-Object System.Drawing.Point($FOriginX + 170, $FOriginY + 60)
 $BtnTaskLogonRun.Width = 44
 $BtnTaskLogonRun.Height = 20
 $BtnTaskLogonRun.Text = "Run"
@@ -445,7 +445,7 @@ $BtnTaskLogonRun.Add_Click({
 })
 
 $BtnTaskLogonCheck = New-Object System.Windows.Forms.Button
-$BtnTaskLogonCheck.Location = New-Object System.Drawing.Point($FOriginX + 214,190)
+$BtnTaskLogonCheck.Location = New-Object System.Drawing.Point($FOriginX + 214, $FOriginY + 60)
 $BtnTaskLogonCheck.Width = 15
 $BtnTaskLogonCheck.Height = 20
 $BtnTaskLogonCheck.Text = "C"
@@ -456,7 +456,7 @@ $BtnTaskLogonCheck.Add_Click({
 })
 
 $BtnTaskLogonPrint = New-Object System.Windows.Forms.Button
-$BtnTaskLogonPrint.Location = New-Object System.Drawing.Point($FOriginX + 229,150)
+$BtnTaskLogonPrint.Location = New-Object System.Drawing.Point($FOriginX + 229, $FOriginY + 20)
 $BtnTaskLogonPrint.Width = 15
 $BtnTaskLogonPrint.Height = 20
 $BtnTaskLogonPrint.Text = "P"
@@ -470,7 +470,7 @@ $BtnTaskLogonPrint.Add_Click({
 		| Out-GridView -Title "SWMB: Tweaks that will apply to the next Logon sequence for CurrentUser ${Env:UserName} - $(Get-Date)"
 })
 $BtnTaskLogonLog = New-Object System.Windows.Forms.Button
-$BtnTaskLogonLog.Location = New-Object System.Drawing.Point($FOriginX + 229,170)
+$BtnTaskLogonLog.Location = New-Object System.Drawing.Point($FOriginX + 229, $FOriginY + 40)
 $BtnTaskLogonLog.Width = 15
 $BtnTaskLogonLog.Height = 20
 $BtnTaskLogonLog.Text = "L"
@@ -479,7 +479,7 @@ $BtnTaskLogonLog.Add_Click({
 	Start-Process -FilePath $Editor -ArgumentList "`"$LogonLog`""
 })
 $BtnTaskLogonEdit = New-Object System.Windows.Forms.Button
-$BtnTaskLogonEdit.Location = New-Object System.Drawing.Point($FOriginX + 229,190)
+$BtnTaskLogonEdit.Location = New-Object System.Drawing.Point($FOriginX + 229, $FOriginY + 60)
 $BtnTaskLogonEdit.Width = 15
 $BtnTaskLogonEdit.Height = 20
 $BtnTaskLogonEdit.Text = "E"
@@ -489,7 +489,7 @@ $BtnTaskLogonEdit.Add_Click({
 })
 If (Test-Path -LiteralPath "${Env:ProgramFiles}\WinMerge\WinMergeU.exe") {
 	$BtnTaskLogonMerge = New-Object System.Windows.Forms.Button
-	$BtnTaskLogonMerge.Location = New-Object System.Drawing.Point($FOriginX + 229,210)
+	$BtnTaskLogonMerge.Location = New-Object System.Drawing.Point($FOriginX + 229, $FOriginY + 80)
 	$BtnTaskLogonMerge.Width = 15
 	$BtnTaskLogonMerge.Height = 20
 	$BtnTaskLogonMerge.Text = "M"
@@ -501,7 +501,7 @@ If (Test-Path -LiteralPath "${Env:ProgramFiles}\WinMerge\WinMergeU.exe") {
 }
 
 $BtnTaskLogonFrame = New-Object System.Windows.Forms.GroupBox
-$BtnTaskLogonFrame.Location = New-Object System.Drawing.Size($FOriginX + 170,145)
+$BtnTaskLogonFrame.Location = New-Object System.Drawing.Size($FOriginX + 170, $FOriginY + 15)
 $BtnTaskLogonFrame.Width = 60
 $BtnTaskLogonFrame.Height = 47
 $BtnTaskLogonFrame.Text = ""
@@ -535,7 +535,7 @@ $FOriginY = 240
 $RunningVersion = (SWMB_GetRunningVersion)
 $PublishedVersion = (SWMB_GetLastPublishedVersion)
 $BtnVersion = New-Object System.Windows.Forms.Label
-$BtnVersion.Location = New-Object System.Drawing.Size($FOriginX + 10,270)
+$BtnVersion.Location = New-Object System.Drawing.Size($FOriginX + 10, $FOriginY + 30)
 $BtnVersion.Width = 110
 $BtnVersion.Height = 40
 $BtnVersion.BackColor = "Transparent"
@@ -544,7 +544,7 @@ $Form.Controls.Add($BtnVersion)
 
 If ($RunningVersion -ne $PublishedVersion) {
 	$BtnUpdate = New-Object System.Windows.Forms.Button
-	$BtnUpdate.Location = New-Object System.Drawing.Point($FOriginX + 120,255)
+	$BtnUpdate.Location = New-Object System.Drawing.Point($FOriginX + 120, $FOriginY + 15)
 	$BtnUpdate.Width = 110
 	$BtnUpdate.Height = 50
 	$BtnUpdate.BackColor = "PaleGreen"
@@ -716,7 +716,7 @@ $FOriginY = 240
 
 # Software
 $BtnSoftware = New-Object System.Windows.Forms.Button
-$BtnSoftware.Location = New-Object System.Drawing.Point($FOriginX + 15,255)
+$BtnSoftware.Location = New-Object System.Drawing.Point($FOriginX + 15, $FOriginY + 15)
 $BtnSoftware.Width = 80
 $BtnSoftware.Height = 50
 $BtnSoftware.Text = "View All Software"
@@ -726,7 +726,7 @@ $BtnSoftware.Add_Click({
 })
 
 $BtnAddDelProgram = New-Object System.Windows.Forms.Button
-$BtnAddDelProgram.Location = New-Object System.Drawing.Point($FOriginX + 94,255)
+$BtnAddDelProgram.Location = New-Object System.Drawing.Point($FOriginX + 94, $FOriginY + 15)
 $BtnAddDelProgram.Width = 15
 $BtnAddDelProgram.Height = 20
 $BtnAddDelProgram.Text = "R"
@@ -740,7 +740,7 @@ $ToolTip.SetToolTip($BtnAddDelProgram, "Install / Remove programs")
 $ProgramCounter = 0
 If (Test-Path -LiteralPath "${Env:ProgramFiles(x86)}\BleachBit\bleachbit.exe") {
 	$BtnBleachBit = New-Object System.Windows.Forms.Button
-	$BtnBleachBit.Location = New-Object System.Drawing.Point($FOriginX + 94,275)
+	$BtnBleachBit.Location = New-Object System.Drawing.Point($FOriginX + 94, $FOriginY + 35)
 	$BtnBleachBit.Width = 15
 	$BtnBleachBit.Height = 20
 	$BtnBleachBit.Text = "B"
@@ -753,7 +753,7 @@ If (Test-Path -LiteralPath "${Env:ProgramFiles(x86)}\BleachBit\bleachbit.exe") {
 }
 If (Test-Path -LiteralPath "${Env:ProgramFiles}\WinDirStat\WinDirStat.exe") {
 	$BtnWinDirStat = New-Object System.Windows.Forms.Button
-	$BtnWinDirStat.Location = New-Object System.Drawing.Point(($FOriginX + 94 + $ProgramCounter * 16),275)
+	$BtnWinDirStat.Location = New-Object System.Drawing.Point(($FOriginX + 94 + $ProgramCounter * 16), $FOriginY + 35)
 	$BtnWinDirStat.Width = 15
 	$BtnWinDirStat.Height = 20
 	$BtnWinDirStat.Text = "S"
@@ -766,7 +766,7 @@ If (Test-Path -LiteralPath "${Env:ProgramFiles}\WinDirStat\WinDirStat.exe") {
 }
 If (Test-Path -LiteralPath "${Env:ProgramFiles}\CCleaner\CCleaner64.exe") {
 	$BtnSoftCCleaner = New-Object System.Windows.Forms.Button
-	$BtnSoftCCleaner.Location = New-Object System.Drawing.Point(($FOriginX + 94 + $ProgramCounter * 16),275)
+	$BtnSoftCCleaner.Location = New-Object System.Drawing.Point(($FOriginX + 94 + $ProgramCounter * 16), $FOriginY + 35)
 	$BtnSoftCCleaner.Width = 15
 	$BtnSoftCCleaner.Height = 20
 	$BtnSoftCCleaner.Text = "C"
@@ -780,7 +780,7 @@ If (Test-Path -LiteralPath "${Env:ProgramFiles}\CCleaner\CCleaner64.exe") {
 
 # Exit
 $BtnExit = New-Object System.Windows.Forms.Button
-$BtnExit.Location = New-Object System.Drawing.Point(450,255)
+$BtnExit.Location = New-Object System.Drawing.Point($FOriginX + 165, $FOriginY + 15)
 $BtnExit.Width = 80
 $BtnExit.Height = 50
 $BtnExit.Text = "Exit"
@@ -800,7 +800,7 @@ $FOriginY = 315
 
 # Secpol Console
 $BtnConsoleSecpol = New-Object System.Windows.Forms.Button
-$BtnConsoleSecpol.Location = New-Object System.Drawing.Point($FOriginX + 15,335)
+$BtnConsoleSecpol.Location = New-Object System.Drawing.Point($FOriginX + 15, $FOriginY + 20)
 $BtnConsoleSecpol.Width = 50
 $BtnConsoleSecpol.Height = 30
 $BtnConsoleSecpol.Text = "GPO"
@@ -812,7 +812,7 @@ $ToolTip.SetToolTip($BtnConsoleSecpol, "Local Security Policy Console")
 
 # GPedit Console
 $BtnConsoleGPedit = New-Object System.Windows.Forms.Button
-$BtnConsoleGPedit.Location = New-Object System.Drawing.Point($FOriginX + 65,335)
+$BtnConsoleGPedit.Location = New-Object System.Drawing.Point($FOriginX + 65, $FOriginY + 20)
 $BtnConsoleGPedit.Width = 15
 $BtnConsoleGPedit.Height = 20
 $BtnConsoleGPedit.Text = "E"
@@ -825,7 +825,7 @@ $ToolTip.SetToolTip($BtnConsoleGPedit, "GPedit Console")
 # Process Monitor Program
 If (Test-Path -LiteralPath "${Env:ProgramFiles}\Sysinternals\Procmon64.exe") {
 	$BtnSoftProcessMonitor = New-Object System.Windows.Forms.Button
-	$BtnSoftProcessMonitor.Location = New-Object System.Drawing.Point($FOriginX + 80,335)
+	$BtnSoftProcessMonitor.Location = New-Object System.Drawing.Point($FOriginX + 80, $FOriginY + 20)
 	$BtnSoftProcessMonitor.Width = 15
 	$BtnSoftProcessMonitor.Height = 20
 	$BtnSoftProcessMonitor.Text = "P"
@@ -838,7 +838,7 @@ If (Test-Path -LiteralPath "${Env:ProgramFiles}\Sysinternals\Procmon64.exe") {
 
 # Task Manager Console
 $BtnConsoleTaskMgr = New-Object System.Windows.Forms.Button
-$BtnConsoleTaskMgr.Location = New-Object System.Drawing.Point($FOriginX + 95,335)
+$BtnConsoleTaskMgr.Location = New-Object System.Drawing.Point($FOriginX + 95, $FOriginY + 20)
 $BtnConsoleTaskMgr.Width = 15
 $BtnConsoleTaskMgr.Height = 20
 $BtnConsoleTaskMgr.Text = "T"
@@ -850,7 +850,7 @@ $ToolTip.SetToolTip($BtnConsoleTaskMgr, "Task Manager")
 
 # Computer Managment Console
 $BtnConsoleMgmt = New-Object System.Windows.Forms.Button
-$BtnConsoleMgmt.Location = New-Object System.Drawing.Point($FOriginX + 120,335)
+$BtnConsoleMgmt.Location = New-Object System.Drawing.Point($FOriginX + 120, $FOriginY + 20)
 $BtnConsoleMgmt.Width = 70
 $BtnConsoleMgmt.Height = 30
 $BtnConsoleMgmt.Text = "Mngmt"
@@ -862,7 +862,7 @@ $ToolTip.SetToolTip($BtnConsoleMgmt, "Managment Console")
 
 # Network Interfaces Console
 $BtnConsoleNet = New-Object System.Windows.Forms.Button
-$BtnConsoleNet.Location = New-Object System.Drawing.Point($FOriginX + 215,335)
+$BtnConsoleNet.Location = New-Object System.Drawing.Point($FOriginX + 215, $FOriginY + 20)
 $BtnConsoleNet.Width = 40
 $BtnConsoleNet.Height = 30
 $BtnConsoleNet.Text = "Net Cards"
