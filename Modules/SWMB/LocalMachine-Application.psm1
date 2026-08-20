@@ -1233,19 +1233,37 @@ Function TweakEnableWindowsFeeds { # RESINFO
 ################################################################
 
 ## https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.AppPrivacy::LetAppsAccessLocation&Language=fr-fr
-# Disable access to location from UWP apps
+# Disable device's location access for Windows UWP apps
+
+# Disable
 Function TweakDisableUWPAccessLocation { # RESINFO
 	Write-Output "Disabling access to location from UWP apps..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy")) {
-		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" -Force | Out-Null
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" -Name "LetAppsAccessLocation" -Type DWord -Value 2
+	Set-ItemProperty -Path $RegPath -Name "LetAppsAccessLocation" -Type DWord -Value 2
 }
 
-# Enable access to location from UWP apps
+# Enable
 Function TweakEnableUWPAccessLocation { # RESINFO
 	Write-Output "Enabling access to location from UWP apps..."
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" -Name "LetAppsAccessLocation" -ErrorAction SilentlyContinue
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy'
+	Remove-ItemProperty -Path $RegPath -Name "LetAppsAccessLocation" -ErrorAction SilentlyContinue
+}
+
+# View
+Function TweakViewUWPAccessLocation { # RESINFO
+	Write-Output "Viewing access to location from UWP apps (0 or not exist: Enable, 2: Disable (Recommanded))..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy'
+	$RegFields = @{
+		'LetAppsAccessLocation' = @{
+			OkValues = @(2)
+			Description = "Location access for Windows UWP apps"
+			Remediation = "DisableUWPAccessLocation"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################
