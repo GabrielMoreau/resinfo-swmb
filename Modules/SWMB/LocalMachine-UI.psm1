@@ -341,22 +341,32 @@ Function TweakDisableVerboseStatus {
 # Disable
 Function TweakDisableWidgetsNewsAndInterests { # RESINFO
 	Write-Output "Disabling Widgets News and Interests..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh")) {
-		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" | Out-Null
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Dsh'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" -Name "AllowNewsAndInterests" -Type DWord -Value 0
+	Set-ItemProperty -Path $RegPath -Name "AllowNewsAndInterests" -Type DWord -Value 0
 }
 
 # Enable
 Function TweakEnableWidgetsNewsAndInterests { # RESINFO
 	Write-Output "Enabling Widgets News and Interests..."
-	Remove-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" -ErrorAction SilentlyContinue
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Dsh'
+	Remove-Item -Path $RegPath -ErrorAction SilentlyContinue
 }
 
 # View
 Function TweakViewWidgetsNewsAndInterests { # RESINFO
-	Write-Output "Viewing Widgets News and Interests (0: Disable, Error: Enable)..."
-	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" -Name "AllowNewsAndInterests"
+	Write-Output "Viewing Widgets News and Interests (0: Disable (Recommanded), Error: Enable)..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Dsh'
+	$RegFields = @{
+		'AllowNewsAndInterests' = @{
+			OkValues = @(0)
+			Description = "Disable Widget news and interests"
+			Remediation = "DisableWidgetsNewsAndInterests"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################
@@ -386,7 +396,7 @@ Function TweakShowMostUsedApps { # RESINFO
 
 # View
 Function TweakViewMostUsedApps { # RESINFO
-	Write-Output "Viewing Hide or Show Most Used Apps (2: Hide, 1: Show, 0: Not Configured)..."
+	Write-Output "Viewing Hide or Show Most Used Apps (2: Hide (Recommanded), 1: Show, 0: Not Configured)..."
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer'
 	$RegFields = @{
 		'ShowOrHideMostUsedApps' = @{
