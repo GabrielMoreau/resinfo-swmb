@@ -511,7 +511,7 @@ $ToolTip.SetToolTip($BtnTaskLogonEdit,  "Edit CurrentUser Logon Task Preset File
 $BtnTaskFrame = New-Object System.Windows.Forms.GroupBox
 $BtnTaskFrame.Location = New-Object System.Drawing.Size(20,130)
 $BtnTaskFrame.Width = 250
-$BtnTaskFrame.Height = 100
+$BtnTaskFrame.Height = 103
 #$BtnTaskFrame.BackColor = "Transparent"
 $BtnTaskFrame.Text = "Run Scheduled Task Now"
 $Form.Controls.Add($BtnTaskFrame)
