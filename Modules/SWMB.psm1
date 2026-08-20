@@ -812,25 +812,23 @@ Function SWMB_GetRegistrySettings {
 		}
 	}
 
-	# Group by Path
-	$RulesByPath = $Rules.Keys | Group-Object { $Rules[$_].Path }
-
+	$PropsCache = @{}
 	$Hash = @{}
-	ForEach ($Group in $RulesByPath) {
-		$RegPath = $Group.Name
-
+	ForEach ($Name in $Rules.Keys) {
+		$RegPath = $Rules[$Name].Path
 		If (-not $RegPath) {
 			Continue
 		}
 
-		$Props = Get-ItemProperty -Path $RegPath -ErrorAction SilentlyContinue
+		If (-not $PropsCache.ContainsKey($RegPath)) {
+			$PropsCache[$RegPath] = Get-ItemProperty -Path $RegPath -ErrorAction SilentlyContinue
+		}
+		$Props = $PropsCache[$RegPath]
 
 		If ($Props) {
-			ForEach ($Name in $Group.Group) {
-				$RegKey = If ($Rules[$Name].Key) { $Rules[$Name].Key } Else { $Name }
-				If ($Null -ne $Props.PSObject.Properties[$RegKey]) {
-					$Hash[$Name] = $Props.$RegKey
-				}
+			$RegKey = If ($Rules[$Name].Key) { $Rules[$Name].Key } Else { $Name }
+			If ($Null -ne $Props.PSObject.Properties[$RegKey]) {
+				$Hash[$Name] = $Props.$RegKey
 			}
 		}
 	}
