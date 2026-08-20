@@ -210,6 +210,7 @@ Function TweakDisableDefenderAppGuard {
 ################################################################
 
 # Windows Script Host (execution of *.vbs scripts and alike)
+# BSI SiSyPHuS Win10 https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Cyber-Security/SiSyPHuS/AP11/Hardening_Guideline.pdf
 
 # Disable
 Function TweakDisableScriptHost {

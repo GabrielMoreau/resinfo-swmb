@@ -82,7 +82,7 @@ Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE
 | `ViewWAPPush`                    | Device Management Wireless Application Protocol (WAP) Push Message Routing Service - Aegis-Privacy-Shield |
 | `ViewAutologgerDiagTrack`        | Disable ETW Autologger DiagTrack Listener during System Startup (Event Tracing for Windows) - BSI |
 | `ViewUWPAccessLocation`          | Disable device's location access for Windows UWP apps |
-| `ViewScriptHost`                 | Windows Script Host (execution of *.vbs scripts and alike) |
+| `ViewScriptHost`                 | Windows Script Host (execution of *.vbs scripts and alike) - BSI SiSyPHuS Win10 https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Cyber-Security/SiSyPHuS/AP11/Hardening_Guideline.pdf |
 | `ViewDEP`                        | Data Execution Prevention (DEP) must be configured for at least OptOut - [W11 STIG V-253283](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253283) |
 | `ViewASLR`                       | Randomize memory allocations (Bottom-Up ASLR), must be on - Old W10 STIG V-220874 |
 | `ViewInsecureGuestLogons`        | Disable SMB client to use insecure guest logons to an SMB server - [W11 STIG V-253360](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253360) |
