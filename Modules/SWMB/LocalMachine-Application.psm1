@@ -445,26 +445,37 @@ Function TweakViewEdgeDoNtoTrack { # RESINFO
 
 # https://admx.help/?Category=EdgeChromium&Policy=Microsoft.Policies.Edge::PersonalizationReportingEnabled
 # This policy prevents Microsoft from collecting a user's Microsoft Edge browsing history
+# By default, Allow personalization of ads, search and news by sending browsing history to Microsoft
+
 # Disable
 Function TweakDisableEdgeSendBrowsingHistory { # RESINFO
 	Write-Output "Disabling sending browsing history to Microsoft..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\")) {
-		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\" -Force | Out-Null
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Edge'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\" -Name "PersonalizationReportingEnabled" -Type DWord -Value 0
+	Set-ItemProperty -Path $RegPath -Name "PersonalizationReportingEnabled" -Type DWord -Value 0
 }
 
-# Default
-# By default, Allow personalization of ads, search and news by sending browsing history to Microsoft
+# Enable
 Function TweakEnableEdgeSendBrowsingHistory { # RESINFO
 	Write-Output "Enabling sending browsing history to Microsoft..."
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\" -Name "PersonalizationReportingEnabled" -ErrorAction SilentlyContinue
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Edge'
+	Remove-ItemProperty -Path $RegPath -Name "PersonalizationReportingEnabled" -ErrorAction SilentlyContinue
 }
 
 # View
 Function TweakViewEdgeSendBrowsingHistory { # RESINFO
-	Write-Output "Viewing Edge Configure Do Not Track - Sending browsing history to Microsoft (0: Disable, 1 or not exist: Enable (Default))..."
-	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\" -Name "PersonalizationReportingEnabled" -ErrorAction SilentlyContinue
+	Write-Output "Viewing Sending Edge browsing history to Microsoft (0: Disable (Recommanded), 1 or not exist: Enable (Default))..."
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Edge'
+	$RegFields = @{
+		'PersonalizationReportingEnabled' = @{
+			OkValues = @(0)
+			Description = "Sending Edge browsing history to Microsoft"
+			Remediation = "DisableEdgeSendBrowsingHistory"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
 
 ################################################################

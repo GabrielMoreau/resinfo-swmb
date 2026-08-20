@@ -23,6 +23,7 @@ Regarding the SWCE project:
   `ViewPcaSvc`, `ViewCDPSvc`, `ViewWERCPlSupport`, `ViewWAPPush`,
   `ViewAutologgerDiagTrack`,
   `ViewWindowsHello`, `ViewUWPAccessLocation`,
+  `ViewEdgeSendBrowsingHistory`,
   `ViewWidgetsNewsAndInterests`, `ViewMostUsedApps`
   checks.
 

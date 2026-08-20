@@ -59,6 +59,7 @@ ViewMostUsedApps
 ### Explorer UI Tweaks ###
 
 ### Application Tweaks ###
+ViewEdgeSendBrowsingHistory
 ViewPowerShellV2
 ViewTelnetClient
 ViewTFTPClient

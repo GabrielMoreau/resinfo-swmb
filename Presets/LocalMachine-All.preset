@@ -250,7 +250,7 @@ DisableEdgeShortcutCreation                     # EnableEdgeShortcutCreation
 EnableEdgeUpdate                                # DisableEdgeUpdate                             # ViewEdgeUpdate
 EnableEdgeClearCacheOnExit                      # DisableEdgeClearCacheOnExit                   # ViewEdgeClearCacheOnExit
 EnableEdgeDoNtoTrack                            # DisableEdgeDoNtoTrack                         # ViewEdgeDoNtoTrack
-DisableEdgeSendBrowsingHistory                  # EnableEdgeSendBrowsingHistory                 # ViewEdgeSendBrowsingHistory
+DisableEdgeSendBrowsingHistory                  # EnableEdgeSendBrowsingHistory                 # ViewEdgeSendBrowsingHistory   ## Prevents personalization of ads, search and news by sending browsing history to Microsoft
 DisableIEFirstRun                               # EnableIEFirstRun
 DisableFirstLogonAnimation                      # EnableFirstLogonAnimation
 DisableMediaSharing                             # EnableMediaSharing
