@@ -802,17 +802,35 @@ Function SWMB_GetHashSettings {
 
 Function SWMB_GetRegistrySettings {
 	Param (
-		[Parameter(Mandatory)] [string]$Path,
+		[Parameter(Mandatory) = $False] [string]$Path,
 		[Parameter(Mandatory)] [System.Collections.IDictionary]$Rules
 	)
 
-	$Props = Get-ItemProperty -Path $Path -ErrorAction SilentlyContinue
+	If ($Path) {
+		ForEach ($Name in $Rules.Keys) {
+			$Rules[$Name].Path = $Path
+		}
+	}
+
+	# Group by Path
+	$RulesByPath = $Rules.Keys | Group-Object { $Rules[$_].Path }
 
 	$Hash = @{}
-	If ($Props) {
-		ForEach ($Name in $Rules.Keys) {
-			If ($Null -ne $Props.PSObject.Properties[$Name]) {
-				$Hash[$Name] = $Props.$Name
+	ForEach ($Group in $RulesByPath) {
+		$RegPath = $Group.Name
+
+		If (-not $RegPath) {
+			Continue
+		}
+
+		$Props = Get-ItemProperty -Path $RegPath -ErrorAction SilentlyContinue
+
+		If ($Props) {
+			ForEach ($Name in $Group.Group) {
+				$RegKey = If ($Rules[$Name].Key) { $Rules[$Name].Key } Else { $Name }
+				If ($Null -ne $Props.PSObject.Properties[$RegKey]) {
+					$Hash[$Name] = $Props.$RegKey
+				}
 			}
 		}
 	}
