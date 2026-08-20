@@ -62,12 +62,12 @@ $Form.Text = "SWMB: Secure Windows Mode Batch / $UptimeStr"
 # Logo Frame
 ################################################################
 
-$FOriginX = 20
-$FOriginY = 10
+$FOriginX = 285
+$FOriginY = 0
 
 # Help
 $BtnHelp = New-Object System.Windows.Forms.Button
-$BtnHelp.Location = New-Object System.Drawing.Point($FOriginX + 15,15)
+$BtnHelp.Location = New-Object System.Drawing.Point($FOriginX + 15, $FOriginY + 15)
 $BtnHelp.Width = 50
 $BtnHelp.Height = 30
 $BtnHelp.Text = "Help"
@@ -78,8 +78,8 @@ $BtnHelp.Add_Click({
 
 # Logo
 $Logo = New-Object System.Windows.Forms.PictureBox
-$Logo.Location = New-Object Drawing.Point($FOriginX + 95,30)
-$Logo.Size = New-Object System.Drawing.Size($FOriginX + 120,141)
+$Logo.Location = New-Object Drawing.Point($FOriginX + 95, $FOriginY + 30)
+$Logo.Size = New-Object System.Drawing.Size(140,141)
 $Logo.image = [system.drawing.image]::FromFile("$PSScriptRoot\logo-swmb.ico")
 $Form.Controls.Add($Logo)
 $Logo.Add_Click({
