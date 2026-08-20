@@ -337,6 +337,8 @@ Function TweakDisableVerboseStatus {
 ################################################################
 
 # Disable Widget news and interests
+
+# Disable
 Function TweakDisableWidgetsNewsAndInterests { # RESINFO
 	Write-Output "Disabling Widgets News and Interests..."
 	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh")) {
@@ -345,7 +347,7 @@ Function TweakDisableWidgetsNewsAndInterests { # RESINFO
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" -Name "AllowNewsAndInterests" -Type DWord -Value 0
 }
 
-# Enable Widget news and interests
+# Enable
 Function TweakEnableWidgetsNewsAndInterests { # RESINFO
 	Write-Output "Enabling Widgets News and Interests..."
 	Remove-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" -ErrorAction SilentlyContinue
@@ -360,31 +362,41 @@ Function TweakViewWidgetsNewsAndInterests { # RESINFO
 ################################################################
 
 # https://admx.help/?Category=Windows_11_2022&Policy=Microsoft.Policies.StartMenu::ShowOrHideMostUsedApps
-# Hide Most Used Apps
+# Show or Hide Most Used Apps
+
+# Hide
 Function TweakHideMostUsedApps { # RESINFO
 	Write-Output "Hiding Most Used Apps..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer")) {
-		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" | Out-Null
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "ShowOrHideMostUsedApps" -Type DWord -Value 2
+	Set-ItemProperty -Path $RegPath -Name "ShowOrHideMostUsedApps" -Type DWord -Value 2
 }
 
-# Show Most Used Apps
+# Show
 Function TweakShowMostUsedApps { # RESINFO
 	Write-Output "Showing Most Used Apps..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer")) {
-		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" | Out-Null
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "ShowOrHideMostUsedApps" -Type DWord -Value 1
+	Set-ItemProperty -Path $RegPath -Name "ShowOrHideMostUsedApps" -Type DWord -Value 1
 }
 
-
-# View Most Used Apps
+# View
 Function TweakViewMostUsedApps { # RESINFO
 	Write-Output "Viewing Hide or Show Most Used Apps (2: Hide, 1: Show, 0: Not Configured)..."
-	Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "ShowOrHideMostUsedApps"
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer'
+	$RegFields = @{
+		'ShowOrHideMostUsedApps' = @{
+			OkValues = @(2)
+			Description = "Hide Most Used Apps"
+			Remediation = "HideMostUsedApps"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
 }
-
 
 ################################################################
 ###### Export Functions
