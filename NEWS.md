@@ -3,7 +3,8 @@
 ## Version 3.22 (in progress)
 
 Update UBR.
-Checks Git tags when the version number is changed
+Checks Git tags when the version number is changed.
+Remove old obsolete script `Win10.ps1`. 
 Add tree websites links in the [REFERENCES](REFERENCES.md) file:
 
 * End-of-Service-Life
@@ -26,6 +27,7 @@ Regarding the SWCE project:
   `ViewEdgeSendBrowsingHistory`,
   `ViewWidgetsNewsAndInterests`, `ViewMostUsedApps`
   checks.
+* Add links to ANSSI and BSI guides in documentation.
 
 New presets/rules:
 
