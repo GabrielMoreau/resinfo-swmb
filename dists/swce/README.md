@@ -75,7 +75,7 @@ Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE
 | `ViewTelemetry`                  | Disable many Telemetry breaks Windows Insider Program and Microsoft Intune enrollment/deployment |
 | `ViewCortana`                    | Cortana is a Digital assistant providing voice commands, search, reminders, and personalized assistance |
 | `ViewRecall`                     | Recall is a feature that allows you to quickly access your documents, applications, and personal information through indexing |
-| `ViewDiagTrack`                  | Connected User Experiences and Telemetry (Diagnostics Tracking Service) - [ANSSI Guide Win10](https://messervices.cyber.gouv.fr/documents-guides/np_securisation_windows10_collecte_de_donnees_v1.2.pdf) |
+| `ViewDiagTrack`                  | Connected User Experiences and Telemetry (Diagnostics Tracking Service) - [ANSSI Guide Win10](https://messervices.cyber.gouv.fr/guides/restreindre-la-collecte-de-donnees-sous-windows-10) |
 | `ViewPCASvc`                     | Disable Windows Program Compatibility Assistant Service - Aegis-Privacy-Shield |
 | `ViewCDPSvc`                     | Disable Connected Devices Platform (Computer + User) Service - Aegis-Privacy-Shield |
 | `ViewWERCPlSupport`              | Windows Error Reporting Control Panel Support - Aegis-Privacy-Shield |
