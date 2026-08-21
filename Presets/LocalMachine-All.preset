@@ -56,7 +56,7 @@ DisablePrivacyExperience                        # EnablePrivacyExperience
 DisableStepsRecorder                          	# EnableStepsRecorder
 DisableSendAdditionalData                     	# EnableSendAdditionalData
 DisableSharedInformationSearch                	# EnableSharedInformationSearch
-DisableAutologgerDiagTrack                      # EnableAutologgerDiagTrack                     # ViewAutologgerDiagTrack       ## Disable ETW Autologger DiagTrack Listener during System Startup (Event Tracing for Windows) - BSI
+DisableAutologgerDiagTrack                      # EnableAutologgerDiagTrack                     # ViewAutologgerDiagTrack       ## Disable ETW Autologger DiagTrack Listener during System Startup (Event Tracing for Windows) - BSI SiSyPHuS Win10 https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Cyber-Security/SiSyPHuS/AP11/Hardening_Guideline.pdf
 DisableHighlightsSearch                         # EnableHighlightsSearch                        # ViewHighlightsSearch
 DisableCloudSearch                              # EnableCloudSearch                             # ViewCloudSearch
 EnableSearchOnTaskbar                           # DisableSearchOnTaskbar                        # ViewSearchOnTaskbar
