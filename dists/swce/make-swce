@@ -82,6 +82,7 @@ do
     | sed -e "
         s#\(\(W[[:digit:]][[:digit:]]\|App\)[[:space:]]STIG V-[[:digit:]][[:digit:]]*\)[[:space:]]\(https\?://[^[:space:]]\+\)#[\1](\3)#g;
         s#\(BSI SiSyPHuS Win10\)[[:space:]]\(https\?://[^[:space:]]\+\)#[\1](\2)#g;
+        s#\(ANSSI Guide Win10\)[[:space:]]\(https\?://[^[:space:]]\+\)#[\1](\2)#g;
         s/[[:space:]]\+$//;
         " \
     )

@@ -37,7 +37,7 @@ DisableAdvertisingID                            # EnableAdvertisingID
 # DisableMicrophone                             # EnableMicrophone
 DisableErrorReporting                           # EnableErrorReporting
 # SetP2PUpdateLocal                             # SetP2PUpdateInternet                          # SetP2PUpdateDisable
-DisableDiagTrack                                # EnableDiagTrack                               # ViewDiagTrack                 ## Connected User Experiences and Telemetry (Diagnostics Tracking Service) - ANSSI Annexe A2
+DisableDiagTrack                                # EnableDiagTrack                               # ViewDiagTrack                 ## Connected User Experiences and Telemetry (Diagnostics Tracking Service) - ANSSI Guide Win10 https://messervices.cyber.gouv.fr/documents-guides/np_securisation_windows10_collecte_de_donnees_v1.2.pdf
 # DisablePCASvc                                 # EnablePCASvc                                  # ViewPCASvc                    ## Disable Windows Program Compatibility Assistant Service - Aegis-Privacy-Shield
 # DisableCDPSvc                                 # EnableCDPSvc                                  # ViewCDPSvc                    ## Disable Connected Devices Platform (Computer + User) Service - Aegis-Privacy-Shield
 # DisableWERCPlSupport                          # EnableWERCPlSupport                           # ViewWERCPlSupport             ## Windows Error Reporting Control Panel Support - Aegis-Privacy-Shield
