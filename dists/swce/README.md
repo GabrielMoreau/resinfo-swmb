@@ -38,6 +38,14 @@ powershell.exe "Unblock-File -Path .\LocalMachine-SWCE.ps1"
 
 And that's it!
 
+### CSV export
+
+The `LocalMachine-SWCE.ps1` script has a `-CSVFile` option that allows you to export the results to a CSV file in addition to the TXT output.
+
+```ps1
+& .\LocalMachine-SWCE.ps1 -CSVFile report.csv
+```
+
 ### SWMB Graphical User Interface
 
 In the SWMB graphical interface, there is a `Check Compliance Enforcement` section.
@@ -50,8 +58,9 @@ All you need to do is deploy this archive and run the script using your deployme
 This is particularly easy with the OCS Inventory software.
 
 You can add a `push-config.ini` file to this archive.
-This will upload the compliance tests to a GitLab server with the filename `LocalMachine-SWCE-%HOSTNAME%.txt`.
-As a result, you will find one file per computer in your Git repository.
+This will upload the compliance tests to a GitLab server with the filenames `LocalMachine-SWCE-%HOSTNAME%.txt` (TXT format) and `LocalMachine-SWCE-%HOSTNAME%.csv` (CSV format).
+As a result, you will find two files per computer in your Git repository.
+It’s up to you whether you prefer to process one format over the other—or both!
 
 The `push-config.ini` configuration file must specify the server, as well as the project ID, branch, and a token.
 
