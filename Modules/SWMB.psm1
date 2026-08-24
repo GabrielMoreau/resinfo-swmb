@@ -879,18 +879,6 @@ Function SWMB_WriteSettings {
 			'NotExist'
 		}
 
-		# CSV part on Information Canal (6)
-		$CsvObject = [PSCustomObject]@{
-			Tweak       = $Tweak
-			Name        = $InputObject.Name
-			Value       = $DisplayValue
-			Status      = $InputObject.Status
-			Remediation = $InputObject.Remediation
-			Description = $InputObject.Description
-		}
-		$CsvLine = ($CsvObject | ConvertTo-Csv -NoTypeInformation)[1]
-		Write-Information $CsvLine -InformationAction Continue
-
 		$Icon = @{
 			'PASS' = '✅'
 			'FAIL' = '❌'
@@ -909,6 +897,18 @@ Function SWMB_WriteSettings {
 			'FAIL'  { Write-Host $OutPut -ForegroundColor Red }
 			'INFO'  { Write-Host $OutPut -ForegroundColor Cyan }
 			default { Write-Host $OutPut }
+		}
+
+		# For CSV potential export
+		If ($Global:SWMB_Results -is [array]) {
+			$Global:SWMB_Results += [PSCustomObject]@{
+				Tweak       = $Tweak
+				Name        = $InputObject.Name
+				Value       = $DisplayValue
+				Status      = $InputObject.Status
+				Remediation = $InputObject.Remediation
+				Description = $InputObject.Description
+			}
 		}
 	}
 }
