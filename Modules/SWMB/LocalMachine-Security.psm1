@@ -237,7 +237,7 @@ Function TweakViewScriptHost { # RESINFO
 			Remediation = "DisableScriptHost"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -373,7 +373,7 @@ Function TweakViewDEP { # RESINFO
 			Remediation = "SetDEPOptOut or SetDEPAlwaysOn (W11 STIG V-253283)"
 		}
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -410,7 +410,7 @@ Function TweakViewASLR { # RESINFO
 			Remediation = "DisableASLR (W10 STIG V-220874)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -449,7 +449,7 @@ Function TweakViewInsecureGuestLogons { # RESINFO
 			Remediation = "DisableInsecureGuestLogons (W11 STIG V-253360)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -504,7 +504,7 @@ Function TweakViewSMBClientSigning { # RESINFO
 	#		Remediation = "EnableSMBClientSigning and reboot"
 	#	}
 	#}
-	#SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	#SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 	$Hash = @{}
 	$Rules = [ordered]@{
 		EnableSecuritySignature = @{
@@ -521,7 +521,7 @@ Function TweakViewSMBClientSigning { # RESINFO
 	ForEach ($Feature in $Rules.keys) {
 		$Hash[$Feature] = (Get-SmbClientConfiguration).$Feature
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -567,7 +567,7 @@ Function TweakViewSMBServerSigning { # RESINFO
 	ForEach ($Feature in $Rules.keys) {
 		$Hash[$Feature] = (Get-SmbServerConfiguration).$Feature
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -604,7 +604,7 @@ Function TweakViewAutoloadDriver { # RESINFO
 			Remediation = "DisableAutoloadDriver"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -656,7 +656,7 @@ Function TweakViewPasswordOnResume { # RESINFO
 			Remediation = "EnablePasswordOnResume (W11 STIG V-253380)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -939,7 +939,7 @@ Function TweakViewSEHOP { # RESINFO
 			Remediation = "EnableSEHOP (W11 STIG V-253284)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -977,7 +977,7 @@ Function TweakViewCredentialGuard { # RESINFO
 			Remediation = "EnableCredentialGuard (W11 STIG V-253370)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 
 	$DeviceGuard = Get-CimInstance -ClassName Win32_DeviceGuard -Namespace root\Microsoft\Windows\DeviceGuard
 	$Hash = @{
@@ -990,7 +990,7 @@ Function TweakViewCredentialGuard { # RESINFO
 			Remediation = "EnableCredentialGuard (W11 STIG V-253370)"
 		}
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -1056,7 +1056,7 @@ Function TweakViewUserInAdminGroup { # RESINFO
 			$Hash[$UserName] = 'AdminRegex'
 			}
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -1196,7 +1196,7 @@ Function TweakViewUserInRDGroup { # RESINFO
 			$Hash[$UserName] = 'RDUsersRegex'
 			}
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -1217,7 +1217,7 @@ Function TweakViewWindowsServicingLevel { # RESINFO
 			Remediation = "Upgrade your Windows (W11 STIG V-253263)"
 		}
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -1616,7 +1616,7 @@ Function TweakViewBitlocker { # RESINFO
 	$DriveRules.Keys | Sort-Object | ForEach-Object {
 		$Rules[$_] = $DriveRules[$_]
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -1663,7 +1663,7 @@ Function TweakViewBitlockerTPM { # RESINFO
 			Remediation = "EnableBitlocker - interactive tweak (W11 STIG V-253261)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -1728,7 +1728,7 @@ Function TweakViewUEFICA23 { # RESINFO
 		}
 		$Hash[$Feature] = ([System.Text.Encoding]::ASCII.GetString((Get-SecureBootUEFI $Feature).bytes) -match 'Windows UEFI CA 2023')
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -1799,7 +1799,7 @@ Function TweakViewAntivirusServices { # RESINFO
 	}
 
 	# Pass the results to the SWMB_WriteSettings function for output
-	$ServiceResults | SWMB_WriteSettings
+	$ServiceResults | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -1841,7 +1841,7 @@ Function TweakViewVolumeBadlyFormatted { # RESINFO
 	$DriveRules.Keys | Sort-Object | ForEach-Object {
 		$Rules[$_] = $DriveRules[$_]
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################

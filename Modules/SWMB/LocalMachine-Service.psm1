@@ -171,7 +171,7 @@ Function TweakViewAutoplay { # RESINFO
 			Remediation = "DisableViewAutoplay (W11 STIG V-253386)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -217,7 +217,7 @@ Function TweakViewAutorun { # RESINFO
 			Remediation = "DisableAutorun (W11 STIG V-253387)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -535,7 +535,7 @@ Function TweakViewIISCore { # RESINFO
 	ForEach ($Feature in $Rules.keys) {
 		$Hash[$Feature] = (Get-WindowsOptionalFeature -Online -FeatureName $Feature).State
 		}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################

@@ -80,7 +80,7 @@ Function TweakViewNetworkOnLockScreen { # RESINFO
 			Remediation = "HideNetworkFromLockScreen (W11 STIG V-253378)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -145,7 +145,7 @@ Function TweakViewCameraFromLockScreen { # RESINFO
 			Remediation = "DisableCameraFromLockScreen (W11 STIG V-253350)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -366,7 +366,7 @@ Function TweakViewWidgetsNewsAndInterests { # RESINFO
 			Remediation = "DisableWidgetsNewsAndInterests"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -405,7 +405,7 @@ Function TweakViewMostUsedApps { # RESINFO
 			Remediation = "HideMostUsedApps"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################

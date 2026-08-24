@@ -347,7 +347,7 @@ Function TweakViewThirdPartySuggestions_CU { # RESINFO
 			Remediation = "DisableThirdPartySuggestions_CU (App STIG V-253425)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 

@@ -131,7 +131,7 @@ Function TweakViewSMB1Protocol { # RESINFO
 	ForEach ($Feature in $Rules.keys) {
 		$Hash[$Feature] = (Get-WindowsOptionalFeature -Online -FeatureName $Feature).State
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -217,7 +217,7 @@ Function TweakViewLanManAuthLevelHigh { # RESINFO
 			Remediation = "EnableLanManAuthLevelHigh (W11 STIG V-253462)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -253,7 +253,7 @@ Function TweakViewPrintOverHTTP { # RESINFO
 			Remediation = "DisablePrintOverHTTP (W11 STIG V-253376)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -405,7 +405,7 @@ Function TweakViewConnectionSharing { # RESINFO
 			Remediation = "DisableConnectionSharing (W11 STIG V-253361)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -438,7 +438,7 @@ Function TweakViewAnonymousNameTranslation { # RESINFO
 			Remediation = "DisableAnonymousNameTranslation (W11 STIG V-253452)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -471,7 +471,7 @@ Function TweakViewAnonymousSAMEnumeration { # RESINFO
 			Remediation = "DisableAnonymousSAMEnumeration (W11 STIG V-253453)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -504,7 +504,7 @@ Function TweakViewAnonymousShareEnumeration { # RESINFO
 			Remediation = "DisableAnonymousShareEnumeration (W11 STIG V-253454)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -538,7 +538,7 @@ Function TweakViewAnonymousShareAccess { # RESINFO
 			Remediation = "DisableAnonymousShareAccess (W11 STIG V-253456)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -600,7 +600,7 @@ Function TweakViewRemoteAssistance { # RESINFO
 			Remediation = "DisableRemoteAssistance"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\Value'
 	$RegFields = @{
@@ -610,7 +610,7 @@ Function TweakViewRemoteAssistance { # RESINFO
 			Remediation = "DisableRemoteAssistance (Disable also Solicited Remote Assistance - W11 STIG V-253382)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -640,7 +640,7 @@ Function TweakViewRemoteDesktop { # RESINFO
 			Remediation = "DisableRemoteDesktop"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -732,7 +732,7 @@ Function TweakViewRDCSavePassword { # RESINFO
 			Remediation = "DisableRDCSavePassword (W11 STIG V-253402)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -766,7 +766,7 @@ Function TweakViewRDCShareLocalDrive { # RESINFO
 			Remediation = "DisableRDCShareLocalDrive (W11 STIG V-253403)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -819,7 +819,7 @@ Function TweakViewWinRMBasicAuth { # RESINFO
 			Remediation = "DisableWinRMBasicAuth (W11 STIG V-253416)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Service'
 	$RegFields = @{
@@ -829,7 +829,7 @@ Function TweakViewWinRMBasicAuth { # RESINFO
 			Remediation = "DisableWinRMBasicAuth (W11 STIG V-253418)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 

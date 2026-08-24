@@ -189,7 +189,7 @@ Function TweakViewSessionLockTimeout { # RESINFO
 			Remediation = "EnableSessionLockTimeout / InactivityTimeoutSecs<901 (W11 STIG V-253444)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################

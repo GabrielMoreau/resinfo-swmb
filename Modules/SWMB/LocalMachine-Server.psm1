@@ -106,7 +106,7 @@ Function TweakViewTCBPrivilege { # RESINFO
 			Remediation = "UnsetTCBPrivilege (W11 STIG V-253481)"
 		}
 	}
-	SWMB_GetIniSettings -IniData $SecurityConf -Section 'Privilege Rights' -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetIniSettings -IniData $SecurityConf -Section 'Privilege Rights' -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -172,7 +172,7 @@ Function TweakViewCreateTokenObject { # RESINFO
 			Remediation = "UnsetCreateTokenObject (W11 STIG V-253486)"
 		}
 	}
-	SWMB_GetIniSettings -IniData $SecurityConf -Section 'Privilege Rights' -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetIniSettings -IniData $SecurityConf -Section 'Privilege Rights' -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -238,7 +238,7 @@ Function TweakViewDebugPrograms { # RESINFO
 			Remediation = "UnsetDebugPrograms (W11 STIG V-253490)"
 		}
 	}
-	SWMB_GetIniSettings -IniData $SecurityConf -Section 'Privilege Rights' -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetIniSettings -IniData $SecurityConf -Section 'Privilege Rights' -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -325,7 +325,7 @@ Function TweakViewPasswordPolicy { # RESINFO
 			Remediation = "EnablePasswordPolicy / MinimumPasswordLength>13 (W11 STIG V-253303)"
 		}
 	}
-	SWMB_GetIniSettings -IniData $SecurityConf -Section 'System Access' -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetIniSettings -IniData $SecurityConf -Section 'System Access' -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -377,7 +377,7 @@ Function TweakViewPasswordComplexity { # RESINFO
 			Remediation = "EnablePasswordComplexity (W11 STIG V-253304)"
 		}
 	}
-	SWMB_GetIniSettings -IniData $SecurityConf -Section 'System Access' -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetIniSettings -IniData $SecurityConf -Section 'System Access' -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -429,7 +429,7 @@ Function TweakViewPasswordClearText { # RESINFO
 			Remediation = "DisablePasswordClearText (W11 STIG V-253305)"
 		}
 	}
-	SWMB_GetIniSettings -IniData $SecurityConf -Section 'System Access' -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetIniSettings -IniData $SecurityConf -Section 'System Access' -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -463,7 +463,7 @@ Function TweakViewPasswordLMHash { # RESINFO
 			Remediation = "DisablePasswordLMHash (W11 STIG V-253305)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -497,7 +497,7 @@ Function TweakViewPrivilegesElevation { # RESINFO
 			Remediation = "DisablePrivilegesElevation (W11 STIG V-253411)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################

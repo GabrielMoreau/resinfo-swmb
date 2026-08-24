@@ -160,7 +160,7 @@ Function TweakViewTelemetry { # RESINFO
 			Remediation = "DisableTelemetry"
 		}
 	}
-	SWMB_GetRegistrySettings -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 
 	$AllTasks = Get-ScheduledTask
 	$TelemetryTasks = @(
@@ -194,7 +194,7 @@ Function TweakViewTelemetry { # RESINFO
 		}
 		$Hash[$TaskName] = $($Task.State)
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -247,7 +247,7 @@ Function TweakViewCortana { # RESINFO
 			Remediation = "DisableCortana"
 		}
 	}
-	SWMB_GetRegistrySettings -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 
 	$Hash = @{}
 	$Rules = [ordered]@{
@@ -263,7 +263,7 @@ Function TweakViewCortana { # RESINFO
 			$Hash[$Feature] = 'Appx'
 		}
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -301,7 +301,7 @@ Function TweakViewRecall { # RESINFO
 			Remediation = "DisableRecall"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -847,7 +847,7 @@ Function TweakViewDiagTrack { # RESINFO
 	ForEach ($Feature in $Rules.keys) {
 		$Hash[$Feature] = (Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$Feature" -Name "Start").Start
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -887,7 +887,7 @@ Function TweakViewPCASvc { # RESINFO
 	ForEach ($Feature in $Rules.keys) {
 		$Hash[$Feature] = (Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$Feature" -Name "Start").Start
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -938,7 +938,7 @@ Function TweakViewCDPSvc { # RESINFO
 	ForEach ($Feature in $Rules.keys) {
 		$Hash[$Feature] = (Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$Feature" -Name "Start").Start
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -978,7 +978,7 @@ Function TweakViewWERCPlSupport { # RESINFO
 	ForEach ($Feature in $Rules.keys) {
 		$Hash[$Feature] = (Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$Feature" -Name "Start").Start
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -1019,7 +1019,7 @@ Function TweakViewWAPPush { # RESINFO
 	ForEach ($Feature in $Rules.keys) {
 		$Hash[$Feature] = (Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$Feature" -Name "Start").Start
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -1093,7 +1093,7 @@ Function TweakViewAutologgerDiagTrack { # RESINFO
 			Remediation = "DisableAutologgerDiagTrack (BSI document)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################

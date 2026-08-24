@@ -475,7 +475,7 @@ Function TweakViewEdgeSendBrowsingHistory { # RESINFO
 			Remediation = "DisableEdgeSendBrowsingHistory"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -772,7 +772,7 @@ Function TweakViewPowerShellV2 { # RESINFO
 	ForEach ($Feature in $Rules.keys) {
 		$Hash[$Feature] = (Get-WindowsOptionalFeature -Online -FeatureName $Feature).State
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -900,7 +900,7 @@ Function TweakViewTelnetClient { # RESINFO
 			Remediation = "UninstallTelnetClient (W11 STIG V-253278)"
 		}
 	}
-	SWMB_GetIniSettings -IniData $Ini -Section 'Features' -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetIniSettings -IniData $Ini -Section 'Features' -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -943,7 +943,7 @@ Function TweakViewTFTPClient { # RESINFO
 			Remediation = "UninstallTFTPClient (W11 STIG V-253279)"
 		}
 	}
-	SWMB_GetIniSettings -IniData $Ini -Section 'Features' -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetIniSettings -IniData $Ini -Section 'Features' -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -1274,7 +1274,7 @@ Function TweakViewUWPAccessLocation { # RESINFO
 			Remediation = "DisableUWPAccessLocation"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -1315,7 +1315,7 @@ Function TweakViewWindowsHello { # RESINFO
 			Remediation = "DisableWindowsHello"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -1640,7 +1640,7 @@ Function TweakViewAdobeEnhancedSecurity { # RESINFO
 			Remediation = "EnableAdobeEnhancedSecurity (App STIG V-213169)"
 		}
 	}
-	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -1688,7 +1688,7 @@ Function TweakViewAdminNetApps { # RESINFO
 		# Add the result object to the list
 		$AppResults += $AppObject
 	}
-	$AppResults | SWMB_WriteSettings
+	$AppResults | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
@@ -1728,7 +1728,7 @@ Function TweakViewFirefoxTLS { # RESINFO
 	If (Test-Path $RegPath) {
 		$RegValue = (Get-ItemProperty -Path $RegPath -Name SSLVersionMin -ErrorAction SilentlyContinue).SSLVersionMin
 		If ($RegValue) {
-			SWMB_GetRegistrySettings -Path $RegPath -Rules $Rules | SWMB_WriteSettings
+			SWMB_GetRegistrySettings -Path $RegPath -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 			Return
 		}
 	}
@@ -1742,7 +1742,7 @@ Function TweakViewFirefoxTLS { # RESINFO
 			$Hash['SSLVersionMin'] = $Json.policies.SSLVersionMin
 		}
 	}
-	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings
+	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
