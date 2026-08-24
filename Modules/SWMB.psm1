@@ -879,6 +879,18 @@ Function SWMB_WriteSettings {
 			'NotExist'
 		}
 
+		# For a CSV potential export
+		If ($Global:SWMB_Results -is [array]) {
+			$Global:SWMB_Results += [PSCustomObject]@{
+				Tweak       = $Tweak
+				Name        = $InputObject.Name
+				Value       = $DisplayValue
+				Status      = $InputObject.Status
+				Remediation = $InputObject.Remediation
+				Description = $InputObject.Description
+			}
+		}
+
 		$Icon = @{
 			'PASS' = '✅'
 			'FAIL' = '❌'
@@ -897,18 +909,6 @@ Function SWMB_WriteSettings {
 			'FAIL'  { Write-Host $OutPut -ForegroundColor Red }
 			'INFO'  { Write-Host $OutPut -ForegroundColor Cyan }
 			default { Write-Host $OutPut }
-		}
-
-		# For CSV potential export
-		If ($Global:SWMB_Results -is [array]) {
-			$Global:SWMB_Results += [PSCustomObject]@{
-				Tweak       = $Tweak
-				Name        = $InputObject.Name
-				Value       = $DisplayValue
-				Status      = $InputObject.Status
-				Remediation = $InputObject.Remediation
-				Description = $InputObject.Description
-			}
 		}
 	}
 }
