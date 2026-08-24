@@ -44,7 +44,7 @@ $ScriptPath = ".\LocalMachine-SWCE.ps1"
 $TXT_TempFile = [System.IO.Path]::GetTempFileName()
 $CSV_TempFile = [System.IO.Path]::GetTempFileName()
 Start-Transcript -Path $TXT_TempFile
-& $ScriptPath 6> $CSV_TempFile
+& $ScriptPath -CSVFile $CSV_TempFile
 Stop-Transcript
 
 $ContentHash = @{
@@ -57,7 +57,7 @@ Remove-Item -Path $CSV_TempFile
 
 # Upload on GITLAB server
 If ($GITLAB_Server -ne '') {
-	ForEach ($FileName in $ContentHash.Key) {
+	ForEach ($FileName in $ContentHash.Keys) {
 
 		# JSON
 		$Body = @{
@@ -93,4 +93,5 @@ If ($GITLAB_Server -ne '') {
 } Else {
 	# Write on STDOUT
 	Write-Output $ContentHash["LocalMachine-SWCE-$MachineName.txt"]
+	# Set-Content -Path "LocalMachine-SWCE-$MachineName.csv" -Value $ContentHash["LocalMachine-SWCE-$MachineName.csv"]
 }
