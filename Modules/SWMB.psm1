@@ -749,6 +749,7 @@ Function SWMB_GetHashSettings {
 				Exists = $False
 				Status = $Status
 				Remediation = If ($Rule.ContainsKey('Remediation')) { $Rule.Remediation } Else { $Null }
+				Description = If ($Rule.ContainsKey('Description')) { $Rule.Description } Else { $Null }
 			}
 			Continue
 		}
@@ -794,6 +795,7 @@ Function SWMB_GetHashSettings {
 			Exists = $True
 			Status = $Status
 			Remediation = If ($Rule.ContainsKey('Remediation')) { $Rule.Remediation } Else { $Null }
+			Description = If ($Rule.ContainsKey('Description')) { $Rule.Description } Else { $Null }
 		}
 	}
 }
@@ -861,7 +863,8 @@ Function SWMB_GetIniSettings {
 
 Function SWMB_WriteSettings {
 	Param (
-		[Parameter(Mandatory, ValueFromPipeline)] [PSCustomObject]$InputObject
+		[Parameter(Mandatory, ValueFromPipeline)] [PSCustomObject]$InputObject,
+		[string]$Tweak
 	)
 
 	Process {
@@ -875,6 +878,18 @@ Function SWMB_WriteSettings {
 		} Else {
 			'NotExist'
 		}
+
+		# CSV part on Information Canal (6)
+		$CsvObject = [PSCustomObject]@{
+			Tweak       = $Tweak
+			Name        = $InputObject.Name
+			Value       = $DisplayValue
+			Status      = $InputObject.Status
+			Remediation = $InputObject.Remediation
+			Description = $InputObject.Description
+		}
+		$CsvLine = ($CsvObject | ConvertTo-Csv -NoTypeInformation)[1]
+		Write-Information $CsvLine -InformationAction Continue
 
 		$Icon = @{
 			'PASS' = '✅'
