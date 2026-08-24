@@ -111,7 +111,7 @@ cat <<'END'
 # EXPORT CSV
 
 If ($CSVFile) {
-	Write-Output "Create CSV File: $CSVFile ($($Global:SWMB_Results.Count) lines)"
+	Write-Output "SWMB: Create CSV File with $($Global:SWMB_Results.Count) lines..."
 	$Global:SWMB_Results | Export-Csv -Path $CSVFile -NoTypeInformation -Delimiter ',' -Encoding UTF8 -Force
 }
 END
