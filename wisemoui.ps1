@@ -663,7 +663,7 @@ $BtnSWCELM.Add_Click({
 	$Script = "$PSScriptRoot\Tasks\LocalMachine-SWCE.ps1"
 	$Command = @"
 Start-Transcript -Path '$SWCELog'
-& '$Script'
+& '$Script' 6> $Null
 Stop-Transcript
 Write-Host '`nPress any key to close...' -NoNewline
 `$Null = `$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
