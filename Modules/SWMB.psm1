@@ -864,7 +864,7 @@ Function SWMB_GetIniSettings {
 Function SWMB_WriteSettings {
 	Param (
 		[Parameter(Mandatory, ValueFromPipeline)] [PSCustomObject]$InputObject,
-		[string]$Tweak
+		[Parameter(Mandatory)] [string]$Tweak
 	)
 
 	Process {
