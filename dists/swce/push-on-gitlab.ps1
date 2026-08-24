@@ -36,53 +36,61 @@ $GITLAB_Token     = $Config.GITLAB_Token
 ########################################################################
 
 $MachineName = ${Env:ComputerName}  # Computer Hostname
-$FilePathInRepo = "LocalMachine-SWCE-$MachineName.txt"  # Repository file name
 $DateTime = Get-Date -Format "yyyy-MM-dd HH:mm"  # Date and time
 $CommitMessage = "SWCE from $MachineName at $DateTime"  # Commit message
 $ScriptPath = ".\LocalMachine-SWCE.ps1"
 
 # Execute the script
-$TempFile = [System.IO.Path]::GetTempFileName()
-Start-Transcript -Path $TempFile
-& $ScriptPath
+$TXT_TempFile = [System.IO.Path]::GetTempFileName()
+$CSV_TempFile = [System.IO.Path]::GetTempFileName()
+Start-Transcript -Path $TXT_TempFile
+& $ScriptPath 6> $CSV_TempFile
 Stop-Transcript
-$Output = Get-Content $TempFile | Out-String
-Remove-Item -Path $TempFile
-$Base64Content = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($Output))
+
+$ContentHash = @{
+	"LocalMachine-SWCE-$MachineName.txt" = Get-Content $TXT_TempFile | Out-String
+	"LocalMachine-SWCE-$MachineName.csv" = Get-Content $CSV_TempFile | Out-String
+	}
+
+Remove-Item -Path $TXT_TempFile
+Remove-Item -Path $CSV_TempFile
 
 # Upload on GITLAB server
 If ($GITLAB_Server -ne '') {
-	# JSON
-	$Body = @{
-		'branch'         = $GITLAB_Branch
-		'content'        = $Base64Content
-		'commit_message' = $CommitMessage
-		'encoding'       = 'base64'
-	} | ConvertTo-Json -Compress
+	ForEach ($FileName in $ContentHash.Key) {
 
-	$EncodedPath = [System.Web.HttpUtility]::UrlEncode($FilePathInRepo)
-	$ApiUrl = "https://$GITLAB_Server/api/v4/projects/$GITLAB_ProjectId/repository/files/$EncodedPath"
+		# JSON
+		$Body = @{
+			'branch'         = $GITLAB_Branch
+			'content'        = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($ContentHash[$FileName]))
+			'commit_message' = $CommitMessage
+			'encoding'       = 'base64'
+		} | ConvertTo-Json -Compress
 
-	$Headers = @{
-		'PRIVATE-TOKEN' = $GITLAB_Token
-		'Content-Type'  = 'application/json'
-	}
+		$EncodedPath = [System.Web.HttpUtility]::UrlEncode($FileName)
+		$ApiUrl = "https://$GITLAB_Server/api/v4/projects/$GITLAB_ProjectId/repository/files/$EncodedPath"
 
-	Try {
-		# Attempt to update (PUT)
-		$Response = Invoke-RestMethod -Method PUT -Uri $ApiUrl -Headers $Headers -Body $Body -ErrorAction Stop
-		Write-Host "File updated. Response : $($Response | ConvertTo-Json)"
-	} Catch {
+		$Headers = @{
+			'PRIVATE-TOKEN' = $GITLAB_Token
+			'Content-Type'  = 'application/json'
+		}
+
 		Try {
-			Write-Host "The file does not exist. Creation with POST..."
-			$Response = Invoke-RestMethod -Method POST -Uri $ApiUrl -Headers $Headers -Body $Body -ErrorAction Stop
-			Write-Host "File created. Response : $($Response | ConvertTo-Json)"
+			# Attempt to update (PUT)
+			$Response = Invoke-RestMethod -Method PUT -Uri $ApiUrl -Headers $Headers -Body $Body -ErrorAction Stop
+			Write-Host "File updated: $FileName. Response: $($Response | ConvertTo-Json)"
 		} Catch {
-			Write-Host "Error : $($_.Exception.Message)"
-			Throw $_
+			Try {
+				Write-Host "The file does not exist: $FileName. Creation with POST..."
+				$Response = Invoke-RestMethod -Method POST -Uri $ApiUrl -Headers $Headers -Body $Body -ErrorAction Stop
+				Write-Host "File created. Response : $($Response | ConvertTo-Json)"
+			} Catch {
+				Write-Host "Error : $($_.Exception.Message)"
+				Throw $_
+			}
 		}
 	}
 } Else {
 	# Write on STDOUT
-	Write-Output $Output
+	Write-Output $ContentHash["LocalMachine-SWCE-$MachineName.txt"]
 }
