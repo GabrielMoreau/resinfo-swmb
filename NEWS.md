@@ -7,8 +7,8 @@ Checks Git tags when the version number is changed.
 Remove old obsolete script `Win10.ps1`. 
 Add tree websites links in the [REFERENCES](REFERENCES.md) file:
 
-* End-of-Service-Life
-* Collection of awesome security hardening websites links
+* [End-of-Service-Life](https://eosl.date/)
+* Collection of [awesome security hardening](https://github.com/decalage2/awesome-security-hardening) websites links
 * [Aegis Privacy Shield & Terminator](https://github.com/yarrowmartin3-prog/Aegis-Privacy-Shield)
 
 The `wisemoui.ps1` graphical interface has been updated.
