@@ -3,3 +3,7 @@ capture-wisemoui.png filter=lfs diff=lfs merge=lfs -text
 swmb-setup-1.png filter=lfs diff=lfs merge=lfs -text
 swmb-setup-2.png filter=lfs diff=lfs merge=lfs -text
 logo-swmb.png filter=lfs diff=lfs merge=lfs -text
+*.ps1 text eol=crlf
+*.psm1 text eol=crlf
+*.psd1 text eol=crlf
+*.bat text eol=crlf
