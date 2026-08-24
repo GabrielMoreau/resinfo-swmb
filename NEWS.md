@@ -20,14 +20,16 @@ Here's a quick summary:
 
 Regarding the SWCE project:
 
-* Add `ViewTelemetry`, `ViewCortana`, `ViewRecall`, `ViewDiagTrack`,
+* Added the tweaks
+  `ViewTelemetry`, `ViewCortana`, `ViewRecall`, `ViewDiagTrack`,
   `ViewPcaSvc`, `ViewCDPSvc`, `ViewWERCPlSupport`, `ViewWAPPush`,
   `ViewAutologgerDiagTrack`,
   `ViewWindowsHello`, `ViewUWPAccessLocation`,
   `ViewEdgeSendBrowsingHistory`,
   `ViewWidgetsNewsAndInterests`, `ViewMostUsedApps`
-  checks.
-* Add links to ANSSI and BSI guides in documentation.
+  to the checks on LocalMachine.
+* Added links to the ANSSI and BSI guides in the documentation.
+* The `push-on-gitlab.ps1` script now pushes the output of `LocalMachine-SWCE.ps1` to a GitLab server as both a TXT file and a CSV file.
 
 New presets/rules:
 
