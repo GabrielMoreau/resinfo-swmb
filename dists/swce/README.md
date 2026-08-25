@@ -74,6 +74,30 @@ GITLAB_Token     = F6EKJHKJJHKSBKBJHdhdgk.04.0z0b1ofxb
 
 If the Git server is not defined, the compliance tests are written to the local `C:\Temp` folder in the file `LocalMachine-SWCE-PS1.log`.
 
+### Big CSV computers database
+
+Synchronize your repository.
+
+```
+git pull
+```
+
+Create a large CSV file that combines all the CSV files on your computer.
+
+```bash
+rm -f GlobalLocalMachine.csv
+for f in LocalMachine-SWCE*.csv;
+do
+  h="${f#LocalMachine-SWCE-}"
+  h="${h%.csv}"
+  sed "s/^/\"$h\",/;" $f >> GlobalLocalMachine.csv
+done
+
+loffice GlobalLocalMachine.csv
+```
+
+You can now search and sort the columns as you like.
+
 ## List of GPOs tested for compliance
 
 Run the `make` command in the current folder and read the `tmp/LocalMachine-SWCE.ps1` file in the temporary folder to get a more accurate list.
