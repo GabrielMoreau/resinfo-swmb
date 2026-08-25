@@ -89,15 +89,15 @@ However, it is very easy to add a first column with the machine's name afterward
 You can then create a large CSV file that combines all the CSV files on your computer.
 
 ```bash
-rm -f GlobalLocalMachine-SWCE.csv
+rm -f AllMachines-SWCE.csv
 for f in LocalMachine-SWCE*.csv;
 do
   h="${f#LocalMachine-SWCE-}"
   h="${h%.csv}"
-  sed "s/^/\"$h\",/;" $f >> GlobalLocalMachine-SWCE.csv
+  sed "s/^/\"$h\",/;" $f >> AllMachines-SWCE.csv
 done
 
-loffice GlobalLocalMachine-SWCE.csv
+loffice AllMachines-SWCE.csv
 ```
 
 You can now search and sort the columns as you like.
