@@ -76,7 +76,7 @@ If the Git server is not defined, the compliance tests are written to the local 
 
 ### Big CSV computers database
 
-Synchronize your repository.
+On your computer, synchronize your repository.
 
 ```
 git pull
