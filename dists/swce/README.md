@@ -82,18 +82,22 @@ Synchronize your repository.
 git pull
 ```
 
-Create a large CSV file that combines all the CSV files on your computer.
+The CSV file for each machine does not contain a column with the machine's name.
+This allows you to run a diff (`meld` command) between the files from two machines and highlight only the lines that differ.
+
+However, it is very easy to add a first column with the machine's name afterward.
+You can then create a large CSV file that combines all the CSV files on your computer.
 
 ```bash
-rm -f GlobalLocalMachine.csv
+rm -f GlobalLocalMachine-SWCE.csv
 for f in LocalMachine-SWCE*.csv;
 do
   h="${f#LocalMachine-SWCE-}"
   h="${h%.csv}"
-  sed "s/^/\"$h\",/;" $f >> GlobalLocalMachine.csv
+  sed "s/^/\"$h\",/;" $f >> GlobalLocalMachine-SWCE.csv
 done
 
-loffice GlobalLocalMachine.csv
+loffice GlobalLocalMachine-SWCE.csv
 ```
 
 You can now search and sort the columns as you like.
