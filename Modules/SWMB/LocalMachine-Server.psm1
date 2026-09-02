@@ -246,10 +246,10 @@ Function TweakViewDebugPrograms { # RESINFO
 # Password Policy
 # MaximumPasswordAge = Number of week (52 = 1 year)
 #
-# PasswordHistorySize = $($Global:SWMB_Custom.PasswordHistorySize) (>23: Recommanded) - W11 STIG V-253300 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253300
+# PasswordHistorySize = $($Global:SWMB_Custom.PasswordHistorySize) (>23: Recommended) - W11 STIG V-253300 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253300
 # MinimumPasswordAge = $($Global:SWMB_Custom.MinimumPasswordAge) - W11 STIG V-253301 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253301
 # MaximumPasswordAge = $($Global:SWMB_Custom.MaximumPasswordAge) - W11 STIG V-253302 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253302
-# MinimumPasswordLength = $($Global:SWMB_Custom.MinimumPasswordLength) (>13: Recommanded) - W11 STIG V-253303 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253303
+# MinimumPasswordLength = $($Global:SWMB_Custom.MinimumPasswordLength) (>13: Recommended) - W11 STIG V-253303 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253303
 # LockoutBadCount = $($Global:SWMB_Custom.LockoutBadCount)
 # ResetLockoutCount = $($Global:SWMB_Custom.ResetLockoutCount)
 # LockoutDuration = $($Global:SWMB_Custom.LockoutDuration)
@@ -296,7 +296,7 @@ Function TweakDisablePasswordPolicy { # RESINFO
 
 # View
 Function TweakViewPasswordPolicy { # RESINFO
-	Write-Output "Viewing Password Policy (Recommanded - PasswordHistorySize: >23, MinimumPasswordAge: >0, MaximumPasswordAge: X days, MinimumPasswordLength: >13)..."
+	Write-Output "Viewing Password Policy (Recommended - PasswordHistorySize: >23, MinimumPasswordAge: >0, MaximumPasswordAge: X days, MinimumPasswordLength: >13)..."
 
 	$TmpFile = New-TemporaryFile
 	secedit /export /cfg $TmpFile /quiet | Out-Null
@@ -363,7 +363,7 @@ Function TweakDisablePasswordComplexity { # RESINFO
 
 # View
 Function TweakViewPasswordComplexity { # RESINFO
-	Write-Output "Viewing Password Complexity (0 or not exist: Disable (Default), 1: Enable (Recommanded))..."
+	Write-Output "Viewing Password Complexity (0 or not exist: Disable (Default), 1: Enable (Recommended))..."
 
 	$TmpFile = New-TemporaryFile
 	secedit /export /cfg $TmpFile /quiet | Out-Null
@@ -383,7 +383,7 @@ Function TweakViewPasswordComplexity { # RESINFO
 ################################################################
 
 # Disable Reversible password encryption
-# ClearTextPassword (0 or not exist: Recommanded) - W11 STIG V-253305 https://system32.eventsentry.com/stig/viewer/V-253305
+# ClearTextPassword (0 or not exist: Recommended) - W11 STIG V-253305 https://system32.eventsentry.com/stig/viewer/V-253305
 
 # Disable
 Function TweakDisablePasswordClearText { # RESINFO
@@ -415,7 +415,7 @@ Function TweakEnablePasswordClearText { # RESINFO
 
 # View
 Function TweakViewPasswordClearText { # RESINFO
-	Write-Output "Viewing Reversible Text Password (0 or not exist: Disable (Default, Recommanded), 1: Enable)..."
+	Write-Output "Viewing Reversible Text Password (0 or not exist: Disable (Default, Recommended), 1: Enable)..."
 
 	$TmpFile = New-TemporaryFile
 	secedit /export /cfg $TmpFile /quiet | Out-Null
@@ -454,7 +454,7 @@ Function TweakEnablePasswordLMHash { # RESINFO
 
 # View
 Function TweakViewPasswordLMHash { # RESINFO
-	Write-Output "Viewing LM Password Hash Storage (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
+	Write-Output "Viewing LM Password Hash Storage (0 or not exist: Enable (Default), 1: Disable (Recommended))..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
 	$RegFields = @{
 		NoLMHash = @{
@@ -488,7 +488,7 @@ Function TweakEnablePrivilegesElevation { # RESINFO
 
 # View
 Function TweakViewPrivilegesElevation { # RESINFO
-	Write-Output "Viewing Elevation of privileges during installation (not exist: Enable (Default), 0: Disable (Recommanded))..."
+	Write-Output "Viewing Elevation of privileges during installation (not exist: Enable (Default), 0: Disable (Recommended))..."
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Installer'
 	$RegFields = @{
 		AlwaysInstallElevated = @{

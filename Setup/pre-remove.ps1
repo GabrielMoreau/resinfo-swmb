@@ -22,7 +22,7 @@ $LogonTask = 'SWMB-CurrentUser-Logon'
 Unregister-ScheduledTask -TaskName $LogonTask -Confirm:$False -ErrorAction SilentlyContinue
 
 
-# Destroy ProgramData Folders and Recommanded Preset
+# Destroy ProgramData Folders and Recommended Preset
 $DataFolder  = (Join-Path -Path ${Env:ProgramData} -ChildPath "SWMB")
 $DataPresets = (Join-Path -Path $DataFolder     -ChildPath "Presets")
 

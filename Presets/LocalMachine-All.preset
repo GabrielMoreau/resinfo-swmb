@@ -14,7 +14,7 @@ SysRequireAdmin                                                                 
 #$IMPORT "C:\Program Files\SWLN\Local-Addon.psm1"
 
 ## Use Resinfo recommanded preset
-# $PRESET "C:\Program Files\SWMB\Presets\LocalMachine-Boot-Recommanded.preset"
+# $PRESET "C:\Program Files\SWMB\Presets\LocalMachine-Boot-Recommended.preset"
 
 ### Privacy Tweaks ###
 DisableTelemetry                                # EnableTelemetry                               # ViewTelemetry                 ## Disable many Telemetry breaks Windows Insider Program and Microsoft Intune enrollment/deployment

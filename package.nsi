@@ -242,10 +242,10 @@ Section "Program files (Required)"
 
   SetOutPath $INSTDIR\Presets
   File "Presets\CurrentUser-All.preset"
-  File "Presets\CurrentUser-Logon-Recommanded.preset"
+  File "Presets\CurrentUser-Logon-Recommended.preset"
   File "Presets\CurrentUser-Logon-Test.preset"
   File "Presets\LocalMachine-All.preset"
-  File "Presets\LocalMachine-Boot-Recommanded.preset"
+  File "Presets\LocalMachine-Boot-Recommended.preset"
   File "Presets\LocalMachine-Boot-Test.preset"
   File "Presets\LocalMachine-Cloud.preset"
   File "Presets\LocalMachine-CortanaSearch.preset"

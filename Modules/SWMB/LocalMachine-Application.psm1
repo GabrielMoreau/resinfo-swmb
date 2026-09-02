@@ -466,7 +466,7 @@ Function TweakEnableEdgeSendBrowsingHistory { # RESINFO
 
 # View
 Function TweakViewEdgeSendBrowsingHistory { # RESINFO
-	Write-Output "Viewing Sending Edge browsing history to Microsoft (0: Disable (Recommanded), 1 or not exist: Enable (Default))..."
+	Write-Output "Viewing Sending Edge browsing history to Microsoft (0: Disable (Recommended), 1 or not exist: Enable (Default))..."
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Edge'
 	$RegFields = @{
 		'PersonalizationReportingEnabled' = @{
@@ -1265,7 +1265,7 @@ Function TweakEnableUWPAccessLocation { # RESINFO
 
 # View
 Function TweakViewUWPAccessLocation { # RESINFO
-	Write-Output "Viewing access to location from UWP apps (0 or not exist: Enable, 2: Disable (Recommanded))..."
+	Write-Output "Viewing access to location from UWP apps (0 or not exist: Enable, 2: Disable (Recommended))..."
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy'
 	$RegFields = @{
 		'LetAppsAccessLocation' = @{
@@ -1306,7 +1306,7 @@ Function TweakEnableWindowsHello { # RESINFO
 
 # View
 Function TweakViewWindowsHello { # RESINFO
-	Write-Output "Viewing Windows Hello Authentification (0: Disable (Recommanded), 1: Enable)..."
+	Write-Output "Viewing Windows Hello Authentification (0: Disable (Recommended), 1: Enable)..."
 	$RegPath = 'HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Settings\AllowSignInOptions'
 	$RegFields = @{
 		'value' = @{
@@ -1698,7 +1698,7 @@ Function TweakViewAdminNetApps { # RESINFO
 # App STIG V-251546 https://www.stigviewer.com/stigs/mozilla_firefox/2025-02-11/finding/V-251546
 
 Function TweakViewFirefoxTLS { # RESINFO
-	Write-Host "Viewing Firefox TLS Minimum Version (not exist: Default, >= TLS1.2: Recommanded)..."
+	Write-Host "Viewing Firefox TLS Minimum Version (not exist: Default, >= TLS1.2: Recommended)..."
 
 	# Possible Firefox installation paths
 	$FirefoxPaths = @(

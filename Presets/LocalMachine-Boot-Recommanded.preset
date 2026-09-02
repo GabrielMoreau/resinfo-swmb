@@ -15,7 +15,7 @@
 ## This file can be replaced by yours, more complete, which includes this
 ## one if needed.
 ##
-## $PRESET "C:\Program Files\SWMB\Presets\LocalMachine-Boot-Recommanded.preset"
+## $PRESET "C:\Program Files\SWMB\Presets\LocalMachine-Boot-Recommended.preset"
 ##
 ## If you don't want one or some tweak predefined in a preset loaded
 ## earlier, it's very easy to just exclude them with an exclamation mark.

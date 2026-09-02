@@ -208,7 +208,7 @@ Function TweakDisableLanManAuthLevelHigh { # RESINFO
 
 # View
 Function TweakViewLanManAuthLevelHigh { # RESINFO
-	Write-Output "Viewing LanMan Authentication Level (not exist: Disable (Default), 5: Enable (Recommanded))..."
+	Write-Output "Viewing LanMan Authentication Level (not exist: Disable (Default), 5: Enable (Recommended))..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
 	$RegFields = @{
 		LmCompatibilityLevel = @{
@@ -244,7 +244,7 @@ Function TweakEnablePrintOverHTTP { # RESINFO
 
 # View
 Function TweakViewPrintOverHTTP { # RESINFO
-	Write-Output "Viewing Print over HTTP (not exist: Enable (Default), 1: Disable (Recommanded))..."
+	Write-Output "Viewing Print over HTTP (not exist: Enable (Default), 1: Disable (Recommended))..."
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers'
 	$RegFields = @{
 		DisableHTTPPrinting = @{
@@ -396,7 +396,7 @@ Function TweakEnableConnectionSharing {
 
 # View
 Function TweakViewConnectionSharing { # RESINFO
-	Write-Output "Viewing Internet Connection Sharing (0 : Disable (Recommanded), not exist: Enable (Default))..."
+	Write-Output "Viewing Internet Connection Sharing (0 : Disable (Recommended), not exist: Enable (Default))..."
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections'
 	$RegFields = @{
 		NC_ShowSharedAccessUI = @{
@@ -429,7 +429,7 @@ Function TweakEnableAnonymousNameTranslation { # RESINFO
 
 # View
 Function TweakViewAnonymousNameTranslation { # RESINFO
-	Write-Output "Viewing Anonymous SID/Name translation (0 or not exist: Disable (Default, Recommanded), 1: Enable)..."
+	Write-Output "Viewing Anonymous SID/Name translation (0 or not exist: Disable (Default, Recommended), 1: Enable)..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
 	$RegFields = @{
 		TurnOffAnonymousBlock = @{
@@ -462,7 +462,7 @@ Function TweakEnableAnonymousSAMEnumeration { # RESINFO
 
 # View
 Function TweakViewAnonymousSAMEnumeration { # RESINFO
-	Write-Output "Viewing Anonymous SAM Enumeration (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
+	Write-Output "Viewing Anonymous SAM Enumeration (0 or not exist: Enable (Default), 1: Disable (Recommended))..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
 	$RegFields = @{
 		RestrictAnonymousSAM = @{
@@ -495,7 +495,7 @@ Function TweakEnableAnonymousShareEnumeration { # RESINFO
 
 # View
 Function TweakViewAnonymousShareEnumeration { # RESINFO
-	Write-Output "Viewing Anonymous Share Enumeration (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
+	Write-Output "Viewing Anonymous Share Enumeration (0 or not exist: Enable (Default), 1: Disable (Recommended))..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
 	$RegFields = @{
 		RestrictAnonymous = @{
@@ -529,7 +529,7 @@ Function TweakEnableAnonymousShareAccess { # RESINFO
 
 # View
 Function TweakViewAnonymousShareAccess { # RESINFO
-	Write-Output "Viewing Anonymous access to Named Pipes and Shares (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
+	Write-Output "Viewing Anonymous access to Named Pipes and Shares (0 or not exist: Enable (Default), 1: Disable (Recommended))..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters'
 	$RegFields = @{
 		RestrictNullSessAccessValue = @{
@@ -591,7 +591,7 @@ Function TweakEnableRemoteAssistance { # RESINFO
 
 # View
 Function TweakViewRemoteAssistance { # RESINFO
-	Write-Output "Viewing Remote Assistance (0: Disable (Recommanded), 1: Enable)..."
+	Write-Output "Viewing Remote Assistance (0: Disable (Recommended), 1: Enable)..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance'
 	$RegFields = @{
 		fAllowToGetHelp = @{
@@ -631,7 +631,7 @@ Function TweakDisableRemoteDesktop {
 
 # View
 Function TweakViewRemoteDesktop { # RESINFO
-	Write-Output "Viewing Remote Desktop (0: Enable (Default), 1: Disable (Recommanded))..."
+	Write-Output "Viewing Remote Desktop (0: Enable (Default), 1: Disable (Recommended))..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server'
 	$RegFields = @{
 		fDenyTSConnections = @{
@@ -723,7 +723,7 @@ Function TweakEnableRDCSavePassword {
 
 # View
 Function TweakViewRDCSavePassword { # RESINFO
-	Write-Output "Viewing whether the Remote Desktop client allows password saving (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
+	Write-Output "Viewing whether the Remote Desktop client allows password saving (0 or not exist: Enable (Default), 1: Disable (Recommended))..."
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services'
 	$RegFields = @{
 		DisablePasswordSaving = @{
@@ -757,7 +757,7 @@ Function TweakEnableRDCShareLocalDrive {
 
 # View
 Function TweakViewRDCShareLocalDrive { # RESINFO
-	Write-Output "Viewing Remote Desktop Share Local Drive (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
+	Write-Output "Viewing Remote Desktop Share Local Drive (0 or not exist: Enable (Default), 1: Disable (Recommended))..."
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services'
 	$RegFields = @{
 		fDisableCdm = @{
@@ -810,7 +810,7 @@ Function TweakEnableWinRMBasicAuth { # RESINFO
 
 # View
 Function TweakViewWinRMBasicAuth { # RESINFO
-	Write-Output "Viewing Windows Remote Management (WinRM) Basic authentication (Client and Service) (0: Disable (Recommanded), not exist: Enable (Default))..."
+	Write-Output "Viewing Windows Remote Management (WinRM) Basic authentication (Client and Service) (0: Disable (Recommended), not exist: Enable (Default))..."
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Client'
 	$RegFields = @{
 		AllowBasic = @{

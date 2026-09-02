@@ -180,7 +180,7 @@ Function TweakDisableSessionLockTimeout { # RESINFO
 
 # View
 Function TweakViewSessionLockTimeout { # RESINFO
-	Write-Output "Viewing Session Lock Timeout (InactivityTimeoutSecs) (0 or not exist: Disable, 900: Enable after 15 min (Recommanded))"
+	Write-Output "Viewing Session Lock Timeout (InactivityTimeoutSecs) (0 or not exist: Disable, 900: Enable after 15 min (Recommended))"
 	$RegPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
 	$RegFields = [ordered]@{
 		InactivityTimeoutSecs = @{

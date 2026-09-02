@@ -227,7 +227,7 @@ Function TweakEnableCortana {
 
 # View
 Function TweakViewCortana { # RESINFO
-	Write-Output "Viewing Cortana (0: Disable (Recommanded), 1 or not exist: Enable)..."
+	Write-Output "Viewing Cortana (0: Disable (Recommended), 1 or not exist: Enable)..."
 	$RegFields = @{
 		'Value' = @{
 			Path = 'HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Experience\AllowCortana'

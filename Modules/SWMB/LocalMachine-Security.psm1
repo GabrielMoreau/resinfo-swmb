@@ -228,7 +228,7 @@ Function TweakEnableScriptHost {
 
 # View
 Function TweakViewScriptHost { # RESINFO
-	Write-Output "Viewing Windows Script Host (not exist: Enable, 0: Disable (Recommanded))..."
+	Write-Output "Viewing Windows Script Host (not exist: Enable, 0: Disable (Recommended))..."
 	$RegPath = 'HKLM:\SOFTWARE\Microsoft\Windows Script Host\Settings'
 	$RegFields = @{
 		'Enabled' = @{
@@ -359,7 +359,7 @@ Function TweakSetDEPOptIn {
 
 # View
 Function TweakViewDEP { # RESINFO
-	Write-Output "Viewing DEP (Data Execution Prevention) (AlwaysOff, OptIn, OptOut: Recommanded, AlwaysOn: Better)..."
+	Write-Output "Viewing DEP (Data Execution Prevention) (AlwaysOff, OptIn, OptOut: Recommended, AlwaysOn: Better)..."
 	$Hash = [ordered]@{}
 	$Hash['DEP'] = $Null
 	If ((Get-CimInstance Win32_OperatingSystem).DataExecutionPrevention_Available) {
@@ -550,7 +550,7 @@ Function TweakDisableSMBServerSigning { # RESINFO
 
 # View
 Function TweakViewSMBServerSigning { # RESINFO
-	Write-Output "Viewing (require) SMB server to use signing messages (0 or not exist: Disable, 1: Enable (Recommanded))..."
+	Write-Output "Viewing (require) SMB server to use signing messages (0 or not exist: Disable, 1: Enable (Recommended))..."
 	$Hash = @{}
 	$Rules = [ordered]@{
 		EnableSecuritySignature = @{
@@ -642,7 +642,7 @@ Function TweakDisablePasswordOnResume { # RESINFO
 
 # View
 Function TweakViewPasswordOnResume { # RESINFO
-	Write-Output "Viewing (prompt) password on resume (0 or not exist: Disable (Default), 1: Enable (Recommanded))..."
+	Write-Output "Viewing (prompt) password on resume (0 or not exist: Disable (Default), 1: Enable (Recommended))..."
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51'
 	$RegFields = @{
 		ACSettingIndex = @{
@@ -930,7 +930,7 @@ Function TweakDisableSEHOP { # RESINFO
 
 # View
 Function TweakViewSEHOP { # RESINFO
-	Write-Output "Viewing Structured Exception Handling Overwrite Protection (SEHOP) (0: Enable (Recommanded), 1 or not exist: Disable)..."
+	Write-Output "Viewing Structured Exception Handling Overwrite Protection (SEHOP) (0: Enable (Recommended), 1 or not exist: Disable)..."
 	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\kernel'
 	$RegFields = @{
 		DisableExceptionChainValidation = @{
@@ -1582,7 +1582,7 @@ Function TweakDisableBitlocker { # RESINFO
 
 # View
 Function TweakViewBitlocker { # RESINFO
-	Write-Output "Viewing Bitlocker on all fixed drives (XtsAes256 Recommanded)..."
+	Write-Output "Viewing Bitlocker on all fixed drives (XtsAes256 Recommended)..."
 	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $Null }
 #		ForEach-Object {
 #			$Disk = Get-Partition -DriveLetter $_.DriveLetter -ErrorAction SilentlyContinue | Get-Disk
@@ -1644,7 +1644,7 @@ Function TweakUnsetBitlockerActive { # RESINFO
 # BitLocker PIN with a minimum length for pre-boot authentication - W11 STIG V-253261 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253261
 
 Function TweakViewBitlockerTPM { # RESINFO
-	Write-Output "Viewing Bitlocker TPM PIN (2: Enable (Recommanded))..."
+	Write-Output "Viewing Bitlocker TPM PIN (2: Enable (Recommended))..."
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\FVE'
 	$RegFields = @{
 		UseTPM = @{

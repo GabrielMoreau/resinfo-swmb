@@ -71,7 +71,7 @@ Function TweakShowNetworkOnLockScreen {
 
 # View
 Function TweakViewNetworkOnLockScreen { # RESINFO
-	Write-Output "Viewing Internet Connection Sharing (1 : Hide (Recommanded), not exist: Show (Default))..."
+	Write-Output "Viewing Internet Connection Sharing (1 : Hide (Recommended), not exist: Show (Default))..."
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System'
 	$RegFields = @{
 		DontDisplayNetworkSelectionUI = @{
@@ -136,7 +136,7 @@ Function TweakEnableCameraFromLockScreen { # RESINFO
 
 # View
 Function TweakViewCameraFromLockScreen { # RESINFO
-	Write-Output "Viewing Camera access from Lock Screen (0 or not exist: Enable (Default), 1: Disable (Recommanded))..."
+	Write-Output "Viewing Camera access from Lock Screen (0 or not exist: Enable (Default), 1: Disable (Recommended))..."
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization'
 	$RegFields = @{
 		NoLockScreenCamera = @{
@@ -357,7 +357,7 @@ Function TweakEnableWidgetsNewsAndInterests { # RESINFO
 
 # View
 Function TweakViewWidgetsNewsAndInterests { # RESINFO
-	Write-Output "Viewing Widgets News and Interests (0: Disable (Recommanded), Error: Enable)..."
+	Write-Output "Viewing Widgets News and Interests (0: Disable (Recommended), Error: Enable)..."
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Dsh'
 	$RegFields = @{
 		'AllowNewsAndInterests' = @{
@@ -396,7 +396,7 @@ Function TweakShowMostUsedApps { # RESINFO
 
 # View
 Function TweakViewMostUsedApps { # RESINFO
-	Write-Output "Viewing Hide or Show Most Used Apps (2: Hide (Recommanded), 1: Show, 0: Not Configured)..."
+	Write-Output "Viewing Hide or Show Most Used Apps (2: Hide (Recommended), 1: Show, 0: Not Configured)..."
 	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer'
 	$RegFields = @{
 		'ShowOrHideMostUsedApps' = @{

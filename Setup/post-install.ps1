@@ -134,8 +134,8 @@ If (Test-Path "HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Unins
 	$ActivatedPreset = (Get-ItemProperty -Path "HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\SWMB" -Name "ActivatedPreset").ActivatedPreset
 }
 If ($ActivatedPreset -eq 1) {
-	_UpdatePresetFile -New "$InstallFolder\Presets\LocalMachine-Boot-Recommanded.preset" -Actual "$DataPresets\LocalMachine-Boot.preset"
-	_UpdatePresetFile -New "$InstallFolder\Presets\CurrentUser-Logon-Recommanded.preset" -Actual "$DataPresets\CurrentUser-Logon.preset"
+	_UpdatePresetFile -New "$InstallFolder\Presets\LocalMachine-Boot-Recommended.preset" -Actual "$DataPresets\LocalMachine-Boot.preset"
+	_UpdatePresetFile -New "$InstallFolder\Presets\CurrentUser-Logon-Recommended.preset" -Actual "$DataPresets\CurrentUser-Logon.preset"
 }
 
 # Bitlocker Script in Start Menu
