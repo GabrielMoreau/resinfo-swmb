@@ -454,7 +454,7 @@ Function TweakViewSearchUseLocation { # RESINFO
 
 ################################################################
 
-## WARNING NOT RECOMMANDED - disable search start menu
+## WARNING NOT RECOMMENDED - disable search start menu
 ## Search on Taskbar and Start Menu for All Users
 # Disable
 Function TweakDisableSearchOnTaskbar { # RESINFO
