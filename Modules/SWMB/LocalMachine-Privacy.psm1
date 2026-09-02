@@ -162,21 +162,26 @@ Function TweakViewTelemetry { # RESINFO
 	}
 	SWMB_GetRegistrySettings -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 
-	$AllTasks = Get-ScheduledTask
+	$AllTasks = Get-ScheduledTask -ErrorAction SilentlyContinue
 	$TelemetryTasks = @(
-		'Microsoft Compatibility Appraiser',
-		'ProgramDataUpdater',
-		'Proxy',
-		'Consolidator',
-		'UsbCeip',
-		'Microsoft-Windows-DiskDiagnosticDataCollector',
-		'Office ClickToRun Service Monitor',
-		'OfficeTelemetryAgentFallBack2016',
-		'OfficeTelemetryAgentLogOn2016'
-		)
+		'\Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser',
+		'\Microsoft\Windows\Application Experience\ProgramDataUpdater',
+		'\Microsoft\Windows\Autochk\Proxy',
+		'\Microsoft\Windows\Customer Experience Improvement Program\Consolidator',
+		'\Microsoft\Windows\Customer Experience Improvement Program\UsbCeip',
+		'\Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector',
+		'\Microsoft\Office\Office ClickToRun Service Monitor',
+		'\Microsoft\Office\OfficeTelemetryAgentFallBack2016',
+		'\Microsoft\Office\OfficeTelemetryAgentLogOn2016'
+	)
 	$Hash = @{}
 	$Rules = [ordered]@{}
-	ForEach ($TaskName in $TelemetryTasks) {
+	ForEach ($TaskCurrent in $TelemetryTasks) {
+		$TaskName = Split-Path $TaskCurrent -Leaf
+		$TaskPath = Split-Path $TaskCurrent -Parent
+		If (-not $TaskPath.EndsWith('\')) {
+			$TaskPath += '\'
+		}
 		$DisplayName = $TaskName `
 			-Replace 'Microsoft-Windows-DiskDiagnosticDataCollector', 'DiskDiagnosticDataCollector' `
 			-Replace 'TelemetryAgent', 'TelemAgent' `
@@ -188,11 +193,15 @@ Function TweakViewTelemetry { # RESINFO
 			Remediation = "DisableTelemetry"
 		}
 
-		$Task = $AllTasks | Where-Object { $_.TaskName -eq $TaskName }
-		If (-not $Task) {
+		If ($AllTasks -eq $Null) {
+			$Task = Get-ScheduledTask -TaskPath $TaskPath -TaskName $TaskName -ErrorAction SilentlyContinue
+		} Else {
+			$Task = $AllTasks | Where-Object {$_.TaskName -eq $TaskName -and $_.TaskPath -eq $TaskPath}
+		}
+		If ($Task -eq $Null) {
 			Continue
 		}
-		$Hash[$TaskName] = $($Task.State)
+		$Hash[$TaskName] = $Task.State
 	}
 	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
