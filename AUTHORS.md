@@ -6,3 +6,4 @@
 * 2020-2024, Clément Deiber (CNRS / DR11)
 * 2020-2026, Gabriel Moreau (CNRS / LEGI)
 * 2021-2023, Sébastien Morin (CNRS / DCM)
+* 2026-2026, Karl Oulmi (CNRS / PLBS)
