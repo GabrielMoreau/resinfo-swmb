@@ -1711,12 +1711,12 @@ Function TweakViewUEFICA23 { # RESINFO
 	$Hash = @{}
 	$Rules = [ordered]@{
 		'db' = @{
-			OkValues = @('True')
+			OkValues = @($True)
 			Description = "UEFI CA 2023"
 			Remediation = "InstallUEFICA23 ($Message)"
 		}
 		'dbdefault' = @{
-			OkValues = @('True')
+			OkValues = @($True)
 			Description = "UEFI CA 2023"
 			Remediation = "InstallUEFICA23 ($Message)"
 		}
@@ -1726,7 +1726,14 @@ Function TweakViewUEFICA23 { # RESINFO
 			$Hash[$Feature] = 'NotAvailable'
 			Continue
 		}
-		$Hash[$Feature] = ([System.Text.Encoding]::ASCII.GetString((Get-SecureBootUEFI $Feature).bytes) -match 'Windows UEFI CA 2023')
+		$UEFIVariable = Get-SecureBootUEFI -Name $Feature -ErrorAction SilentlyContinue
+		If ($UEFIVariable -eq $Null) {
+			Continue
+		}
+		$Hash[$Feature] = ([System.Text.Encoding]::ASCII.GetString($UEFIVariable.bytes) -match 'Windows UEFI CA 2023')
+	}
+	If ($Hash['db'] -eq 'True') {
+		$Rules['dbdefault'].OkValues += $Null
 	}
 	SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
