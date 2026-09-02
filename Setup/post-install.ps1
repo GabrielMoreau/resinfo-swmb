@@ -110,7 +110,7 @@ If (Test-Path -LiteralPath "$InstallFolder\Tasks\CurrentUser-Logon.ps1") {
 	$LogonObject | Set-ScheduledTask
 }
 
-# Copy recommanded preset
+# Copy recommended preset
 Function _UpdatePresetFile {
 	Param (
 		[Parameter(Mandatory = $True)] [string]$New,

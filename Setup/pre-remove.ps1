@@ -39,7 +39,7 @@ Function _RemovePresetFile {
 	}
 }
 
-# Remove data default recommanded preset if not modified
+# Remove data default recommended preset if not modified
 _RemovePresetFile -Path "$DataPresets\LocalMachine-Boot.preset"
 _RemovePresetFile -Path "$DataPresets\CurrentUser-Logon.preset"
 
