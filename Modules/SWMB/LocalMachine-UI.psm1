@@ -236,6 +236,20 @@ Function TweakShowRecommendedSection { # RESINFO
 
 ################################################################
 
+# Hide
+Function TweakHideRecommandedSection { # OBSOLETE
+	Write-Output "Hiding [Warning] obsolete tweak HideRecommandedSection, now use HideRecommendedSection"
+	EnablePasswordPolicy
+}
+
+# Show
+Function TweakShowRecommandedSection { # OBSOLETE
+	Write-Output "Showing [Warning] obsolete tweak ShowRecommandedSection, now use ShowRecommendedSection"
+	EnablePasswordPolicy
+}
+
+################################################################
+
 # Hide shortcut icon arrow
 Function TweakHideShortcutArrow {
 	Write-Output "Hiding shortcut icon arrow..."

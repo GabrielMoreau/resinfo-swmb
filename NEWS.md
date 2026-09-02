@@ -5,6 +5,8 @@
 Update UBR.
 Checks Git tags when the version number is changed.
 Remove old obsolete script `Win10.ps1`. 
+There was a major spelling error between “Recommanded” and “Recommended”.
+One group of tweaks was affected and has been corrected : `HideRecommandedSection` -> `HideRecommendedSection` and `ShowRecommandedSection` -> `ShowRecommendedSection`.
 Add tree websites links in the [REFERENCES](REFERENCES.md) file:
 
 * [End-of-Service-Life](https://eosl.date/)
@@ -360,7 +362,7 @@ New presets/rules:
 * 2024/02/07 - `UninstallHPWolfSecurity`/`ViewHPWolfSecurity` -> Uninstall HP Wolf Security
 * 2024/02/07 - `UninstallHPBuiltInApps` -> Uninstall HP built-in apps
 * 2024/02/07 - `UninstallHPBloatware` -> Uninstall HP Bloatware Software
-* 2024/01/25 - `HideRecommendedSection`/`ShowRecommendedSection` -> Hide Recommended Section in start menu (Windows11)
+* 2024/01/25 - `HideRecommandedSection`/`ShowRecommandedSection` -> Hide Recommended Section in start menu (Windows11)
 * 2024/01/25 - `DisableSearchInternetInMenu_CU`/`EnableSearchInternetInMenu_CU`/`ViewSearchInternetInMenu_CU` -> No Search Internet In StartMenu
 * 2024/01/23 - `DisableSearchOnTaskbar`/`EnableSearchOnTaskbar`/`ViewSearchOnTaskbar` -> Disable Search on Taskbar and Start Menu for All Users (Windows11)
 * 2024/01/22 - `DisableCloudSearch`/`EnableCloudSearch`/`ViewCloudSearch` -> No search on cloud by default in menu (Windows11)
