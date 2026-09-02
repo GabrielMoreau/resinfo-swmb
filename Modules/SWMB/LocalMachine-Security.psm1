@@ -1787,7 +1787,7 @@ Function TweakViewAntivirusServices { # RESINFO
 	$ServiceResults = @()
 	$OneAntivirusIsUp = $False
 	ForEach ($AntivirusCurrent in (Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntivirusProduct)) {
-		$AntivirusName = $AntivirusCurrent.displayName
+		$AntivirusName = $AntivirusCurrent.displayName -replace ' ', '-'
 		$AntivirusState = _GetAntivirusProductState($AntivirusCurrent.productState)
 		$ServiceObject = [PSCustomObject]@{
 			Name        = $AntivirusName
