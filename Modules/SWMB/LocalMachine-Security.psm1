@@ -1584,10 +1584,6 @@ Function TweakDisableBitlocker { # RESINFO
 Function TweakViewBitlocker { # RESINFO
 	Write-Output "Viewing Bitlocker on all fixed drives (XtsAes256 Recommended)..."
 	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $Null }
-#		ForEach-Object {
-#			$Disk = Get-Partition -DriveLetter $_.DriveLetter -ErrorAction SilentlyContinue | Get-Disk
-#			If ($Disk.BusType -notmatch "USB|UASP|SD|MMC") { $_ }
-#		}
 	$Hash = @{}
 	$DriveRules = @{}
 	ForEach ($Volume in $ListVolume) {
@@ -1596,8 +1592,9 @@ Function TweakViewBitlocker { # RESINFO
 		$DiskBusType = (Get-Partition -DriveLetter $Volume.DriveLetter -ErrorAction SilentlyContinue | Get-Disk).BusType
 		$Hash[$LetterColon] = 'OFF'
 		$Action = 'Encrypt'
-		If ((Get-BitLockerVolume $Letter).ProtectionStatus -eq "On") {
-			$Hash[$LetterColon] = (Get-BitLockerVolume $Letter).EncryptionMethod
+		$BitLockerVolume = Get-BitLockerVolume $Letter -ErrorAction SilentlyContinue
+		If (($BitLockerVolume -ne $Null) -and ($BitLockerVolume.ProtectionStatus -eq "On")) {
+			$Hash[$LetterColon] = $BitLockerVolume.EncryptionMethod
 			$Action = 'Re-encrypt'
 		}
 		If ($DiskBusType -match "USB|UASP|SD|MMC") {
