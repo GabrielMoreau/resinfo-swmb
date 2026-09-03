@@ -1592,12 +1592,16 @@ Function TweakViewBitlocker { # RESINFO
 		$DiskBusType = (Get-Partition -DriveLetter $Volume.DriveLetter -ErrorAction SilentlyContinue | Get-Disk).BusType
 		$Hash[$LetterColon] = 'OFF'
 		$Action = 'Encrypt'
+		$BitLockerVolume = $Null
+		$OldErrorActionPreference = $ErrorActionPreference
 		Try {
-			$BitLockerVolume = Get-BitLockerVolume $Letter -ErrorAction Stop
-		} Catch {
-			$BitLockerVolume = $Null
+			$ErrorActionPreference = 'SilentlyContinue'
+			# Get-BitLockerVolume does not fully honor -ErrorAction in PowerShell 5.1
+			$BitLockerVolume = Get-BitLockerVolume -MountPoint $LetterColon -ErrorAction SilentlyContinue
+		} Finally {
+			$ErrorActionPreference = $OldErrorActionPreference
 		}
-		If (($BitLockerVolume -ne $Null) -and ($BitLockerVolume.ProtectionStatus -eq "On")) {
+		If (($Null -ne $BitLockerVolume) -and ($BitLockerVolume.ProtectionStatus -eq "On")) {
 			$Hash[$LetterColon] = $BitLockerVolume.EncryptionMethod
 			$Action = 'Re-encrypt'
 		}
@@ -1727,12 +1731,16 @@ Function TweakViewUEFICA23 { # RESINFO
 			$Hash[$Feature] = 'NotAvailable'
 			Continue
 		}
+		$UEFIVariable = $Null
+		$OldErrorActionPreference = $ErrorActionPreference
 		Try {
-			$UEFIVariable = Get-SecureBootUEFI -Name $Feature -ErrorAction Stop
-		} Catch {
-			$UEFIVariable = $Null
+			$ErrorActionPreference = 'SilentlyContinue'
+			# The -ErrorAction option is not fully supported in PowerShell 5.1
+			$UEFIVariable = Get-SecureBootUEFI -Name $Feature -ErrorAction SilentlyContinue
+		} Finally {
+			$ErrorActionPreference = $OldErrorActionPreference
 		}
-		If ($UEFIVariable -eq $Null) {
+		If ($Null -eq $UEFIVariable) {
 			Continue
 		}
 		$Hash[$Feature] = ([System.Text.Encoding]::ASCII.GetString($UEFIVariable.bytes) -match 'Windows UEFI CA 2023')
