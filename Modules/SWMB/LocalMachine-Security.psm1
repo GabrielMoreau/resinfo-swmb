@@ -1794,7 +1794,7 @@ Function TweakViewAntivirusServices { # RESINFO
 			Value       = $AntivirusState
 			Exists      = $True
 			Status      = If ($AntivirusState -eq 'Enabled') { 'PASS' } Else { 'FAIL' }
-			Description = "Antivirus $($AntivirusCurrent.DisplayName) in state: $AntivirusState"
+			Description = "Antivirus $($AntivirusCurrent.DisplayName) in state: $AntivirusState ($($AntivirusCurrent.productState))"
 			Remediation = If ($AntivirusState -ne 'Enabled') { "Enable the antivirus $($AntivirusCurrent.DisplayName)" } Else { $Null }
 		}
 
