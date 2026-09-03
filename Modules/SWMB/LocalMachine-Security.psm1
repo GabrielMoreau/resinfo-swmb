@@ -1592,7 +1592,11 @@ Function TweakViewBitlocker { # RESINFO
 		$DiskBusType = (Get-Partition -DriveLetter $Volume.DriveLetter -ErrorAction SilentlyContinue | Get-Disk).BusType
 		$Hash[$LetterColon] = 'OFF'
 		$Action = 'Encrypt'
-		$BitLockerVolume = Get-BitLockerVolume $Letter -ErrorAction SilentlyContinue
+		Try {
+			$BitLockerVolume = Get-BitLockerVolume $Letter -ErrorAction Stop
+		} Catch {
+			$BitLockerVolume = $Null
+		}
 		If (($BitLockerVolume -ne $Null) -and ($BitLockerVolume.ProtectionStatus -eq "On")) {
 			$Hash[$LetterColon] = $BitLockerVolume.EncryptionMethod
 			$Action = 'Re-encrypt'
@@ -1723,7 +1727,11 @@ Function TweakViewUEFICA23 { # RESINFO
 			$Hash[$Feature] = 'NotAvailable'
 			Continue
 		}
-		$UEFIVariable = Get-SecureBootUEFI -Name $Feature -ErrorAction SilentlyContinue
+		Try {
+			$UEFIVariable = Get-SecureBootUEFI -Name $Feature -ErrorAction Stop
+		} Catch {
+			$UEFIVariable = $Null
+		}
 		If ($UEFIVariable -eq $Null) {
 			Continue
 		}
