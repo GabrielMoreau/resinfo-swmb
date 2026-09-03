@@ -1584,6 +1584,12 @@ Function TweakDisableBitlocker { # RESINFO
 Function TweakViewBitlocker { # RESINFO
 	Write-Output "Viewing Bitlocker on all fixed drives (XtsAes256 Recommended)..."
 	$ListVolume = Get-volume | Where-Object { $_.DriveType -eq "Fixed" -and $_.DriveLetter -ne $Null }
+	$BitLockerVolumes = @{}
+	Get-CimInstance -Namespace 'root\CIMV2\Security\MicrosoftVolumeEncryption' -ClassName 'Win32_EncryptableVolume' -ErrorAction SilentlyContinue |
+		Where-Object { $Null -ne $_.DriveLetter } |
+		ForEach-Object {
+			$BitLockerVolumes[$_.DriveLetter] = $_
+		}
 	$Hash = @{}
 	$DriveRules = @{}
 	ForEach ($Volume in $ListVolume) {
@@ -1593,18 +1599,23 @@ Function TweakViewBitlocker { # RESINFO
 		$Hash[$LetterColon] = 'OFF'
 		$Action = 'Encrypt'
 		$BitLockerVolume = $Null
-		$OldErrorActionPreference = $ErrorActionPreference
-		Try {
-			$ErrorActionPreference = 'SilentlyContinue'
-			# Get-BitLockerVolume does not fully honor -ErrorAction in PowerShell 5.1
-			$BitLockerVolume = Get-BitLockerVolume -MountPoint $LetterColon -ErrorAction SilentlyContinue
-		} Finally {
-			$ErrorActionPreference = $OldErrorActionPreference
+
+		If ($BitLockerVolumes.ContainsKey($LetterColon)) {
+			$OldErrorActionPreference = $ErrorActionPreference
+			Try {
+				$ErrorActionPreference = 'SilentlyContinue'
+				# Get-BitLockerVolume does not fully honor -ErrorAction in PowerShell 5.1
+				$BitLockerVolume = Get-BitLockerVolume -MountPoint $LetterColon -ErrorAction SilentlyContinue
+			} Finally {
+				$ErrorActionPreference = $OldErrorActionPreference
+			}
+
+			If (($Null -ne $BitLockerVolume) -and ($BitLockerVolume.ProtectionStatus -eq "On")) {
+				$Hash[$LetterColon] = $BitLockerVolume.EncryptionMethod
+				$Action = 'Re-encrypt'
+			}
 		}
-		If (($Null -ne $BitLockerVolume) -and ($BitLockerVolume.ProtectionStatus -eq "On")) {
-			$Hash[$LetterColon] = $BitLockerVolume.EncryptionMethod
-			$Action = 'Re-encrypt'
-		}
+
 		If ($DiskBusType -match "USB|UASP|SD|MMC") {
 			$DriveRules[$LetterColon] = @{
 				Description = "External Disk $DiskBusType"
@@ -1736,7 +1747,7 @@ Function TweakViewUEFICA23 { # RESINFO
 		Try {
 			$ErrorActionPreference = 'SilentlyContinue'
 			# The -ErrorAction option is not fully supported in PowerShell 5.1
-			$UEFIVariable = Get-SecureBootUEFI -Name $Feature -ErrorAction SilentlyContinue
+			$UEFIVariable = Get-SecureBootUEFI -Name $Feature -ErrorAction SilentlyContinue 2> $Null
 		} Finally {
 			$ErrorActionPreference = $OldErrorActionPreference
 		}
