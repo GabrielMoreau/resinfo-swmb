@@ -28,7 +28,8 @@ Regarding the SWCE project:
   `ViewAutologgerDiagTrack`,
   `ViewWindowsHello`, `ViewUWPAccessLocation`,
   `ViewEdgeSendBrowsingHistory`,
-  `ViewWidgetsNewsAndInterests`, `ViewMostUsedApps`
+  `ViewWidgetsNewsAndInterests`, `ViewMostUsedApps`,
+  `ViewTargetRelease`
   to the checks on LocalMachine.
 * Added links to the ANSSI and BSI guides in the documentation.
 * The `push-on-gitlab.ps1` script now pushes the output of `LocalMachine-SWCE.ps1` to a GitLab server as both a TXT file and a CSV file.
