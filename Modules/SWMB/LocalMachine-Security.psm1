@@ -1831,7 +1831,9 @@ Function TweakViewAntivirusServices { # RESINFO
 	$ServiceResults = @()
 	$OneAntivirusIsUp = $False
 	ForEach ($AntivirusCurrent in (Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntivirusProduct)) {
-		$AntivirusName = $AntivirusCurrent.displayName -replace ' ', '-'
+		$AntivirusName = $AntivirusCurrent.displayName `
+			-replace 'Kaspersky Endpoint Security for Windows', 'Kaspersky-Endpoint-Security' `
+			-replace ' ', '-'
 		$AntivirusState = _GetAntivirusProductState($AntivirusCurrent.productState)
 		$ServiceObject = [PSCustomObject]@{
 			Name        = $AntivirusName
