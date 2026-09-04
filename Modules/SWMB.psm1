@@ -873,6 +873,7 @@ Function SWMB_WriteSettings {
 				'EnablePending'  { 'Enading' }
 				'DisablePending' { 'Disading' }
 				'DisabledWithPayloadRemoved' { 'NoPayload' }
+				$Null { 'Null' }
 				default { $InputObject.Value }
 			}
 		} Else {
