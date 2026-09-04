@@ -1731,7 +1731,7 @@ Catch {
 		If ($LASTEXITCODE -ne 0 -or $Null -eq $Output) {
 			Return $Null
 		}
-		Return [System.Text.Encoding]::ASCII.GetString([Convert]::FromBase64String(($Output -join ''))
+		Return [System.Text.Encoding]::ASCII.GetString([Convert]::FromBase64String($Output -join ''))
 	}
 
 	$SecureBootAvailable = Test-Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\State"
