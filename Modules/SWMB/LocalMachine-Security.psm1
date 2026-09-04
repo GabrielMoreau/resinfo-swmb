@@ -1708,6 +1708,32 @@ Function TweakInstallUEFICA23 { # RESINFO
 
 Function TweakViewUEFICA23 { # RESINFO
 	Write-Output "Viewing SecureBoot UEFI CA 2023..."
+
+	# Call a subroutine to prevent any error messages related to the dbdefault field
+	Function _GetSafeSecureBootUEFI {
+		Param (
+			[Parameter(Mandatory)][String]$Name
+		)
+
+		$Command = @"
+`$ErrorActionPreference = 'Stop'
+Try {
+	`$Variable = Get-SecureBootUEFI -Name '$Name'
+	[Convert]::ToBase64String(`$Variable.Bytes)
+	Exit 0
+}
+Catch {
+	Exit 1
+}
+"@
+
+		$Output = & powershell.exe -NoProfile -Command $Command 2> $Null
+		If ($LASTEXITCODE -ne 0 -or $Null -eq $Output) {
+			Return $Null
+		}
+		Return [System.Text.Encoding]::ASCII.GetString([Convert]::FromBase64String(($Output -join ''))
+	}
+
 	$SecureBootAvailable = Test-Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\State"
 	$Message = 'fix AvailableUpdates to 0x5944'
 	If ($SecureBootAvailable) {
@@ -1742,19 +1768,11 @@ Function TweakViewUEFICA23 { # RESINFO
 			$Hash[$Feature] = 'NotAvailable'
 			Continue
 		}
-		$UEFIVariable = $Null
-		$OldErrorActionPreference = $ErrorActionPreference
-		Try {
-			$ErrorActionPreference = 'SilentlyContinue'
-			# The -ErrorAction option is not fully supported in PowerShell 5.1
-			$UEFIVariable = Get-SecureBootUEFI -Name $Feature -ErrorAction SilentlyContinue 2> $Null
-		} Finally {
-			$ErrorActionPreference = $OldErrorActionPreference
-		}
+		$UEFIVariable = _GetSafeSecureBootUEFI -Name $Feature
 		If ($Null -eq $UEFIVariable) {
 			Continue
 		}
-		$Hash[$Feature] = ([System.Text.Encoding]::ASCII.GetString($UEFIVariable.bytes) -match 'Windows UEFI CA 2023')
+		$Hash[$Feature] = $UEFIVariable -match 'Windows UEFI CA 2023'
 	}
 	If ($Hash['db'] -eq 'True') {
 		$Rules['dbdefault'].OkValues += $Null
@@ -1767,6 +1785,8 @@ Function TweakViewUEFICA23 { # RESINFO
 # The Windows 11 system must use an antivirus program
 # W11 STIG V-253264 https://system32.eventsentry.com/stig/viewer/V-253264
 
+# https://ourcodeworld.com/articles/read/878/how-to-identify-detect-and-name-the-antivirus-software-installed-on-the-pc-with-c-on-winforms
+#
 # Decimal  Hex        Comment
 # 262144   0x040000   Disabled + signatures up to date
 # 262160   0x040010   Disabled + signatures out of date
