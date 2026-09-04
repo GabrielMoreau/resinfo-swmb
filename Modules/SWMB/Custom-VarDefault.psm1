@@ -66,7 +66,7 @@ $Global:SWMB_Custom = @{
 	}
 	Windows11 = @{
 		ProductVersion           = "Windows 11"
-		TargetReleaseVersionInfo = "23H2"
+		TargetReleaseVersionInfo = "24H2"
 	}
 
 	# Kaspersky Endpoint Security and Network Agent
