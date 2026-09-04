@@ -46,6 +46,7 @@ ViewRDCShareLocalDrive
 ViewWinRMBasicAuth
 
 ### Service Tweaks ###
+ViewTargetRelease
 ViewAutoplay
 ViewAutorun
 ViewIISCore

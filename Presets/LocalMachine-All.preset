@@ -169,7 +169,7 @@ DisableWinRMBasicAuth                           # EnableWinRMBasicAuth          
 
 ### Service Tweaks ###
 # DisableUpdateMSRT                             # EnableUpdateMSRT
-# SetTargetRelease                              # UnsetTargetRelease                            # ViewTargetRelease
+# SetTargetRelease                              # UnsetTargetRelease                            # ViewTargetRelease             ## Windows Target Release Version - Set use the global variable $Global:SWMB_Custom.WindowsXX.TargetReleaseVersionInfo (XX = 10 or 11)
 # DisableUpdateDriver                           # EnableUpdateDriver
 EnableUpdateMSProducts                          # DisableUpdateMSProducts
 # DisableUpdateAutoDownload                     # EnableUpdateAutoDownload
