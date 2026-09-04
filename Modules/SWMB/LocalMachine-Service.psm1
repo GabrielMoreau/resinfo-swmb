@@ -485,6 +485,13 @@ Function TweakUnsetTargetRelease { # RESINFO
 Function TweakViewTargetRelease { # RESINFO
 	Write-Output "Viewing Target Release (nothing = no target release)..."
 	Get-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate' -Name "TargetReleaseVersionInfo" -ErrorAction SilentlyContinue
+	$RegPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate'
+	$RegFields = @{
+		'TargetReleaseVersionInfo' = @{
+			Description = "Target Release Version"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
