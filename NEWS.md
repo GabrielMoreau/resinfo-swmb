@@ -34,6 +34,9 @@ Regarding the SWCE project:
 * The `push-on-gitlab.ps1` script now pushes the output of `LocalMachine-SWCE.ps1` to a GitLab server as both a TXT file and a CSV file.
   The View tweaks now populate a global array `$Global:SWMB_Results`.
   This makes it fairly easy to offer a JSON export in addition to the CSV export if this feature is requested.
+* Some View tweaks were displaying unwanted error messages.
+  They have been rewritten (made more complex) so that they no longer display these messages.
+  This was achieved either using `Try`/`Catch`/`Finally` or by running a separate sub-shell.
 
 New presets/rules:
 
