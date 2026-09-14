@@ -38,6 +38,33 @@ Regarding the SWCE project:
 * Some View tweaks were displaying unwanted error messages.
   They have been rewritten (made more complex) so that they no longer display these messages.
   This was achieved either using `Try`/`Catch`/`Finally` or by running a separate sub-shell.
+* New applications checked against the `$Global:SWMB_Custom.AdminNetAppsToBlock` key (`ViewAdminNetApps` tweak):
+	* `${Env:ProgramFiles}\7-Zip\7zFM.exe`
+	* `${Env:ProgramFiles}\Advanced Renamer\ARen.exe`
+	* `${Env:ProgramFiles}\arduino-ide\Arduino IDE.exe`
+	* `${Env:ProgramFiles}\CCleaner\CCleaner64.exe`
+	* `${Env:ProgramFiles}\Cisco Spark\CiscoCollabHost.exe`
+	* `${Env:ProgramFiles}\darktable\bin\darktable.exe`
+	* `${Env:ProgramFiles}\digiKam\digikam.exe`
+	* `${Env:ProgramFiles}\digiKam\exiftool.exe`
+	* `${Env:ProgramFiles}\digiKam\showphoto.exe`
+	* `${Env:ProgramFiles}\FastStone Image Viewer\FSViewer.exe`
+	* `${Env:ProgramFiles}\Git\cmd\git-gui.exe`
+	* `${Env:ProgramFiles}\Inkscape\bin\inkscape.exe`
+	* `${Env:ProgramFiles}\Inkscape\bin\inkview.exe`
+	* `${Env:ProgramFiles}\Nextcloud\nextcloud.exe`
+	* `${Env:ProgramFiles}\PDFCreator\PDFCreator.exe`
+	* `${Env:ProgramFiles}\Speccy\Speccy64.exe`
+	* `${Env:ProgramFiles}\TeamViewer\teamviewer.exe`
+	* `${Env:ProgramFiles}\TeraCopy\32-bit\TeraCopy.exe`
+	* `${Env:ProgramFiles}\TeraCopy\TeraCopy.exe`
+	* `${Env:ProgramFiles}\XnViewMP\xnviewmp.exe`
+	* `${Env:ProgramFiles(x86)}\Citrix\ICA Client\SelfServicePlugin\SelfService.exe`
+	* `${Env:ProgramFiles(x86)}\FastStone Image Viewer\FSViewer.exe`
+	* `${Env:ProgramFiles(x86)}\PDF4QT\Pdf4QtDiff.exe`
+	* `${Env:ProgramFiles(x86)}\PDF4QT\Pdf4QtEditor.exe`
+	* `${Env:ProgramFiles(x86)}\PDF4QT\Pdf4QtPageMaster.exe`
+	* `${Env:ProgramFiles(x86)}\PDF4QT\Pdf4QtViewer.exe`
 
 New presets/rules:
 
