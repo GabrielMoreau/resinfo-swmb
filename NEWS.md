@@ -55,6 +55,7 @@ Regarding the SWCE project:
 	* `${Env:ProgramFiles}\Nextcloud\nextcloud.exe`
 	* `${Env:ProgramFiles}\PDFCreator\PDFCreator.exe`
 	* `${Env:ProgramFiles}\Speccy\Speccy64.exe`
+	* `${Env:ProgramFiles}\Tabby\Tabby.exe`
 	* `${Env:ProgramFiles}\TeamViewer\teamviewer.exe`
 	* `${Env:ProgramFiles}\TeraCopy\32-bit\TeraCopy.exe`
 	* `${Env:ProgramFiles}\TeraCopy\TeraCopy.exe`
