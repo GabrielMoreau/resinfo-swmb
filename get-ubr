@@ -55,8 +55,8 @@ get_osbuild () {
 	# Windows 11 / version 26H2
 	OSBUILD+=("$(get_ubr 11 26H2 26300 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 4 0)")
 
-	# Windows 11 / version 26H1
-	OSBUILD+=("$(get_ubr 11 26H1 28000 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 4 0)")
+	# Windows 11 / version 26H1 / Only ARM64
+	# OSBUILD+=("$(get_ubr 11 26H1 28000 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 4 0)")
 
 	# Windows 11 / version 25H2
 	OSBUILD+=("$(get_ubr 11 25H2 26200 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information' 4 0)")

@@ -367,13 +367,9 @@ Function SWMB_GetOSVersionColor {
 	# Last OS revision
 	# See ./get-ubr
 	$UBR = @(
-		# BeginAutoEdit - UBR - d7d39332a5d6b17d448eba52a13d422a
+		# BeginAutoEdit - UBR - cd6ba3aee0146792c92f88bda9c76144
 		@{Os = '11'; DisplayVersion = '26H2'; MajorMinor = '10.0'; Build = 26300; UBR = 9550; Level = 0} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
 		@{Os = '11'; DisplayVersion = '26H2'; MajorMinor = '10.0'; Build = 26300; UBR = 9457; Level = 1} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '11'; DisplayVersion = '26H1'; MajorMinor = '10.0'; Build = 28000; UBR = 3086; Level = 0} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '11'; DisplayVersion = '26H1'; MajorMinor = '10.0'; Build = 28000; UBR = 2956; Level = 1} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '11'; DisplayVersion = '26H1'; MajorMinor = '10.0'; Build = 28000; UBR = 2954; Level = 2} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '11'; DisplayVersion = '26H1'; MajorMinor = '10.0'; Build = 28000; UBR = 2804; Level = 3} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
 		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 9550; Level = 0} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
 		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 9457; Level = 1} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
 		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 9445; Level = 2} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
