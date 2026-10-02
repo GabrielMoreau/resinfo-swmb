@@ -357,8 +357,9 @@ If you'd like to contribute, the tools and/or values provided below may help.
   |  22H2   | Sun Valley 2            | September 20, 2022     | 22621 |
   |  23H2   | Sun Valley 3            | October 31, 2023       | 22631 |
   |  24H2   | Hudson Valley           | October 1, 2024        | 26100 |
-  |  25H2   | Hudson Valley 2         | September 30, 2025     | 26200 |
-  |  26H1   | Hudson Valley 3         | February 10, 2026      | 28000 |
+  |  25H2   | -                       | September 30, 2025     | 26200 |
+  |  26H1   | -                       | February 10, 2026      | 28000 |
+  |  26H2   | -                       | September 29, 2026     | 26300 |
 
 * See [Windows 10 version history](https://en.wikipedia.org/wiki/Windows_10_version_history)
 
