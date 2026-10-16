@@ -367,26 +367,27 @@ Function SWMB_GetOSVersionColor {
 	# Last OS revision
 	# See ./get-ubr
 	$UBR = @(
-		# BeginAutoEdit - UBR - cd6ba3aee0146792c92f88bda9c76144
-		@{Os = '11'; DisplayVersion = '26H2'; MajorMinor = '10.0'; Build = 26300; UBR = 9550; Level = 0} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '11'; DisplayVersion = '26H2'; MajorMinor = '10.0'; Build = 26300; UBR = 9457; Level = 1} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 9550; Level = 0} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 9457; Level = 1} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 9445; Level = 2} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 9278; Level = 3} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '11'; DisplayVersion = '24H2'; MajorMinor = '10.0'; Build = 26100; UBR = 9550; Level = 1} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '11'; DisplayVersion = '24H2'; MajorMinor = '10.0'; Build = 26100; UBR = 9457; Level = 2} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '11'; DisplayVersion = '24H2'; MajorMinor = '10.0'; Build = 26100; UBR = 9445; Level = 3} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '11'; DisplayVersion = '23H2'; MajorMinor = '10.0'; Build = 22631; UBR = 7584; Level = 1} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '11'; DisplayVersion = '23H2'; MajorMinor = '10.0'; Build = 22631; UBR = 7582; Level = 2} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '11'; DisplayVersion = '23H2'; MajorMinor = '10.0'; Build = 22631; UBR = 7517; Level = 3} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
+		# BeginAutoEdit - UBR - 8417a9a97474bf547671a6e315320a84
+		@{Os = '11'; DisplayVersion = '26H2'; MajorMinor = '10.0'; Build = 26300; UBR = 9711; Level = 0} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
+		@{Os = '11'; DisplayVersion = '26H2'; MajorMinor = '10.0'; Build = 26300; UBR = 9550; Level = 1} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
+		@{Os = '11'; DisplayVersion = '26H2'; MajorMinor = '10.0'; Build = 26300; UBR = 9457; Level = 2} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
+		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 9711; Level = 0} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
+		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 9550; Level = 1} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
+		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 9457; Level = 2} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
+		@{Os = '11'; DisplayVersion = '25H2'; MajorMinor = '10.0'; Build = 26200; UBR = 9445; Level = 3} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
+		@{Os = '11'; DisplayVersion = '24H2'; MajorMinor = '10.0'; Build = 26100; UBR = 9711; Level = 1} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
+		@{Os = '11'; DisplayVersion = '24H2'; MajorMinor = '10.0'; Build = 26100; UBR = 9550; Level = 2} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
+		@{Os = '11'; DisplayVersion = '24H2'; MajorMinor = '10.0'; Build = 26100; UBR = 9457; Level = 3} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
+		@{Os = '11'; DisplayVersion = '23H2'; MajorMinor = '10.0'; Build = 22631; UBR = 7652; Level = 1} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
+		@{Os = '11'; DisplayVersion = '23H2'; MajorMinor = '10.0'; Build = 22631; UBR = 7584; Level = 2} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
+		@{Os = '11'; DisplayVersion = '23H2'; MajorMinor = '10.0'; Build = 22631; UBR = 7582; Level = 3} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
 		@{Os = '11'; DisplayVersion = '22H2'; MajorMinor = '10.0'; Build = 22621; UBR = 6060; Level = 3} # {https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information}
-		@{Os = '10'; DisplayVersion = '22H2'; MajorMinor = '10.0'; Build = 19045; UBR = 7727; Level = 0} # {https://learn.microsoft.com/en-us/windows/release-health/release-information}
-		@{Os = '10'; DisplayVersion = '22H2'; MajorMinor = '10.0'; Build = 19045; UBR = 7725; Level = 1} # {https://learn.microsoft.com/en-us/windows/release-health/release-information}
-		@{Os = '10'; DisplayVersion = '22H2'; MajorMinor = '10.0'; Build = 19045; UBR = 7663; Level = 2} # {https://learn.microsoft.com/en-us/windows/release-health/release-information}
-		@{Os = '10'; DisplayVersion = '21H2'; MajorMinor = '10.0'; Build = 19044; UBR = 7727; Level = 0} # {https://learn.microsoft.com/en-us/windows/release-health/release-information}
-		@{Os = '10'; DisplayVersion = '21H2'; MajorMinor = '10.0'; Build = 19044; UBR = 7725; Level = 1} # {https://learn.microsoft.com/en-us/windows/release-health/release-information}
-		@{Os = '10'; DisplayVersion = '21H2'; MajorMinor = '10.0'; Build = 19044; UBR = 7663; Level = 2} # {https://learn.microsoft.com/en-us/windows/release-health/release-information}
+		@{Os = '10'; DisplayVersion = '22H2'; MajorMinor = '10.0'; Build = 19045; UBR = 7807; Level = 0} # {https://learn.microsoft.com/en-us/windows/release-health/release-information}
+		@{Os = '10'; DisplayVersion = '22H2'; MajorMinor = '10.0'; Build = 19045; UBR = 7727; Level = 1} # {https://learn.microsoft.com/en-us/windows/release-health/release-information}
+		@{Os = '10'; DisplayVersion = '22H2'; MajorMinor = '10.0'; Build = 19045; UBR = 7725; Level = 2} # {https://learn.microsoft.com/en-us/windows/release-health/release-information}
+		@{Os = '10'; DisplayVersion = '21H2'; MajorMinor = '10.0'; Build = 19044; UBR = 7807; Level = 0} # {https://learn.microsoft.com/en-us/windows/release-health/release-information}
+		@{Os = '10'; DisplayVersion = '21H2'; MajorMinor = '10.0'; Build = 19044; UBR = 7727; Level = 1} # {https://learn.microsoft.com/en-us/windows/release-health/release-information}
+		@{Os = '10'; DisplayVersion = '21H2'; MajorMinor = '10.0'; Build = 19044; UBR = 7725; Level = 2} # {https://learn.microsoft.com/en-us/windows/release-health/release-information}
 		# EndAutoEdit
 	)
 
