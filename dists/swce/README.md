@@ -31,8 +31,18 @@ Then, if necessary, unlock the script to allow it to run.
 
 ```ps1
 cd C:\Temp
-powershell.exe Set-ExecutionPolicy RemoteSigned -Force -Scope LocalMachine
-powershell.exe "Unblock-File -Path .\LocalMachine-SWCE.ps1"
+Invoke-WebRequest -UseBasicParsing `
+  -Uri 'https://resinfo-gt.pages.in2p3.fr/swmb/resinfo-swmb/SWCE-Latest.zip' `
+  -OutFile '.\SWCE-Latest.zip'
+ls *.zip
+
+Expand-Archive -Path '.\SWCE-Latest.zip' -DestinationPath '.\SWCE'
+cd '.\SWCE'
+ls
+
+Get-ExecutionPolicy -List
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+Unblock-File -Path .\LocalMachine-SWCE.ps1
 & .\LocalMachine-SWCE.ps1
 ```
 
