@@ -4,7 +4,7 @@
 
 Update UBR.
 Checks Git tags when the version number is changed.
-Remove old obsolete script `Win10.ps1`. 
+Remove old obsolete script `Win10.ps1`.
 There was a major spelling error between “Recommanded” and “Recommended”.
 One group of tweaks was affected and has been corrected : `HideRecommandedSection` -> `HideRecommendedSection` and `ShowRecommandedSection` -> `ShowRecommendedSection`.
 Add tree websites links in the [REFERENCES](REFERENCES.md) file:
@@ -80,6 +80,9 @@ New presets/rules:
 * 2026/08/18 - `DisablePCASvc`/`EnablePCASvc`/`ViewPCASvc` -> Disable Windows Program Compatibility Assistant Service
 * 2026/07/17 - `DisableThirdPartySuggestions_CU`/`EnableThirdPartySuggestions_CU`/`ViewThirdPartySuggestions_CU` -> Disable Third Party Suggestions
 * 2026/06/30 - `SetUserInRDGroup`/`UnsetUserInRDGroup` -> Set accounts valid for Remote Desktop (Use `$Global:SWMB_Custom.LocalRDUsersRegex`)
+
+Update the implementation of the tweaks:
+	`ViewUpgradesOnUnsupportedHard`
 
 
 ## Version 3.21 (2026/05/26)
