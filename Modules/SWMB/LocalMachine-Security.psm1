@@ -815,9 +815,27 @@ Function TweakEnableUpgradesOnUnsupportedHard { # RESINFO
 Function TweakViewUpgradesOnUnsupportedHard { # RESINFO
 	Write-Output "Viewing Windows 11 upgrades with unsupported hardware (0 or not exist: Disable, 1: Enable)..."
 	If ([System.Environment]::OSVersion.Version.Build -ge 22000) {
-		Get-ItemProperty -Path 'HKLM:\SYSTEM\Setup\MoSetup' -Name 'AllowUpgradesWithUnsupportedTPMOrCPU'
+		$RegPath = 'HKLM:\SYSTEM\Setup\MoSetup'
+		$RegFields = @{
+			'AllowUpgradesWithUnsupportedTPMOrCPU' = @{
+				OkValues = @(0, $Null)
+				Description = "Do not upgrades on unsupported hardware"
+				Remediation = "DisableUpgradesOnUnsupportedHard"
+			}
+		}
+		SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 	} Else {
-		Write-Output " Operating system not running Windows 11 or higher"
+		$Hash = @{
+			'AllowUpgradesWithUnsupportedTPMOrCPU' = 'NotExist'
+		}
+		$Rules = [ordered]@{
+			'AllowUpgradesWithUnsupportedTPMOrCPU' = @{
+				OkValues = @('NotExist')
+				Description = "Operating system not running Windows 11 or higher"
+				Remediation = "Upgrade your OS"
+			}
+		}
+		SWMB_GetHashSettings -Hash $Hash -Rules $Rules | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 	}
 }
 
