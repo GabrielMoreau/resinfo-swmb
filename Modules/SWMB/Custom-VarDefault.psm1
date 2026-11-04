@@ -145,6 +145,7 @@ $Global:SWMB_Custom = @{
 		"${Env:ProgramFiles}\Advanced Renamer\ARen.exe"
 		"${Env:ProgramFiles}\arduino-ide\Arduino IDE.exe"
 		"${Env:ProgramFiles}\Audacity\Audacity.exe"
+		"${Env:ProgramFiles}\Audacity 4\Audacity4.exe"
 		"${Env:ProgramFiles}\BraveSoftware\Brave-Browser\Application\brave.exe"
 		"${Env:ProgramFiles}\CCleaner\CCleaner64.exe"
 		"${Env:ProgramFiles}\Cisco Spark\CiscoCollabHost.exe"
