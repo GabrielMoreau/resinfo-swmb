@@ -1,5 +1,8 @@
 # NEWS
 
+## Version 3.23 (in progress)
+
+
 ## Version 3.22 (2026/11/04)
 
 Update UBR.
