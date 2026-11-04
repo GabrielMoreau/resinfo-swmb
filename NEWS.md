@@ -8,6 +8,14 @@ Here's a quick summary:
 * The SWCE LocalMachine button now also creates a CSV file in addition to the log file.
   A `C` button has therefore been created to open this new file.
 
+Regarding the SWCE project:
+
+* New applications checked against the `$Global:SWMB_Custom.AdminNetAppsToBlock` key (`ViewAdminNetApps` tweak):
+	* `${Env:ProgramFiles}\Audacity 4\Audacity4.exe`
+
+Update the implementation of the tweaks:
+	`ViewAdminNetApps`
+
 
 ## Version 3.22 (2026/11/04)
 
