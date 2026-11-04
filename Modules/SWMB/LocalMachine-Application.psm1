@@ -1675,8 +1675,8 @@ Function TweakViewAdminNetApps { # RESINFO
 		$Status = SWMB_QueryAppBlockStatus -Path $App -Account $NTAccount
 		If ($Status -eq $Null) { Continue }
 		$AppSplit = $App `
-			-Replace "^$([regex]::Escape($Env:ProgramFiles(x86)))\\", '' `
-			-Replace "^$([regex]::Escape($Env:ProgramFiles))\\", '' `
+			-Replace "^$([regex]::Escape(${Env:ProgramFiles(x86)}))\\", '' `
+			-Replace "^$([regex]::Escape(${Env:ProgramFiles}))\\", '' `
 			-Split '\\'
 		$Vendor = ($AppSplit[0] -Replace '\s.*$','') -Replace '[^A-Za-z0-9-].*$',''
 		$Name    = Split-Path $App -Leaf
