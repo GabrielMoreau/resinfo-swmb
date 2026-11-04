@@ -649,9 +649,24 @@ $Form.controls.Add($BtnSWCELMLog)
 $BtnSWCELMLog.Add_Click({
 	Start-Process -FilePath $Editor -ArgumentList "`"$SWCELog`""
 })
-$ToolTip.SetToolTip($BtnSWCELMLog, "Show Last LocalMachine SWCE Task Run")
+$ToolTip.SetToolTip($BtnSWCELMLog, "Show Last LocalMachine SWCE Task Run (LOG)")
 If (Test-Path -LiteralPath "$SWCELog") {
 	$BtnSWCELMLog.Visible = $True
+}
+
+$BtnSWCELMCsv = New-Object System.Windows.Forms.Button
+$BtnSWCELMCsv.Location = [System.Drawing.Point]::new($FOriginX + 110, $FOriginY + 20)
+$BtnSWCELMCsv.Width = 15
+$BtnSWCELMCsv.Height = 20
+$BtnSWCELMCsv.Text = "L"
+$BtnSWCELMCsv.Visible = $False
+$Form.controls.Add($BtnSWCELMCsv)
+$BtnSWCELMCsv.Add_Click({
+	Start-Process -FilePath $Editor -ArgumentList "`"$SWCECsv`""
+})
+$ToolTip.SetToolTip($BtnSWCELMCsv, "Show Last LocalMachine SWCE Task Run (CSV)")
+If (Test-Path -LiteralPath "$SWCECsv") {
+	$BtnSWCELMCsv.Visible = $True
 }
 
 $BtnSWCELM = New-Object System.Windows.Forms.Button
@@ -679,6 +694,9 @@ Write-Host '`nPress any key to close...' -NoNewline
 		-WindowStyle Maximized
 	If (Test-Path -LiteralPath "$SWCELog") {
 		$BtnSWCELMLog.Visible = $True
+	}
+	If (Test-Path -LiteralPath "$SWCECsv") {
+		$BtnSWCELMCsv.Visible = $True
 	}
 })
 $ToolTip.SetToolTip($BtnSWCELM, "SWCE - LocalMachine")
