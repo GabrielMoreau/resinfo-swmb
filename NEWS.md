@@ -2,6 +2,12 @@
 
 ## Version 3.23 (in progress)
 
+The `wisemoui.ps1` graphical interface has been updated.
+Here's a quick summary:
+
+* The SWCE LocalMachine button now also creates a CSV file in addition to the log file.
+  A `C` button has therefore been created to open this new file.
+
 
 ## Version 3.22 (2026/11/04)
 
