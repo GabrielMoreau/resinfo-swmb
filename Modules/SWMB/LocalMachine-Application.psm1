@@ -1678,7 +1678,7 @@ Function TweakViewAdminNetApps { # RESINFO
 			-Replace "^$([regex]::Escape($Env:ProgramFiles(x86)))\\", '' `
 			-Replace "^$([regex]::Escape($Env:ProgramFiles))\\", '' `
 			-Split '\\'
-		$Vendor = ($AppSplit[0] -Replace '\s.*$','') -Replace '[^A-Za-z-].*$',''
+		$Vendor = ($AppSplit[0] -Replace '\s.*$','') -Replace '[^A-Za-z0-9-].*$',''
 		$Name    = Split-Path $App -Leaf
 		$AppObject = [PSCustomObject]@{
 			Name        = "$Vendor/$Name"
