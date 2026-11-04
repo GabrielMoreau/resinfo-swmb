@@ -26,6 +26,7 @@ $BootLog        = (Join-Path -Path $DataFolder -ChildPath (Join-Path -Path "Logs
 $PostInstallLog = (Join-Path -Path $DataFolder -ChildPath (Join-Path -Path "Logs" -ChildPath "LocalMachine-PostInstall.log"))
 $LogonLog       = (Join-Path -Path $DataFolder -ChildPath (Join-Path -Path "Logs" -ChildPath "CurrentUser-LastLogon.log"))
 $SWCELog        = (Join-Path -Path $DataFolder -ChildPath (Join-Path -Path "Logs" -ChildPath "LocalMachine-SWCE.log"))
+$SWCECsv        = (Join-Path -Path $DataFolder -ChildPath (Join-Path -Path "Logs" -ChildPath "LocalMachine-SWCE.csv"))
 
 Import-Module -Name "$PSScriptRoot\Modules\SWMB.psd1" -ErrorAction Stop
 Import-Module -Name "$PSScriptRoot\Modules\WiSeMoUI.psm1" -ErrorAction Stop
@@ -663,7 +664,7 @@ $BtnSWCELM.Add_Click({
 	$Script = Join-Path $PSScriptRoot 'Tasks\LocalMachine-SWCE.ps1'
 	$Command = @"
 Start-Transcript -Path '$SWCELog'
-& '$Script'
+& '$Script' -CSVFile '$SWCECsv'
 Stop-Transcript
 Write-Host '`nPress any key to close...' -NoNewline
 `$Null = `$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
