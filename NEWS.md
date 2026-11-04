@@ -1,6 +1,6 @@
 # NEWS
 
-## Version 3.22 (in progress)
+## Version 3.22 (2026/11/04)
 
 Update UBR.
 Checks Git tags when the version number is changed.
