@@ -169,16 +169,44 @@ Function TweakEnableSMBServer {
 
 ################################################################
 
-# Disable NetBIOS over TCP/IP on all currently installed network interfaces
-Function TweakDisableNetBIOS {
+# NetBIOS over TCP/IP on all currently installed network interfaces
+
+# Disable
+Function TweakDisableNetBIOS { # RESINFO
 	Write-Output "Disabling NetBIOS over TCP/IP..."
-	Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\services\NetBT\Parameters\Interfaces\Tcpip*" -Name "NetbiosOptions" -Type DWord -Value 2
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters\Interfaces'
+	Get-ChildItem $RegPath | ForEach-Object {
+		New-ItemProperty -Path $_.PSPath -Name 'NetbiosOptions' -PropertyType DWord -Value 2 -Force | Out-Null
+	}
 }
 
-# Enable NetBIOS over TCP/IP on all currently installed network interfaces
-Function TweakEnableNetBIOS {
+# Enable
+Function TweakEnableNetBIOS { # RESINFO
 	Write-Output "Enabling NetBIOS over TCP/IP..."
-	Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\services\NetBT\Parameters\Interfaces\Tcpip*" -Name "NetbiosOptions" -Type DWord -Value 0
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters\Interfaces'
+	Get-ChildItem $RegPath | ForEach-Object {
+		New-ItemProperty -Path $_.PSPath -Name 'NetbiosOptions' -PropertyType DWord -Value 0 -Force | Out-Null
+	}
+}
+
+# View
+Function TweakViewNetBIOS { # RESINFO
+	Write-Output "Viewing NetBIOS over TCP/IP on all network interfaces (0: Enable (Default), 2: Disable (Recommended))..."
+	$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters\Interfaces'
+	Get-ChildItem $RegPath | ForEach-Object {
+		$TcpKey = Split-Path -Leaf $_
+		$TcpKeyShort = $TcpKey -replace '^Tcpip_\{(.*)\}$', '$1'
+		$TcpKeyShort = $TcpKeyShort.Substring(0, 24) + '...'
+		$RegFields = @{
+			'NetbiosOptions' = @{
+				OkValues = @(3)
+				DisplayName = $TcpKeyShort
+				Description = "NetBIOS over TCP/IP on TcpKey installed network interfaces"
+				Remediation = "DisableNetBIOS (ACSC - page 33)"
+			}
+		}
+		SWMB_GetRegistrySettings -Path $_.PSPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
+	}
 }
 
 ################################################################

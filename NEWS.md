@@ -17,6 +17,7 @@ Regarding the SWCE project:
 
 New presets/rules:
 
+* 2026/11/16 - `ViewNetBIOS` -> NetBIOS over TCP/IP status on all currently installed network interfaces
 * 2026/11/16 - `ViewMicrosoftAccount` -> Users cannot add or log in to a Microsoft accounts
 
 Update the implementation of the tweaks:

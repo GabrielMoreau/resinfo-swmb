@@ -139,7 +139,7 @@ SetCurrentNetworkPrivate                        # SetCurrentNetworkPublic
 DisableSMB1Protocol                             # EnableSMB1Protocol                            # ViewSMB1Protocol              ## Disable Server Message Block (SMB) v1 protocol - W11 STIG V-253287 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253287
 # DisableSMB1Server                             # EnableSMB1Server
 # DisableSMBServer                              # EnableSMBServer
-# DisableNetBIOS                                # EnableNetBIOS
+# DisableNetBIOS                                # EnableNetBIOS                                 # ViewNetBIOS                   ## NetBIOS over TCP/IP status on all currently installed network interfaces - ACSC ASD Win11 https://www.cyber.gov.au/sites/default/files/2025-09/hardening_microsoft_windows_11_workstations_september_2025.pdf
 # EnableLanManAuthLevelHigh                     # DisableLanManAuthLevelHigh                    # ViewLanManAuthLevelHigh       ## Enable LanMan Authentication Level to NTLMv2 - W11 STIG V-253462 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253462
 # DisablePrintOverHTTP                          # EnablePrintOverHTTP                           # ViewPrintOverHTTP             ## Disable Printing over HTTP - W11 STIG V-253376 https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide/2025-05-15/finding/V-253376
 # DisableLLMNR                                  # EnableLLMNR
