@@ -15,6 +15,10 @@ Regarding the SWCE project:
 * New applications checked against the `$Global:SWMB_Custom.AdminNetAppsToBlock` key (`ViewAdminNetApps` tweak):
 	* `${Env:ProgramFiles}\Audacity 4\Audacity4.exe`
 
+New presets/rules:
+
+* 2026/11/16 - `ViewMicrosoftAccount` -> Users cannot add or log in to a Microsoft accounts
+
 Update the implementation of the tweaks:
 	`ViewAdminNetApps`
 

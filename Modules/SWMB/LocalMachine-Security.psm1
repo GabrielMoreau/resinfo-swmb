@@ -751,19 +751,35 @@ Function TweakEnablePublicProfile { # RESINFO
 # Disable
 Function TweakDisableMicrosoftAccount { # RESINFO
 	Write-Output "Disabling (Block) Microsoft Account..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System")) {
-		New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Force | Out-Null
+	$RegPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "NoConnectedUser" -Type DWord -Value 3
+	Set-ItemProperty -Path $RegPath -Name "NoConnectedUser" -Type DWord -Value 3
 }
 
 # Enable
 Function TweakEnableMicrosoftAccount { # RESINFO
 	Write-Output "Enabling Microsoft Account..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System")) {
-		New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Force | Out-Null
+	$RegPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+	If (!(Test-Path $RegPath)) {
+		New-Item -Path $RegPath -Force | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "NoConnectedUser" -Type DWord -Value 0
+	Set-ItemProperty -Path $RegPath -Name "NoConnectedUser" -Type DWord -Value 0
+}
+
+# View
+Function TweakViewMicrosoftAccount { # RESINFO
+	Write-Output "Viewing Microsoft Account(0: Enable (Default), 3: Disable (Recommended))..."
+	$RegPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+	$RegFields = @{
+		NoConnectedUser = @{
+			OkValues = @(3)
+			Description = "Users cannot add or log in to a Microsoft accounts"
+			Remediation = "DisableMicrosoftAccount (CNRS)"
+		}
+	}
+	SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 }
 
 ################################################################
