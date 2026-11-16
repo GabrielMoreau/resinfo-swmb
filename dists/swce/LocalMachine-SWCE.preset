@@ -24,7 +24,9 @@ ViewInsecureGuestLogons
 ViewSMBClientSigning
 ViewSMBServerSigning
 ViewSMB1Protocol
+ViewNetBIOS
 ViewPasswordOnResume
+ViewMicrosoftAccount
 ViewSessionLockTimeout
 ViewSEHOP
 ViewCredentialGuard
