@@ -11,7 +11,7 @@
   [Hardening Guideline](https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Cyber-Security/SiSyPHuS/AP11/Hardening_Guideline.pdf)
   (english, pdf)
 * Document of the [ACSC](https://en.wikipedia.org/wiki/Australian_Cyber_Security_Centre)
-  (Australian Cyber Security Centre - Australian)
+  (Australian Cyber Security Centre)
   and [ASD](https://en.wikipedia.org/wiki/Australian_Signals_Directorate)
   (Australian Signals Directorate)
 	* [Hardening Microsoft Windows 11 workstations](https://www.cyber.gov.au/sites/default/files/2025-09/hardening_microsoft_windows_11_workstations_september_2025.pdf) (english, pdf)

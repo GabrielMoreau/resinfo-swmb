@@ -3,6 +3,10 @@
 ## Version 3.23 (in progress)
 
 Update UBR.
+Add ACSC ASD websites links in the [REFERENCES](REFERENCES.md) file:
+
+* [ACSC](https://en.wikipedia.org/wiki/Australian_Cyber_Security_Centre) (Australian Cyber Security Centre)
+* [ASD](https://en.wikipedia.org/wiki/Australian_Signals_Directorate) (Australian Signals Directorate)
 
 The `wisemoui.ps1` graphical interface has been updated.
 Here's a quick summary:
@@ -12,6 +16,9 @@ Here's a quick summary:
 
 Regarding the SWCE project:
 
+* Added the tweaks
+  `ViewMicrosoftAccount`, `ViewNetBIOS`
+  to the checks on LocalMachine.
 * New applications checked against the `$Global:SWMB_Custom.AdminNetAppsToBlock` key (`ViewAdminNetApps` tweak):
 	* `${Env:ProgramFiles}\Audacity 4\Audacity4.exe`
 
@@ -21,7 +28,8 @@ New presets/rules:
 * 2026/11/16 - `ViewMicrosoftAccount` -> Users cannot add or log in to a Microsoft accounts
 
 Update the implementation of the tweaks:
-	`ViewAdminNetApps`
+	`ViewAdminNetApps`,
+	`DisableNetBIOS`, `EnableNetBIOS`
 
 
 ## Version 3.22 (2026/11/04)
