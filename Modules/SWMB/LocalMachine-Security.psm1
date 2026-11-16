@@ -342,7 +342,7 @@ Function TweakSetDEPAlwaysOn { # RESINFO
 }
 
 # Set Data Execution Prevention (DEP) policy to OptOut - Turn on DEP for all 32-bit applications except manually excluded. 64-bit applications have DEP always on.
-Function TweakSetDEPOptOut {
+Function TweakSetDEPOptOut { # RESINFO
 	Write-Output "Setting Data Execution Prevention (DEP) policy to OptOut..."
 	If ((Get-CimInstance Win32_OperatingSystem).DataExecutionPrevention_Available) {
 		bcdedit /set '{current}' nx OptOut | Out-Null
@@ -350,7 +350,7 @@ Function TweakSetDEPOptOut {
 }
 
 # Set Data Execution Prevention (DEP) policy to OptIn - Turn on DEP only for essential 32-bit Windows executables and manually included applications. 64-bit applications have DEP always on.
-Function TweakSetDEPOptIn {
+Function TweakSetDEPOptIn { # RESINFO
 	Write-Output "Setting Data Execution Prevention (DEP) policy to OptIn..."
 	If ((Get-CimInstance Win32_OperatingSystem).DataExecutionPrevention_Available) {
 		bcdedit /set '{current}' nx OptIn | Out-Null
@@ -491,20 +491,6 @@ Function TweakDisableSMBClientSigning { # RESINFO
 # View
 Function TweakViewSMBClientSigning { # RESINFO
 	Write-Output "Viewing (require) SMB client to use signing messages (0 or not exist: Disable, 1: Enable)..."
-	#$RegPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters'
-	#$RegFields = @{
-	#	EnableSecuritySignature = @{
-	#		OkValues = @(1)
-	#		Description = "Enable Security Signature"
-	#		Remediation = "EnableSMBClientSigning and reboot"
-	#	}
-	#	RequireSecuritySignature = @{
-	#		OkValues = @(1)
-	#		Description = "Require Security Signature"
-	#		Remediation = "EnableSMBClientSigning and reboot"
-	#	}
-	#}
-	#SWMB_GetRegistrySettings -Path $RegPath -Rules $RegFields | SWMB_WriteSettings -Tweak ($MyInvocation.MyCommand.Name -replace '^Tweak', '')
 	$Hash = @{}
 	$Rules = [ordered]@{
 		EnableSecuritySignature = @{
