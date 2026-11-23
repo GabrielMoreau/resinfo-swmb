@@ -16,9 +16,6 @@
   (Australian Signals Directorate)
 	* [Hardening Microsoft Windows 11 workstations](https://www.cyber.gov.au/sites/default/files/2025-09/hardening_microsoft_windows_11_workstations_september_2025.pdf) (english, pdf)
 	* [Hardening Microsoft Windows 10 workstations](https://www.cyber.gov.au/sites/default/files/2025-09/hardening_microsoft_windows_10_workstations_september_2025.pdf) (english, pdf)
-* All the tools to secure Windows and privacy
-  [Comparison of Windows 10 Privacy tools](https://www.ghacks.net/2015/08/14/comparison-of-windows-10-privacy-tools/) (english)
-* Upstream SWMB project [Win10-Initial-Setup-Script](https://github.com/Disassembler0/Win10-Initial-Setup-Script) (english)
 * [STIG - Security Technical Implementation Guides](https://www.stigviewer.com/stigs) (english)
   is a security protocol framework designed to safeguard the U.S. Department of Defense (DoD) and developed by the Defense Information Systems Agency (DISA).
 	* [Microsoft Windows 11](https://www.stigviewer.com/stigs/microsoft-windows-11-security-technical-implementation-guide)
@@ -30,6 +27,7 @@
 	* [Adobe Acrobat Reader DC Continuous Track](https://www.stigviewer.com/stigs/adobe_acrobat_reader_dc_continuous_track)
 	* [Mozilla Firefox](https://www.stigviewer.com/stigs/mozilla_firefox)
 	* [Microsoft Edge](https://www.stigviewer.com/stigs/microsoft_edge)
+* Upstream SWMB project [Win10-Initial-Setup-Script](https://github.com/Disassembler0/Win10-Initial-Setup-Script) (english)
 * [EOSL](https://eosl.date/) (english)
   is a simple and free online tool for checking End-of-Service-Life dates for your IT infrastructure components, particularly useful for planning hardware and software upgrades.
 
@@ -53,6 +51,7 @@
 ## 2026
 
 * [Windows 11 26H2 : quels sont les nouveaux paramètres de GPO ?](https://david-informaticien.com/blog/windows/4408-windows-11-26h2-quels-sont-les-nouveaux-parametres-de-gpo) (french)
+* [Windows 10 Privacy tool: Comparison of antispy tools](https://www.ghacks.net/2015/08/14/comparison-of-windows-10-privacy-tools/) (english)
 
 ## 2025
 
