@@ -50,6 +50,10 @@
 * [FlyOOBE](https://github.com/builtbybel/FlyOOBE) (code in C#) - installing Windows 11 on unsupported hardware and more
 * [Aegis Privacy Shield & Terminator](https://github.com/yarrowmartin3-prog/Aegis-Privacy-Shield) (script in PowerShell) (french)
 
+## 2026
+
+* [Windows 11 26H2 : quels sont les nouveaux paramètres de GPO ?](https://david-informaticien.com/blog/windows/4408-windows-11-26h2-quels-sont-les-nouveaux-parametres-de-gpo) (french)
+
 ## 2025
 
 * [Retex avec l’outil SWMB pour la sécurisation des postes de travail Windows (hors AD et comme alternative aux GPO)](https://hal.science/hal-05010045) (french)
